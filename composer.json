@@ -1,0 +1,20 @@
+{
+  "name": "oxid-esales/codeception-page-object",
+  "description": "This repository contains the script, which reports OXID eShop version status in admin",
+  "keywords": [
+    "oxid",
+    "codeception",
+    "pageObject",
+    "eShop"
+  ],
+  "homepage": "https://www.oxid-esales.com/en/home.html",
+  "license": [
+    "GPL-3.0-only",
+    "proprietary"
+  ],
+  "autoload": {
+    "psr-4": {
+      "OxidEsales\\Codeception\\Page\\": "Page"
+    }
+  }
+}
