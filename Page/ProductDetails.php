@@ -1,12 +1,12 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Account\UserLogin;
-use OxidEsales\Page\Footer\ServiceWidget;
-use OxidEsales\Page\Header\AccountMenu;
-use OxidEsales\Page\Header\LanguageMenu;
-use OxidEsales\Page\Header\MiniBasket;
-use OxidEsales\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Account\UserLogin;
+use OxidEsales\Codeception\Page\Footer\ServiceWidget;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Header\LanguageMenu;
+use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Header\Navigation;
 
 class ProductDetails extends Page
 {

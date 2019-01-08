@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page\Header;
+namespace OxidEsales\Codeception\Page\Header;
 
-use OxidEsales\Page\ProductSearchList;
+use OxidEsales\Codeception\Page\ProductSearchList;
 
 trait SearchWidget
 {

@@ -1,11 +1,11 @@
 <?php
-namespace OxidEsales\Page\Account;
+namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Page\GiftRegistry;
-use OxidEsales\Page\Header\AccountMenu;
-use OxidEsales\Page\Header\MiniBasket;
-use OxidEsales\Page\Page;
-use OxidEsales\Page\ProductDetails;
+use OxidEsales\Codeception\Page\GiftRegistry;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Page\ProductDetails;
 
 class UserGiftRegistry extends Page
 {

@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
 class NewsletterSubscription extends Page
 {

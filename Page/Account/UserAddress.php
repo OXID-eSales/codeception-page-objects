@@ -1,9 +1,9 @@
 <?php
-namespace OxidEsales\Page\Account;
+namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Page\Header\AccountMenu;
-use OxidEsales\Page\Page;
-use OxidEsales\Page\UserForm;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Page\UserForm;
 
 class UserAddress extends Page
 {

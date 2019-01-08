@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page\Header;
+namespace OxidEsales\Codeception\Page\Header;
 
 trait LanguageMenu
 {

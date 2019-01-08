@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page\Footer;
+namespace OxidEsales\Codeception\Page\Footer;
 
-use OxidEsales\Page\Basket;
+use OxidEsales\Codeception\Page\Basket;
 
 trait ServiceWidget
 {

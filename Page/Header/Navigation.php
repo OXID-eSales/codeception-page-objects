@@ -1,8 +1,8 @@
 <?php
-namespace OxidEsales\Page\Header;
+namespace OxidEsales\Codeception\Page\Header;
 
-use OxidEsales\Page\Home;
-use OxidEsales\Page\ProductList;
+use OxidEsales\Codeception\Page\Home;
+use OxidEsales\Codeception\Page\ProductList;
 
 trait Navigation
 {

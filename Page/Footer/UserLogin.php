@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page\Footer;
+namespace OxidEsales\Codeception\Page\Footer;
 
 trait UserLogin
 {

@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Header\MiniBasket;
 
 class Basket extends Page
 {

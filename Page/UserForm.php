@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
 trait UserForm
 {

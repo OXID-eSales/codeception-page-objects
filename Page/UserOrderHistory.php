@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Footer\UserLogin;
+use OxidEsales\Codeception\Page\Footer\UserLogin;
 
 class UserOrderHistory
 {

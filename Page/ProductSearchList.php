@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Header\LanguageMenu;
+use OxidEsales\Codeception\Page\Header\LanguageMenu;
 
 class ProductSearchList extends Page
 {

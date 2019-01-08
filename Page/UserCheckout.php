@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Header\Navigation;
 
 class UserCheckout extends Page
 {

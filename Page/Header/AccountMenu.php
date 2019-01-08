@@ -1,13 +1,13 @@
 <?php
-namespace OxidEsales\Page\Header;
+namespace OxidEsales\Codeception\Page\Header;
 
-use OxidEsales\Page\Account\ProductCompare;
-use OxidEsales\Page\Account\UserAccount;
-use OxidEsales\Page\Account\UserGiftRegistry;
-use OxidEsales\Page\Account\UserLogin;
-use OxidEsales\Page\Account\UserPasswordReminder;
-use OxidEsales\Page\Account\UserWishList;
-use OxidEsales\Page\UserRegistration;
+use OxidEsales\Codeception\Page\Account\ProductCompare;
+use OxidEsales\Codeception\Page\Account\UserAccount;
+use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
+use OxidEsales\Codeception\Page\Account\UserLogin;
+use OxidEsales\Codeception\Page\Account\UserPasswordReminder;
+use OxidEsales\Codeception\Page\Account\UserWishList;
+use OxidEsales\Codeception\Page\UserRegistration;
 
 trait AccountMenu
 {

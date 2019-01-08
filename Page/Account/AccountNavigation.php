@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page\Account;
+namespace OxidEsales\Codeception\Page\Account;
 
 trait AccountNavigation
 {

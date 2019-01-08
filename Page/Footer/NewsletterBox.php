@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page\Footer;
+namespace OxidEsales\Codeception\Page\Footer;
 
-use OxidEsales\Page\NewsletterSubscription;
+use OxidEsales\Codeception\Page\NewsletterSubscription;
 
 trait NewsletterBox
 {

@@ -1,8 +1,8 @@
 <?php
-namespace OxidEsales\Page\Header;
+namespace OxidEsales\Codeception\Page\Header;
 
-use OxidEsales\Page\PaymentCheckout;
-use OxidEsales\Page\UserCheckout;
+use OxidEsales\Codeception\Page\PaymentCheckout;
+use OxidEsales\Codeception\Page\UserCheckout;
 
 trait MiniBasket
 {

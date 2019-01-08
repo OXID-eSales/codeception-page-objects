@@ -1,8 +1,8 @@
 <?php
-namespace OxidEsales\Page\Account;
+namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Page\Header\Navigation;
-use OxidEsales\Page\Page;
+use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Page;
 
 class UserPasswordReminder extends Page
 {

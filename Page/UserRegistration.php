@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
 
 class UserRegistration extends Page
 {

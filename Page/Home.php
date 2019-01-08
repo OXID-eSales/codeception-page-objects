@@ -1,11 +1,11 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Page\Footer\NewsletterBox;
-use OxidEsales\Page\Header\AccountMenu;
-use OxidEsales\Page\Header\MiniBasket;
-use OxidEsales\Page\Header\Navigation;
-use OxidEsales\Page\Header\SearchWidget;
+use OxidEsales\Codeception\Page\Footer\NewsletterBox;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Header\SearchWidget;
 
 class Home extends Page
 {

@@ -1,5 +1,5 @@
 <?php
-namespace OxidEsales\Page;
+namespace OxidEsales\Codeception\Page;
 
 class ThankYou extends Page
 {

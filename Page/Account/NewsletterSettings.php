@@ -1,7 +1,7 @@
 <?php
-namespace OxidEsales\Page\Account;
+namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Page\Page;
+use OxidEsales\Codeception\Page\Page;
 
 class NewsletterSettings extends Page
 {
