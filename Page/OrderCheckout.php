@@ -1,5 +1,6 @@
 <?php
 namespace OxidEsales\Codeception\Page;
+use OxidEsales\Codeception\Module\Translator;
 
 class OrderCheckout extends Page
 {
@@ -24,10 +25,10 @@ class OrderCheckout extends Page
         return static::$URL.$param;
     }
 
-    public function clickOnSubmitOrder()
+    public function submitOrder()
     {
         $I = $this->user;
-        $I->click($I->translate('SUBMIT_ORDER'));
+        $I->click(Translator::translate('SUBMIT_ORDER'));
         return $this;
     }
 
@@ -50,7 +51,7 @@ class OrderCheckout extends Page
     public function validateRemarkText($userRemarkText)
     {
         $I = $this->user;
-        $I->see($I->translate('WHAT_I_WANTED_TO_SAY'), self::$userRemarkHeader);
+        $I->see(Translator::translate('WHAT_I_WANTED_TO_SAY'), self::$userRemarkHeader);
         $I->see($userRemarkText, self::$userRemark);
         return $this;
     }

@@ -1,8 +1,6 @@
 <?php
 namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Codeception\Page\Header\Navigation;
-
 class PaymentCheckout extends Page
 {
     // include url of current page

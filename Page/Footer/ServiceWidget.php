@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page\Footer;
 
 use OxidEsales\Codeception\Page\Basket;
+use OxidEsales\Codeception\Module\Translator;
 
 trait ServiceWidget
 {
@@ -14,7 +15,7 @@ trait ServiceWidget
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('CART'), self::$basketLink);
+        $I->click(Translator::translate('CART'), self::$basketLink);
         return new Basket($I);
     }
 }

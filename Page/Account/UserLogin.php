@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserLogin extends Page
 {
@@ -31,7 +32,7 @@ class UserLogin extends Page
         $I->fillField(self::$userAccountLoginName, $userName);
         $I->fillField(self::$userAccountLoginPassword, $userPassword);
         $I->click(self::$userAccountLoginButton);
-        $I->dontSee($I->translate('LOGIN'));
+        $I->dontSee(Translator::translate('LOGIN'));
         return new UserAccount($I);
     }
 
@@ -45,7 +46,7 @@ class UserLogin extends Page
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$userForgotPasswordLink);
-        $breadCrumbName = $I->translate("YOU_ARE_HERE") . ":" . $I->translate("FORGOT_PASSWORD");
+        $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD");
         $I->see($breadCrumbName, UserPasswordReminder::$breadCrumb);
         return new UserPasswordReminder($I);
     }

@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Module\Translator;
 
 class NewsletterSettings extends Page
 {
@@ -24,9 +25,9 @@ class NewsletterSettings extends Page
     {
         $I = $this->user;
         $I->click(self::$newsletterStatusSelect);
-        $I->click($I->translate('YES'));
+        $I->click(Translator::translate('YES'));
         $I->click(self::$newsletterSubscribeButton);
-        $I->see($I->translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
+        $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
         return $this;
     }
 
@@ -37,9 +38,9 @@ class NewsletterSettings extends Page
     {
         $I = $this->user;
         $I->click(self::$newsletterStatusSelect);
-        $I->click($I->translate('NO'));
+        $I->click(Translator::translate('NO'));
         $I->click(self::$newsletterSubscribeButton);
-        $I->see($I->translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
+        $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
         return $this;
     }
 
@@ -53,7 +54,7 @@ class NewsletterSettings extends Page
     public function seeNewsletterSubscribed()
     {
         $I = $this->user;
-        $I->see($I->translate('YES'), self::$newsletterStatusSelect);
+        $I->see(Translator::translate('YES'), self::$newsletterStatusSelect);
         return $this;
     }
 
@@ -67,7 +68,7 @@ class NewsletterSettings extends Page
     public function seeNewsletterUnSubscribed()
     {
         $I = $this->user;
-        $I->see($I->translate('NO'), self::$newsletterStatusSelect);
+        $I->see(Translator::translate('NO'), self::$newsletterStatusSelect);
         return $this;
     }
 

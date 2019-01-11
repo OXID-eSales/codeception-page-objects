@@ -1,12 +1,13 @@
 <?php
 namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserPasswordReminder extends Page
 {
-    use Navigation;
+    use AccountMenu;
 
     // include url of current page
     public static $URL = '/en/forgot-password/';
@@ -27,7 +28,7 @@ class UserPasswordReminder extends Page
     {
         $I = $this->user;
         $I->fillField(self::$forgotPasswordUserEmail, $userEmail);
-        $I->click($I->translate('REQUEST_PASSWORD'));
+        $I->click(Translator::translate('REQUEST_PASSWORD'));
         return $this;
     }
 

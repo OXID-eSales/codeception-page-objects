@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page\Footer;
 
 use OxidEsales\Codeception\Page\NewsletterSubscription;
+use OxidEsales\Codeception\Module\Translator;
 
 trait NewsletterBox
 {
@@ -20,7 +21,7 @@ trait NewsletterBox
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$newsletterUserEmail, $userEmail);
-        $I->click($I->translate('SUBSCRIBE'), self::$newsletterSubscribeButton);
+        $I->click(Translator::translate('SUBSCRIBE'), self::$newsletterSubscribeButton);
         return new NewsletterSubscription($I);
     }
 }

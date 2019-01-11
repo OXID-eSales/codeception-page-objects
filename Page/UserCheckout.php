@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page;
 
 use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserCheckout extends Page
 {
@@ -30,7 +31,7 @@ class UserCheckout extends Page
     public function selectOptionNoRegistration()
     {
         $I = $this->user;
-        $I->see($I->translate('PURCHASE_WITHOUT_REGISTRATION'));
+        $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
         $I->click(self::$noRegistrationOption);
         return $this;
     }

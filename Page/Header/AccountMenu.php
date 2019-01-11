@@ -1,6 +1,7 @@
 <?php
 namespace OxidEsales\Codeception\Page\Header;
 
+use Helper\Context;
 use OxidEsales\Codeception\Page\Account\ProductCompare;
 use OxidEsales\Codeception\Page\Account\UserAccount;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
@@ -8,6 +9,7 @@ use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Account\UserPasswordReminder;
 use OxidEsales\Codeception\Page\Account\UserWishList;
 use OxidEsales\Codeception\Page\UserRegistration;
+use OxidEsales\Codeception\Module\Translator;
 
 trait AccountMenu
 {
@@ -54,7 +56,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userRegistrationLink);
-        $breadCrumbName = $I->translate("YOU_ARE_HERE") . ":" . $I->translate("PAGE_TITLE_REGISTER");
+        $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("PAGE_TITLE_REGISTER");
         $I->see($breadCrumbName, UserRegistration::$breadCrumb);
         return new UserRegistration($I);
     }
@@ -70,7 +72,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userForgotPasswordButton);
-        $breadCrumbName = $I->translate("YOU_ARE_HERE") . ":" . $I->translate("FORGOT_PASSWORD");
+        $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD");
         $I->see($breadCrumbName, UserPasswordReminder::$breadCrumb);
         return new UserPasswordReminder($I);
     }
@@ -90,6 +92,7 @@ trait AccountMenu
         $I->fillField(self::$userLoginName, $userName);
         $I->fillField(self::$userLoginPassword, $userPassword);
         $I->click(self::$userLoginButton);
+        Context::setActiveUser($userName);
         return $this;
     }
 
@@ -101,7 +104,8 @@ trait AccountMenu
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click($I->translate('LOGOUT'));
+        $I->click(Translator::translate('LOGOUT'));
+        Context::setActiveUser(null);
         return $this;
     }
 
@@ -130,9 +134,9 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountGiftRegistryLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('MY_GIFT_REGISTRY');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $I->see($breadCrumb, UserGiftRegistry::$breadCrumb);
-        $I->see($I->translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
         return new UserGiftRegistry($I);
     }
 
@@ -147,9 +151,9 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountWishListLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('MY_WISH_LIST');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
         $I->see($breadCrumb, UserWishList::$breadCrumb);
-        $I->see($I->translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
         return new UserWishList($I);
     }
 
@@ -164,9 +168,9 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountCompareListLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('PRODUCT_COMPARISON');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
         $I->see($breadCrumb, ProductCompare::$breadCrumb);
-        $I->see($I->translate('COMPARE'), ProductCompare::$headerTitle);
+        $I->see(Translator::translate('COMPARE'), ProductCompare::$headerTitle);
         return new ProductCompare($I);
     }
 
@@ -179,7 +183,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('LOGIN');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
         $I->see($breadCrumb, UserLogin::$breadCrumb);
         return new UserLogin($I);
     }
@@ -217,8 +221,10 @@ trait AccountMenu
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $this->openAccountMenu();
         $cnt = ($count) ? ' '.$count : '';
-        $I->see($I->translate('MY_PRODUCT_COMPARISON').$cnt, self::$userAccountCompareListText);
+        $I->see(Translator::translate('MY_PRODUCT_COMPARISON').$cnt, self::$userAccountCompareListText);
+        $this->closeAccountMenu();
         return $this;
     }
 
@@ -232,7 +238,7 @@ trait AccountMenu
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
-        $I->see($I->translate('MY_WISH_LIST').$cnt, self::$userAccountWishListText);
+        $I->see(Translator::translate('MY_WISH_LIST').$cnt, self::$userAccountWishListText);
         return $this;
     }
 
@@ -246,7 +252,7 @@ trait AccountMenu
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
-        $I->see($I->translate('MY_GIFT_REGISTRY').$cnt, self::$userAccountGiftRegistryText);
+        $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, self::$userAccountGiftRegistryText);
         return $this;
     }
 }

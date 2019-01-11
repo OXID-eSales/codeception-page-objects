@@ -6,6 +6,7 @@ use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\ProductDetails;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserGiftRegistry extends Page
 {
@@ -58,7 +59,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->fillField(self::$giftRegistrySearch, $userName);
-        $I->click($I->translate('SEARCH'));
+        $I->click(Translator::translate('SEARCH'));
         return $this;
     }
 
@@ -71,7 +72,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->click(self::$foundListLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('PUBLIC_GIFT_REGISTRIES');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('PUBLIC_GIFT_REGISTRIES');
         $I->see($breadCrumb, GiftRegistry::$breadCrumb);
         return new GiftRegistry($I);
     }
@@ -90,7 +91,7 @@ class UserGiftRegistry extends Page
         $I->fillField(self::$recipientName, $recipient);
         $I->fillField(self::$recipientEmail, $email);
         $I->fillField(self::$emailMessage, $message);
-        $I->click($I->translate('SUBMIT'));
+        $I->click(Translator::translate('SUBMIT'));
         return $this;
     }
 
@@ -100,9 +101,9 @@ class UserGiftRegistry extends Page
     public function openGiftRegistryEmailForm()
     {
         $I = $this->user;
-        $I->click($I->translate('MESSAGE_SEND_GIFT_REGISTRY'));
-        $I->waitForText($I->translate('SEND_GIFT_REGISTRY'));
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('MY_GIFT_REGISTRY');
+        $I->click(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
+        $I->waitForText(Translator::translate('SEND_GIFT_REGISTRY'));
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $I->see($breadCrumb, self::$breadCrumb);
         return $this;
     }
@@ -126,7 +127,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->selectOption(self::$publicSelection, 1);
-        $I->click($I->translate('SAVE'));
+        $I->click(Translator::translate('SAVE'));
         return $this;
     }
 
@@ -137,7 +138,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->selectOption(self::$publicSelection, 0);
-        $I->click($I->translate('SAVE'));
+        $I->click(Translator::translate('SAVE'));
         return $this;
     }
 

@@ -3,6 +3,7 @@ namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserAccount extends Page
 {
@@ -35,8 +36,8 @@ class UserAccount extends Page
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click($I->translate('LOGOUT'));
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('LOGIN');
+        $I->click(Translator::translate('LOGOUT'));
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
         $I->see($breadCrumb, UserLogin::$breadCrumb);
         return new UserLogin($I);
     }
@@ -50,7 +51,7 @@ class UserAccount extends Page
     {
         $I = $this->user;
         $I->click(self::$dashboardChangePasswordPanelHeader);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('CHANGE_PASSWORD');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('CHANGE_PASSWORD');
         $I->see($breadCrumb, UserChangePassword::$breadCrumb);
         return new UserChangePassword($I);
     }

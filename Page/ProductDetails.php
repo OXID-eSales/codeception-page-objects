@@ -7,6 +7,7 @@ use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Header\LanguageMenu;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Module\Translator;
 
 class ProductDetails extends Page
 {
@@ -219,7 +220,7 @@ class ProductDetails extends Page
     /**
      * @return $this
      */
-    public function addToGiftRegistryList()
+    public function addProductToGiftRegistryList()
     {
         $I = $this->user;
         $I->click(self::$addToGiftRegistryLink);
@@ -229,7 +230,7 @@ class ProductDetails extends Page
     /**
      * @return $this
      */
-    public function removeFromGiftRegistryList()
+    public function removeProductFromGiftRegistryList()
     {
         $I = $this->user;
         $I->click(self::$addToGiftRegistryLink);
@@ -246,7 +247,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$reviewLoginLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('LOGIN');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
         $I->see($breadCrumb, UserLogin::$breadCrumb);
         $userLoginPage = new UserLogin($I);
         $userLoginPage->login($userName, $userPassword);
@@ -296,9 +297,9 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$productSuggestionLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('RECOMMEND_PRODUCT');
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('RECOMMEND_PRODUCT');
         $I->see($breadCrumb, ProductSuggestion::$breadCrumb);
-        $I->see($I->translate('RECOMMEND_PRODUCT'), ProductSuggestion::$headerTitle);
+        $I->see(Translator::translate('RECOMMEND_PRODUCT'), ProductSuggestion::$headerTitle);
         return new ProductSuggestion($I);
     }
 
@@ -314,7 +315,7 @@ class ProductDetails extends Page
         $this->openPriceAlert();
         $I->fillField(self::$priceAlertEmail, $email);
         $I->fillField(self::$priceAlertSuggestedPrice, $price);
-        $I->click($I->translate('SEND'));
+        $I->click(Translator::translate('SEND'));
         return $this;
     }
 
@@ -324,8 +325,8 @@ class ProductDetails extends Page
     public function openPriceAlert()
     {
         $I = $this->user;
-        $I->click($I->translate('PRICE_ALERT'));
-        $I->see($I->translate('MESSAGE_PRICE_ALARM_PRICE_CHANGE'));
+        $I->click(Translator::translate('PRICE_ALERT'));
+        $I->see(Translator::translate('MESSAGE_PRICE_ALARM_PRICE_CHANGE'));
         return $this;
     }
 
@@ -335,7 +336,7 @@ class ProductDetails extends Page
     public function openAttributes()
     {
         $I = $this->user;
-        $I->click($I->translate('SPECIFICATION'));
+        $I->click(Translator::translate('SPECIFICATION'));
         return $this;
     }
 
@@ -345,7 +346,7 @@ class ProductDetails extends Page
     public function openDescription()
     {
         $I = $this->user;
-        $I->click($I->translate('DESCRIPTION'));
+        $I->click(Translator::translate('DESCRIPTION'));
         return $this;
     }
 
@@ -479,13 +480,14 @@ class ProductDetails extends Page
     public function seeAmountPrices($amountPrices)
     {
         $I = $this->user;
-        $I->click($I->translate('BLOCK_PRICE'));
+        $I->click(Translator::translate('BLOCK_PRICE'));
         $I->waitForElementVisible(sprintf(self::$amountPriceQuantity, 1));
         $itemPosition = 1;
-        foreach ($amountPrices as $key => $discount) {
-            $fromAmount = $I->translate('FROM').' '.$key.' '.$I->translate('PCS');
+        foreach ($amountPrices as $amountPrice) {
+            $fromAmount = Translator::translate('FROM').' '.$amountPrice['amountFrom'].' '.Translator::translate('PCS');
+            $discountText = $amountPrice['discount'].'% '.Translator::translate('DISCOUNT');
             $I->see($fromAmount, sprintf(self::$amountPriceQuantity, $itemPosition));
-            $I->see($discount, sprintf(self::$amountPriceValue, $itemPosition));
+            $I->see($discountText, sprintf(self::$amountPriceValue, $itemPosition));
             $itemPosition++;
         }
         $I->click(self::$amountPriceCloseButton);
@@ -518,7 +520,7 @@ class ProductDetails extends Page
     public function openProductSearchList()
     {
         $I = $this->user;
-        $I->click($I->translate('BACK_TO_OVERVIEW'));
+        $I->click(Translator::translate('BACK_TO_OVERVIEW'));
         return new ProductSearchList($I);
     }
 

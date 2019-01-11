@@ -4,6 +4,7 @@ namespace OxidEsales\Codeception\Page\Account;
 use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\UserForm;
+use OxidEsales\Codeception\Module\Translator;
 
 class UserAddress extends Page
 {
@@ -99,7 +100,7 @@ class UserAddress extends Page
         $I->click(sprintf(self::$selectShipAddress, $id));
         $I->waitForElementVisible(sprintf(self::$deleteShipAddress, $id));
         $I->click(sprintf(self::$deleteShipAddress, $id));
-        $I->click($I->translate('DELETE'));
+        $I->click(Translator::translate('DELETE'));
         return $this;
     }
 

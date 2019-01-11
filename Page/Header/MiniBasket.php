@@ -1,8 +1,11 @@
 <?php
 namespace OxidEsales\Codeception\Page\Header;
 
+use Helper\Context;
+use OxidEsales\Codeception\Page\Basket;
 use OxidEsales\Codeception\Page\PaymentCheckout;
 use OxidEsales\Codeception\Page\UserCheckout;
+use OxidEsales\Codeception\Module\Translator;
 
 trait MiniBasket
 {
@@ -36,7 +39,7 @@ trait MiniBasket
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openMiniBasket();
-        $I->see( $totalAmount . ' ' . $I->translate('ITEMS_IN_BASKET'));
+        $I->see( $totalAmount . ' ' . Translator::translate('ITEMS_IN_BASKET'));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
             $I->see($basketProduct['title'], $I->clearString(sprintf(self::$miniBasketItemTitle, $itemPosition)));
@@ -59,28 +62,28 @@ trait MiniBasket
     }
 
     /**
-     * @return UserCheckout
+     * @return UserCheckout|PaymentCheckout
      */
-    public function openCheckoutForNotLoggedInUser()
+    public function openCheckout()
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('CHECKOUT'));
-        $breadCrumbName = $I->translate("YOU_ARE_HERE") . ':' . $I->translate("ADDRESS");
-        $I->see($breadCrumbName, UserCheckout::$breadCrumb);
-        return new UserCheckout($I);
+        $I->click(Translator::translate('CHECKOUT'));
+        if (Context::isUserLoggedIn()) {
+            return new PaymentCheckout($I);
+        } else {
+            return new UserCheckout($I);
+        }
     }
 
     /**
-     * @return PaymentCheckout
+     * @return Basket
      */
-    public function openCheckoutForLoggedInUser()
+    public function openBasketDisplay()
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('CHECKOUT'));
-        $breadCrumbName = $I->translate("YOU_ARE_HERE") . ':' . $I->translate("PAY");
-        $I->see($breadCrumbName, PaymentCheckout::$breadCrumb);
-        return new PaymentCheckout($I);
+        $I->click(Translator::translate('DISPLAY_BASKET'));
+        return new Basket($I);
     }
 }

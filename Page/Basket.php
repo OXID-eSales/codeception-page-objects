@@ -2,6 +2,7 @@
 namespace OxidEsales\Codeception\Page;
 
 use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Module\Translator;
 
 class Basket extends Page
 {
@@ -77,7 +78,7 @@ class Basket extends Page
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see($I->translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
+            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
             $I->see($basketProduct['title'], sprintf(self::$basketItemTitle, $itemPosition));
             $I->see($basketProduct['totalPrice'], sprintf(self::$basketItemTotalPrice, $itemPosition));
             $I->seeInField(sprintf(self::$basketItemAmount, $itemPosition), $basketProduct['amount']);
@@ -101,7 +102,7 @@ class Basket extends Page
     public function seeBasketContainsBundledProduct($basketProduct, $itemPosition)
     {
         $I = $this->user;
-        $I->see($I->translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
+        $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
         $I->see($basketProduct['title'], sprintf(self::$basketItemTitle, $itemPosition));
         $I->see($basketProduct['amount'], sprintf(self::$basketBundledItemAmount, $itemPosition));
         return $this;
@@ -113,7 +114,7 @@ class Basket extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click($I->translate('CONTINUE_TO_NEXT_STEP'));
+        $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
         $I->waitForElement(self::$breadCrumb);
         return new UserCheckout($I);
     }

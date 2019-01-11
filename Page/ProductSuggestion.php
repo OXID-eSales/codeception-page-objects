@@ -1,6 +1,8 @@
 <?php
 namespace OxidEsales\Codeception\Page;
 
+use OxidEsales\Codeception\Module\Translator;
+
 class ProductSuggestion extends Page
 {
     // include url of current page
@@ -51,7 +53,7 @@ class ProductSuggestion extends Page
         if (isset($suggestionEmailData['subject'])) {
             $I->fillField(self::$emailSubject, $suggestionEmailData['subject']);
         }
-        $I->click($I->translate('SEND'));
+        $I->click(Translator::translate('SEND'));
         return $this;
     }
 

@@ -1,5 +1,6 @@
 <?php
 namespace OxidEsales\Codeception\Page\Account;
+use OxidEsales\Codeception\Module\Translator;
 
 trait AccountNavigation
 {
@@ -20,10 +21,10 @@ trait AccountNavigation
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('NEWSLETTER_SETTINGS'), self::$newsletterSettingsLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('NEWSLETTER_SETTINGS');
+        $I->click(Translator::translate('NEWSLETTER_SETTINGS'), self::$newsletterSettingsLink);
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
         $I->see($breadCrumb, NewsletterSettings::$breadCrumb);
-        $I->see($I->translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), NewsletterSettings::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), NewsletterSettings::$headerTitle);
         return new NewsletterSettings($I);
     }
 
@@ -36,10 +37,10 @@ trait AccountNavigation
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('BILLING_SHIPPING_SETTINGS'), self::$addressSettingsLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('BILLING_SHIPPING_SETTINGS');
+        $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), self::$addressSettingsLink);
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
         $I->see($breadCrumb, UserAddress::$breadCrumb);
-        $I->see($I->translate('BILLING_SHIPPING_SETTINGS'), UserAddress::$headerTitle);
+        $I->see(Translator::translate('BILLING_SHIPPING_SETTINGS'), UserAddress::$headerTitle);
         return new UserAddress($I);
     }
 
@@ -52,10 +53,10 @@ trait AccountNavigation
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('MY_GIFT_REGISTRY'), self::$giftRegistryLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('MY_GIFT_REGISTRY');
+        $I->click(Translator::translate('MY_GIFT_REGISTRY'), self::$giftRegistryLink);
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $I->see($breadCrumb, UserGiftRegistry::$breadCrumb);
-        $I->see($I->translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
         return new UserGiftRegistry($I);
     }
 
@@ -68,10 +69,10 @@ trait AccountNavigation
     {
         /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->click($I->translate('MY_WISH_LIST'), self::$wishListLink);
-        $breadCrumb = $I->translate('YOU_ARE_HERE').':'.$I->translate('MY_ACCOUNT').$I->translate('MY_WISH_LIST');
+        $I->click(Translator::translate('MY_WISH_LIST'), self::$wishListLink);
+        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
         $I->see($breadCrumb, UserWishList::$breadCrumb);
-        $I->see($I->translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
         return new UserWishList($I);
     }
 

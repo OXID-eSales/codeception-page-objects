@@ -4,6 +4,7 @@ namespace OxidEsales\Codeception\Page\Account;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\ProductDetails;
+use OxidEsales\Codeception\Module\Translator;
 
 class ProductCompare extends Page
 {
@@ -42,7 +43,7 @@ class ProductCompare extends Page
     public function seeProductData($productData, $position = 1)
     {
         $I = $this->user;
-        $I->see($I->translate('PRODUCT_NO').': '.$productData['id'], sprintf(self::$productNumber, $position));
+        $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf(self::$productNumber, $position));
         $I->see($productData['title'], sprintf(self::$productTitle, $position));
         // TODO: uncomment
         //$I->see($productData['price'], sprintf(self::$productPrice, $id));
