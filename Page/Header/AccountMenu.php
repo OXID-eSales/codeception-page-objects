@@ -56,9 +56,10 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userRegistrationLink);
-        $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("PAGE_TITLE_REGISTER");
-        $I->see($breadCrumbName, UserRegistration::$breadCrumb);
-        return new UserRegistration($I);
+        $userRegistrationPage = new UserRegistration($I);
+        $breadCrumb = Translator::translate('PAGE_TITLE_REGISTER');
+        $userRegistrationPage->seeOnBreadCrumb($breadCrumb);
+        return $userRegistrationPage;
     }
 
     /**
@@ -72,9 +73,10 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userForgotPasswordButton);
-        $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD");
-        $I->see($breadCrumbName, UserPasswordReminder::$breadCrumb);
-        return new UserPasswordReminder($I);
+        $userPasswordReminderPage = new UserPasswordReminder($I);
+        $breadCrumb = Translator::translate('FORGOT_PASSWORD');
+        $userPasswordReminderPage->seeOnBreadCrumb($breadCrumb);
+        return $userPasswordReminderPage;
     }
 
     /**
@@ -134,10 +136,11 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountGiftRegistryLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $I->see($breadCrumb, UserGiftRegistry::$breadCrumb);
+        $userGiftRegistryPage = new UserGiftRegistry($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
+        $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
-        return new UserGiftRegistry($I);
+        return $userGiftRegistryPage;
     }
 
     /**
@@ -151,10 +154,11 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountWishListLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
-        $I->see($breadCrumb, UserWishList::$breadCrumb);
+        $userWishListPage = new UserWishList($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
+        $userWishListPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
-        return new UserWishList($I);
+        return $userWishListPage;
     }
 
     /**
@@ -168,10 +172,11 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountCompareListLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
-        $I->see($breadCrumb, ProductCompare::$breadCrumb);
+        $productComparePage = new ProductCompare($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
+        $productComparePage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('COMPARE'), ProductCompare::$headerTitle);
-        return new ProductCompare($I);
+        return $productComparePage;
     }
 
     /**
@@ -183,9 +188,10 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
-        $I->see($breadCrumb, UserLogin::$breadCrumb);
-        return new UserLogin($I);
+        $userLoginPage = new UserLogin($I);
+        $breadCrumb = Translator::translate('LOGIN');
+        $userLoginPage->seeOnBreadCrumb($breadCrumb);
+        return $userLoginPage;
     }
 
     /**

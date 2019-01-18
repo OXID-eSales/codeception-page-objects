@@ -72,9 +72,10 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->click(self::$foundListLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('PUBLIC_GIFT_REGISTRIES');
-        $I->see($breadCrumb, GiftRegistry::$breadCrumb);
-        return new GiftRegistry($I);
+        $giftRegistryPage = new GiftRegistry($I);
+        $breadCrumb = Translator::translate('PUBLIC_GIFT_REGISTRIES');
+        $giftRegistryPage->seeOnBreadCrumb($breadCrumb);
+        return $giftRegistryPage;
     }
 
     /**
@@ -103,8 +104,8 @@ class UserGiftRegistry extends Page
         $I = $this->user;
         $I->click(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
         $I->waitForText(Translator::translate('SEND_GIFT_REGISTRY'));
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $I->see($breadCrumb, self::$breadCrumb);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
+        $this->seeOnBreadCrumb($breadCrumb);
         return $this;
     }
 

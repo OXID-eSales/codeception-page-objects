@@ -11,7 +11,7 @@ class UserRegistration extends Page
     public static $URL = '/en/open-account';
 
     // include bread crumb of current page
-    public static $breadCrumb = ['id' => 'breadcrumb'];
+    public static $breadCrumb = '#breadcrumb';
 
     //save form button
     public static $saveFormButton = '#accUserSaveTop';

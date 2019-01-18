@@ -113,7 +113,7 @@ class OrderCheckout extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'UserLastName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'Street');
         $transformedAddress .= $this->getAddressElement($userAddress, 'StreetNr');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'StateId');
+        $transformedAddress .= (isset($userAddress['StateId']) && $userAddress['StateId']) ? 'BE ': '';
         $transformedAddress .= $this->getAddressElement($userAddress, 'ZIP');
         $transformedAddress .= $this->getAddressElement($userAddress, 'City');
         $transformedAddress .= $this->getAddressElement($userAddress, 'CountryId');

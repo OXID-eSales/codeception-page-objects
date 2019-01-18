@@ -22,10 +22,11 @@ trait AccountNavigation
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('NEWSLETTER_SETTINGS'), self::$newsletterSettingsLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
-        $I->see($breadCrumb, NewsletterSettings::$breadCrumb);
+        $newsletterSettingsPage = new NewsletterSettings($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
+        $newsletterSettingsPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), NewsletterSettings::$headerTitle);
-        return new NewsletterSettings($I);
+        return $newsletterSettingsPage;
     }
 
     /**
@@ -38,10 +39,11 @@ trait AccountNavigation
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), self::$addressSettingsLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
-        $I->see($breadCrumb, UserAddress::$breadCrumb);
+        $userAddressPage = new UserAddress($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
+        $userAddressPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('BILLING_SHIPPING_SETTINGS'), UserAddress::$headerTitle);
-        return new UserAddress($I);
+        return $userAddressPage;
     }
 
     /**
@@ -54,10 +56,11 @@ trait AccountNavigation
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('MY_GIFT_REGISTRY'), self::$giftRegistryLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $I->see($breadCrumb, UserGiftRegistry::$breadCrumb);
+        $userGiftRegistryPage = new UserGiftRegistry($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
+        $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
-        return new UserGiftRegistry($I);
+        return $userGiftRegistryPage;
     }
 
     /**
@@ -70,10 +73,11 @@ trait AccountNavigation
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('MY_WISH_LIST'), self::$wishListLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
-        $I->see($breadCrumb, UserWishList::$breadCrumb);
+        $userWishListPage = new UserWishList($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
+        $userWishListPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
-        return new UserWishList($I);
+        return $userWishListPage;
     }
 
 }

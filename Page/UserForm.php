@@ -109,7 +109,7 @@ trait UserForm
         $this->selectBillingCountry($userData['CountryId']);
         unset($userData['CountryId']);
         if (isset($userData['StateId'])) {
-            $this->selectUserData(self::$billStateId, 'Berlin', '');
+            $this->selectUserData(self::$billStateId, $userData['StateId'], '');
             unset($userData['StateId']);
         }
 
@@ -169,7 +169,7 @@ trait UserForm
         $this->selectShippingCountry($userData['CountryId']);
         unset($userData['CountryId']);
         if (isset($userData['StateId'])) {
-            $this->selectUserData(self::$delStateId, 'Berlin', '#shippingAddress');
+            $this->selectUserData(self::$delStateId, $userData['StateId'], '#shippingAddress');
             unset($userData['StateId']);
         }
 

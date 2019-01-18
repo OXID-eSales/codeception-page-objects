@@ -37,9 +37,10 @@ class UserAccount extends Page
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
-        $I->see($breadCrumb, UserLogin::$breadCrumb);
-        return new UserLogin($I);
+        $userLoginPage = new UserLogin($I);
+        $breadCrumb = Translator::translate('LOGIN');
+        $userLoginPage->seeOnBreadCrumb($breadCrumb);
+        return $userLoginPage;
     }
 
     /**
@@ -51,8 +52,9 @@ class UserAccount extends Page
     {
         $I = $this->user;
         $I->click(self::$dashboardChangePasswordPanelHeader);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('MY_ACCOUNT').Translator::translate('CHANGE_PASSWORD');
-        $I->see($breadCrumb, UserChangePassword::$breadCrumb);
-        return new UserChangePassword($I);
+        $userChangePasswordPage = new UserChangePassword($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('CHANGE_PASSWORD');
+        $userChangePasswordPage->seeOnBreadCrumb($breadCrumb);
+        return $userChangePasswordPage;
     }
 }

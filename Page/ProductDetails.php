@@ -247,9 +247,9 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$reviewLoginLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('LOGIN');
-        $I->see($breadCrumb, UserLogin::$breadCrumb);
         $userLoginPage = new UserLogin($I);
+        $breadCrumb = Translator::translate('LOGIN');
+        $userLoginPage->seeOnBreadCrumb($breadCrumb);
         $userLoginPage->login($userName, $userPassword);
         return $this;
     }
@@ -297,10 +297,11 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$productSuggestionLink);
-        $breadCrumb = Translator::translate('YOU_ARE_HERE').':'.Translator::translate('RECOMMEND_PRODUCT');
-        $I->see($breadCrumb, ProductSuggestion::$breadCrumb);
+        $productSuggestionPage = new ProductSuggestion($I);
+        $breadCrumb = Translator::translate('RECOMMEND_PRODUCT');
+        $productSuggestionPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('RECOMMEND_PRODUCT'), ProductSuggestion::$headerTitle);
-        return new ProductSuggestion($I);
+        return $productSuggestionPage;
     }
 
     /**
