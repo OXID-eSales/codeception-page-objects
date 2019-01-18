@@ -13,13 +13,13 @@ trait MiniBasket
 
     public static $miniBasketTitle = '//div[@class="minibasket-menu-box"]/p';
 
-    public static $miniBasketItemTitle = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[2]/a';
+    public static $miniBasketItemTitle = '//div[@id="basketFlyout"]/div/div[%s]/div[2]/a';
 
-    public static $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[1]/span';
+    public static $miniBasketItemAmount = '//div[@id="basketFlyout"]/div/div[%s]/div[1]/span';
 
-    public static $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[3]';
+    public static $miniBasketItemPrice = '//div[@id="basketFlyout"]/div/div[%s]/div[3]';
 
-    public static $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
+    public static $miniBasketSummaryPrice = '//div[@class="row minibasket-total-row"]/div[2]';
 
     /**
      * Assert basket product

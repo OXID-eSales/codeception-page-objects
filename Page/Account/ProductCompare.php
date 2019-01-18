@@ -18,11 +18,11 @@ class ProductCompare extends Page
 
     public static $headerTitle = 'h1';
 
-    public static $productTitle = '//tr[@class="products"]/td[%s]/div[2]/strong/a';
+    public static $productTitle = '//tr[@class="compare-products"]/td[%s]/div[2]/strong/a';
 
-    public static $productNumber = '//tr[@class="products"]/td[%s]/div[2]/span';
+    public static $productNumber = '//tr[@class="compare-products"]/td[%s]//span[@class="identifier"]';
 
-    public static $productPrice = '//tr[@class="products"]/td[%s]/div[2]/form[1]/div[2]/div[1]/span[1]';
+    public static $productPrice = '//tr[@class="compare-products"]/td[%s]/div[2]/form[1]/div[2]/div[1]/span[1]';
 
     public static $attributeName = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/th';
 

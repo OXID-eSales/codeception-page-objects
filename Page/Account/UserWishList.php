@@ -19,7 +19,7 @@ class UserWishList extends Page
 
     public static $productTitle = '#noticelistProductList_%s';
 
-    public static $productDescription = '//div[@id="noticelistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
+    public static $productDescription = '//div[@id="noticelistProductList"]/div/div[%s]//div[@class="description"]';
 
     public static $productPrice = '#productPrice_noticelistProductList_%s';
 

@@ -11,9 +11,9 @@ class OrderCheckout extends Page
 
     public static $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
 
-    public static $userRemarkHeader = '//div[@class="panel panel-default orderRemarks"]/div[1]/h3';
+    public static $userRemarkHeader = '//div[@class="card orderRemarks"]/div[1]/h3';
 
-    public static $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
+    public static $userRemark = '//div[@class="card orderRemarks"]/div[2]';
 
     /**
      * Basic route example for your current URL

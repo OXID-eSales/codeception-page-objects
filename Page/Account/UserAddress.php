@@ -42,7 +42,7 @@ class UserAddress extends Page
 
     public static $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[2]/label';
 
-    public static $newShipAddressForm = '//div[@class="panel panel-default dd-add-delivery-address"]';
+    public static $newShipAddressForm = '//div[@class="card dd-add-delivery-address"]';
 
     /**
      * @return $this

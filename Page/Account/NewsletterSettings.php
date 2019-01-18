@@ -14,7 +14,7 @@ class NewsletterSettings extends Page
 
     public static $headerTitle = 'h1';
 
-    public static $newsletterStatusSelect = '//button[@data-id="status"]';
+    public static $newsletterStatusSelect = '//select[@id="status"]';
 
     public static $newsletterSubscribeButton = '#newsletterSettingsSave';
 
@@ -24,8 +24,7 @@ class NewsletterSettings extends Page
     public function subscribeNewsletter()
     {
         $I = $this->user;
-        $I->click(self::$newsletterStatusSelect);
-        $I->click(Translator::translate('YES'));
+        $I->selectOption(self::$newsletterStatusSelect, Translator::translate('YES'));
         $I->click(self::$newsletterSubscribeButton);
         $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
         return $this;
@@ -37,8 +36,7 @@ class NewsletterSettings extends Page
     public function unSubscribeNewsletter()
     {
         $I = $this->user;
-        $I->click(self::$newsletterStatusSelect);
-        $I->click(Translator::translate('NO'));
+        $I->selectOption(self::$newsletterStatusSelect, Translator::translate('NO'));
         $I->click(self::$newsletterSubscribeButton);
         $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
         return $this;

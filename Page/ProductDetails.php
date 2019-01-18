@@ -59,7 +59,7 @@ class ProductDetails extends Page
 
     public static $productReviewText = '#reviewText_%s';
 
-    public static $userProductRating = '//div[@id="reviewName_%s"]/div[2]/div/div[2]/div[1]/i[@class="fa fa-star"]';
+    public static $userProductRating = '//div[@id="reviewName_%s"]/div[2]/div/div[2]/div[1]/i[@class="fas fa-star"]';
 
     public static $productSuggestionLink = '#suggest';
 
@@ -81,7 +81,7 @@ class ProductDetails extends Page
 
     public static $disabledBasketButton = '//button[@id="toBasket" and @disabled="disabled"]';
 
-    public static $variantSelection = '/descendant::button[@class="btn btn-default btn-sm dropdown-toggle"][%s]';
+    public static $variantSelection = '//div[@id="variants"]/div[%s]//button';
 
     public static $amountPriceQuantity = '//div[@class="modal-content"]/div[2]/dl/dt[%s]';
 

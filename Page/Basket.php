@@ -16,17 +16,17 @@ class Basket extends Page
 
     public static $basketSummary = '#basketGrandTotal';
 
-    public static $basketItemAmount = '#basketcontents_table #am_%s';
+    public static $basketItemAmount = '#am_%s';
 
-    public static $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+    public static $basketItemTotalPrice = '//li[@id="list_cartItem_%s"]//div[@class="totalPrice text-right"]';
 
-    public static $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
+    public static $basketItemTitle = '//li[@id="list_cartItem_%s"]/div/div[2]/div/div/a';
 
-    public static $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
+    public static $basketItemId = '//li[@id="list_cartItem_%s"]/div/div[2]/div/div/div';
 
-    public static $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
+    public static $basketBundledItemAmount = '//div[@id="basketItem-%s"]//div[@class="quantity"]';
 
-    public static $basketUpdateButton = '#basketcontents_table #basketUpdate';
+    public static $basketUpdateButton = '#basketUpdate-%s';
 
     /**
      * Declare UI map for this page here. CSS or XPath allowed.
@@ -55,8 +55,8 @@ class Basket extends Page
     public function updateProductAmount($amount, $itemPosition = 1)
     {
         $I = $this->user;
-        $I->fillField('#basketcontents_table #am_1', $amount);
-        $I->click(self::$basketUpdateButton);
+        $I->fillField(sprintf(self::$basketItemAmount, $itemPosition), $amount);
+        $I->click(sprintf(self::$basketUpdateButton, $itemPosition));
         return $this;
     }
 

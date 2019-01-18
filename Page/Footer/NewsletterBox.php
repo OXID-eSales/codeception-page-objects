@@ -6,8 +6,8 @@ use OxidEsales\Codeception\Module\Translator;
 
 trait NewsletterBox
 {
-    public static $newsletterUserEmail = "#footer_newsletter_oxusername";
-    public static $newsletterSubscribeButton = "//section[@class='footer-box footer-box-newsletter']";
+    public static $newsletterUserEmail = "editval[oxuser__oxusername]";
+    public static $newsletterSubscribeButton = "//button[@class='btn btn-primary']";
 
     /**
      * Opens newsletter page.
@@ -21,7 +21,7 @@ trait NewsletterBox
         /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$newsletterUserEmail, $userEmail);
-        $I->click(Translator::translate('SUBSCRIBE'), self::$newsletterSubscribeButton);
+        $I->click(Translator::translate('SUBSCRIBE'));
         return new NewsletterSubscription($I);
     }
 }

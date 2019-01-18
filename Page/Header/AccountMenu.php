@@ -13,9 +13,9 @@ use OxidEsales\Codeception\Module\Translator;
 
 trait AccountMenu
 {
-    public static $accountMenuButton = "//div[@class='menu-dropdowns pull-right']/div[3]/button";
+    public static $accountMenuButton = "//div[@class='menu-dropdowns']/div[3]/button";
 
-    public static $openAccountMenuButton = "//div[@class='menu-dropdowns pull-right']/div[3]/ul";
+    public static $openAccountMenuButton = "//div[@class='menu-dropdowns']/div[3]/ul";
 
     public static $userRegistrationLink = '#registerLink';
 
@@ -23,7 +23,7 @@ trait AccountMenu
 
     public static $userLoginPassword = '#loginPasword';
 
-    public static $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
+    public static $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-tertiary"]';
 
     public static $userLoginButton = '//div[@id="loginBox"]/button';
 

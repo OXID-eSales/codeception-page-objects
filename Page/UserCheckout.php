@@ -11,9 +11,9 @@ class UserCheckout extends Page
     // include url of current page
     public static $URL = '';
 
-    public static $noRegistrationOption = '//div[@id="optionNoRegistration"]/div/button';
+    public static $noRegistrationOption = '//form[@id="optionNoRegistration"]//button';
 
-    public static $registrationOption = '//div[@id="optionRegistration"]/div[3]/button';
+    public static $registrationOption = '//form[@id="optionRegistration"]//button';
 
     public static $openShipAddressForm = '#showShipAddress';
 
