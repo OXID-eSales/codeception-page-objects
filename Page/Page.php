@@ -7,7 +7,7 @@ class Page
 
     public static $breadCrumb = '#breadcrumb';
 
-    public function __construct(\AcceptanceTester $I)
+    public function __construct(\Codeception\Actor $I)
     {
         $this->user = $I;
     }
