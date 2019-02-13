@@ -22,6 +22,8 @@ class OrderCheckout extends Page
 
     public static $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
 
+    public static $previousStepLink = '//li[@class="step3 passed "]/a[1]';
+
     /**
      * Basic route example for your current URL
      * You can append any additional parameter to URL
@@ -37,6 +39,17 @@ class OrderCheckout extends Page
         $I = $this->user;
         $I->click(Translator::translate('SUBMIT_ORDER'));
         return $this;
+    }
+
+    /**
+     * @return PaymentCheckout
+     */
+    public function goToPreviousStep()
+    {
+        $I = $this->user;
+        $I->click(self::$previousStepLink);
+        $I->waitForElement(self::$breadCrumb);
+        return new PaymentCheckout($I);
     }
 
     public function validateUserBillingAddress($userBillAddress)

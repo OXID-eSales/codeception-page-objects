@@ -32,6 +32,8 @@ class UserCheckout extends Page
     //save form button
     public static $nextStepButton = '#userNextStepBottom';
 
+    public static $previousStepButton = '.prevStep';
+
     /**
      * @return $this
      */
@@ -62,6 +64,17 @@ class UserCheckout extends Page
         $I->click(self::$nextStepButton);
         $I->waitForElement(self::$breadCrumb);
         return new PaymentCheckout($I);
+    }
+
+    /**
+     * @return Basket
+     */
+    public function goToPreviousStep()
+    {
+        $I = $this->user;
+        $I->click(self::$previousStepButton);
+        $I->waitForElement(self::$breadCrumb);
+        return new Basket($I);
     }
 
     /**
