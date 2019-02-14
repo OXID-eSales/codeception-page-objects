@@ -5,16 +5,11 @@
  */
 
 namespace OxidEsales\Codeception\Page\Account;
+
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait AccountNavigation
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $newsletterSettingsLink = '//nav[@id="account_menu"]';
 
     public static $addressSettingsLink = '//nav[@id="account_menu"]';

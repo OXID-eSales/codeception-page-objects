@@ -381,6 +381,7 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->fillField(self::$basketAmountField, $amount);
         $I->click(self::$toBasketButton);
+        $I->waitForPageLoad();
         return $this;
     }
 

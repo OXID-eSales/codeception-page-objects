@@ -45,5 +45,4 @@ class Page
     {
         return trim(preg_replace("/[\t\r\n]+/", '', $line));
     }
-
 }

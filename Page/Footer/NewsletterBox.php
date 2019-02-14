@@ -8,15 +8,9 @@ namespace OxidEsales\Codeception\Page\Footer;
 
 use OxidEsales\Codeception\Page\NewsletterSubscription;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait NewsletterBox
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $newsletterUserEmail = "#footer_newsletter_oxusername";
     public static $newsletterSubscribeButton = "//section[@class='footer-box footer-box-newsletter']";
 

@@ -11,15 +11,9 @@ use OxidEsales\Codeception\Page\Checkout\Basket;
 use OxidEsales\Codeception\Page\Checkout\PaymentCheckout;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait MiniBasket
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $miniBasketMenuElement = '//div[@class="btn-group minibasket-menu"]/button';
 
     public static $miniBasketTitle = '//div[@class="minibasket-menu-box"]/p';
@@ -66,6 +60,7 @@ trait MiniBasket
     public function openMiniBasket()
     {
         $I = $this->user;
+        $I->waitForElement(self::$miniBasketMenuElement);
         $I->click(self::$miniBasketMenuElement);
         $I->see(Translator::translate('DISPLAY_BASKET'));
         return $this;
@@ -78,6 +73,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->click(Translator::translate('CHECKOUT'));
+        $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
         } else {

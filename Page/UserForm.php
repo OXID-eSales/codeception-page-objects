@@ -6,15 +6,8 @@
 
 namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
-
 trait UserForm
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     // include form fields of current page
     public static $userLoginNameField = ['id' => 'userLoginName'];
     public static $userPasswordField = ['id' => 'userPassword'];
@@ -136,6 +129,7 @@ trait UserForm
     private function selectUserData($locator, $value, $valueLocator)
     {
         $I = $this->user;
+        $I->waitForElement($locator);
         $I->click($locator);
         $I->click($value, $valueLocator);
     }

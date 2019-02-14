@@ -24,6 +24,8 @@ class UserCheckout extends Page
 
     public static $openShipAddressForm = '#showShipAddress';
 
+    public static $openBillingAddressFormButton = '#userChangeAddress';
+
     public static $orderRemark = '#orderRemark';
 
     // include bread crumb of current page
@@ -33,6 +35,14 @@ class UserCheckout extends Page
     public static $nextStepButton = '#userNextStepBottom';
 
     public static $previousStepButton = '.prevStep';
+
+    public static $openShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[1]';
+
+    public static $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[2]';
+
+    public static $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[2]/label';
+
+    public static $shipAddressForm = '#shippingAddressForm';
 
     /**
      * @return $this
@@ -96,6 +106,17 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->click(self::$openShipAddressForm);
         $I->dontSeeCheckboxIsChecked(self::$openShipAddressForm);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function openUserBillingAddressForm()
+    {
+        $I = $this->user;
+        $I->click(self::$openBillingAddressFormButton);
+        $I->waitForElementVisible(UserForm::$billCountryId);
         return $this;
     }
 

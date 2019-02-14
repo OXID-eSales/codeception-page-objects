@@ -8,15 +8,9 @@ namespace OxidEsales\Codeception\Page\Header;
 
 use OxidEsales\Codeception\Page\Home;
 use OxidEsales\Codeception\Page\ProductList;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait Navigation
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $homeLink = '//ul[@id="navigation"]/li[1]/a';
 
     /**

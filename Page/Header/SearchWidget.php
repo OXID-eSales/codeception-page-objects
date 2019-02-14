@@ -7,15 +7,9 @@
 namespace OxidEsales\Codeception\Page\Header;
 
 use OxidEsales\Codeception\Page\ProductSearchList;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait SearchWidget
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $searchField = '#searchParam';
 
     public static $searchButton = '';

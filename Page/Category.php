@@ -6,8 +6,15 @@
 
 namespace OxidEsales\Codeception\Page;
 
+use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
+
 class Category
 {
+    /**
+     * @var AcceptanceTester
+     */
+    protected $user;
+
     // include url of current page
     public static $URL = '';
 

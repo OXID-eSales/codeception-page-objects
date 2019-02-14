@@ -6,15 +6,8 @@
 
 namespace OxidEsales\Codeception\Page\Header;
 
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
-
 trait LanguageMenu
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $languageMenuButton = "//div[@class='btn-group languages-menu']/button";
 
     public static $openLanguageMenu = "//div[@class='btn-group languages-menu open']";

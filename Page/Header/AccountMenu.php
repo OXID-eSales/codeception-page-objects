@@ -15,15 +15,9 @@ use OxidEsales\Codeception\Page\Account\UserPasswordReminder;
 use OxidEsales\Codeception\Page\Account\UserWishList;
 use OxidEsales\Codeception\Page\UserRegistration;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait AccountMenu
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $accountMenuButton = "//div[contains(@class,'service-menu')]/button";
 
     public static $openAccountMenuButton = "//div[contains(@class,'service-menu')]/ul";

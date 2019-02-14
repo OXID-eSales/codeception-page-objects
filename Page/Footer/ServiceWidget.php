@@ -8,15 +8,9 @@ namespace OxidEsales\Codeception\Page\Footer;
 
 use OxidEsales\Codeception\Page\Checkout\Basket;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 trait ServiceWidget
 {
-    /**
-     * @var AcceptanceTester
-     */
-    protected $user;
-
     public static $basketLink = '//ul[@class="services list-unstyled"]';
 
     /**
