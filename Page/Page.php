@@ -6,20 +6,45 @@
 
 namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
-
+/**
+ * Class Page
+ * @package OxidEsales\Codeception\Page
+ */
 class Page
 {
     /**
-     * @var AcceptanceTester
+     * @var \Codeception\Actor
      */
     protected $user;
 
-    public static $breadCrumb = '#breadcrumb';
+    /**
+     * @var string
+     */
+    public $URL = '';
 
+    /**
+     * @var string
+     */
+    public $breadCrumb = '#breadcrumb';
+
+    /**
+     * Page constructor.
+     *
+     * @param \Codeception\Actor $I
+     */
     public function __construct(\Codeception\Actor $I)
     {
         $this->user = $I;
+    }
+
+    /**
+     * @param mixed $params
+     *
+     * @return string
+     */
+    public function route($params)
+    {
+        return $this->URL.'/index.php?'.http_build_query($params);
     }
 
     /**
@@ -27,10 +52,10 @@ class Page
      *
      * @return $this
      */
-    public function seeOnBreadCrumb($breadCrumb)
+    public function seeOnBreadCrumb(string $breadCrumb)
     {
         $I = $this->user;
-        $I->assertContains($breadCrumb, $this->clearNewLines($I->grabTextFrom(static::$breadCrumb)));
+        $I->assertContains($breadCrumb, $this->clearNewLines($I->grabTextFrom($this->breadCrumb)));
         return $this;
     }
 
@@ -41,7 +66,7 @@ class Page
      *
      * @return string Formatted string with single spaces and no \n signs.
      */
-    private function clearNewLines($line)
+    private function clearNewLines(string $line)
     {
         return trim(preg_replace("/[\t\r\n]+/", '', $line));
     }

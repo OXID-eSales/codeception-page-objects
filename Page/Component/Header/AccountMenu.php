@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Header;
+namespace OxidEsales\Codeception\Page\Component\Header;
 
 use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\ProductCompare;
@@ -13,42 +13,46 @@ use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
 use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Account\UserPasswordReminder;
 use OxidEsales\Codeception\Page\Account\UserWishList;
-use OxidEsales\Codeception\Page\UserRegistration;
+use OxidEsales\Codeception\Page\Account\UserRegistration;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Trait for account menu widget.
+ * @package OxidEsales\Codeception\Page\Component\Header
+ */
 trait AccountMenu
 {
-    public static $accountMenuButton = "//div[contains(@class,'service-menu')]/button";
+    public $accountMenuButton = "//div[contains(@class,'service-menu')]/button";
 
-    public static $openAccountMenuButton = "//div[contains(@class,'service-menu')]/ul";
+    public $openAccountMenuButton = "//div[contains(@class,'service-menu')]/ul";
 
-    public static $userRegistrationLink = '#registerLink';
+    public $userRegistrationLink = '#registerLink';
 
-    public static $userLoginName = '#loginEmail';
+    public $userLoginName = '#loginEmail';
 
-    public static $userLoginPassword = '#loginPasword';
+    public $userLoginPassword = '#loginPasword';
 
-    public static $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
+    public $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
 
-    public static $userLoginButton = '//div[@id="loginBox"]/button';
+    public $userLoginButton = '//div[@id="loginBox"]/button';
 
-    public static $userLogoutButton = '';
+    public $userLogoutButton = '';
 
-    public static $badLoginError = '#errorBadLogin';
+    public $badLoginError = '#errorBadLogin';
 
-    public static $userAccountLink = '//ul[@id="services"]/li[1]/a';
+    public $userAccountLink = '//ul[@id="services"]/li[1]/a';
 
-    public static $userAccountCompareListLink = '//ul[@id="services"]/li[2]/a';
+    public $userAccountCompareListLink = '//ul[@id="services"]/li[2]/a';
 
-    public static $userAccountWishListLink = '//ul[@id="services"]/li[3]/a';
+    public $userAccountWishListLink = '//ul[@id="services"]/li[3]/a';
 
-    public static $userAccountGiftRegistryLink = '//ul[@id="services"]/li[4]/a';
+    public $userAccountGiftRegistryLink = '//ul[@id="services"]/li[4]/a';
 
-    public static $userAccountCompareListText = '//ul[@id="services"]/li[2]';
+    public $userAccountCompareListText = '//ul[@id="services"]/li[2]';
 
-    public static $userAccountWishListText = '//ul[@id="services"]/li[3]';
+    public $userAccountWishListText = '//ul[@id="services"]/li[3]';
 
-    public static $userAccountGiftRegistryText = '//ul[@id="services"]/li[4]';
+    public $userAccountGiftRegistryText = '//ul[@id="services"]/li[4]';
 
     /**
      * Opens open-account page.
@@ -59,7 +63,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userRegistrationLink);
+        $I->click($this->userRegistrationLink);
         $userRegistrationPage = new UserRegistration($I);
         $breadCrumb = Translator::translate('PAGE_TITLE_REGISTER');
         $userRegistrationPage->seeOnBreadCrumb($breadCrumb);
@@ -75,7 +79,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userForgotPasswordButton);
+        $I->click($this->userForgotPasswordButton);
         $userPasswordReminderPage = new UserPasswordReminder($I);
         $breadCrumb = Translator::translate('FORGOT_PASSWORD');
         $userPasswordReminderPage->seeOnBreadCrumb($breadCrumb);
@@ -83,19 +87,20 @@ trait AccountMenu
     }
 
     /**
+     *
      * @param string $userName
      * @param string $userPassword
      *
      * @return $this
      */
-    public function loginUser($userName, $userPassword)
+    public function loginUser(string $userName, string $userPassword)
     {
         $I = $this->user;
         // logging in
         $this->openAccountMenu();
-        $I->fillField(self::$userLoginName, $userName);
-        $I->fillField(self::$userLoginPassword, $userPassword);
-        $I->click(self::$userLoginButton);
+        $I->fillField($this->userLoginName, $userName);
+        $I->fillField($this->userLoginPassword, $userPassword);
+        $I->click($this->userLoginButton);
         Context::setActiveUser($userName);
         return $this;
     }
@@ -108,7 +113,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
-        Context::setActiveUser(null);
+        Context::resetActiveUser();
         return $this;
     }
 
@@ -121,7 +126,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userAccountLink);
+        $I->click($this->userAccountLink);
         $I->waitForPageLoad();
         return new UserAccount($I);
     }
@@ -135,11 +140,11 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userAccountGiftRegistryLink);
+        $I->click($this->userAccountGiftRegistryLink);
         $userGiftRegistryPage = new UserGiftRegistry($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
         return $userGiftRegistryPage;
     }
 
@@ -152,11 +157,11 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userAccountWishListLink);
+        $I->click($this->userAccountWishListLink);
         $userWishListPage = new UserWishList($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
         $userWishListPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $userWishListPage->headerTitle);
         return $userWishListPage;
     }
 
@@ -169,22 +174,23 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userAccountCompareListLink);
+        $I->click($this->userAccountCompareListLink);
         $productComparePage = new ProductCompare($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
         $productComparePage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('COMPARE'), ProductCompare::$headerTitle);
+        $I->see(Translator::translate('COMPARE'), $productComparePage->headerTitle);
         return $productComparePage;
     }
 
     /**
+     * TODO: should we use trait here?
      * @return UserLogin
      */
     public function openUserLoginPage()
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(self::$userAccountLink);
+        $I->click($this->userAccountLink);
         $userLoginPage = new UserLogin($I);
         $breadCrumb = Translator::translate('LOGIN');
         $userLoginPage->seeOnBreadCrumb($breadCrumb);
@@ -192,13 +198,15 @@ trait AccountMenu
     }
 
     /**
+     * Opens my-account page.
+     *
      * @return $this
      */
     public function openAccountMenu()
     {
         $I = $this->user;
-        $I->click(self::$accountMenuButton);
-        $I->waitForElement(self::$openAccountMenuButton);
+        $I->click($this->accountMenuButton);
+        $I->waitForElement($this->openAccountMenuButton);
         return $this;
     }
 
@@ -208,8 +216,8 @@ trait AccountMenu
     public function closeAccountMenu()
     {
         $I = $this->user;
-        $I->click(self::$accountMenuButton);
-        $I->waitForElementNotVisible(self::$openAccountMenuButton);
+        $I->click($this->accountMenuButton);
+        $I->waitForElementNotVisible($this->openAccountMenuButton);
         return $this;
     }
 
@@ -218,12 +226,12 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkCompareListItemCount($count)
+    public function checkCompareListItemCount(int $count)
     {
         $I = $this->user;
         $this->openAccountMenu();
         $cnt = ($count) ? ' '.$count : '';
-        $I->see(Translator::translate('MY_PRODUCT_COMPARISON').$cnt, self::$userAccountCompareListText);
+        $I->see(Translator::translate('MY_PRODUCT_COMPARISON').$cnt, $this->userAccountCompareListText);
         $this->closeAccountMenu();
         return $this;
     }
@@ -233,11 +241,11 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkWishListItemCount($count)
+    public function checkWishListItemCount(int $count)
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
-        $I->see(Translator::translate('MY_WISH_LIST').$cnt, self::$userAccountWishListText);
+        $I->see(Translator::translate('MY_WISH_LIST').$cnt, $this->userAccountWishListText);
         return $this;
     }
 
@@ -246,11 +254,11 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkGiftRegistryItemCount($count)
+    public function checkGiftRegistryItemCount(int $count)
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
-        $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, self::$userAccountGiftRegistryText);
+        $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, $this->userAccountGiftRegistryText);
         return $this;
     }
 }

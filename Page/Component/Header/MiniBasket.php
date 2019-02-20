@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Header;
+namespace OxidEsales\Codeception\Page\Component\Header;
 
 use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Checkout\Basket;
@@ -12,19 +12,23 @@ use OxidEsales\Codeception\Page\Checkout\PaymentCheckout;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Trait for mini basket widget.
+ * @package OxidEsales\Codeception\Page\Component\Header
+ */
 trait MiniBasket
 {
-    public static $miniBasketMenuElement = '//div[@class="btn-group minibasket-menu"]/button';
+    public $miniBasketMenuElement = '//div[@class="btn-group minibasket-menu"]/button';
 
-    public static $miniBasketTitle = '//div[@class="minibasket-menu-box"]/p';
+    public $miniBasketTitle = '//div[@class="minibasket-menu-box"]/p';
 
-    public static $miniBasketItemTitle = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[2]/a';
+    public $miniBasketItemTitle = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[2]/a';
 
-    public static $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[1]/span';
+    public $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[1]/span';
 
-    public static $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[3]';
+    public $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%s]/td[3]';
 
-    public static $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
+    public $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
 
     /**
      * Assert basket product
@@ -39,34 +43,40 @@ trait MiniBasket
      *
      * @return $this
      */
-    public function seeMiniBasketContains(array $basketProducts, $basketSummaryPrice, $totalAmount)
+    public function seeMiniBasketContains(array $basketProducts, string $basketSummaryPrice, string $totalAmount)
     {
         $I = $this->user;
         $this->openMiniBasket();
         $I->see( $totalAmount . ' ' . Translator::translate('ITEMS_IN_BASKET'));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see($basketProduct['title'], $I->clearString(sprintf(self::$miniBasketItemTitle, $itemPosition)));
-            $I->see($basketProduct['amount'], sprintf(self::$miniBasketItemAmount, $itemPosition));
-            $I->see($basketProduct['price'], sprintf(self::$miniBasketItemPrice, $itemPosition));
+            $I->see($basketProduct['title'], $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));
+            $I->see($basketProduct['amount'], sprintf($this->miniBasketItemAmount, $itemPosition));
+            $I->see($basketProduct['price'], sprintf($this->miniBasketItemPrice, $itemPosition));
         }
-        $I->see($basketSummaryPrice, self::$miniBasketSummaryPrice);
+        $I->see($basketSummaryPrice, $this->miniBasketSummaryPrice);
         return $this;
     }
 
     /**
+     * Opens mini basket box.
+     *
      * @return $this
      */
     public function openMiniBasket()
     {
         $I = $this->user;
-        $I->waitForElement(self::$miniBasketMenuElement);
-        $I->click(self::$miniBasketMenuElement);
+        $I->waitForElement($this->miniBasketMenuElement);
+        $I->click($this->miniBasketMenuElement);
         $I->see(Translator::translate('DISPLAY_BASKET'));
         return $this;
     }
 
     /**
+     * Open checkout page.
+     * If user is logged in, open PaymentCheckout page.
+     * If user is not logged in, open UserCheckout page.
+     *
      * @return UserCheckout|PaymentCheckout
      */
     public function openCheckout()
@@ -82,6 +92,8 @@ trait MiniBasket
     }
 
     /**
+     * Open cart page.
+     *
      * @return Basket
      */
     public function openBasketDisplay()

@@ -4,19 +4,27 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Account;
+namespace OxidEsales\Codeception\Page\Account\Component;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Account\NewsletterSettings;
+use OxidEsales\Codeception\Page\Account\UserAddress;
+use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
+use OxidEsales\Codeception\Page\Account\UserWishList;
 
+/**
+ * Trait for account page navigation
+ * @package OxidEsales\Codeception\Page\Account\Component
+ */
 trait AccountNavigation
 {
-    public static $newsletterSettingsLink = '//nav[@id="account_menu"]';
+    public $newsletterSettingsLink = '//nav[@id="account_menu"]';
 
-    public static $addressSettingsLink = '//nav[@id="account_menu"]';
+    public $addressSettingsLink = '//nav[@id="account_menu"]';
 
-    public static $giftRegistryLink = '//nav[@id="account_menu"]';
+    public $giftRegistryLink = '//nav[@id="account_menu"]';
 
-    public static $wishListLink = '//nav[@id="account_menu"]';
+    public $wishListLink = '//nav[@id="account_menu"]';
 
     /**
      * Opens account_newsletter page
@@ -26,12 +34,12 @@ trait AccountNavigation
     public function openNewsletterSettingsPage()
     {
         $I = $this->user;
-        $I->waitForElement(self::$newsletterSettingsLink);
-        $I->click(Translator::translate('NEWSLETTER_SETTINGS'), self::$newsletterSettingsLink);
+        $I->waitForElement($this->newsletterSettingsLink);
+        $I->click(Translator::translate('NEWSLETTER_SETTINGS'), $this->newsletterSettingsLink);
         $newsletterSettingsPage = new NewsletterSettings($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
         $newsletterSettingsPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), NewsletterSettings::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), $newsletterSettingsPage->headerTitle);
         return $newsletterSettingsPage;
     }
 
@@ -43,12 +51,12 @@ trait AccountNavigation
     public function openUserAddressPage()
     {
         $I = $this->user;
-        $I->waitForElement(self::$addressSettingsLink);
-        $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), self::$addressSettingsLink);
+        $I->waitForElement($this->addressSettingsLink);
+        $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), $this->addressSettingsLink);
         $userAddressPage = new UserAddress($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
         $userAddressPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('BILLING_SHIPPING_SETTINGS'), UserAddress::$headerTitle);
+        $I->see(Translator::translate('BILLING_SHIPPING_SETTINGS'), $userAddressPage->headerTitle);
         return $userAddressPage;
     }
 
@@ -60,12 +68,12 @@ trait AccountNavigation
     public function openGiftRegistryPage()
     {
         $I = $this->user;
-        $I->waitForElement(self::$giftRegistryLink);
-        $I->click(Translator::translate('MY_GIFT_REGISTRY'), self::$giftRegistryLink);
+        $I->waitForElement($this->giftRegistryLink);
+        $I->click(Translator::translate('MY_GIFT_REGISTRY'), $this->giftRegistryLink);
         $userGiftRegistryPage = new UserGiftRegistry($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), UserGiftRegistry::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
         return $userGiftRegistryPage;
     }
 
@@ -77,13 +85,12 @@ trait AccountNavigation
     public function openWishListPage()
     {
         $I = $this->user;
-        $I->waitForElement(self::$wishListLink);
-        $I->click(Translator::translate('MY_WISH_LIST'), self::$wishListLink);
+        $I->waitForElement($this->wishListLink);
+        $I->click(Translator::translate('MY_WISH_LIST'), $this->wishListLink);
         $userWishListPage = new UserWishList($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
         $userWishListPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), UserWishList::$headerTitle);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $userWishListPage->headerTitle);
         return $userWishListPage;
     }
-
 }

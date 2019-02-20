@@ -6,26 +6,20 @@
 
 namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Codeception\Page\Footer\NewsletterBox;
-use OxidEsales\Codeception\Page\Header\AccountMenu;
-use OxidEsales\Codeception\Page\Header\MiniBasket;
-use OxidEsales\Codeception\Page\Header\Navigation;
-use OxidEsales\Codeception\Page\Header\SearchWidget;
+use OxidEsales\Codeception\Page\Component\Footer\NewsletterBox;
+use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Component\Header\Navigation;
+use OxidEsales\Codeception\Page\Component\Header\SearchWidget;
 
+/**
+ * Class for home page
+ * @package OxidEsales\Codeception\Page
+ */
 class Home extends Page
 {
     use AccountMenu, NewsletterBox, SearchWidget, Navigation, MiniBasket;
 
     // include url of current page
-    public static $URL = '/';
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
-    public static function route($param)
-    {
-        return static::$URL.$param;
-    }
+    public $URL = '/';
 }

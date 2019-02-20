@@ -9,34 +9,38 @@ namespace OxidEsales\Codeception\Page\Account;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Class for my-account page
+ * @package OxidEsales\Codeception\Page\Account
+ */
 class UserLogin extends Page
 {
     // include url of current page
-    public static $URL = '/en/my-account/';
+    public $URL = '/en/my-account/';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    public static $userAccountLoginName = '#loginUser';
+    public $userAccountLoginName = '#loginUser';
 
-    public static $userAccountLoginPassword = '#loginPwd';
+    public $userAccountLoginPassword = '#loginPwd';
 
-    public static $userAccountLoginButton = '#loginButton';
+    public $userAccountLoginButton = '#loginButton';
 
-    public static $userForgotPasswordLink = '#forgotPasswordLink';
+    public $userForgotPasswordLink = '#forgotPasswordLink';
 
     /**
-     * @param $userName
-     * @param $userPassword
+     * @param string $userName
+     * @param string $userPassword
      *
      * @return UserAccount
      */
-    public function login($userName, $userPassword)
+    public function login(string $userName, string $userPassword)
     {
         $I = $this->user;
-        $I->fillField(self::$userAccountLoginName, $userName);
-        $I->fillField(self::$userAccountLoginPassword, $userPassword);
-        $I->click(self::$userAccountLoginButton);
+        $I->fillField($this->userAccountLoginName, $userName);
+        $I->fillField($this->userAccountLoginPassword, $userPassword);
+        $I->click($this->userAccountLoginButton);
         $I->dontSee(Translator::translate('LOGIN'));
         return new UserAccount($I);
     }
@@ -49,10 +53,10 @@ class UserLogin extends Page
     public function openUserPasswordReminderPage()
     {
         $I = $this->user;
-        $I->click(self::$userForgotPasswordLink);
+        $I->click($this->userForgotPasswordLink);
+        $userPasswordReminderPage = new UserPasswordReminder($I);
         $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD");
-        $I->see($breadCrumbName, UserPasswordReminder::$breadCrumb);
-        return new UserPasswordReminder($I);
+        $I->see($breadCrumbName, $userPasswordReminderPage->breadCrumb);
+        return $userPasswordReminderPage;
     }
-
 }

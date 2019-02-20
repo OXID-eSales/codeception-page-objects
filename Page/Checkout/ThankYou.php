@@ -8,21 +8,15 @@ namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Page\Page;
 
+/**
+ * Class for thank you page
+ * @package OxidEsales\Codeception\Page\Checkout
+ */
 class ThankYou extends Page
 {
     // include url of current page
-    public static $URL = '';
+    public $URL = '/index.php?cl=thankyou&lang=1';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
-    public static function route($param)
-    {
-        return static::$URL.$param;
-    }
+    public $breadCrumb = '#breadcrumb';
 }

@@ -14,7 +14,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "OxidEsales\\Codeception\\Page\\": "Page"
+      "OxidEsales\\Codeception\\Page\\": "Page",
+      "OxidEsales\\Codeception\\Step\\": "Step"
     }
   }
 }

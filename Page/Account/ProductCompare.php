@@ -6,133 +6,149 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Page\ProductDetails;
+use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Class for my-product-comparison page
+ * @package OxidEsales\Codeception\Page\Account
+ */
 class ProductCompare extends Page
 {
     use MiniBasket;
 
     // include url of current page
-    public static $URL = '/en/my-product-comparison/';
+    public $URL = '/en/my-product-comparison/';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    public static $headerTitle = 'h1';
+    public $headerTitle = 'h1';
 
-    public static $productTitle = '//tr[@class="products"]/td[%s]/div[2]/strong/a';
+    public $productTitle = '//tr[@class="products"]/td[%s]/div[2]/strong/a';
 
-    public static $productNumber = '//tr[@class="products"]/td[%s]/div[2]/span';
+    public $productNumber = '//tr[@class="products"]/td[%s]/div[2]/span';
 
-    public static $productPrice = '//tr[@class="products"]/td[%s]/div[2]/form[1]/div[2]/div[1]/span[1]';
+    public $productPrice = '//tr[@class="products"]/td[%s]/div[2]/form[1]/div[2]/div[1]/span[1]';
 
-    public static $attributeName = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/th';
+    public $attributeName = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/th';
 
-    public static $attributeValue = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/td[%s]';
+    public $attributeValue = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/td[%s]';
 
-    public static $rightArrow = '#compareRight_%s';
+    public $rightArrow = '#compareRight_%s';
 
-    public static $leftArrow = '#compareLeft_%s';
+    public $leftArrow = '#compareLeft_%s';
 
-    public static $removeButton = '#remove_cmp_%s';
+    public $removeButton = '#remove_cmp_%s';
 
     /**
+     * Checks if given product data is shown correctly:
+     * ['id', 'title', 'price']
+     *
      * @param array $productData
      * @param int   $position    The Item position
      *
      * @return $this
      */
-    public function seeProductData($productData, $position = 1)
+    public function seeProductData(array $productData, int $position = 1)
     {
         $I = $this->user;
-        $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf(self::$productNumber, $position));
-        $I->see($productData['title'], sprintf(self::$productTitle, $position));
+        $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf($this->productNumber, $position));
+        $I->see($productData['title'], sprintf($this->productTitle, $position));
         // TODO: uncomment
-        //$I->see($productData['price'], sprintf(self::$productPrice, $id));
+        //$I->see($productData['price'], sprintf($this->productPrice, $id));
         return $this;
     }
 
     /**
+     * Check product information
+     *
      * @param string $attributeName
      * @param int    $attributeId
      *
      * @return $this
      */
-    public function seeProductAttributeName($attributeName, $attributeId)
+    public function seeProductAttributeName(string $attributeName, int $attributeId)
     {
         $I = $this->user;
-        $I->see($attributeName, sprintf(self::$attributeName, ($attributeId+1)));
+        $I->see($attributeName, sprintf($this->attributeName, ($attributeId+1)));
         return $this;
     }
 
     /**
+     * Check product information
+     *
      * @param string $attributeValue
      * @param int    $attributeId
      * @param int    $position       The Item position
      *
      * @return $this
      */
-    public function seeProductAttributeValue($attributeValue, $attributeId, $position)
+    public function seeProductAttributeValue(string $attributeValue, int $attributeId, int $position)
     {
         $I = $this->user;
-        $I->see($attributeValue, sprintf(self::$attributeValue, ($attributeId+1), $position));
+        $I->see($attributeValue, sprintf($this->attributeValue, ($attributeId+1), $position));
         return $this;
     }
 
     /**
      * Opens details page
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage($id)
+    public function openProductDetailsPage(int $id)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$productTitle, $id));
+        $I->click(sprintf($this->productTitle, $id));
         return new ProductDetails($I);
     }
 
     /**
+     * Moves selected product to the right.
+     *
      * @param string $productId
      *
      * @return $this
      */
-    public function moveItemToRight($productId)
+    public function moveItemToRight(string $productId)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$rightArrow, $productId));
+        $I->click(sprintf($this->rightArrow, $productId));
         $I->waitForPageLoad();
         return $this;
     }
 
     /**
+     * Moves selected product to the left.
+     *
      * @param string $productId
      *
      * @return $this
      */
-    public function moveItemToLeft($productId)
+    public function moveItemToLeft(string $productId)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$leftArrow, $productId));
+        $I->click(sprintf($this->leftArrow, $productId));
         $I->waitForPageLoad();
         return $this;
     }
 
     /**
+     * Removes selected product from the list.
+     *
      * @param string $productId
      *
      * @return $this
      */
-    public function removeProductFromList($productId)
+    public function removeProductFromList(string $productId)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$removeButton, $productId));
+        $I->click(sprintf($this->removeButton, $productId));
         $I->waitForPageLoad();
         return $this;
     }
-
 }

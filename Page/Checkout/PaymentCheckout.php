@@ -8,37 +8,31 @@ namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Page\Page;
 
+/**
+ * Class for payment checkout page
+ * @package OxidEsales\Codeception\Page\Checkout
+ */
 class PaymentCheckout extends Page
 {
     // include url of current page
-    public static $URL = '';
+    public $URL = 'index.php?lang=1&cl=payment';
 
-    public static $paymentMethod = '';
+    public $paymentMethod = '';
 
     //save form button
-    public static $nextStepButton = '#paymentNextStepBottom';
+    public $nextStepButton = '#paymentNextStepBottom';
 
-    public static $previousStepButton = '.prevStep';
+    public $previousStepButton = '.prevStep';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
     /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
-    public static function route($param)
-    {
-        return static::$URL.$param;
-    }
-
-    /**
-     * @param $paymentMethod
+     * @param string $paymentMethod The id of a payment method.
      *
      * @return $this
      */
-    public function selectPayment($paymentMethod)
+    public function selectPayment(string $paymentMethod)
     {
         $I = $this->user;
         $I->click('#payment_'.$paymentMethod);
@@ -46,24 +40,28 @@ class PaymentCheckout extends Page
     }
 
     /**
+     * Opens next page: final order step.
+     *
      * @return OrderCheckout
      */
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click(self::$nextStepButton);
-        $I->waitForElement(self::$breadCrumb);
+        $I->click($this->nextStepButton);
+        $I->waitForElement($this->breadCrumb);
         return new OrderCheckout($I);
     }
 
     /**
+     * Opens previous page: user checkout.
+     *
      * @return UserCheckout
      */
     public function goToPreviousStep()
     {
         $I = $this->user;
-        $I->click(self::$previousStepButton);
-        $I->waitForElement(self::$breadCrumb);
+        $I->click($this->previousStepButton);
+        $I->waitForElement($this->breadCrumb);
         return new UserCheckout($I);
     }
 }

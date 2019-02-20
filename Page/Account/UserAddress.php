@@ -6,105 +6,124 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Codeception\Page\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
+use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Page\UserForm;
+use OxidEsales\Codeception\Page\Component\UserForm;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Class for my-address page
+ * @package OxidEsales\Codeception\Page\Account
+ */
 class UserAddress extends Page
 {
     use UserForm, AccountNavigation, AccountMenu;
 
     // include url of current page
-    public static $URL = '/en/my-address/';
+    public $URL = '/en/my-address/';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    public static $headerTitle = 'h1';
+    public $headerTitle = 'h1';
 
-    public static $openBillingAddressFormButton = '#userChangeAddress';
+    public $openBillingAddressFormButton = '#userChangeAddress';
 
-    public static $userEmail = 'invadr[oxuser__oxusername]';
+    public $userEmail = 'invadr[oxuser__oxusername]';
 
-    public static $userPassword = '//input[@name="user_password"]';
+    public $userPassword = '//input[@name="user_password"]';
 
-    public static $saveUserAddressButton = '#accUserSaveTop';
+    public $saveUserAddressButton = '#accUserSaveTop';
 
-    public static $billingAddress = '#addressText';
+    public $billingAddress = '#addressText';
 
-    public static $shippingAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]';
+    public $shippingAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]';
 
-    public static $openShipAddressPanel = '#showShipAddress';
+    public $openShipAddressPanel = '#showShipAddress';
 
-    public static $shipAddressPanel = '#shippingAddress';
+    public $shipAddressPanel = '#shippingAddress';
 
-    public static $shipAddressForm = '#shippingAddressForm';
+    public $shipAddressForm = '#shippingAddressForm';
 
-    public static $openShipAddressForm = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[1]';
+    public $openShipAddressForm = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[1]';
 
-    public static $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[2]';
+    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[2]';
 
-    public static $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[2]/label';
+    public $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[2]/label';
 
-    public static $newShipAddressForm = '//div[@class="panel panel-default dd-add-delivery-address"]';
+    public $newShipAddressForm = '//div[@class="panel panel-default dd-add-delivery-address"]';
 
     /**
+     * Opens billing address form.
+     *
      * @return $this
      */
     public function openUserBillingAddressForm()
     {
         $I = $this->user;
-        $I->click(self::$openBillingAddressFormButton);
-        $I->waitForElementVisible(UserForm::$billCountryId);
+        $I->click($this->openBillingAddressFormButton);
+        $I->waitForElementVisible($this->billCountryId);
         return $this;
     }
 
     /**
+     * Opens shipping address form.
+     *
      * @return $this
      */
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->click(self::$openShipAddressPanel);
-        $I->waitForElementVisible(self::$shipAddressPanel);
-        $I->dontSeeCheckboxIsChecked(self::$openShipAddressPanel);
+        $I->click($this->openShipAddressPanel);
+        $I->waitForElementVisible($this->shipAddressPanel);
+        $I->dontSeeCheckboxIsChecked($this->openShipAddressPanel);
         return $this;
     }
 
     /**
+     * Opens empty form for creating new shipping address.
+     *
      * @return $this
      */
     public function selectNewShippingAddress()
     {
         $I = $this->user;
-        $I->click(self::$newShipAddressForm);
-        $I->waitForElementVisible(self::$shipAddressForm);
+        $I->click($this->newShipAddressForm);
+        $I->waitForElementVisible($this->shipAddressForm);
         return $this;
     }
 
     /**
+     * Selects existing shipping address.
+     *
+     * @param int $position The position of the Address
+     *
      * @return $this
      */
-    public function selectShippingAddress($id)
+    public function selectShippingAddress(int $position)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$selectShipAddress, $id));
-        $I->waitForElementVisible(sprintf(self::$openShipAddressForm, $id));
-        $I->click(sprintf(self::$openShipAddressForm, $id));
-        $I->waitForElementVisible(self::$shipAddressForm);
+        $I->click(sprintf($this->selectShipAddress, $position));
+        $I->waitForElementVisible(sprintf($this->openShipAddressForm, $position));
+        $I->click(sprintf($this->openShipAddressForm, $position));
+        $I->waitForElementVisible($this->shipAddressForm);
         return $this;
     }
 
     /**
+     * Deletes selected shipping address.
+     *
+     * @param int $position The position of the Address
+     *
      * @return $this
      */
-    public function deleteShippingAddress($id)
+    public function deleteShippingAddress(int $position)
     {
         $I = $this->user;
-        $I->click(sprintf(self::$selectShipAddress, $id));
-        $I->waitForElementVisible(sprintf(self::$deleteShipAddress, $id));
-        $I->click(sprintf(self::$deleteShipAddress, $id));
+        $I->click(sprintf($this->selectShipAddress, $position));
+        $I->waitForElementVisible(sprintf($this->deleteShipAddress, $position));
+        $I->click(sprintf($this->deleteShipAddress, $position));
         $I->click(Translator::translate('DELETE'));
         return $this;
     }
@@ -115,19 +134,22 @@ class UserAddress extends Page
     public function saveAddress()
     {
         $I = $this->user;
-        $I->click(self::$saveUserAddressButton);
+        $I->click($this->saveUserAddressButton);
         return $this;
     }
 
     /**
-     * @return $this
+     * @param string $newEmail The new email address
+     * @param string $password The user password
+     *
+     * @return UserAddress
      */
-    public function changeEmail($newEmail, $password)
+    public function changeEmail(string $newEmail, string $password)
     {
         $I = $this->user;
-        $I->fillField(self::$userEmail, $newEmail);
-        $I->waitForElementVisible(self::$userPassword);
-        $I->fillField(self::$userPassword, $password);
+        $I->fillField($this->userEmail, $newEmail);
+        $I->waitForElementVisible($this->userPassword);
+        $I->fillField($this->userPassword, $password);
         return $this->saveAddress();
     }
 
@@ -136,11 +158,11 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function validateUserBillingAddress($userBillAddress)
+    public function validateUserBillingAddress(array $userBillAddress)
     {
         $I = $this->user;
         $addressInfo = $this->convertBillInformationIntoString($userBillAddress);
-        $I->assertEquals($I->clearString($addressInfo), $I->clearString($I->grabTextFrom(self::$billingAddress)));
+        $I->assertEquals($I->clearString($addressInfo), $I->clearString($I->grabTextFrom($this->billingAddress)));
         return $this;
     }
 
@@ -150,11 +172,11 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function validateUserDeliveryAddress($userDelAddress, $id = 1)
+    public function validateUserDeliveryAddress(array $userDelAddress, int $id = 1)
     {
         $I = $this->user;
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
-        $selectedShippingAddress = sprintf(self::$shippingAddress, $id);
+        $selectedShippingAddress = sprintf($this->shippingAddress, $id);
         $I->assertEquals($I->clearString($addressInfo), $I->clearString($I->grabTextFrom($selectedShippingAddress)));
         return $this;
     }
@@ -166,15 +188,15 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertBillInformationIntoString($userAddress)
+    private function convertBillInformationIntoString(array $userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
         $transformedAddress .= Translator::translate('EMAIL').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE').' ';
-        $transformedAddress .= $this->getAddressElement($userAddress, 'FonNr');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
         $transformedAddress .= Translator::translate('FAX').' ';
-        $transformedAddress .= $this->getAddressElement($userAddress, 'FaxNr');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');
         $transformedAddress .= Translator::translate('PERSONAL_PHONE').' ';
@@ -189,13 +211,13 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertDeliveryAddressIntoString($userAddress)
+    private function convertDeliveryAddressIntoString(array $userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
         $transformedAddress .= Translator::translate('PHONE').' ';
-        $transformedAddress .= $this->getAddressElement($userAddress, 'FonNr');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
         $transformedAddress .= Translator::translate('FAX').' ';
-        $transformedAddress .= $this->getAddressElement($userAddress, 'FaxNr');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         return $transformedAddress;
     }
 
@@ -206,20 +228,20 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertAddressArrayIntoString($userAddress)
+    private function convertAddressArrayIntoString(array $userAddress)
     {
-        $transformedAddress = $this->getAddressElement($userAddress, 'CompanyName');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'AdditionalInfo');
+        $transformedAddress = $this->getAddressElement($userAddress, 'companyName');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'additionalInfo');
         $transformedAddress .= $this->getAddressElement($userAddress, 'userUstIDField', Translator::translate('VAT_ID_NUMBER').' ');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'UserSalutation');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'UserFirstName');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'UserLastName');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'Street');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'StreetNr');
-        $transformedAddress .= (isset($userAddress['StateId']) && $userAddress['StateId']) ? 'BE ': '';
+        $transformedAddress .= $this->getAddressElement($userAddress, 'userSalutation');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'userFirstName');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'userLastName');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'street');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'streetNr');
+        $transformedAddress .= (isset($userAddress['stateId']) && $userAddress['stateId']) ? 'BE ': '';
         $transformedAddress .= $this->getAddressElement($userAddress, 'ZIP');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'City');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'CountryId');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'city');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'countryId');
         return $transformedAddress;
     }
 

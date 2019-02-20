@@ -6,25 +6,17 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Codeception\Page\Footer\UserLogin;
+use OxidEsales\Codeception\Page\Account\Component\UserLogin;
 use OxidEsales\Codeception\Page\Page;
 
+/**
+ * Class for order-history page
+ * @package OxidEsales\Codeception\Page\Account
+ */
 class UserOrderHistory extends Page
 {
     use UserLogin;
 
     // include url of current page
-    public static $URL = '/en/order-history/';
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
-    public static function route($param)
-    {
-        return static::$URL.$param;
-    }
-
-
+    public $URL = '/en/order-history/';
 }

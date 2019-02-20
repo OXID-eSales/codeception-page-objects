@@ -9,42 +9,50 @@ namespace OxidEsales\Codeception\Page\Account;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+/**
+ * Class for account_newsletter page
+ * @package OxidEsales\Codeception\Page\Account
+ */
 class NewsletterSettings extends Page
 {
     // include url of current page
-    public static $URL = '/index.php?lang=1&cl=account_newsletter';
+    public $URL = '/index.php?lang=1&cl=account_newsletter';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    public static $headerTitle = 'h1';
+    public $headerTitle = 'h1';
 
-    public static $newsletterStatusSelect = '//button[@data-id="status"]';
+    public $newsletterStatusSelect = '//button[@data-id="status"]';
 
-    public static $newsletterSubscribeButton = '#newsletterSettingsSave';
+    public $newsletterSubscribeButton = '#newsletterSettingsSave';
 
     /**
+     * Responsible for newsletter subscription
+     *
      * @return $this
      */
     public function subscribeNewsletter()
     {
         $I = $this->user;
-        $I->click(self::$newsletterStatusSelect);
+        $I->click($this->newsletterStatusSelect);
         $I->click(Translator::translate('YES'));
-        $I->click(self::$newsletterSubscribeButton);
+        $I->click($this->newsletterSubscribeButton);
         $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
         return $this;
     }
 
     /**
+     * Responsible for newsletter unsubscription
+     *
      * @return $this
      */
     public function unSubscribeNewsletter()
     {
         $I = $this->user;
-        $I->click(self::$newsletterStatusSelect);
+        $I->click($this->newsletterStatusSelect);
         $I->click(Translator::translate('NO'));
-        $I->click(self::$newsletterSubscribeButton);
+        $I->click($this->newsletterSubscribeButton);
         $I->see(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
         return $this;
     }
@@ -52,29 +60,24 @@ class NewsletterSettings extends Page
     /**
      * Check if newsletter is subscribed
      *
-     * TODO: should it be here?
-     *
      * @return $this
      */
     public function seeNewsletterSubscribed()
     {
         $I = $this->user;
-        $I->see(Translator::translate('YES'), self::$newsletterStatusSelect);
+        $I->see(Translator::translate('YES'), $this->newsletterStatusSelect);
         return $this;
     }
 
     /**
-     * Check if newsletter is subscribed
-     *
-     * TODO: should it be here?
+     * Check if newsletter is unsubscribed
      *
      * @return $this
      */
     public function seeNewsletterUnSubscribed()
     {
         $I = $this->user;
-        $I->see(Translator::translate('NO'), self::$newsletterStatusSelect);
+        $I->see(Translator::translate('NO'), $this->newsletterStatusSelect);
         return $this;
     }
-
 }

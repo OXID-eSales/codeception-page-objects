@@ -4,14 +4,18 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Header;
+namespace OxidEsales\Codeception\Page\Component\Header;
 
 use OxidEsales\Codeception\Page\Home;
-use OxidEsales\Codeception\Page\ProductList;
+use OxidEsales\Codeception\Page\Lists\ProductList;
 
+/**
+ * Trait for the navigation widget in the header.
+ * @package OxidEsales\Codeception\Page\Component\Header
+ */
 trait Navigation
 {
-    public static $homeLink = '//ul[@id="navigation"]/li[1]/a';
+    public $homeLink = '//ul[@id="navigation"]/li[1]/a';
 
     /**
      * @return Home
@@ -19,16 +23,18 @@ trait Navigation
     public function openHomePage()
     {
         $I = $this->user;
-        $I->click(self::$homeLink);
+        $I->click($this->homeLink);
         return new Home($I);
     }
 
     /**
+     * Open selected category page.
+     *
      * @param string $category
      *
      * @return ProductList
      */
-    public function openCategoryPage($category)
+    public function openCategoryPage(string $category)
     {
         $I = $this->user;
         $I->click(['link' => $category]);

@@ -6,63 +6,51 @@
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
-use OxidEsales\Codeception\Page\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
+/**
+ * Class for cart page
+ * @package OxidEsales\Codeception\Page\Checkout
+ */
 class Basket extends Page
 {
     use MiniBasket;
 
     // include url of current page
-    public static $URL = '';
+    public $URL = '';
 
     // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    public static $basketSummary = '#basketGrandTotal';
+    public $basketSummary = '#basketGrandTotal';
 
-    public static $basketItemAmount = '#basketcontents_table #am_%s';
+    public $basketItemAmount = '#basketcontents_table #am_%s';
 
-    public static $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+    public $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
 
-    public static $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
+    public $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
 
-    public static $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
+    public $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
 
-    public static $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
+    public $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
 
-    public static $basketUpdateButton = '#basketcontents_table #basketUpdate';
-
-    /**
-     * Declare UI map for this page here. CSS or XPath allowed.
-     * public static $usernameField = '#username';
-     * public static $formSubmitButton = "#mainForm input[type=submit]";
-     */
-
-    /**
-     * Basic route example for your current URL
-     * You can append any additional parameter to URL
-     * and use it in tests like: Page\Edit::route('/123-post');
-     */
-    public static function route($params)
-    {
-        return static::$URL.'/index.php?'.http_build_query($params);
-    }
+    public $basketUpdateButton = '#basketcontents_table #basketUpdate';
 
     /**
      * Update product amount in the basket
      *
-     * @param int   $itemPosition
      * @param float $amount
+     * @param int   $itemPosition
      *
      * @return $this
      */
-    public function updateProductAmount($amount, $itemPosition = 1)
+    public function updateProductAmount(float $amount, int $itemPosition = 1)
     {
         $I = $this->user;
-        $I->fillField('#basketcontents_table #am_1', $amount);
-        $I->click(self::$basketUpdateButton);
+        $I->fillField(sprintf($this->basketItemAmount, $itemPosition), $amount);
+        $I->click($this->basketUpdateButton);
         return $this;
     }
 
@@ -79,17 +67,17 @@ class Basket extends Page
      *
      * @return $this
      */
-    public function seeBasketContains($basketProducts, $basketSummaryPrice)
+    public function seeBasketContains(array $basketProducts, string $basketSummaryPrice)
     {
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
-            $I->see($basketProduct['title'], sprintf(self::$basketItemTitle, $itemPosition));
-            $I->see($basketProduct['totalPrice'], sprintf(self::$basketItemTotalPrice, $itemPosition));
-            $I->seeInField(sprintf(self::$basketItemAmount, $itemPosition), $basketProduct['amount']);
+            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+            $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
+            $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
+            $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), $basketProduct['amount']);
         }
-        $I->see($basketSummaryPrice, self::$basketSummary);
+        $I->see($basketSummaryPrice, $this->basketSummary);
         return $this;
     }
 
@@ -105,23 +93,25 @@ class Basket extends Page
      *
      * @return $this
      */
-    public function seeBasketContainsBundledProduct($basketProduct, $itemPosition)
+    public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition)
     {
         $I = $this->user;
-        $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf(self::$basketItemId, $itemPosition));
-        $I->see($basketProduct['title'], sprintf(self::$basketItemTitle, $itemPosition));
-        $I->see($basketProduct['amount'], sprintf(self::$basketBundledItemAmount, $itemPosition));
+        $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+        $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
+        $I->see($basketProduct['amount'], sprintf($this->basketBundledItemAmount, $itemPosition));
         return $this;
     }
 
     /**
+     * Opens next step: user checkout page
+     *
      * @return UserCheckout
      */
     public function goToNextStep()
     {
         $I = $this->user;
         $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
-        $I->waitForElement(self::$breadCrumb);
+        $I->waitForElement($this->breadCrumb);
         return new UserCheckout($I);
     }
 }

@@ -6,95 +6,101 @@
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
-use OxidEsales\Codeception\Page\Header\Navigation;
+use OxidEsales\Codeception\Page\Component\Header\Navigation;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Page\UserForm;
+use OxidEsales\Codeception\Page\Component\UserForm;
 
 class UserCheckout extends Page
 {
     use UserForm, Navigation;
 
     // include url of current page
-    public static $URL = '';
+    public $URL = '/index.php?lang=1&cl=user';
 
-    public static $noRegistrationOption = '//div[@id="optionNoRegistration"]/div/button';
+    public $noRegistrationOption = '//div[@id="optionNoRegistration"]/div/button';
 
-    public static $registrationOption = '//div[@id="optionRegistration"]/div[3]/button';
+    public $registrationOption = '//div[@id="optionRegistration"]/div[3]/button';
 
-    public static $openShipAddressForm = '#showShipAddress';
+    public $openShipAddressForm = '#showShipAddress';
 
-    public static $openBillingAddressFormButton = '#userChangeAddress';
+    public $openBillingAddressFormButton = '#userChangeAddress';
 
-    public static $orderRemark = '#orderRemark';
+    public $orderRemark = '#orderRemark';
 
-    // include bread crumb of current page
-    public static $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '#breadcrumb';
 
-    //save form button
-    public static $nextStepButton = '#userNextStepBottom';
+    public $nextStepButton = '#userNextStepBottom';
 
-    public static $previousStepButton = '.prevStep';
+    public $previousStepButton = '.prevStep';
 
-    public static $openShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[1]';
+    public $openShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[1]';
 
-    public static $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[2]';
+    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[2]';
 
-    public static $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[2]/label';
+    public $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[2]/label';
 
-    public static $shipAddressForm = '#shippingAddressForm';
+    public $shipAddressForm = '#shippingAddressForm';
 
     /**
+     * Opens the checkout user form without registration.
+     *
      * @return $this
      */
     public function selectOptionNoRegistration()
     {
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
-        $I->click(self::$noRegistrationOption);
+        $I->click($this->noRegistrationOption);
         return $this;
     }
 
     /**
+     * Opens checkout user form for new user registration.
+     *
      * @return $this
      */
     public function selectOptionRegisterNewAccount()
     {
         $I = $this->user;
-        $I->click(self::$registrationOption);
+        $I->click($this->registrationOption);
         return $this;
     }
 
     /**
+     * Opens next page: payment checkout.
+     *
      * @return PaymentCheckout
      */
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click(self::$nextStepButton);
-        $I->waitForElement(self::$breadCrumb);
+        $I->click($this->nextStepButton);
+        $I->waitForElement($this->breadCrumb);
         return new PaymentCheckout($I);
     }
 
     /**
+     * Opens previous page: cart.
+     *
      * @return Basket
      */
     public function goToPreviousStep()
     {
         $I = $this->user;
-        $I->click(self::$previousStepButton);
-        $I->waitForElement(self::$breadCrumb);
+        $I->click($this->previousStepButton);
+        $I->waitForElement($this->breadCrumb);
         return new Basket($I);
     }
 
     /**
      * @return $this
      */
-    public function tryToRegisterUser()
+    public function clickOnRegisterUserButton()
     {
         $I = $this->user;
-        $I->click(self::$nextStepButton);
-        $I->waitForElement(self::$breadCrumb);
+        $I->click($this->nextStepButton);
+        $I->waitForElement($this->breadCrumb);
         return $this;
     }
 
@@ -104,8 +110,8 @@ class UserCheckout extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->click(self::$openShipAddressForm);
-        $I->dontSeeCheckboxIsChecked(self::$openShipAddressForm);
+        $I->click($this->openShipAddressForm);
+        $I->dontSeeCheckboxIsChecked($this->openShipAddressForm);
         return $this;
     }
 
@@ -115,8 +121,8 @@ class UserCheckout extends Page
     public function openUserBillingAddressForm()
     {
         $I = $this->user;
-        $I->click(self::$openBillingAddressFormButton);
-        $I->waitForElementVisible(UserForm::$billCountryId);
+        $I->click($this->openBillingAddressFormButton);
+        $I->waitForElementVisible($this->billCountryId);
         return $this;
     }
 
@@ -125,10 +131,10 @@ class UserCheckout extends Page
      *
      * @return $this
      */
-    public function enterOrderRemark($orderRemark)
+    public function enterOrderRemark(string $orderRemark)
     {
         $I = $this->user;
-        $I->fillField(self::$orderRemark, $orderRemark);
+        $I->fillField($this->orderRemark, $orderRemark);
         return $this;
     }
 }
