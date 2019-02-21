@@ -104,12 +104,12 @@ trait UserForm
     public function enterAddressData($userData)
     {
         $I = $this->user;
-        $this->selectUserData(self::$billUserSalutation, $userData['UserSalutation'], '');
+        $I->selectOption(self::$billUserSalutation, $userData['UserSalutation']);
         unset($userData['UserSalutation']);
         $this->selectBillingCountry($userData['CountryId']);
         unset($userData['CountryId']);
         if (isset($userData['StateId'])) {
-            $this->selectUserData(self::$billStateId, $userData['StateId'], '');
+            $I->selectOption(self::$billStateId, $userData['StateId']);
             unset($userData['StateId']);
         }
 
@@ -118,19 +118,6 @@ trait UserForm
             $I->fillField(self::${$locatorName}, $value);
         }
         return $this;
-    }
-
-    /**
-     * @param string $locator
-     * @param string $value
-     * @param string $valueLocator
-     */
-    private function selectUserData($locator, $value, $valueLocator)
-    {
-        $I = $this->user;
-        $I->waitForElement($locator);
-        $I->click($locator);
-        $I->click($value, $valueLocator);
     }
 
     /**
