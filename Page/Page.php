@@ -1,8 +1,18 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page;
+
+use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 class Page
 {
+    /**
+     * @var AcceptanceTester
+     */
     protected $user;
 
     public static $breadCrumb = '#breadcrumb';
@@ -35,5 +45,4 @@ class Page
     {
         return trim(preg_replace("/[\t\r\n]+/", '', $line));
     }
-
 }

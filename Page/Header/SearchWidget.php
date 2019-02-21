@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Header;
 
 use OxidEsales\Codeception\Page\ProductSearchList;
@@ -18,7 +23,6 @@ trait SearchWidget
      */
     public function searchFor($value)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$searchField, $value);
         $I->click('form[name=search] button[type=submit]');

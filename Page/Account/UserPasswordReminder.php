@@ -1,9 +1,14 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 class UserPasswordReminder extends Page
 {

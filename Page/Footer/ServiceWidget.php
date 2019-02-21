@@ -1,8 +1,13 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Footer;
 
-use OxidEsales\Codeception\Page\Basket;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Page\Checkout\Basket;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ServiceWidget
 {
@@ -13,7 +18,6 @@ trait ServiceWidget
      */
     public function openBasket()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('CART'), self::$basketLink);
         return new Basket($I);

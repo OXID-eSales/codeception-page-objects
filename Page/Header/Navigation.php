@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Header;
 
 use OxidEsales\Codeception\Page\Home;
@@ -13,7 +18,6 @@ trait Navigation
      */
     public function openHomePage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$homeLink);
         return new Home($I);
@@ -26,7 +30,6 @@ trait Navigation
      */
     public function openCategoryPage($category)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(['link' => $category]);
         return new ProductList($I);

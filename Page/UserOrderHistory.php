@@ -1,9 +1,15 @@
 <?php
-namespace OxidEsales\Codeception\Page;
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Footer\UserLogin;
+use OxidEsales\Codeception\Page\Page;
 
-class UserOrderHistory
+class UserOrderHistory extends Page
 {
     use UserLogin;
 

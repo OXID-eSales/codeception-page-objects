@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page;
 
 trait UserForm
@@ -53,7 +58,6 @@ trait UserForm
      */
     public function enterUserLoginName($userLoginName)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$userLoginNameField, $userLoginName);
         return $this;
@@ -66,7 +70,6 @@ trait UserForm
      */
     public function enterUserLoginData($userData)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$userLoginNameField, $userData['userLoginNameField']);
         $I->fillField(self::$userPasswordField, $userData['userPasswordField']);
@@ -81,7 +84,6 @@ trait UserForm
      */
     public function enterUserData($userData)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$userUstIDField, $userData['userUstIDField']);
         $I->fillField(self::$userMobFonField, $userData['userMobFonField']);
@@ -101,14 +103,13 @@ trait UserForm
      */
     public function enterAddressData($userData)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
-        $I->selectOption(self::$billUserSalutation, $userData['UserSalutation']);
+        $this->selectUserData(self::$billUserSalutation, $userData['UserSalutation'], '');
         unset($userData['UserSalutation']);
         $this->selectBillingCountry($userData['CountryId']);
         unset($userData['CountryId']);
         if (isset($userData['StateId'])) {
-            $I->selectOption(self::$billStateId, $userData['StateId']);
+            $this->selectUserData(self::$billStateId, $userData['StateId'], '');
             unset($userData['StateId']);
         }
 
@@ -126,8 +127,8 @@ trait UserForm
      */
     private function selectUserData($locator, $value, $valueLocator)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement($locator);
         $I->click($locator);
         $I->click($value, $valueLocator);
     }
@@ -139,7 +140,6 @@ trait UserForm
      */
     public function selectBillingCountry($country)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->selectOption(self::$billCountryId, $country);
         return $this;
@@ -152,7 +152,6 @@ trait UserForm
      */
     public function selectShippingCountry($country)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->selectOption(self::$delCountryId, $country);
         return $this;
@@ -165,7 +164,6 @@ trait UserForm
      */
     public function enterShippingAddressData($userData)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->selectOption(self::$delUserSalutation, $userData['UserSalutation']);
         unset($userData['UserSalutation']);

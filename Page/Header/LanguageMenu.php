@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Header;
 
 trait LanguageMenu
@@ -14,7 +19,6 @@ trait LanguageMenu
      */
     public function switchLanguage($language)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$languageMenuButton);
         $I->waitForElement(self::$openLanguageMenu);

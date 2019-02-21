@@ -1,6 +1,12 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Account;
-use OxidEsales\Codeception\Module\Translator;
+
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AccountNavigation
 {
@@ -19,8 +25,8 @@ trait AccountNavigation
      */
     public function openNewsletterSettingsPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement(self::$newsletterSettingsLink);
         $I->click(Translator::translate('NEWSLETTER_SETTINGS'), self::$newsletterSettingsLink);
         $newsletterSettingsPage = new NewsletterSettings($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
@@ -36,8 +42,8 @@ trait AccountNavigation
      */
     public function openUserAddressPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement(self::$addressSettingsLink);
         $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), self::$addressSettingsLink);
         $userAddressPage = new UserAddress($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
@@ -53,8 +59,8 @@ trait AccountNavigation
      */
     public function openGiftRegistryPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement(self::$giftRegistryLink);
         $I->click(Translator::translate('MY_GIFT_REGISTRY'), self::$giftRegistryLink);
         $userGiftRegistryPage = new UserGiftRegistry($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
@@ -70,8 +76,8 @@ trait AccountNavigation
      */
     public function openWishListPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement(self::$wishListLink);
         $I->click(Translator::translate('MY_WISH_LIST'), self::$wishListLink);
         $userWishListPage = new UserWishList($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');

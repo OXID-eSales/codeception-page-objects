@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page;
 
 use OxidEsales\Codeception\Page\Account\UserLogin;
@@ -7,7 +12,7 @@ use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Header\LanguageMenu;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Header\Navigation;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 class ProductDetails extends Page
 {
@@ -141,8 +146,8 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->click(sprintf(self::$variantSelection, $variant));
         $I->click($variantValue);
-        //wait for JS to finish
-        $I->waitForJS("return $.active == 0;",10);
+        $I->waitForPageLoad();
+        $I->see($variantValue);
         return $this;
     }
 
@@ -183,6 +188,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$addToCompareListLink);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -194,6 +200,7 @@ class ProductDetails extends Page
         $I = $this->user;
         //TODO: not like in azure
         $I->click(self::$addToCompareListLink);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -204,16 +211,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$addToWishListLink);
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function removeFromWishList()
-    {
-        $I = $this->user;
-        $I->click(self::$addToWishListLink);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -224,16 +222,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click(self::$addToGiftRegistryLink);
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function removeProductFromGiftRegistryList()
-    {
-        $I = $this->user;
-        $I->click(self::$addToGiftRegistryLink);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -392,6 +381,7 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->fillField(self::$basketAmountField, $amount);
         $I->click(self::$toBasketButton);
+        $I->waitForPageLoad();
         return $this;
     }
 

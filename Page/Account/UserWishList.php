@@ -1,13 +1,19 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Page\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\ProductDetails;
 
 class UserWishList extends Page
 {
-    use MiniBasket;
+    use MiniBasket, AccountMenu;
 
     // include url of current page
     public static $URL = '/en/my-wish-list/';

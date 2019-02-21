@@ -1,5 +1,12 @@
 <?php
-namespace OxidEsales\Codeception\Page;
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+namespace OxidEsales\Codeception\Page\Checkout;
+
+use OxidEsales\Codeception\Page\Page;
 
 class PaymentCheckout extends Page
 {
@@ -10,6 +17,8 @@ class PaymentCheckout extends Page
 
     //save form button
     public static $nextStepButton = '#paymentNextStepBottom';
+
+    public static $previousStepButton = '.prevStep';
 
     // include bread crumb of current page
     public static $breadCrumb = '#breadcrumb';
@@ -45,5 +54,16 @@ class PaymentCheckout extends Page
         $I->click(self::$nextStepButton);
         $I->waitForElement(self::$breadCrumb);
         return new OrderCheckout($I);
+    }
+
+    /**
+     * @return UserCheckout
+     */
+    public function goToPreviousStep()
+    {
+        $I = $this->user;
+        $I->click(self::$previousStepButton);
+        $I->waitForElement(self::$breadCrumb);
+        return new UserCheckout($I);
     }
 }

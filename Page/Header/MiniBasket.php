@@ -1,11 +1,16 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Header;
 
-use Helper\Context;
-use OxidEsales\Codeception\Page\Basket;
-use OxidEsales\Codeception\Page\PaymentCheckout;
-use OxidEsales\Codeception\Page\UserCheckout;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Context;
+use OxidEsales\Codeception\Page\Checkout\Basket;
+use OxidEsales\Codeception\Page\Checkout\PaymentCheckout;
+use OxidEsales\Codeception\Page\Checkout\UserCheckout;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait MiniBasket
 {
@@ -36,7 +41,6 @@ trait MiniBasket
      */
     public function seeMiniBasketContains(array $basketProducts, $basketSummaryPrice, $totalAmount)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openMiniBasket();
         $I->see( $totalAmount . ' ' . Translator::translate('ITEMS_IN_BASKET'));
@@ -55,9 +59,10 @@ trait MiniBasket
      */
     public function openMiniBasket()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
+        $I->waitForElement(self::$miniBasketMenuElement);
         $I->click(self::$miniBasketMenuElement);
+        $I->see(Translator::translate('DISPLAY_BASKET'));
         return $this;
     }
 
@@ -66,9 +71,9 @@ trait MiniBasket
      */
     public function openCheckout()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('CHECKOUT'));
+        $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
         } else {
@@ -81,9 +86,9 @@ trait MiniBasket
      */
     public function openBasketDisplay()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(Translator::translate('DISPLAY_BASKET'));
+        $I->see(Translator::translate('CART'));
         return new Basket($I);
     }
 }

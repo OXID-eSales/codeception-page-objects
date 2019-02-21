@@ -1,8 +1,13 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 class UserLogin extends Page
 {
@@ -43,7 +48,6 @@ class UserLogin extends Page
      */
     public function openUserPasswordReminderPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$userForgotPasswordLink);
         $breadCrumbName = Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD");

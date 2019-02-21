@@ -1,5 +1,12 @@
 <?php
-namespace OxidEsales\Codeception\Page;
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+namespace OxidEsales\Codeception\Page\Checkout;
+
+use OxidEsales\Codeception\Page\Page;
 
 class ThankYou extends Page
 {

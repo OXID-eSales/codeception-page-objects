@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page;
 
 class NewsletterSubscription extends Page
@@ -43,7 +48,6 @@ class NewsletterSubscription extends Page
      */
     public function subscribe()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->checkOption(self::$subscribeCheckbox);
         $I->click(self::$newsletterSubmitButton);

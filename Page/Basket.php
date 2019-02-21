@@ -1,8 +1,14 @@
 <?php
-namespace OxidEsales\Codeception\Page;
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Page\Header\MiniBasket;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
 class Basket extends Page
 {

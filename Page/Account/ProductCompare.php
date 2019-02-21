@@ -1,10 +1,15 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\ProductDetails;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 class ProductCompare extends Page
 {
@@ -100,6 +105,7 @@ class ProductCompare extends Page
     {
         $I = $this->user;
         $I->click(sprintf(self::$rightArrow, $productId));
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -112,6 +118,7 @@ class ProductCompare extends Page
     {
         $I = $this->user;
         $I->click(sprintf(self::$leftArrow, $productId));
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -124,6 +131,7 @@ class ProductCompare extends Page
     {
         $I = $this->user;
         $I->click(sprintf(self::$removeButton, $productId));
+        $I->waitForPageLoad();
         return $this;
     }
 

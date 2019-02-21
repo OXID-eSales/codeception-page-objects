@@ -1,7 +1,12 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Header;
 
-use Helper\Context;
+use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\ProductCompare;
 use OxidEsales\Codeception\Page\Account\UserAccount;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
@@ -9,7 +14,7 @@ use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Account\UserPasswordReminder;
 use OxidEsales\Codeception\Page\Account\UserWishList;
 use OxidEsales\Codeception\Page\UserRegistration;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AccountMenu
 {
@@ -52,7 +57,6 @@ trait AccountMenu
      */
     public function openUserRegistrationPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userRegistrationLink);
@@ -69,7 +73,6 @@ trait AccountMenu
      */
     public function openUserPasswordReminderPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userForgotPasswordButton);
@@ -87,7 +90,6 @@ trait AccountMenu
      */
     public function loginUser($userName, $userPassword)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         // logging in
         $this->openAccountMenu();
@@ -103,7 +105,6 @@ trait AccountMenu
      */
     public function logoutUser()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
@@ -118,10 +119,10 @@ trait AccountMenu
      */
     public function openAccountPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountLink);
+        $I->waitForPageLoad();
         return new UserAccount($I);
     }
 
@@ -132,7 +133,6 @@ trait AccountMenu
      */
     public function openUserGiftRegistryPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountGiftRegistryLink);
@@ -150,7 +150,6 @@ trait AccountMenu
      */
     public function openUserWishListPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountWishListLink);
@@ -168,7 +167,6 @@ trait AccountMenu
      */
     public function openProductComparePage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountCompareListLink);
@@ -184,7 +182,6 @@ trait AccountMenu
      */
     public function openUserLoginPage()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(self::$userAccountLink);
@@ -199,7 +196,6 @@ trait AccountMenu
      */
     public function openAccountMenu()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$accountMenuButton);
         $I->waitForElement(self::$openAccountMenuButton);
@@ -211,10 +207,9 @@ trait AccountMenu
      */
     public function closeAccountMenu()
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->click(self::$accountMenuButton);
-        $I->waitForElement(self::$openAccountMenuButton);
+        $I->waitForElementNotVisible(self::$openAccountMenuButton);
         return $this;
     }
 
@@ -225,7 +220,6 @@ trait AccountMenu
      */
     public function checkCompareListItemCount($count)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $this->openAccountMenu();
         $cnt = ($count) ? ' '.$count : '';
@@ -241,7 +235,6 @@ trait AccountMenu
      */
     public function checkWishListItemCount($count)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
         $I->see(Translator::translate('MY_WISH_LIST').$cnt, self::$userAccountWishListText);
@@ -255,7 +248,6 @@ trait AccountMenu
      */
     public function checkGiftRegistryItemCount($count)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
         $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, self::$userAccountGiftRegistryText);

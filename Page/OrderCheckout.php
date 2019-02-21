@@ -1,6 +1,13 @@
 <?php
-namespace OxidEsales\Codeception\Page;
-use OxidEsales\Codeception\Module\Translator;
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
+namespace OxidEsales\Codeception\Page\Checkout;
+
+use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
 class OrderCheckout extends Page
 {
@@ -14,6 +21,8 @@ class OrderCheckout extends Page
     public static $userRemarkHeader = '//div[@class="card orderRemarks"]/div[1]/h3';
 
     public static $userRemark = '//div[@class="card orderRemarks"]/div[2]';
+
+    public static $previousStepLink = '//li[@class="step3 passed "]/a[1]';
 
     /**
      * Basic route example for your current URL
@@ -30,6 +39,17 @@ class OrderCheckout extends Page
         $I = $this->user;
         $I->click(Translator::translate('SUBMIT_ORDER'));
         return $this;
+    }
+
+    /**
+     * @return PaymentCheckout
+     */
+    public function goToPreviousStep()
+    {
+        $I = $this->user;
+        $I->click(self::$previousStepLink);
+        $I->waitForElement(self::$breadCrumb);
+        return new PaymentCheckout($I);
     }
 
     public function validateUserBillingAddress($userBillAddress)
@@ -66,15 +86,15 @@ class OrderCheckout extends Page
     private function convertBillInformationIntoString($userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= $this->user->translate('EMAIL').' ';
+        $transformedAddress .= Translator::translate('EMAIL').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
-        $transformedAddress .= $this->user->translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'FonNr');
-        $transformedAddress .= $this->user->translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'FaxNr');
-        $transformedAddress .= $this->user->translate('CELLUAR_PHONE').' ';
+        $transformedAddress .= Translator::translate('CELLUAR_PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');
-        $transformedAddress .= $this->user->translate('PERSONAL_PHONE').' ';
+        $transformedAddress .= Translator::translate('PERSONAL_PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userPrivateFonField');
         return $transformedAddress;
     }
@@ -89,9 +109,9 @@ class OrderCheckout extends Page
     private function convertDeliveryAddressIntoString($userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= $this->user->translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'FonNr');
-        $transformedAddress .= $this->user->translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'FaxNr');
         return $transformedAddress;
     }
@@ -107,7 +127,7 @@ class OrderCheckout extends Page
     {
         $transformedAddress = $this->getAddressElement($userAddress, 'CompanyName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'AdditionalInfo');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'userUstIDField', $this->user->translate('VAT_ID_NUMBER').' ');
+        $transformedAddress .= $this->getAddressElement($userAddress, 'userUstIDField', Translator::translate('VAT_ID_NUMBER').' ');
         $transformedAddress .= $this->getAddressElement($userAddress, 'UserSalutation');
         $transformedAddress .= $this->getAddressElement($userAddress, 'UserFirstName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'UserLastName');

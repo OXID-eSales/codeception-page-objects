@@ -1,8 +1,13 @@
 <?php
+/**
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
+ */
+
 namespace OxidEsales\Codeception\Page\Footer;
 
 use OxidEsales\Codeception\Page\NewsletterSubscription;
-use OxidEsales\Codeception\Module\Translator;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait NewsletterBox
 {
@@ -18,10 +23,9 @@ trait NewsletterBox
      */
     public function subscribeForNewsletter($userEmail)
     {
-        /** @var \AcceptanceTester $I */
         $I = $this->user;
         $I->fillField(self::$newsletterUserEmail, $userEmail);
-        $I->click(Translator::translate('SUBSCRIBE'));
+        $I->click(Translator::translate('SUBSCRIBE'), self::$newsletterSubscribeButton);
         return new NewsletterSubscription($I);
     }
 }
