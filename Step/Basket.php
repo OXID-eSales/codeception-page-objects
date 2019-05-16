@@ -11,7 +11,7 @@ use OxidEsales\Codeception\Page\Checkout\Basket as BasketPage;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Header\MiniBasket;
 
-class Basket extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester
+class Basket extends Step
 {
     /**
      * @param $productId
@@ -19,7 +19,7 @@ class Basket extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTest
      */
     public function addProductToBasket($productId, $amount)
     {
-        $I = $this;
+        $I = $this->user;
         //add Product to basket
         // $params['cl'] = $controller;
         $params['fnc'] = 'tobasket';
@@ -38,7 +38,7 @@ class Basket extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTest
      */
     public function addProductToBasketAndOpen($productId, $amount, $controller)
     {
-        $I = $this;
+        $I = $this->user;
         //add Product to basket
         $params['cl'] = $controller;
         $params['fnc'] = 'tobasket';

@@ -8,7 +8,7 @@ namespace OxidEsales\Codeception\Step;
 
 use OxidEsales\Codeception\Page\ProductDetails;
 
-class ProductNavigation extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester
+class ProductNavigation extends Step
 {
 
     /**
@@ -20,7 +20,7 @@ class ProductNavigation extends \OxidEsales\EshopCommunity\Tests\Codeception\Acc
      */
     public function openProductDetailsPage($productId)
     {
-        $I = $this;
+        $I = $this->user;
 
         $I->amOnPage(ProductDetails::route($productId));
         return new ProductDetails($I);

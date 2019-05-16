@@ -8,11 +8,11 @@ namespace OxidEsales\Codeception\Step;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-class UserRegistration extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester
+class UserRegistration extends Step
 {
     public function registerUser($userLoginDataToFill, $userDataToFill, $addressDataToFill)
     {
-        $I = $this;
+        $I = $this->user;
         $breadCrumbName = Translator::translate("PAGE_TITLE_REGISTER");
         $registrationPage = new \OxidEsales\Codeception\Page\UserRegistration($I);
         $registrationPage->enterUserLoginData($userLoginDataToFill)

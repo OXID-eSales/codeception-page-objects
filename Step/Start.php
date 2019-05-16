@@ -9,7 +9,7 @@ namespace OxidEsales\Codeception\Step;
 use OxidEsales\Codeception\Page\Home;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-class Start extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester
+class Start extends Step
 {
     /**
      * @param $userEmail
@@ -20,7 +20,7 @@ class Start extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTeste
      */
     public function registerUserForNewsletter($userEmail, $userName, $userLastName)
     {
-        $I = $this;
+        $I = $this->user;
         $homePage = new Home($I);
         $newsletterPage = $homePage->subscribeForNewsletter($userEmail);
         $newsletterPage->enterUserData($userEmail, $userName, $userLastName)->subscribe();
@@ -37,7 +37,7 @@ class Start extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTeste
      */
     public function loginOnStartPage($userName, $userPassword)
     {
-        $I = $this;
+        $I = $this->user;
         $startPage = $I->openShop();
         // if snapshot exists - skipping login
         if ($I->loadSessionSnapshot('login')) {

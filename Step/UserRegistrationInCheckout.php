@@ -9,7 +9,7 @@ namespace OxidEsales\Codeception\Step;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester
+class UserRegistrationInCheckout extends Step
 {
     public function createRegisteredUserInCheckout(
         $userLoginData,
@@ -17,7 +17,6 @@ class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codece
         $addressData,
         $shippingAddressData = null)
     {
-        $I = $this;
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 
         if ($shippingAddressData) {
@@ -36,7 +35,6 @@ class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codece
         $addressData,
         $shippingAddressData = null)
     {
-        $I = $this;
         $userCheckout = $this->enterNotRegisteredUserData($userLogin, $userData, $addressData);
 
         if ($shippingAddressData) {
@@ -55,7 +53,7 @@ class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codece
         $addressData,
         $shippingAddressData = null)
     {
-        $I = $this;
+        $I = $this->user;
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 
         if ($shippingAddressData) {
@@ -72,7 +70,7 @@ class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codece
 
     private function enterRegisteredUserData($userLoginData, $userData, $addressData)
     {
-        $userCheckout = new UserCheckout($this);
+        $userCheckout = new UserCheckout($this->user);
         $userCheckout = $userCheckout->selectOptionRegisterNewAccount();
 
         $userCheckout->enterUserLoginData($userLoginData)
@@ -83,7 +81,7 @@ class UserRegistrationInCheckout extends \OxidEsales\EshopCommunity\Tests\Codece
 
     private function enterNotRegisteredUserData($userLogin, $userData, $addressData)
     {
-        $userCheckout = new UserCheckout($this);
+        $userCheckout = new UserCheckout($this->user);
         $userCheckout = $userCheckout->selectOptionNoRegistration();
 
         $userCheckout->enterUserLoginName($userLogin)
