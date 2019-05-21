@@ -66,7 +66,7 @@ class UserGiftRegistry extends Page
      *
      * @return $this
      */
-    public function searchForGiftRegistry(string $userName)
+    public function searchForGiftRegistry($userName)
     {
         $I = $this->user;
         $I->fillField($this->giftRegistrySearch, $userName);
@@ -96,7 +96,7 @@ class UserGiftRegistry extends Page
      *
      * @return $this
      */
-    public function sendGiftRegistryEmail(string $email, string $recipient, string $message)
+    public function sendGiftRegistryEmail($email, $recipient, $message)
     {
         $I = $this->user;
         $this->openGiftRegistryEmailForm();
@@ -127,7 +127,7 @@ class UserGiftRegistry extends Page
      *
      * @return $this
      */
-    public function removeFromGiftRegistry(int $itemPosition)
+    public function removeFromGiftRegistry($itemPosition)
     {
         $I = $this->user;
         $I->click(sprintf($this->removeFromGitRegistry, $itemPosition));
@@ -165,7 +165,7 @@ class UserGiftRegistry extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $itemPosition = 1)
+    public function seeProductData($productData, $itemPosition = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->productTitle, $itemPosition));
@@ -181,7 +181,7 @@ class UserGiftRegistry extends Page
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage(int $itemPosition)
+    public function openProductDetailsPage($itemPosition)
     {
         $I = $this->user;
         $I->click(sprintf($this->productTitle, $itemPosition));
@@ -196,7 +196,7 @@ class UserGiftRegistry extends Page
      *
      * @return $this
      */
-    public function addProductToBasket(int $itemPosition, int $amount)
+    public function addProductToBasket($itemPosition, $amount)
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketAmount, $itemPosition), $amount);

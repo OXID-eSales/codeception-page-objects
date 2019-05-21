@@ -146,7 +146,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function selectVariant(int $variant, string $variantValue, string $waitForText = '')
+    public function selectVariant($variant, $variantValue, $waitForText = '')
     {
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $variant));
@@ -162,7 +162,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeVariant(int $variant, string $variantValue)
+    public function seeVariant($variant, $variantValue)
     {
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $variant));
@@ -177,7 +177,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function dontSeeVariant(int $variant, string $variantValue)
+    public function dontSeeVariant($variant, $variantValue)
     {
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $variant));
@@ -248,7 +248,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function loginUserForReview(string $userName, string $userPassword)
+    public function loginUserForReview($userName, $userPassword)
     {
         $I = $this->user;
         $I->click($this->reviewLoginLink);
@@ -265,7 +265,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function addReviewAndRating(string $review, int $rating)
+    public function addReviewAndRating($review, $rating)
     {
         $I = $this->user;
         $I->click($this->openReviewForm);
@@ -284,7 +284,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeUserProductReviewAndRating(int $reviewId, string $userName, string $reviewText, int $rating)
+    public function seeUserProductReviewAndRating($reviewId, $userName, $reviewText, $rating)
     {
         $I = $this->user;
         $I->see($userName, sprintf($this->productReviewAuthor, $reviewId));
@@ -315,7 +315,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function sendPriceAlert(string $email, float $price)
+    public function sendPriceAlert($email, float $price)
     {
         $I = $this->user;
         $this->openPriceAlert();
@@ -370,7 +370,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData)
+    public function seeProductData($productData)
     {
         $I = $this->user;
         $I->see($productData['title'], $this->productTitle);
@@ -385,7 +385,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeProductOldPrice(string $price)
+    public function seeProductOldPrice($price)
     {
         $I = $this->user;
         $I->see($price, $this->productOldPrice);
@@ -397,7 +397,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeProductUnitPrice(string $price)
+    public function seeProductUnitPrice($price)
     {
         $I = $this->user;
         $I->see($price, $this->productUnitPrice);
@@ -411,7 +411,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function addProductToBasket(int $amount = 1)
+    public function addProductToBasket($amount = 1)
     {
         $I = $this->user;
         $I->fillField($this->basketAmountField, $amount);
@@ -429,7 +429,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeAccessoryData(array $productData, int $position = 1)
+    public function seeAccessoryData($productData, $position = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->accessoriesProductTitle, $position));
@@ -442,7 +442,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function openAccessoryDetailsPage(int $position = 1)
+    public function openAccessoryDetailsPage($position = 1)
     {
         $I = $this->user;
         $I->click(sprintf($this->accessoriesProductTitle, $position));
@@ -458,7 +458,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeSimilarProductData(array $productData, int $position = 1)
+    public function seeSimilarProductData($productData, $position = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->similarProductTitle, $position));
@@ -471,7 +471,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function openSimilarProductDetailsPage(int $position = 1)
+    public function openSimilarProductDetailsPage($position = 1)
     {
         $I = $this->user;
         $I->click(sprintf($this->similarProductTitle, $position));
@@ -487,7 +487,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeCrossSellingData(array $productData, int $position = 1)
+    public function seeCrossSellingData($productData, $position = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->crossSellingProductTitle, $position));
@@ -500,7 +500,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function openCrossSellingDetailsPage(int $position = 1)
+    public function openCrossSellingDetailsPage($position = 1)
     {
         $I = $this->user;
         $I->click(sprintf($this->crossSellingProductTitle, $position));
@@ -518,7 +518,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeAmountPrices(array $amountPrices)
+    public function seeAmountPrices($amountPrices)
     {
         $I = $this->user;
         $I->click(Translator::translate('BLOCK_PRICE'));
@@ -569,7 +569,7 @@ class ProductDetails extends Page
      * @param string $selectionItem
      * @return $this
      */
-    public function selectSelectionListItem(string $selectionItem)
+    public function selectSelectionListItem($selectionItem)
     {
         $I = $this->user;
         $I->click($this->selectionList);
@@ -584,7 +584,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeAttributeName(string $attributeName, int $attributeId)
+    public function seeAttributeName($attributeName, $attributeId)
     {
         $I = $this->user;
         $I->see($attributeName, sprintf($this->attributeName, $attributeId));
@@ -597,7 +597,7 @@ class ProductDetails extends Page
      *
      * @return $this
      */
-    public function seeAttributeValue(string $attributeValue, int $attributeId)
+    public function seeAttributeValue($attributeValue, $attributeId)
     {
         $I = $this->user;
         $I->see($attributeValue, sprintf($this->attributeValue, $attributeId));

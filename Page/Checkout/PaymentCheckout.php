@@ -32,7 +32,7 @@ class PaymentCheckout extends Page
      *
      * @return $this
      */
-    public function selectPayment(string $paymentMethod)
+    public function selectPayment($paymentMethod)
     {
         $I = $this->user;
         $I->click('#payment_'.$paymentMethod);

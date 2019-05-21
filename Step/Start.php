@@ -23,7 +23,7 @@ class Start extends Step
      *
      * @return NewsletterSubscription
      */
-    public function registerUserForNewsletter(string $userEmail, string $userName, string $userLastName)
+    public function registerUserForNewsletter($userEmail, $userName, $userLastName)
     {
         $I = $this->user;
         $homePage = new Home($I);
@@ -39,7 +39,7 @@ class Start extends Step
      *
      * @return Home
      */
-    public function loginOnStartPage(string $userName, string $userPassword)
+    public function loginOnStartPage($userName, $userPassword)
     {
         $I = $this->user;
         $startPage = $I->openShop();

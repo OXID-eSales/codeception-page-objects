@@ -81,7 +81,7 @@ class OrderCheckout extends Page
      *
      * @return $this
      */
-    public function validateUserBillingAddress(array $userBillAddress)
+    public function validateUserBillingAddress($userBillAddress)
     {
         $I = $this->user;
         $addressInfo = $this->convertBillInformationIntoString($userBillAddress);
@@ -110,7 +110,7 @@ class OrderCheckout extends Page
      *
      * @return $this
      */
-    public function validateUserDeliveryAddress(array $userDelAddress)
+    public function validateUserDeliveryAddress($userDelAddress)
     {
         $I = $this->user;
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
@@ -122,7 +122,7 @@ class OrderCheckout extends Page
      * @param string $userRemarkText
      * @return $this
      */
-    public function validateRemarkText(string $userRemarkText)
+    public function validateRemarkText($userRemarkText)
     {
         $I = $this->user;
         $I->see(Translator::translate('WHAT_I_WANTED_TO_SAY'), $this->userRemarkHeader);

@@ -52,7 +52,7 @@ class Page
      *
      * @return $this
      */
-    public function seeOnBreadCrumb(string $breadCrumb)
+    public function seeOnBreadCrumb($breadCrumb)
     {
         $I = $this->user;
         $I->assertContains($breadCrumb, $this->clearNewLines($I->grabTextFrom($this->breadCrumb)));
@@ -66,7 +66,7 @@ class Page
      *
      * @return string Formatted string with single spaces and no \n signs.
      */
-    private function clearNewLines(string $line)
+    private function clearNewLines($line)
     {
         return trim(preg_replace("/[\t\r\n]+/", '', $line));
     }

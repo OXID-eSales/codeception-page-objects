@@ -21,7 +21,7 @@ class ProductNavigation extends Step
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage(string $productId)
+    public function openProductDetailsPage($productId)
     {
         $I = $this->user;
         $productDetailsPage = new ProductDetails($I);

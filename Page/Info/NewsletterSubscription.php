@@ -38,7 +38,7 @@ class NewsletterSubscription extends Page
      *
      * @return $this
      */
-    public function enterUserData(string $userEmail, string $userFirstName, string $userLastName)
+    public function enterUserData($userEmail, $userFirstName, $userLastName)
     {
         $I = $this->user;
         $I->fillField($this->userFirstName, $userFirstName);

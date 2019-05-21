@@ -131,7 +131,7 @@ class UserCheckout extends Page
      *
      * @return $this
      */
-    public function enterOrderRemark(string $orderRemark)
+    public function enterOrderRemark($orderRemark)
     {
         $I = $this->user;
         $I->fillField($this->orderRemark, $orderRemark);

@@ -33,7 +33,7 @@ class UserPasswordReminder extends Page
      *
      * @return $this
      */
-    public function resetPassword(string $userEmail)
+    public function resetPassword($userEmail)
     {
         $I = $this->user;
         $I->fillField($this->forgotPasswordUserEmail, $userEmail);

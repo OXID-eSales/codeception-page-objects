@@ -43,11 +43,11 @@ trait MiniBasket
      *
      * @return $this
      */
-    public function seeMiniBasketContains(array $basketProducts, string $basketSummaryPrice, string $totalAmount)
+    public function seeMiniBasketContains($basketProducts, $basketSummaryPrice, $totalAmount)
     {
         $I = $this->user;
         $this->openMiniBasket();
-        $I->see( $totalAmount . ' ' . Translator::translate('ITEMS_IN_BASKET'));
+        $I->see($totalAmount . ' ' . Translator::translate('ITEMS_IN_BASKET'));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
             $I->see($basketProduct['title'], $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));

@@ -52,7 +52,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $position = 1)
+    public function seeProductData($productData, $position = 1)
     {
         $I = $this->user;
         $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf($this->productNumber, $position));
@@ -70,7 +70,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function seeProductAttributeName(string $attributeName, int $attributeId)
+    public function seeProductAttributeName($attributeName, $attributeId)
     {
         $I = $this->user;
         $I->see($attributeName, sprintf($this->attributeName, ($attributeId+1)));
@@ -86,7 +86,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function seeProductAttributeValue(string $attributeValue, int $attributeId, int $position)
+    public function seeProductAttributeValue($attributeValue, $attributeId, $position)
     {
         $I = $this->user;
         $I->see($attributeValue, sprintf($this->attributeValue, ($attributeId+1), $position));
@@ -100,7 +100,7 @@ class ProductCompare extends Page
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage(int $id)
+    public function openProductDetailsPage($id)
     {
         $I = $this->user;
         $I->click(sprintf($this->productTitle, $id));
@@ -114,7 +114,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function moveItemToRight(string $productId)
+    public function moveItemToRight($productId)
     {
         $I = $this->user;
         $I->click(sprintf($this->rightArrow, $productId));
@@ -129,7 +129,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function moveItemToLeft(string $productId)
+    public function moveItemToLeft($productId)
     {
         $I = $this->user;
         $I->click(sprintf($this->leftArrow, $productId));
@@ -144,7 +144,7 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function removeProductFromList(string $productId)
+    public function removeProductFromList($productId)
     {
         $I = $this->user;
         $I->click(sprintf($this->removeButton, $productId));

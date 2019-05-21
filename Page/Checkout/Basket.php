@@ -53,7 +53,7 @@ class Basket extends Page
      *
      * @return $this
      */
-    public function updateProductAmount(float $amount, int $itemPosition = 1)
+    public function updateProductAmount(float $amount, $itemPosition = 1)
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketItemAmount, $itemPosition), $amount);
@@ -74,7 +74,7 @@ class Basket extends Page
      *
      * @return $this
      */
-    public function seeBasketContains(array $basketProducts, string $basketSummaryPrice)
+    public function seeBasketContains($basketProducts, $basketSummaryPrice)
     {
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
@@ -100,7 +100,7 @@ class Basket extends Page
      *
      * @return $this
      */
-    public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition)
+    public function seeBasketContainsBundledProduct($basketProduct, $itemPosition)
     {
         $I = $this->user;
         $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));

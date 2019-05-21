@@ -48,7 +48,7 @@ class UserWishList extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $itemPosition = 1)
+    public function seeProductData($productData, $itemPosition = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->productTitle, $itemPosition));
@@ -64,7 +64,7 @@ class UserWishList extends Page
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage(int $itemPosition)
+    public function openProductDetailsPage($itemPosition)
     {
         $I = $this->user;
         $I->click(sprintf($this->productTitle, $itemPosition));
@@ -79,7 +79,7 @@ class UserWishList extends Page
      *
      * @return $this
      */
-    public function addProductToBasket(int $itemPosition, int $amount)
+    public function addProductToBasket($itemPosition, $amount)
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketAmount, $itemPosition), $amount);
@@ -94,7 +94,7 @@ class UserWishList extends Page
      *
      * @return $this
      */
-    public function removeProductFromList(int $itemPosition)
+    public function removeProductFromList($itemPosition)
     {
         $I = $this->user;
         $I->click(sprintf($this->removeButton, $itemPosition));

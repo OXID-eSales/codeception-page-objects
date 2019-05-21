@@ -34,7 +34,7 @@ trait Navigation
      *
      * @return ProductList
      */
-    public function openCategoryPage(string $category)
+    public function openCategoryPage($category)
     {
         $I = $this->user;
         $I->click(['link' => $category]);

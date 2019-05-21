@@ -27,7 +27,7 @@ trait SearchWidget
      *
      * @return ProductSearchList
      */
-    public function searchFor(string $value)
+    public function searchFor($value)
     {
         $I = $this->user;
         $I->fillField($this->searchField, $value);

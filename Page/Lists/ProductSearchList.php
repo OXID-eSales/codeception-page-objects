@@ -45,7 +45,7 @@ class ProductSearchList extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $itemId = 1)
+    public function seeProductData($productData, $itemId = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
@@ -61,7 +61,7 @@ class ProductSearchList extends Page
      *
      * @return ProductDetails
      */
-    public function selectVariant(int $itemId, string $variantValue, string $waitForText = '')
+    public function selectVariant($itemId, $variantValue, $waitForText = '')
     {
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $itemId));
@@ -76,7 +76,7 @@ class ProductSearchList extends Page
      *
      * @return ProductDetails
      */
-    public function openProductDetailsPage(int $itemId)
+    public function openProductDetailsPage($itemId)
     {
         $I = $this->user;
         $I->click(sprintf($this->listItemTitle, $itemId));

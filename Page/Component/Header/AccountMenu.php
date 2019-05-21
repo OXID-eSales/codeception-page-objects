@@ -93,7 +93,7 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function loginUser(string $userName, string $userPassword)
+    public function loginUser($userName, $userPassword)
     {
         $I = $this->user;
         // logging in
@@ -227,7 +227,7 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkCompareListItemCount(int $count)
+    public function checkCompareListItemCount($count)
     {
         $I = $this->user;
         $this->openAccountMenu();
@@ -242,7 +242,7 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkWishListItemCount(int $count)
+    public function checkWishListItemCount($count)
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
@@ -255,7 +255,7 @@ trait AccountMenu
      *
      * @return $this
      */
-    public function checkGiftRegistryItemCount(int $count)
+    public function checkGiftRegistryItemCount($count)
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';

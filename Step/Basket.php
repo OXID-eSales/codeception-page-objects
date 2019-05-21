@@ -27,7 +27,7 @@ class Basket extends Step
      * @param string $productId
      * @param int    $amount
      */
-    public function addProductToBasket(string $productId, int $amount)
+    public function addProductToBasket($productId, $amount)
     {
         $I = $this->user;
         //add Product to basket
@@ -57,7 +57,7 @@ class Basket extends Step
      *
      * @return BasketPage|UserCheckout
      */
-    public function addProductToBasketAndOpen(string $productId, int $amount, string $controller)
+    public function addProductToBasketAndOpen($productId, $amount, $controller)
     {
         $I = $this->user;
 

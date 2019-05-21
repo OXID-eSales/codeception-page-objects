@@ -40,7 +40,7 @@ class GiftRegistry extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $itemPosition = 1)
+    public function seeProductData($productData, $itemPosition = 1)
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->productTitle, $itemPosition));

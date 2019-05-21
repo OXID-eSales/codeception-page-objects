@@ -60,7 +60,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function enterUserLoginName(string $userLoginName)
+    public function enterUserLoginName($userLoginName)
     {
         $I = $this->user;
         $I->fillField($this->userLoginNameField, $userLoginName);
@@ -78,7 +78,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function enterUserLoginData(array $userData)
+    public function enterUserLoginData($userData)
     {
         $I = $this->user;
         $I->fillField($this->userLoginNameField, $userData['userLoginNameField']);
@@ -102,7 +102,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function enterUserData(array $userData)
+    public function enterUserData($userData)
     {
         $I = $this->user;
         $I->fillField($this->userUstIDField, $userData['userUstIDField']);
@@ -138,7 +138,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function enterAddressData(array $userData)
+    public function enterAddressData($userData)
     {
         $I = $this->user;
         $this->selectUserData($this->billUserSalutation, $userData['userSalutation'], '');
@@ -162,7 +162,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function selectBillingCountry(string $country)
+    public function selectBillingCountry($country)
     {
         $this->selectUserData($this->billCountryId, $country, '');
         return $this;
@@ -173,7 +173,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function selectShippingCountry(string $country)
+    public function selectShippingCountry($country)
     {
         $this->selectUserData($this->delCountryId, $country, '#shippingAddress');
         return $this;
@@ -200,7 +200,7 @@ trait UserForm
      *
      * @return $this
      */
-    public function enterShippingAddressData(array $userData)
+    public function enterShippingAddressData($userData)
     {
         $I = $this->user;
         $this->selectUserData($this->delUserSalutation, $userData['userSalutation'], '#shippingAddress');

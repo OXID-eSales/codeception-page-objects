@@ -25,7 +25,7 @@ trait NewsletterBox
      *
      * @return NewsletterSubscription
      */
-    public function subscribeForNewsletter(string $userEmail)
+    public function subscribeForNewsletter($userEmail)
     {
         $I = $this->user;
         $I->fillField($this->newsletterUserEmail, $userEmail);

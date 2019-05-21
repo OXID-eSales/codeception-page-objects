@@ -19,7 +19,7 @@ class UserRegistration extends Step
      * @param array $userDataToFill
      * @param array $addressDataToFill
      */
-    public function registerUser(array $userLoginDataToFill, array $userDataToFill, array $addressDataToFill)
+    public function registerUser($userLoginDataToFill, $userDataToFill, $addressDataToFill)
     {
         $I = $this->user;
         $breadCrumbName = Translator::translate("PAGE_TITLE_REGISTER");

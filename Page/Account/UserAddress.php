@@ -101,7 +101,7 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function selectShippingAddress(int $position)
+    public function selectShippingAddress($position)
     {
         $I = $this->user;
         $I->click(sprintf($this->selectShipAddress, $position));
@@ -118,7 +118,7 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function deleteShippingAddress(int $position)
+    public function deleteShippingAddress($position)
     {
         $I = $this->user;
         $I->click(sprintf($this->selectShipAddress, $position));
@@ -145,7 +145,7 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function changeEmail(string $newEmail, string $password)
+    public function changeEmail($newEmail, $password)
     {
         $I = $this->user;
         $I->fillField($this->userEmail, $newEmail);
@@ -159,7 +159,7 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function validateUserBillingAddress(array $userBillAddress)
+    public function validateUserBillingAddress($userBillAddress)
     {
         $I = $this->user;
         $addressInfo = $this->convertBillInformationIntoString($userBillAddress);
@@ -173,7 +173,7 @@ class UserAddress extends Page
      *
      * @return $this
      */
-    public function validateUserDeliveryAddress(array $userDelAddress, int $id = 1)
+    public function validateUserDeliveryAddress($userDelAddress, $id = 1)
     {
         $I = $this->user;
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
@@ -189,7 +189,7 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertBillInformationIntoString(array $userAddress)
+    private function convertBillInformationIntoString($userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
         $transformedAddress .= Translator::translate('EMAIL').' ';
@@ -212,7 +212,7 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertDeliveryAddressIntoString(array $userAddress)
+    private function convertDeliveryAddressIntoString($userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
         $transformedAddress .= Translator::translate('PHONE').' ';
@@ -229,7 +229,7 @@ class UserAddress extends Page
      *
      * @return string
      */
-    private function convertAddressArrayIntoString(array $userAddress)
+    private function convertAddressArrayIntoString($userAddress)
     {
         $transformedAddress = $this->getAddressElement($userAddress, 'companyName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'additionalInfo');

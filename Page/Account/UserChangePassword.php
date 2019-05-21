@@ -42,7 +42,7 @@ class UserChangePassword extends Page
      *
      * @return $this
      */
-    public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
+    public function fillPasswordFields($oldPassword, $newPassword, $confirmPassword)
     {
         $I = $this->user;
         $I->fillField($this->userOldPassword, $oldPassword);
@@ -60,7 +60,7 @@ class UserChangePassword extends Page
      *
      * @return $this
      */
-    public function changePassword(string $oldPassword, string $newPassword, string $confirmPassword)
+    public function changePassword($oldPassword, $newPassword, $confirmPassword)
     {
         $I = $this->user;
         $this->fillPasswordFields($oldPassword, $newPassword, $confirmPassword);

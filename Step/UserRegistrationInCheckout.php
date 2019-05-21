@@ -103,7 +103,7 @@ class UserRegistrationInCheckout extends Step
      *
      * @return UserCheckout
      */
-    private function enterRegisteredUserData(array $userLoginData, array $userData, array $addressData)
+    private function enterRegisteredUserData($userLoginData, $userData, $addressData)
     {
         $userCheckout = new UserCheckout($this->user);
         $userCheckout = $userCheckout->selectOptionRegisterNewAccount();
@@ -121,7 +121,7 @@ class UserRegistrationInCheckout extends Step
      *
      * @return UserCheckout
      */
-    private function enterNotRegisteredUserData(string $userLogin, array $userData, array $addressData)
+    private function enterNotRegisteredUserData($userLogin, $userData, $addressData)
     {
         $userCheckout = new UserCheckout($this->user);
         $userCheckout = $userCheckout->selectOptionNoRegistration();

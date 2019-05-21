@@ -35,7 +35,7 @@ class UserLogin extends Page
      *
      * @return UserAccount
      */
-    public function login(string $userName, string $userPassword)
+    public function login($userName, $userPassword)
     {
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);

@@ -21,7 +21,7 @@ trait LanguageMenu
      *
      * @return $this
      */
-    public function switchLanguage(string $language)
+    public function switchLanguage($language)
     {
         $I = $this->user;
         $I->click($this->languageMenuButton);
