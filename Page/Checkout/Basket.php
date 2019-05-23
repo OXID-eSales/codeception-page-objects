@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
@@ -16,7 +17,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class Basket extends Page
 {
-    use MiniBasket;
+    use MiniBasket, AccountMenu;
 
     // include url of current page
     public $URL = '';
@@ -37,6 +38,12 @@ class Basket extends Page
     public $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
 
     public $basketUpdateButton = '#basketcontents_table #basketUpdate';
+
+    public $addBasketCouponField = '#input_voucherNr';
+
+    public $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
+
+    public $removeBasketCoupon = '.couponData .removeFn';
 
     /**
      * Update product amount in the basket
@@ -113,5 +120,28 @@ class Basket extends Page
         $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
         $I->waitForElement($this->breadCrumb);
         return new UserCheckout($I);
+    }
+
+    /**
+     * @param string $couponNumber
+     *
+     * @return $this
+     */
+    public function addCouponToBasket(string $couponNumber)
+    {
+        $I = $this->user;
+        $I->fillField($this->addBasketCouponField, $couponNumber);
+        $I->click($this->addBasketCouponButton);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeCouponFromBasket()
+    {
+        $I = $this->user;
+        $I->click($this->removeBasketCoupon);
+        return $this;
     }
 }
