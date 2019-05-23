@@ -113,6 +113,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
+        $I->waitForPageLoad();
         Context::resetActiveUser();
         return $this;
     }
