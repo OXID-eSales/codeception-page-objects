@@ -103,6 +103,8 @@ class ProductDetails extends Page
 
     public $attributeValue = '#attrValue_%s';
 
+    public $addToListmania = '#recommList';
+
     /**
      * @param mixed $param
      *
@@ -216,6 +218,17 @@ class ProductDetails extends Page
         $I->click($this->addToWishListLink);
         $I->waitForPageLoad();
         return $this;
+    }
+
+    /**
+     * @return ProductListmania
+     */
+    public function addToListmania()
+    {
+        $I = $this->user;
+        $I->click($this->addToListmania);
+        $I->waitForPageLoad();
+        return new ProductListmania($I);
     }
 
     /**

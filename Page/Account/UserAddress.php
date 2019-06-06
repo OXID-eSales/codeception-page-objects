@@ -135,6 +135,7 @@ class UserAddress extends Page
     {
         $I = $this->user;
         $I->click($this->saveUserAddressButton);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -142,7 +143,7 @@ class UserAddress extends Page
      * @param string $newEmail The new email address
      * @param string $password The user password
      *
-     * @return UserAddress
+     * @return $this
      */
     public function changeEmail(string $newEmail, string $password)
     {

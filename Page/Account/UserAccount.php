@@ -39,10 +39,14 @@ class UserAccount extends Page
 
     public $dashboardGiftRegistryPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[2]/div[2]';
 
+    public $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
+
+    public $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
+
     /**
      * @return UserLogin
      */
-    public function logoutUser()
+    public function logoutUserInAccountPage()
     {
         $I = $this->user;
         $this->openAccountMenu();

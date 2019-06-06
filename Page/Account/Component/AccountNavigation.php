@@ -10,6 +10,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\NewsletterSettings;
 use OxidEsales\Codeception\Page\Account\UserAddress;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
+use OxidEsales\Codeception\Page\Account\UserListmania;
 use OxidEsales\Codeception\Page\Account\UserWishList;
 
 /**
@@ -25,6 +26,8 @@ trait AccountNavigation
     public $giftRegistryLink = '//nav[@id="account_menu"]';
 
     public $wishListLink = '//nav[@id="account_menu"]';
+
+    public $listmaniaLink = '//nav[@id="account_menu"]';
 
     /**
      * Opens account_newsletter page
@@ -92,5 +95,23 @@ trait AccountNavigation
         $userWishListPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $userWishListPage->headerTitle);
         return $userWishListPage;
+    }
+
+    /**
+     * Opens my-listmania-list page.
+     *
+     * @return UserListmania
+     */
+    public function openListmaniaPage()
+    {
+        $I = $this->user;
+        $I->waitForElement($this->listmaniaLink);
+        $I->click(Translator::translate('MY_LISTMANIA'), $this->listmaniaLink);
+        $I->waitForPageLoad();
+        $userListmania = new UserListmania($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST');
+        $userListmania->seeOnBreadCrumb($breadCrumb);
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST'), $userListmania->headerTitle);
+        return $userListmania;
     }
 }
