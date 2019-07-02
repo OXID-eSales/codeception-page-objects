@@ -20,6 +20,10 @@ class Basket extends Step
     use MiniBasket;
 
     /**
+     * Add product to the basket without any redirects
+     *
+     * This method requires existing of name='stoken' element to present in Currently loaded page.
+     *
      * @param string $productId
      * @param int    $amount
      */
@@ -32,6 +36,8 @@ class Basket extends Step
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
+        $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+
         $I->amOnPage('/index.php?'.http_build_query($params));
         $I->waitForElement($this->miniBasketMenuElement);
     }
@@ -39,6 +45,8 @@ class Basket extends Step
     /**
      * Add product to the basket and open given controller:
      * 'user' for  UserCheckout page, else opens Basket page.
+     *
+     * This method requires existing of name='stoken' element to present in Currently loaded page.
      *
      * @param string $productId
      * @param int    $amount
@@ -49,12 +57,15 @@ class Basket extends Step
     public function addProductToBasketAndOpen(string $productId, int $amount, string $controller)
     {
         $I = $this->user;
+
         //add Product to basket
         $params['cl'] = $controller;
         $params['fnc'] = 'tobasket';
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
+        $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+
         $I->amOnPage('/index.php?'.http_build_query($params));
         if ($controller === 'user') {
             $userCheckoutPage = new UserCheckout($I);
