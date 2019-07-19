@@ -36,7 +36,10 @@ class Basket extends Step
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
-        $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+
+        if ($I->seePageHasElement('input[name=stoken]')) {
+            $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+        }
 
         $I->amOnPage('/index.php?'.http_build_query($params));
         $I->waitForElement($this->miniBasketMenuElement);
@@ -64,7 +67,10 @@ class Basket extends Step
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
-        $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+
+        if ($I->seePageHasElement('input[name=stoken]')) {
+            $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
+        }
 
         $I->amOnPage('/index.php?'.http_build_query($params));
         if ($controller === 'user') {
