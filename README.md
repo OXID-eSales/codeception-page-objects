@@ -7,7 +7,7 @@ Page Objects for OXID eShop acceptance tests on codeception
 This component is installable via composer:
 
 ```
-composer require --dev oxid-esales/codeception-page-object
+composer require --dev oxid-esales/codeception-page-objects
 ```
 
 ## Bugs and issues
