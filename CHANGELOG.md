@@ -1,4 +1,4 @@
-# Change Log for Codeception OXID eShop Page Object
+# Change Log for OXID eShop Codeception Page Objects
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)

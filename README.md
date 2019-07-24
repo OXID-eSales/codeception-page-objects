@@ -1,4 +1,4 @@
-# Codeception OXID eShop Page Object
+# OXID eShop Codeception Page Objects
 
 Page Objects for OXID eShop acceptance tests on codeception
 
