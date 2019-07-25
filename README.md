@@ -13,5 +13,4 @@ composer require --dev oxid-esales/codeception-page-objects
 ## Bugs and issues
 
 If you experience any bugs or issues, please report them in 
-the [Testing library](https://github.com/OXID-eSales/testing_library) 
-Issues section.
+the Issues section.
