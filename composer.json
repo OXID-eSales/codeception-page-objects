@@ -1,6 +1,6 @@
 {
   "name": "oxid-esales/codeception-page-objects",
-  "description": "This repository contains the script, which reports OXID eShop version status in admin",
+  "description": "Page Objects for OXID eShop acceptance tests on codeception",
   "keywords": [
     "oxid",
     "codeception",
