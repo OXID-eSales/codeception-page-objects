@@ -27,6 +27,7 @@ trait ServiceWidget
     {
         $I = $this->user;
         $I->click(Translator::translate('CART'), $this->basketLink);
+        $I->waitForPageLoad();
         return new Basket($I);
     }
 

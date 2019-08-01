@@ -101,6 +101,7 @@ trait AccountMenu
         $I->fillField($this->userLoginName, $userName);
         $I->fillField($this->userLoginPassword, $userPassword);
         $I->click($this->userLoginButton);
+        $I->waitForPageLoad();
         Context::setActiveUser($userName);
         return $this;
     }
@@ -142,6 +143,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click($this->userAccountGiftRegistryLink);
+        $I->waitForPageLoad();
         $userGiftRegistryPage = new UserGiftRegistry($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
         $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
@@ -159,6 +161,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click($this->userAccountWishListLink);
+        $I->waitForPageLoad();
         $userWishListPage = new UserWishList($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
         $userWishListPage->seeOnBreadCrumb($breadCrumb);
@@ -176,6 +179,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click($this->userAccountCompareListLink);
+        $I->waitForPageLoad();
         $productComparePage = new ProductCompare($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
         $productComparePage->seeOnBreadCrumb($breadCrumb);
@@ -192,6 +196,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->click($this->userAccountLink);
+        $I->waitForPageLoad();
         $userLoginPage = new UserLogin($I);
         $breadCrumb = Translator::translate('LOGIN');
         $userLoginPage->seeOnBreadCrumb($breadCrumb);
@@ -207,6 +212,8 @@ trait AccountMenu
     {
         $I = $this->user;
         $I->click($this->accountMenuButton);
+        $I->waitForPageLoad();
+        $I->waitForJS("return $.active == 0;", 10);
         $I->waitForElement($this->openAccountMenuButton);
         return $this;
     }

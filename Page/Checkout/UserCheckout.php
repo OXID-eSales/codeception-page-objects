@@ -100,6 +100,7 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->click($this->nextStepButton);
+        $I->waitForPageLoad();
         $I->waitForElement($this->breadCrumb);
         return $this;
     }

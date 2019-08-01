@@ -24,6 +24,7 @@ trait Navigation
     {
         $I = $this->user;
         $I->click($this->homeLink);
+        $I->waitForPageLoad();
         return new Home($I);
     }
 

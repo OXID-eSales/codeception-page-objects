@@ -43,6 +43,7 @@ class Basket extends Step
 
         $I->amOnPage('/index.php?'.http_build_query($params));
         $I->waitForElement($this->miniBasketMenuElement);
+        $I->waitForPageLoad();
     }
 
     /**

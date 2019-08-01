@@ -68,6 +68,7 @@ trait MiniBasket
         $I = $this->user;
         $I->waitForElement($this->miniBasketMenuElement);
         $I->click($this->miniBasketMenuElement);
+        $I->waitForPageLoad();
         $I->see(Translator::translate('DISPLAY_BASKET'));
         return $this;
     }

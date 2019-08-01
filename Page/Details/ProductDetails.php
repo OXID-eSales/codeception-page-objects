@@ -322,6 +322,7 @@ class ProductDetails extends Page
         $I->fillField($this->priceAlertEmail, $email);
         $I->fillField($this->priceAlertSuggestedPrice, $price);
         $I->click(Translator::translate('SEND'));
+        $I->waitForPageLoad();
         return $this;
     }
 

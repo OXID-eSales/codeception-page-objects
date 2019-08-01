@@ -84,6 +84,7 @@ class UserWishList extends Page
         $I = $this->user;
         $I->fillField(sprintf($this->basketAmount, $itemPosition), $amount);
         $I->click(sprintf($this->toBasketButton, $itemPosition));
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -98,6 +99,7 @@ class UserWishList extends Page
     {
         $I = $this->user;
         $I->click(sprintf($this->removeButton, $itemPosition));
+        $I->waitForPageLoad();
         return $this;
     }
 }
