@@ -49,6 +49,8 @@ class ProductDetails extends Page
 
     public $addToCompareListLink = '#addToCompare';
 
+    public $removeFromCompareListLink = '#removeFromCompare';
+
     public $addToWishListLink = '#linkToNoticeList';
 
     public $addToGiftRegistryLink = '#linkToWishList';
@@ -203,8 +205,7 @@ class ProductDetails extends Page
     public function removeFromCompareList()
     {
         $I = $this->user;
-        //TODO: not like in azure
-        $I->click($this->addToCompareListLink);
+        $I->click($this->removeFromCompareListLink);
         $I->waitForPageLoad();
         return $this;
     }
