@@ -64,6 +64,7 @@ class UserChangePassword extends Page
     {
         $I = $this->user;
         $this->fillPasswordFields($oldPassword, $newPassword, $confirmPassword);
+        $I->clickWithLeftButton($this->userChangePasswordButton);
         $I->click($this->userChangePasswordButton);
         $I->waitForPageLoad();
         return $this;
