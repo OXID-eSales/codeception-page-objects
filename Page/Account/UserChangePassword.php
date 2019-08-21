@@ -45,9 +45,12 @@ class UserChangePassword extends Page
     public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
     {
         $I = $this->user;
-        $I->fillField($this->userOldPassword, $oldPassword);
-        $I->fillField($this->userNewPassword, $newPassword);
-        $I->fillField($this->userConfirmNewPassword, $confirmPassword);
+        $I->pressKey($this->userOldPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userOldPassword, $oldPassword);
+        $I->pressKey($this->userNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userNewPassword, $newPassword);
+        $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
         return $this;
     }
 

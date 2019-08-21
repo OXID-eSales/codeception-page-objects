@@ -26,7 +26,41 @@ class OrderCheckout extends Page
 
     public $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
 
+    public $paymentMethod = '#orderPayment';
+
+    public $shippingMethod = '#orderShipping';
+
+    public $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+
+    public $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/b';
+
+    public $basketItemId = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/div[1]';
+
+    public $basketItemAmount = '//tr[@id="table_cartItem_%s"]/td[@class="quantity"]';
+
+    public $basketSummaryNet = '#basketTotalProductsNetto';
+
+    public $basketSummaryVat = '//div[@id="basketSummary"]//tr[%s]/td';
+
+    public $basketSummaryGross = '#basketTotalProductsGross';
+
+    public $basketShippingGross = '#basketDeliveryGross';
+
+    public $basketPaymentGross = '#basketPaymentGross';
+
+    public $basketWrappingGross = '#basketWrappingGross';
+
+    public $basketGiftCardGross = '#basketGiftCardGross';
+
+    public $basketTotalPrice = '#basketGrandTotal';
+
+    public $couponInformation = '.couponData';
+
     public $previousStepLink = '//li[@class="step3 passed "]/a[1]';
+
+    public $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
+
+    public $editPayment = '//div[@id="orderShipping"]/div[1]//button';
 
     /**
      * Clicks on submit order button.
@@ -45,12 +79,132 @@ class OrderCheckout extends Page
      *
      * @return PaymentCheckout
      */
-    public function goToPreviousStep()
+    public function goToPreviousStep(): PaymentCheckout
     {
         $I = $this->user;
         $I->click($this->previousStepLink);
-        $I->waitForElement($this->breadCrumb);
-        return new PaymentCheckout($I);
+        $paymentPage = new PaymentCheckout($I);
+        $I->waitForElement($paymentPage->breadCrumb);
+        return $paymentPage;
+    }
+
+    /**
+     * Opens page: user checkout.
+     *
+     * @return UserCheckout
+     */
+    public function editUserAddress(): UserCheckout
+    {
+        $I = $this->user;
+        $I->click($this->editBillingAddress);
+        $userPage = new UserCheckout($I);
+        $I->waitForElement($userPage->breadCrumb);
+        return $userPage;
+    }
+
+    /**
+     * Opens page: payment checkout.
+     *
+     * @return PaymentCheckout
+     */
+    public function editPaymentMethod(): PaymentCheckout
+    {
+        $I = $this->user;
+        $I->click($this->previousStepLink);
+        $paymentPage = new PaymentCheckout($I);
+        $I->waitForElement($paymentPage->breadCrumb);
+        return $paymentPage;
+    }
+
+    /**
+     * Asset payment method
+     *
+     * @param string $paymentMethod
+     *
+     * @return $this
+     */
+    public function validatePaymentMethod(string $paymentMethod)
+    {
+        $I = $this->user;
+        $I->see($paymentMethod, $this->paymentMethod);
+        return $this;
+    }
+
+    /**
+     * Asset shipping method
+     *
+     * @param string $shippingMethod
+     *
+     * @return $this
+     */
+    public function validateShippingMethod(string $shippingMethod)
+    {
+        $I = $this->user;
+        $I->see($shippingMethod, $this->shippingMethod);
+        return $this;
+    }
+
+    /**
+     * Asset coupon information
+     *
+     * @param string $couponId
+     * @param string $couponDiscount
+     *
+     * @return $this
+     */
+    public function validateCoupon(string $couponId, string $couponDiscount)
+    {
+        $I = $this->user;
+        $informationText = sprintf('%s (%s %s) %s',
+            Translator::translate('COUPON'),
+            Translator::translate('NUMBER'),
+            $couponId,
+            $couponDiscount);
+        $I->see($informationText, $this->couponInformation);
+        return $this;
+    }
+
+    /**
+     * Asset vat information
+     *
+     * @param array $vatInformation An Array of the Vat amount
+     *
+     * @return $this
+     */
+    public function validateVat(array $vatInformation)
+    {
+        $I = $this->user;
+        $position = 2;
+        foreach ($vatInformation as $vatAmount) {
+            $I->see($vatAmount, sprintf($this->basketSummaryVat, $position));
+            $position++;
+        }
+        return $this;
+    }
+
+    /**
+     * Assert order product
+     *
+     * $basketProducts[] = ['id' => productId,
+     *                   'title' => productTitle,
+     *                   'amount' => productAmount,
+     *                   'totalPrice' => productTotalPrice]
+     *
+     * @param array $basketProducts
+     *
+     * @return $this
+     */
+    public function validateOrderItems(array $basketProducts)
+    {
+        $I = $this->user;
+        foreach ($basketProducts as $key => $basketProduct) {
+            $itemPosition = $key + 1;
+            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+            $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
+            $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
+            $I->see($basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
+        }
+        return $this;
     }
 
     /**
@@ -120,6 +274,7 @@ class OrderCheckout extends Page
 
     /**
      * @param string $userRemarkText
+     *
      * @return $this
      */
     public function validateRemarkText(string $userRemarkText)

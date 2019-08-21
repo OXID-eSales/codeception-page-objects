@@ -45,6 +45,8 @@ class Basket extends Page
 
     public $removeBasketCoupon = '.couponData .removeFn';
 
+    public $openGiftSelection = '//tr[@id="table_cartItem_%s"]/td[3]/a';
+
     /**
      * Update product amount in the basket
      *
@@ -143,5 +145,20 @@ class Basket extends Page
         $I = $this->user;
         $I->click($this->removeBasketCoupon);
         return $this;
+    }
+
+    /**
+     * Open gift selection widget (wrapping and gift card)
+     *
+     * @param int $itemPosition
+     *
+     * @return GiftSelection
+     */
+    public function openGiftSelection(int $itemPosition)
+    {
+        $I = $this->user;
+        $I->click(sprintf($this->openGiftSelection, $itemPosition));
+        $I->waitForText(Translator::translate('GIFT_OPTION'));
+        return new GiftSelection($I);
     }
 }
