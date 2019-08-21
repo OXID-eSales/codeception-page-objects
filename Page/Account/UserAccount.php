@@ -13,10 +13,12 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
  * Class for my-account page
+ *
  * @package OxidEsales\Codeception\Page\Account
  */
 class UserAccount extends Page
 {
+
     use AccountMenu, AccountNavigation;
 
     // include url of current page
@@ -43,6 +45,8 @@ class UserAccount extends Page
 
     public $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
 
+    public $dashboardOrderHistoryHeader = '#linkAccountOrder';
+
     /**
      * @return UserLogin
      */
@@ -54,6 +58,7 @@ class UserAccount extends Page
         $userLoginPage = new UserLogin($I);
         $breadCrumb = Translator::translate('LOGIN');
         $userLoginPage->seeOnBreadCrumb($breadCrumb);
+
         return $userLoginPage;
     }
 
@@ -67,8 +72,25 @@ class UserAccount extends Page
         $I = $this->user;
         $I->click($this->dashboardChangePasswordPanelHeader);
         $userChangePasswordPage = new UserChangePassword($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('CHANGE_PASSWORD');
+        $breadCrumb = Translator::translate('MY_ACCOUNT') . Translator::translate('CHANGE_PASSWORD');
         $userChangePasswordPage->seeOnBreadCrumb($breadCrumb);
+
         return $userChangePasswordPage;
+    }
+
+    /**
+     * Opens order-hisotry page.
+     *
+     * @return UserOrderHistory
+     */
+    public function openOrderHistory()
+    {
+        $I = $this->user;
+        $I->click($this->dashboardOrderHistoryHeader);
+        $userOrderHistoryPage = new UserOrderHistory($I);
+        $breadCrumb = Translator::translate('MY_ACCOUNT') . Translator::translate('ORDER_HISTORY');
+        $userOrderHistoryPage->seeOnBreadCrumb($breadCrumb);
+
+        return $userOrderHistoryPage;
     }
 }
