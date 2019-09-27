@@ -15,7 +15,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class AdminPanel extends Page
 {
-    public $productClassName = '.productClass';
+    public $productClassName = '.productBox';
     public $coreSettingsLink = '/html/body/table/tbody/tr/td[1]/dl[1]/dd/ul/li[1]/a';
 
     /**
