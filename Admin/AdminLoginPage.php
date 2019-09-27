@@ -4,25 +4,22 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Admin;
+namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Admin\Component\NavBar;
 
 /**
- * Class AdminPanel
+ * Class AdminLoginPage
  *
  * @package OxidEsales\Codeception\Page\Admin
  */
-class AdminPanel extends AdminPage
+class AdminLoginPage extends \OxidEsales\Codeception\Page\Page
 {
-
-    use NavBar;
-
     public $URL = '/admin/';
+
     public $userAccountLoginName = '#usr';
-    public $userAccountLoginButton = '.btn';
     public $userAccountLoginPassword = '#pwd';
+    public $userAccountLoginButton = '.btn';
 
     /**
      * @param string $userName
@@ -30,7 +27,7 @@ class AdminPanel extends AdminPage
      *
      * @return UserAccount
      */
-    public function login(string $userName, string $userPassword): AdminPage
+    public function login(string $userName, string $userPassword): AdminPanel
     {
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
@@ -38,6 +35,6 @@ class AdminPanel extends AdminPage
         $I->click($this->userAccountLoginButton);
         $I->dontSee(Translator::translate('LOGIN'));
 
-        return $this;
+        return new AdminPanel($I);
     }
 }
