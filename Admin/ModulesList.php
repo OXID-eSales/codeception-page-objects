@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Admin;
+namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 

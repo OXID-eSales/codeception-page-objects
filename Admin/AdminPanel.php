@@ -68,11 +68,9 @@ class AdminPanel extends Page
     }
 
     /**
-     * @param AdminPage $page
-     *
      * @return ProductCategories
      */
-    public function openModules(AdminPage $page): \OxidEsales\Codeception\Page\Admin\ModulesList
+    public function openModules(): \OxidEsales\Codeception\Admin\ModulesList
     {
         $I = $this->user;
 
@@ -82,6 +80,6 @@ class AdminPanel extends Page
         $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
-        return new \OxidEsales\Codeception\Page\Admin\ModulesList($I);
+        return new \OxidEsales\Codeception\Admin\ModulesList($I);
     }
 }
