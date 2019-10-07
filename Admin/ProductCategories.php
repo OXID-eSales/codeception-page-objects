@@ -22,7 +22,7 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
     /**
      * @param string $categoryName
      */
-    public function createNewCategory(string $categoryName)
+    public function createNewCategory(string $categoryName): ProductCategories
     {
         $I = $this->user;
 
@@ -36,9 +36,11 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
 
         $I->selectListFrame();
         $I->waitForText($categoryName);
+
+        return $this;
     }
 
-    public function assignProductsToSelectedCategory()
+    public function assignProductsToSelectedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
@@ -49,18 +51,22 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         $I->click('Assign all');
         $I->waitForAjax(10);
         $I->closeTab();
+
+        return $this;
     }
 
-    public function openRightsForSelectedCategory()
+    public function openRightsForSelectedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
         $I->waitForElement("#transfer", 10);
         $I->selectListFrame();
         $I->click('Rights');
+
+        return $this;
     }
 
-    public function assignUserRightsToSeletedCategory()
+    public function assignUserRightsToSeletedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
@@ -71,5 +77,7 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         $I->click('Assign all');
         $I->waitForAjax(10);
         $I->closeTab();
+
+        return $this;
     }
 }

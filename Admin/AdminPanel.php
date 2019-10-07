@@ -7,6 +7,7 @@
 namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Admin\ModulesList;
 
 /**
  * Class AdminPanel
@@ -39,7 +40,7 @@ class AdminPanel extends Page
     /**
      * Opens Home page of Admin panel
      */
-    public function returnToHome()
+    public function returnToHome(): AdminPanel
     {
         $I = $this->user;
 
@@ -47,11 +48,11 @@ class AdminPanel extends Page
         $I->click("Home");
         $I->selectBaseFrame();
         $I->waitForText("Home");
+
+        return $this;
     }
 
     /**
-     * @param AdminPage $page
-     *
      * @return ProductCategories
      */
     public function openCategories(): ProductCategories
@@ -68,9 +69,9 @@ class AdminPanel extends Page
     }
 
     /**
-     * @return ProductCategories
+     * @return ModulesList
      */
-    public function openModules(): \OxidEsales\Codeception\Admin\ModulesList
+    public function openModules(): ModulesList
     {
         $I = $this->user;
 

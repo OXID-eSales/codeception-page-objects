@@ -23,7 +23,7 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
     /**
      * @param string $shopName
      */
-    public function createNewShop(string $shopName)
+    public function createNewShop(string $shopName): CoreSettings
     {
         $I = $this->user;
 
@@ -44,17 +44,21 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
 
         $I->selectListFrame();
         $I->waitForText($shopName, 10);
+
+        return $this;
     }
 
     /**
      * @param string $subShopName
      */
-    public function selectShopInList(string $subShopName)
+    public function selectShopInList(string $subShopName): CoreSettings
     {
         $I = $this->user;
         $I->selectListFrame();
         $I->click($subShopName);
         $I->selectEditFrame();
         $I->waitForElement("//input[@value='{$subShopName}']");
+
+        return $this;
     }
 }

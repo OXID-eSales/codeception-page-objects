@@ -18,7 +18,7 @@ class ModulesList extends \OxidEsales\Codeception\Page\Page
     /**
      * @param string $moduleId
      */
-    public function selectModule(string $moduleName)
+    public function selectModule(string $moduleName): ModulesList
     {
         $I = $this->user;
 
@@ -27,12 +27,14 @@ class ModulesList extends \OxidEsales\Codeception\Page\Page
         $I->click($moduleName);
         $I->selectEditFrame();
         $I->waitForElement("#transfer", 10);
+
+        return $this;
     }
 
     /**
      * @param string $tab
      */
-    public function openModuleTab(string $tab)
+    public function openModuleTab(string $tab): ModulesList
     {
         $I = $this->user;
 
@@ -42,5 +44,7 @@ class ModulesList extends \OxidEsales\Codeception\Page\Page
         $I->click($selector);
         $I->selectEditFrame();
         $I->waitForElement("#transfer", 10);
+
+        return $this;
     }
 }

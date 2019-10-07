@@ -13,7 +13,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  *
  * @package OxidEsales\Codeception\Page\Admin
  */
-class AdminLoginPage extends \OxidEsales\Codeception\Page\Page
+class AdminLoginPage extends AdminPanel
 {
     public $URL = '/admin/';
 
@@ -25,7 +25,7 @@ class AdminLoginPage extends \OxidEsales\Codeception\Page\Page
      * @param string $userName
      * @param string $userPassword
      *
-     * @return UserAccount
+     * @return AdminPanel
      */
     public function login(string $userName, string $userPassword): AdminPanel
     {
@@ -33,8 +33,11 @@ class AdminLoginPage extends \OxidEsales\Codeception\Page\Page
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
         $I->click($this->userAccountLoginButton);
-        $I->dontSee(Translator::translate('LOGIN'));
 
-        return new AdminPanel($I);
+        $adminPanel = new AdminPanel($I);
+        $I->selectBaseFrame();
+        $I->see(Translator::translate('HOME_DESC'));
+
+        return $adminPanel;
     }
 }
