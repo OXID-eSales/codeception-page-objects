@@ -6,8 +6,8 @@
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Component\AdminMenu;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Admin\ModulesList;
 
 /**
  * Class AdminPanel
@@ -16,71 +16,5 @@ use OxidEsales\Codeception\Admin\ModulesList;
  */
 class AdminPanel extends Page
 {
-    public $productClassName = '.productBox';
-    public $coreSettingsLink = '/html/body/table/tbody/tr/td[1]/dl[1]/dd/ul/li[1]/a';
-
-    /**
-     * @param string $baseFormName
-     * @param string $coreSettingsLink
-     *
-     * @return CoreSettings
-     */
-    public function openCoreSettings(): CoreSettings
-    {
-        $I = $this->user;
-        $I->selectBaseFrame();
-        $I->waitForElementVisible($this->coreSettingsLink);
-        $I->click($this->coreSettingsLink);
-        //bad solution, but it works. try to figure out something reasonable
-        $I->wait(3);
-
-        return new CoreSettings($I);
-    }
-
-    /**
-     * Opens Home page of Admin panel
-     */
-    public function returnToHome(): AdminPanel
-    {
-        $I = $this->user;
-
-        $I->selectHeaderFrame();
-        $I->click("Home");
-        $I->selectBaseFrame();
-        $I->waitForText("Home");
-
-        return $this;
-    }
-
-    /**
-     * @return ProductCategories
-     */
-    public function openCategories(): ProductCategories
-    {
-        $I = $this->user;
-
-        $I->selectNavigationFrame();
-        $I->click("Administer Products");
-        $I->click("Categories");
-        $I->selectEditFrame();
-        $I->waitForElement("//input[@name='editval[oxcategories__oxtitle]']");
-
-        return new ProductCategories($I);
-    }
-
-    /**
-     * @return ModulesList
-     */
-    public function openModules(): ModulesList
-    {
-        $I = $this->user;
-
-        $I->selectNavigationFrame();
-        $I->click("Extensions");
-        $I->click("Modules");
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
-
-        return new \OxidEsales\Codeception\Admin\ModulesList($I);
-    }
+    use AdminMenu;
 }

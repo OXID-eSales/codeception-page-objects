@@ -6,8 +6,6 @@
 
 namespace OxidEsales\Codeception\Admin;
 
-use OxidEsales\Codeception\Module\Translation\Translator;
-
 /**
  * Class ModulesList
  *
@@ -15,8 +13,13 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 class ModulesList extends \OxidEsales\Codeception\Page\Page
 {
+    public $moduleInformation = '#transfer';
+    public $moduleTabSelector = '//div[@class="tabs"]//a[text()="%s"]';
+
     /**
-     * @param string $moduleId
+     * @param string $moduleName
+     *
+     * @return ModulesList
      */
     public function selectModule(string $moduleName): ModulesList
     {
@@ -26,24 +29,26 @@ class ModulesList extends \OxidEsales\Codeception\Page\Page
         $I->waitForText($moduleName, 10);
         $I->click($moduleName);
         $I->selectEditFrame();
-        $I->waitForElement("#transfer", 10);
+        $I->waitForElement($this->moduleInformation, 10);
 
         return $this;
     }
 
     /**
      * @param string $tab
+     *
+     * @return ModulesList
      */
     public function openModuleTab(string $tab): ModulesList
     {
         $I = $this->user;
 
         $I->selectListFrame();
-        $selector = "//div[@class='tabs']//a[text()='{$tab}']";
+        $selector = sprintf($this->moduleTabSelector, $tab);
         $I->waitForElement($selector, 10);
         $I->click($selector);
         $I->selectEditFrame();
-        $I->waitForElement("#transfer", 10);
+        $I->waitForElement($this->moduleInformation, 10);
 
         return $this;
     }

@@ -18,9 +18,12 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
     public $newItemButtonId = '#btn.new';
     public $newCategoryName = 'editval[oxcategories__oxtitle]';
     public $activeCategoryCheckbox = 'editval[oxcategories__oxactive]';
+    public $categoryInformation = '#transfer';
 
     /**
      * @param string $categoryName
+     *
+     * @return ProductCategories
      */
     public function createNewCategory(string $categoryName): ProductCategories
     {
@@ -32,7 +35,7 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
 
         $I->checkOption($this->activeCategoryCheckbox);
         $I->fillField($this->newCategoryName, $categoryName);
-        $I->click('Save');
+        $I->click(Translator::translate('GENERAL_SAVE'));
 
         $I->selectListFrame();
         $I->waitForText($categoryName);
@@ -40,41 +43,50 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @return ProductCategories
+     */
     public function assignProductsToSelectedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click('Assign Products');
+        $I->click(Translator::translate('GENERAL_ASSIGNARTICLES'));
 
         $I->switchToNextTab();//codeception way of opening next window
         $I->waitForDocumentReadyState();
-        $I->click('Assign all');
+        $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->waitForAjax(10);
         $I->closeTab();
 
         return $this;
     }
 
+    /**
+     * @return ProductCategories
+     */
     public function openRightsForSelectedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->waitForElement("#transfer", 10);
+        $I->waitForElement($this->categoryInformation, 10);
         $I->selectListFrame();
-        $I->click('Rights');
+        $I->click(Translator::translate('tbclcategory_rights'));
 
         return $this;
     }
 
+    /**
+     * @return ProductCategories
+     */
     public function assignUserRightsToSeletedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click('Assign User Groups (Exclusively visible)');
+        $I->click(Translator::translate('CATEGORY_RIGHTS_ASSIGNVISIBLE'));
 
         $I->switchToNextTab();//codeception way of opening next window
         $I->waitForDocumentReadyState();
-        $I->click('Assign all');
+        $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->waitForAjax(10);
         $I->closeTab();
 
