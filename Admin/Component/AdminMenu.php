@@ -9,6 +9,7 @@ namespace OxidEsales\Codeception\Admin\Component;
 use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\ModulesList;
+use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
@@ -84,5 +85,20 @@ trait AdminMenu
         $I->waitForDocumentReadyState();
 
         return new ModulesList($I);
+    }
+
+    /**
+     * @return Orders
+     */
+    public function openOrders(): Orders
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxorders'));
+        $I->click(Translator::translate('mxdisplayorders'));
+        $I->waitForDocumentReadyState();
+
+        return new Orders($I);
     }
 }

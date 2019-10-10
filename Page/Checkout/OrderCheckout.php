@@ -70,6 +70,7 @@ class OrderCheckout extends Page
     public function submitOrder()
     {
         $I = $this->user;
+        $I->waitForText(Translator::translate('SUBMIT_ORDER'));
         $I->click(Translator::translate('SUBMIT_ORDER'));
         return $this;
     }
