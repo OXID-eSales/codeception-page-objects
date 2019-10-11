@@ -7,6 +7,7 @@
 namespace OxidEsales\Codeception\Page\Lists;
 
 use OxidEsales\Codeception\Page\Component\Header\LanguageMenu;
+use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Page\Page;
 
@@ -16,13 +17,15 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ProductSearchList extends Page
 {
-    use LanguageMenu;
+    use LanguageMenu, MiniBasket;
 
     public $listItemTitle = '#searchList_%s';
 
     public $listItemDescription = '//form[@name="tobasketsearchList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
 
     public $listItemPrice = '//form[@name="tobasketsearchList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
+
+    public $listItemForm = '//form[@name="tobasketsearchList_%s"]';
 
     public $variantSelection = '#variantselector_searchList_%s button';
 
@@ -81,5 +84,18 @@ class ProductSearchList extends Page
         $I = $this->user;
         $I->click(sprintf($this->listItemTitle, $itemId));
         return new ProductDetails($I);
+    }
+
+    /**
+     * @param int $itemId The position of the item in the list.
+     *
+     * @return ProductSearchList
+     */
+    public function addProductToBasket(int $itemId): ProductSearchList
+    {
+        $I = $this->user;
+        $I->submitForm(sprintf($this->listItemForm, $itemId), []);
+
+        return $this;
     }
 }

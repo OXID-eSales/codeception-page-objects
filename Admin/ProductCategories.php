@@ -11,7 +11,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 /**
  * Class ProductCategories
  *
- * @package OxidEsales\Codeception\Page\Admin
+ * @package OxidEsales\Codeception\Admin
  */
 class ProductCategories extends \OxidEsales\Codeception\Page\Page
 {

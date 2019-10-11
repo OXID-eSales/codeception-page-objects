@@ -9,7 +9,7 @@ namespace OxidEsales\Codeception\Admin;
 /**
  * Class ModulesList
  *
- * @package OxidEsales\Codeception\Page\Admin
+ * @package OxidEsales\Codeception\Admin
  */
 class ModulesList extends \OxidEsales\Codeception\Page\Page
 {

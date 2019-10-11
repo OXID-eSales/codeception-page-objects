@@ -11,7 +11,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 /**
  * Class AdminLoginPage
  *
- * @package OxidEsales\Codeception\Page\Admin
+ * @package OxidEsales\Codeception\Admin
  */
 class AdminLoginPage extends AdminPanel
 {

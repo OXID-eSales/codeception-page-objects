@@ -10,12 +10,13 @@ use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\ModulesList;
 use OxidEsales\Codeception\Admin\ProductCategories;
+use OxidEsales\Codeception\Admin\Products;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
- * Class AdminMenu
+ * Trait AdminMenu
  *
- * @package OxidEsales\Codeception\Page\Admin\Component
+ * @package OxidEsales\Codeception\Admin\Component
  */
 trait AdminMenu
 {
@@ -84,5 +85,29 @@ trait AdminMenu
         $I->waitForDocumentReadyState();
 
         return new ModulesList($I);
+    }
+
+    /**
+     * @return Products
+     */
+    public function openProducts(): Products
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxmanageprod'));
+        $I->click(Translator::translate('mxarticles'));
+
+        // After clicking on Products link two requests are executed:
+        // - load product list section
+        // - load product main section
+
+        // Wait for product list section to load
+        $I->selectListFrame();
+
+        // Wait for product list section to load
+        $I->selectEditFrame();
+
+        return new Products($I);
     }
 }

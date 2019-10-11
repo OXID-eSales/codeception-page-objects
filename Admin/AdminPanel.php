@@ -12,7 +12,7 @@ use OxidEsales\Codeception\Page\Page;
 /**
  * Class AdminPanel
  *
- * @package OxidEsales\Codeception\Page\Admin
+ * @package OxidEsales\Codeception\Admin
  */
 class AdminPanel extends Page
 {

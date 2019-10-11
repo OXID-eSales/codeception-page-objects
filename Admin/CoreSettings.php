@@ -12,7 +12,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 /**
  * Class CoreSettings
  *
- * @package OxidEsales\Codeception\Page\Admin
+ * @package OxidEsales\Codeception\Admin
  */
 class CoreSettings extends \OxidEsales\Codeception\Page\Page
 {
