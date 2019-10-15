@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.0] - Unreleased
 
 ### Added
+- Admin page objects
+    - Admin login page
+    - Admin panel
+    - Core settings
+    - Module list
+    - Product categories
+
 - New page objects
-    - GiftSelection
-    
+    - Gift Selection
+    - MultiShop Home page
+
 - New methods
     - Basket::openGiftSelection
     - OrderCheckout::editUserAddress
