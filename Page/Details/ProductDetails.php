@@ -375,6 +375,7 @@ class ProductDetails extends Page
     public function seeProductData(array $productData)
     {
         $I = $this->user;
+        $I->waitForElement($this->productTitle);
         $I->see($productData['title'], $this->productTitle);
         $I->see($productData['description'], $this->productShortDesc);
         $I->see($productData['id']);

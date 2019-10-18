@@ -44,11 +44,11 @@ class Start extends Step
         $I = $this->user;
         $startPage = $I->openShop();
         // if snapshot exists - skipping login
-        if ($I->loadSessionSnapshot('login')) {
+       /* if ($I->loadSessionSnapshot('login')) {
             return $startPage;
-        }
+        }*/
         $startPage = $startPage->loginUser($userName, $userPassword);
-        $I->saveSessionSnapshot('login');
+      //  $I->saveSessionSnapshot('login');
         return $startPage;
     }
 }

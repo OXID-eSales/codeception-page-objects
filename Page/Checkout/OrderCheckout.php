@@ -56,7 +56,7 @@ class OrderCheckout extends Page
 
     public $couponInformation = '.couponData';
 
-    public $previousStepLink = '//li[@class="step3 passed "]/a[1]';
+    public $previousStepLink = '//li[@class="step3 passed "]/a/div[2]';
 
     public $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
 
