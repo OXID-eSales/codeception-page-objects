@@ -11,6 +11,7 @@ use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\ModulesList;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
+use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
@@ -109,5 +110,29 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Products($I);
+    }
+
+    /**
+     * @return Users
+     */
+    public function openUsers(): Users
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxuadmin'));
+        $I->click(Translator::translate('mxusers'));
+
+        // After clicking on Users link two requests are executed:
+        // - load user list section
+        // - load user main section
+
+        // Wait for user list section to load
+        $I->selectListFrame();
+
+        // Wait for user main section to load
+        $I->selectEditFrame();
+
+        return new Users($I);
     }
 }

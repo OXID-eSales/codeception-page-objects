@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Lists;
 
+use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\LanguageMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
@@ -17,7 +18,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ProductSearchList extends Page
 {
-    use LanguageMenu, MiniBasket;
+    use LanguageMenu, MiniBasket, AccountMenu;
 
     public $listItemTitle = '#searchList_%s';
 
