@@ -1,12 +1,16 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\B2BModule\ScheduledOrders\Tests\Codeception\AcceptanceTester;
+use OxidEsales\Codeception\Admin\CoreSetting\SystemTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
@@ -69,5 +73,22 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $I->waitForText($subShopName, 30, $this->shopName);
 
         return $this;
+    }
+
+    /**
+     * @return SystemTab
+     */
+    public function openSystemTab(): SystemTab
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclshop_system'));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new SystemTab($I);
     }
 }
