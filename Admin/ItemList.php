@@ -54,7 +54,8 @@ class ItemList extends \OxidEsales\Codeception\Page\Page
         $selector = sprintf($this->tabSelector, $tabPage::TAB_KEY);
         $I->waitForElement($selector, 10);
 
-        $I->click($selector);
+        $I->executeJS("document.evaluate(\"$selector\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()");
+
         $I->selectEditFrame();
         $I->waitForElement($this->navigationInformation, 10);
 
