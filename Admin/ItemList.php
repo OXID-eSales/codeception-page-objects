@@ -16,8 +16,6 @@ namespace OxidEsales\Codeception\Admin;
 class ItemList extends \OxidEsales\Codeception\Page\Page
 {
     public $navigationInformation = '#transfer';
-    public $tabSelector = "//div[@class='tabs']//a[@href='#%s']";
-
     protected $createNewItemButton = '//div[@class="actions"]//a[@id="btn.new"]';
 
     /**
@@ -51,10 +49,8 @@ class ItemList extends \OxidEsales\Codeception\Page\Page
         $I = $this->user;
 
         $I->selectListFrame();
-        $selector = sprintf($this->tabSelector, $tabPage::TAB_KEY);
-        $I->waitForElement($selector, 10);
-
-        $I->executeJS("document.evaluate(\"$selector\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()");
+        $I->waitForElement($tabPage->getTabSelector(), 10);
+        $I->executeJS("document.evaluate(\"{$tabPage->getTabSelector()}\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()");
 
         $I->selectEditFrame();
         $I->waitForElement($this->navigationInformation, 10);
