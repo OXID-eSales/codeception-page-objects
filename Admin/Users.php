@@ -17,6 +17,7 @@ class Users extends Page
 {
     public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
     public $searchForm = '#search';
+    public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
 
     /**
      * @param string $field
@@ -31,7 +32,7 @@ class Users extends Page
         $I->submitForm($this->searchForm, []);
         $I->selectListFrame(); // Waits for list section to load
 
-        $I->click($value);
+        $I->click($this->firstRowName);
         // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
