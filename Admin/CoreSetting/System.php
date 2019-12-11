@@ -9,24 +9,29 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\CoreSetting;
 
+use OxidEsales\Codeception\Admin\CoreSetting\Component\Footer;
+use OxidEsales\Codeception\Admin\CoreSetting\Component\ItemList;
+use OxidEsales\Codeception\Admin\CoreSetting\Component\ListHeader;
+use OxidEsales\Codeception\Admin\CoreSetting\Component\SettingsMenu;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 /**
- * Class SystemTab
+ * Class SystemTa
  *
  * @package OxidEsales\Codeception\Admin\CoreSetting
  */
-class SystemTab extends Page
+class System extends Page
 {
+    use Footer, ListHeader, SettingsMenu, ItemList;
+
     public $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
 
     /**
-     * @return SystemTab
+     * @return System
      */
-    public function openVariants(): SystemTab
+    public function openVariants(): System
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
 
         $I->selectEditFrame();
@@ -40,11 +45,10 @@ class SystemTab extends Page
     }
 
     /**
-     * @return SystemTab
+     * @return System
      */
-    public function checkParentProductAsBuyable(): SystemTab
+    public function checkParentProductAsBuyable(): System
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
 
         $I->selectEditFrame();

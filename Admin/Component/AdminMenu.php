@@ -7,12 +7,12 @@
 namespace OxidEsales\Codeception\Admin\Component;
 
 use OxidEsales\Codeception\Admin\AdminPanel;
-use OxidEsales\Codeception\Admin\CoreSettings;
-use OxidEsales\Codeception\Admin\ModulesList;
-use OxidEsales\Codeception\Admin\Orders;
-use OxidEsales\Codeception\Admin\ProductCategories;
-use OxidEsales\Codeception\Admin\Products;
-use OxidEsales\Codeception\Admin\Users;
+use OxidEsales\Codeception\Admin\Category\Main as CategoryMain;
+use OxidEsales\Codeception\Admin\Module\Main as ModuleMain;
+use OxidEsales\Codeception\Admin\Order\Main as OrderMain;
+use OxidEsales\Codeception\Admin\Product\Main as ProductMain;
+use OxidEsales\Codeception\Admin\CoreSetting\Main as CoreSettingsMain;
+use OxidEsales\Codeception\Admin\User\Main as UserMain;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
@@ -26,9 +26,9 @@ trait AdminMenu
     public $categoryTitle = "//input[@name='editval[oxcategories__oxtitle]']";
 
     /**
-     * @return CoreSettings
+     * @return CoreSettingsMain
      */
-    public function openCoreSettings(): CoreSettings
+    public function openCoreSettings(): CoreSettingsMain
     {
         $I = $this->user;
         $I->selectBaseFrame();
@@ -37,7 +37,7 @@ trait AdminMenu
         //bad solution, but it works. try to figure out something reasonable
         $I->wait(3);
 
-        return new CoreSettings($I);
+        return new CoreSettingsMain($I);
     }
 
     /**
@@ -58,9 +58,9 @@ trait AdminMenu
     }
 
     /**
-     * @return ProductCategories
+     * @return CategoryMain
      */
-    public function openCategories(): ProductCategories
+    public function openCategories(): CategoryMain
     {
         $I = $this->user;
 
@@ -70,13 +70,13 @@ trait AdminMenu
         $I->selectEditFrame();
         $I->waitForElement($this->categoryTitle);
 
-        return new ProductCategories($I);
+        return new CategoryMain($I);
     }
 
     /**
-     * @return ModulesList
+     * @return ModuleMain
      */
-    public function openModules(): ModulesList
+    public function openModules(): ModuleMain
     {
         $I = $this->user;
 
@@ -86,13 +86,13 @@ trait AdminMenu
         $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
-        return new ModulesList($I);
+        return new ModuleMain($I);
     }
 
     /**
-     * @return Orders
+     * @return OrderMain
      */
-    public function openOrders(): Orders
+    public function openOrders(): OrderMain
     {
         $I = $this->user;
 
@@ -101,13 +101,13 @@ trait AdminMenu
         $I->click(Translator::translate('mxdisplayorders'));
         $I->waitForDocumentReadyState();
 
-        return new Orders($I);
+        return new OrderMain($I);
     }
 
     /**
-     * @return Products
+     * @return ProductMain
      */
-    public function openProducts(): Products
+    public function openProducts(): ProductMain
     {
         $I = $this->user;
 
@@ -122,16 +122,16 @@ trait AdminMenu
         // Wait for product list section to load
         $I->selectListFrame();
 
-        // Wait for product list section to load
+        // Wait for product main section to load
         $I->selectEditFrame();
 
-        return new Products($I);
+        return new ProductMain($I);
     }
 
     /**
-     * @return Users
+     * @return UserMain
      */
-    public function openUsers(): Users
+    public function openUsers(): UserMain
     {
         $I = $this->user;
 
@@ -149,6 +149,6 @@ trait AdminMenu
         // Wait for user main section to load
         $I->selectEditFrame();
 
-        return new Users($I);
+        return new UserMain($I);
     }
 }

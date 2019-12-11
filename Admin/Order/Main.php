@@ -4,17 +4,17 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Admin;
+namespace OxidEsales\Codeception\Admin\Order;
 
-use OxidEsales\Codeception\Admin\Component\AdminMenu;
+use OxidEsales\Codeception\Admin\Order\Component\ListHeader;
 use OxidEsales\Codeception\Page\Page;
 
 /**
- * Class AdminPanel
+ * Class Orders
  *
  * @package OxidEsales\Codeception\Admin
  */
-class AdminPanel extends Page
+class Main extends Page
 {
-    use AdminMenu;
+    use ListHeader;
 }

@@ -4,16 +4,12 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Admin;
-
-use OxidEsales\Codeception\Page\Page;
+namespace OxidEsales\Codeception\Admin\Order\Component;
 
 /**
- * Class Orders
- *
- * @package OxidEsales\Codeception\Admin
+ * Trait header
  */
-class Orders extends Page
+trait ListHeader
 {
     public $searchForm = '#search';
     public $orderNumberInput = 'where[oxorder][oxordernr]';
@@ -23,7 +19,7 @@ class Orders extends Page
      *
      * @return $this
      */
-    public function searchByOrderNumber(int $orderNumber)
+    public function searchByOrderNumber(int $orderNumber): self
     {
         $I = $this->user;
         $I->selectListFrame();

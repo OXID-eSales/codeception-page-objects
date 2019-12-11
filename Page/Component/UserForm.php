@@ -6,6 +6,9 @@
 
 namespace OxidEsales\Codeception\Page\Component;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
+
 /**
  * Trait for user form
  * @package OxidEsales\Codeception\Page\Component
@@ -41,6 +44,7 @@ trait UserForm
     public $billStateId = "//button[@data-id='oxStateSelect_invadr[oxuser__oxstateid]']";
 
     //user delivery address data
+    public $deliveryAddressForm = '#shippingAddress';
     public $delUserSalutation = '//button[@data-id="deladr_oxaddress__oxsal"]';
     public $delUserFirstName = 'deladr[oxaddress__oxfname]';
     public $delUserLastName = 'deladr[oxaddress__oxlname]';
@@ -175,7 +179,7 @@ trait UserForm
      */
     public function selectShippingCountry(string $country)
     {
-        $this->selectUserData($this->delCountryId, $country, '#shippingAddress');
+        $this->selectUserData($this->delCountryId, $country, $this->deliveryAddressForm);
         return $this;
     }
 
@@ -202,13 +206,14 @@ trait UserForm
      */
     public function enterShippingAddressData(array $userData)
     {
+        /** @var AcceptanceTester $I */
         $I = $this->user;
-        $this->selectUserData($this->delUserSalutation, $userData['userSalutation'], '#shippingAddress');
+        $this->selectUserData($this->delUserSalutation, $userData['userSalutation'], $this->deliveryAddressForm);
         unset($userData['userSalutation']);
         $this->selectShippingCountry($userData['countryId']);
         unset($userData['countryId']);
         if (isset($userData['stateId'])) {
-            $this->selectUserData($this->delStateId, $userData['stateId'], '#shippingAddress');
+            $this->selectUserData($this->delStateId, $userData['stateId'], $this->deliveryAddressForm);
             unset($userData['stateId']);
         }
 

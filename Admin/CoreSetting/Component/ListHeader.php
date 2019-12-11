@@ -1,28 +1,26 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Admin;
-
-use OxidEsales\Codeception\Page\Page;
+namespace OxidEsales\Codeception\Admin\CoreSetting\Component;
 
 /**
- * Class Users
- *
- * @package OxidEsales\Codeception\Admin
+ * Trait header
  */
-class Users extends Page
+trait ListHeader
 {
-    public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
+    public $numberInput = "//input[@name='where[oxshops][oxname]']";
     public $searchForm = '#search';
 
     /**
      * @param string $field
      * @param string $value
+     *
+     * @return $this
      */
-    public function find(string $field, string $value)
+    public function find(string $field, string $value): self
     {
         $I = $this->user;
 
@@ -35,5 +33,7 @@ class Users extends Page
         // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
+
+        return $this;
     }
 }

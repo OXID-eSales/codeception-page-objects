@@ -1,20 +1,15 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Admin;
-
-use OxidEsales\Codeception\Admin\Product\MainTab;
-use OxidEsales\Codeception\Page\Page;
+namespace OxidEsales\Codeception\Admin\Product\Component;
 
 /**
- * Class Products
- *
- * @package OxidEsales\Codeception\Admin
+ * Trait header
  */
-class Products extends Page
+trait ListHeader
 {
     public $numberInput = "//input[@name='where[oxarticles][oxartnum]']";
     public $languageSelect = "//select[@name='changelang']";
@@ -23,9 +18,9 @@ class Products extends Page
     /**
      * @param string $language
      *
-     * @return Products
+     * @return $this
      */
-    public function switchLanguage(string $language): Products
+    public function switchLanguage(string $language): self
     {
         $I = $this->user;
 
@@ -43,9 +38,9 @@ class Products extends Page
      * @param string $field
      * @param string $value
      *
-     * @return MainTab
+     * @return $this
      */
-    public function find(string $field, string $value): MainTab
+    public function find(string $field, string $value): self
     {
         $I = $this->user;
 
@@ -59,6 +54,6 @@ class Products extends Page
         $I->selectListFrame();
         $I->selectEditFrame();
 
-        return new MainTab($I);
+        return $this;
     }
 }

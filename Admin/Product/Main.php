@@ -6,21 +6,24 @@
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Product\Component\Footer;
+use OxidEsales\Codeception\Admin\Product\Component\ListHeader;
 use OxidEsales\Codeception\Page\Page;
 
 /**
- * Class MainTab
+ * Class Main
  *
  * @package OxidEsales\Codeception\Admin\Product
  */
-class MainTab extends Page
+class Main extends Page
 {
-    public $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
-    public $titleInput = "//input[@name='editval[oxarticles__oxtitle]']";
-    public $numberInput = "//input[@name='editval[oxarticles__oxartnum]']";
-    public $priceInput = "//input[@name='editval[oxarticles__oxprice]']";
+    use Footer, ListHeader;
 
-    public $createButton = "//a[@id='btn.new']";
+    public $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
+    public $productTitle = "//input[@name='editval[oxarticles__oxtitle]']";
+    public $productNumber = "//input[@name='editval[oxarticles__oxartnum]']";
+    public $productPrice = "//input[@name='editval[oxarticles__oxprice]']";
+
     public $saveButton = "//input[@name='saveArticle']";
 
     /**
@@ -28,27 +31,23 @@ class MainTab extends Page
      * @param string|null $number
      * @param int|null    $price
      *
-     * @return MainTab
+     * @return Main
      */
-    public function create(string $title, ?string $number = null, ?int $price = null): MainTab
+    public function create(string $title, ?string $number = null, ?int $price = null): Main
     {
         $I = $this->user;
 
-        $I->selectEditFrame();
-        $I->click($this->createButton);
-        // Wait for list and edit sections to load
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openNewProductForm();
 
         $I->checkOption($this->activeCheckbox);
-        $I->fillField($this->titleInput, $title);
+        $I->fillField($this->productTitle, $title);
 
         if ($number) {
-            $I->fillField($this->numberInput, $number);
+            $I->fillField($this->productNumber, $number);
         }
 
         if ($price) {
-            $I->fillField($this->priceInput, $price);
+            $I->fillField($this->productPrice, $price);
         }
 
         $I->waitForElementClickable($this->saveButton);

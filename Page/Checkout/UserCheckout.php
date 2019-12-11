@@ -113,6 +113,7 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->click($this->openShipAddressForm);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressForm);
+        $I->waitForElementVisible($this->deliveryAddressForm);
         return $this;
     }
 
