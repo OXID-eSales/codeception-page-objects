@@ -13,12 +13,12 @@ use OxidEsales\Codeception\Admin\Category\Main;
  */
 trait Footer
 {
-    public $createButton = '#btn.new';
+    public $createButton = "//a[@id='btn.new']";
 
     /**
      * @return Main
      */
-    public function openNewProductForm(): Main
+    public function openNewCategoryForm(): Main
     {
         $I = $this->user;
 

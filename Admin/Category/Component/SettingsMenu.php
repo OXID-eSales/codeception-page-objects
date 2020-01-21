@@ -16,7 +16,7 @@ trait SettingsMenu
     /**
      * @return CategoryRights
      */
-    public function openOpenRights(): CategoryRights
+    public function openRights(): CategoryRights
     {
         $I = $this->user;
         $I->selectEditFrame();
