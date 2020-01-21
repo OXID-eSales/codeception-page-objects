@@ -376,6 +376,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElement($this->productTitle);
+        $I->waitForText($productData['title'], 30, $this->productTitle);
         $I->see($productData['title'], $this->productTitle);
         $I->see($productData['description'], $this->productShortDesc);
         $I->see($productData['id']);
