@@ -93,6 +93,8 @@ class ProductDetails extends Page
 
     public $variantSelection = '/descendant::button[@class="btn btn-default btn-sm dropdown-toggle"][%s]';
 
+    public $variantOpenSelection = '//ul[@class="dropdown-menu  vardrop"]';
+
     public $amountPriceQuantity = '//div[@class="modal-content"]/div[2]/dl/dt[%s]';
 
     public $amountPriceValue = '//div[@class="modal-content"]/div[2]/dl/dd[%s]';
@@ -153,6 +155,7 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $variant));
         $I->click($variantValue);
+        $I->waitForElementNotVisible($this->variantOpenSelection);
         $I->waitForPageLoad();
         $I->see($variantValue);
         return $this;
