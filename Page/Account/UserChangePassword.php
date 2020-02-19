@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,6 +7,7 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use Facebook\WebDriver\WebDriverKeys;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
@@ -45,11 +47,11 @@ class UserChangePassword extends Page
     public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
     {
         $I = $this->user;
-        $I->pressKey($this->userOldPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userOldPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userOldPassword, $oldPassword);
-        $I->pressKey($this->userNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userNewPassword, $newPassword);
-        $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
         return $this;
     }

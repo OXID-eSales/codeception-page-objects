@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
 namespace OxidEsales\Codeception\Page;
+
+use Codeception\Actor;
 
 /**
  * Class Page
@@ -13,7 +16,7 @@ namespace OxidEsales\Codeception\Page;
 class Page
 {
     /**
-     * @var \Codeception\Actor
+     * @var Actor
      */
     protected $user;
 
@@ -30,9 +33,9 @@ class Page
     /**
      * Page constructor.
      *
-     * @param \Codeception\Actor $I
+     * @param Actor $I
      */
-    public function __construct(\Codeception\Actor $I)
+    public function __construct(Actor $I)
     {
         $this->user = $I;
     }
@@ -44,7 +47,7 @@ class Page
      */
     public function route($params)
     {
-        return $this->URL.'/index.php?'.http_build_query($params);
+        return $this->URL . '/index.php?' . http_build_query($params);
     }
 
     /**
@@ -55,7 +58,7 @@ class Page
     public function seeOnBreadCrumb(string $breadCrumb)
     {
         $I = $this->user;
-        $I->assertContains($breadCrumb, $this->clearNewLines($I->grabTextFrom($this->breadCrumb)));
+        $I->assertStringContainsString($breadCrumb, $this->clearNewLines($I->grabTextFrom($this->breadCrumb)));
         return $this;
     }
 

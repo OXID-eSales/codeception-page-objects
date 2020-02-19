@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -17,7 +18,8 @@ use OxidEsales\Codeception\Page\Page;
  */
 class Basket extends Page
 {
-    use MiniBasket, AccountMenu;
+    use AccountMenu;
+    use MiniBasket;
 
     // include url of current page
     public $URL = '';
@@ -81,10 +83,11 @@ class Basket extends Page
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+            $I->see(Translator::translate('PRODUCT_NO') .
+                ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
             $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
             $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
-            $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), $basketProduct['amount']);
+            $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
         }
         $I->see($basketSummaryPrice, $this->basketSummary);
         return $this;
@@ -105,7 +108,8 @@ class Basket extends Page
     public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition)
     {
         $I = $this->user;
-        $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+        $I->see(Translator::translate('PRODUCT_NO') .
+            ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
         $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
         $I->see($basketProduct['amount'], sprintf($this->basketBundledItemAmount, $itemPosition));
         return $this;
