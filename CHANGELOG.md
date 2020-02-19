@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - AdminMenu::openOrders
     - AdminMenu::operProducts
 
+## [1.1.1] - 2020-02-07
+
+### Fixed
+- Variant selection
+
 ## [1.1.0] - 2019-11-07
 
 ### Added
