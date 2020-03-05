@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Lists;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\LanguageMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
@@ -29,6 +30,8 @@ class ProductSearchList extends Page
     public $listItemForm = '//form[@name="tobasketsearchList_%s"]';
 
     public $variantSelection = '#variantselector_searchList_%s button';
+
+    public $sortingSelection = '//a[@title="%s"]';
 
     /**
      * @param mixed $param
@@ -98,5 +101,49 @@ class ProductSearchList extends Page
         $I->submitForm(sprintf($this->listItemForm, $itemId), []);
 
         return $this;
+    }
+
+    /**
+     * @param string $sortingName
+     * @param string $sortingOrder
+     *
+     * @return ProductSearchList
+     */
+    public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): ProductSearchList
+    {
+        $I = $this->user;
+        $I->click(Translator::translate('SORT_BY'));
+        $I->click(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
+
+        return $this;
+    }
+
+    /**
+     * @param string $sortingOrder
+     *
+     * @return string
+     */
+    private function getSortingOrderTranslation($sortingOrder) : string
+    {
+        if ($sortingOrder === 'asc') {
+            $sortingOrderTranslated = Translator::translate('DD_SORT_ASC');
+        } else {
+            $sortingOrderTranslated = Translator::translate('DD_SORT_DESC');
+        }
+        return $sortingOrderTranslated;
+    }
+
+    /**
+     * @param string $sortingName
+     * @param string $sortingOrder
+     *
+     * @return string
+     */
+    private function getSortingElementTitle(string $sortingName, string $sortingOrder) : string
+    {
+        $sortingOrderTranslated = $this->getSortingOrderTranslation($sortingOrder);
+        $sortingNameTranslated = Translator::translate(strtoupper($sortingName));
+
+        return $sortingNameTranslated . ' ' . $sortingOrderTranslated;
     }
 }
