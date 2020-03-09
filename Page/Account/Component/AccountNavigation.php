@@ -19,6 +19,8 @@ use OxidEsales\Codeception\Page\Account\UserWishList;
  */
 trait AccountNavigation
 {
+    public $accountMenu = '//nav[@id="account_menu"]';
+
     public $newsletterSettingsLink = '//nav[@id="account_menu"]';
 
     public $addressSettingsLink = '//nav[@id="account_menu"]';

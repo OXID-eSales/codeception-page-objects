@@ -40,6 +40,8 @@ trait AccountMenu
 
     public $badLoginError = '#errorBadLogin';
 
+    public $userAccount = '//ul[@id="services"]';
+
     public $userAccountLink = '//ul[@id="services"]/li[1]/a';
 
     public $userAccountCompareListLink = '//ul[@id="services"]/li[2]/a';
