@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.3.0] - unreleased
 
 ### Added
+- New traits
+    - CurrencyMenu
+
 - New methods
     - ProductSearchList::selectSorting
+
+- New properties
+    - AccountMenu::userAccount
+    - AccountNavigation::accountMenu
 
 ## [1.2.0] - 2020-02-19
 
