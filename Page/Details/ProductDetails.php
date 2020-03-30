@@ -59,7 +59,7 @@ class ProductDetails extends Page
 
     public $openReviewForm = '#writeNewReview';
 
-    public $reviewTextForm = 'rvw_txt';
+    public $reviewTextForm = '[name=rvw_txt]';
 
     public $ratingSelection = '//ul[@id="reviewRating"]/li[%s]';
 
@@ -273,7 +273,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click($this->openReviewForm);
-       // $I->waitForElement($this->reviewTextForm);
+        $I->waitForElement($this->reviewTextForm);
         $I->fillField($this->reviewTextForm, $review);
         $I->click(sprintf($this->ratingSelection, $rating));
         $I->click($this->saveRatingAndReviewButton);
