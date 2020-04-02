@@ -1,119 +1,161 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Account\Component;
 
+use Codeception\Util\Locator;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Account\MyReviews;
 use OxidEsales\Codeception\Page\Account\NewsletterSettings;
 use OxidEsales\Codeception\Page\Account\UserAddress;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
 use OxidEsales\Codeception\Page\Account\UserListmania;
 use OxidEsales\Codeception\Page\Account\UserWishList;
+use OxidEsales\Codeception\Page\Page;
 
-/**
- * Trait for account page navigation
- * @package OxidEsales\Codeception\Page\Account\Component
- */
 trait AccountNavigation
 {
-    public $accountMenu = '//nav[@id="account_menu"]';
+    public $accountMenu = 'nav#account_menu';
 
-    public $newsletterSettingsLink = '//nav[@id="account_menu"]';
-
-    public $addressSettingsLink = '//nav[@id="account_menu"]';
-
-    public $giftRegistryLink = '//nav[@id="account_menu"]';
-
-    public $wishListLink = '//nav[@id="account_menu"]';
-
-    public $listmaniaLink = '//nav[@id="account_menu"]';
-
-    /**
-     * Opens account_newsletter page
-     *
-     * @return NewsletterSettings
-     */
-    public function openNewsletterSettingsPage()
+    /** @return NewsletterSettings */
+    public function openNewsletterSettingsPage(): NewsletterSettings
     {
-        $I = $this->user;
-        $I->waitForElement($this->newsletterSettingsLink);
-        $I->click(Translator::translate('NEWSLETTER_SETTINGS'), $this->newsletterSettingsLink);
-        $newsletterSettingsPage = new NewsletterSettings($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('NEWSLETTER_SETTINGS');
-        $newsletterSettingsPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NEWSLETTER'), $newsletterSettingsPage->headerTitle);
-        return $newsletterSettingsPage;
+        $this->clickLinkOnAccountMenu('NEWSLETTER_SETTINGS');
+        $page = new NewsletterSettings($this->user);
+        $this->seePageBreadcrumbs($page, 'NEWSLETTER_SETTINGS');
+        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_NEWSLETTER');
+        return $page;
     }
 
-    /**
-     * Opens my-address page.
-     *
-     * @return UserAddress
-     */
-    public function openUserAddressPage()
+    /** @return UserAddress */
+    public function openUserAddressPage(): UserAddress
     {
-        $I = $this->user;
-        $I->waitForElement($this->addressSettingsLink);
-        $I->click(Translator::translate('BILLING_SHIPPING_SETTINGS'), $this->addressSettingsLink);
-        $userAddressPage = new UserAddress($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('BILLING_SHIPPING_SETTINGS');
-        $userAddressPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('BILLING_SHIPPING_SETTINGS'), $userAddressPage->headerTitle);
-        return $userAddressPage;
+        $this->clickLinkOnAccountMenu('BILLING_SHIPPING_SETTINGS');
+        $page = new UserAddress($this->user);
+        $this->seePageBreadcrumbs($page, 'BILLING_SHIPPING_SETTINGS');
+        $this->seePageTitle($page, 'BILLING_SHIPPING_SETTINGS');
+        return $page;
     }
 
-    /**
-     * Opens my-gift-registry page.
-     *
-     * @return UserGiftRegistry
-     */
-    public function openGiftRegistryPage()
+    /** @return UserGiftRegistry */
+    public function openGiftRegistryPage(): UserGiftRegistry
     {
-        $I = $this->user;
-        $I->waitForElement($this->giftRegistryLink);
-        $I->click(Translator::translate('MY_GIFT_REGISTRY'), $this->giftRegistryLink);
-        $userGiftRegistryPage = new UserGiftRegistry($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
-        return $userGiftRegistryPage;
+        $this->clickLinkOnAccountMenu('MY_GIFT_REGISTRY');
+        $page = new UserGiftRegistry($this->user);
+        $this->seePageBreadcrumbs($page, 'MY_GIFT_REGISTRY');
+        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_WISHLIST');
+        return $page;
     }
 
-    /**
-     * Opens my-wish-list page.
-     *
-     * @return UserWishList
-     */
-    public function openWishListPage()
+    public function dontSeeGiftRegistryLink(): void
     {
-        $I = $this->user;
-        $I->waitForElement($this->wishListLink);
-        $I->click(Translator::translate('MY_WISH_LIST'), $this->wishListLink);
-        $userWishListPage = new UserWishList($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
-        $userWishListPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $userWishListPage->headerTitle);
-        return $userWishListPage;
+        $this->dontSeeLinkInAccountMenu('MY_GIFT_REGISTRY');
     }
 
-    /**
-     * Opens my-listmania-list page.
-     *
-     * @return UserListmania
-     */
-    public function openListmaniaPage()
+    /** @return UserWishList */
+    public function openWishListPage(): UserWishList
+    {
+        $this->clickLinkOnAccountMenu('MY_WISH_LIST');
+        $page = new UserWishList($this->user);
+        $this->seePageBreadcrumbs($page, 'MY_WISH_LIST');
+        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_NOTICELIST');
+        return $page;
+    }
+
+    /** @return UserListmania */
+    public function openListmaniaPage(): UserListmania
+    {
+        $this->clickLinkOnAccountMenu('MY_LISTMANIA');
+        $page = new UserListmania($this->user);
+        $this->seePageBreadcrumbs($page, 'PAGE_TITLE_ACCOUNT_RECOMMLIST');
+        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_RECOMMLIST');
+        return $page;
+    }
+
+    /** @return MyReviews */
+    public function openMyReviewsPage(): MyReviews
+    {
+        $this->clickLinkOnAccountMenu('MY_REVIEWS');
+        $page = new MyReviews($this->user);
+        $this->seePageBreadcrumbs($page, 'MY_REVIEWS');
+        $this->seePageTitle($page, 'MY_REVIEWS');
+        return $page;
+    }
+
+    public function dontSeeMyReviewsLink(): void
+    {
+        $this->dontSeeLinkInAccountMenu('MY_REVIEWS');
+    }
+
+    public function dontSeeMyReviewsPageTitle(): void
+    {
+        $page = new MyReviews($this->user);
+        $this->dontSeePageTitle($page, 'MY_REVIEWS');
+    }
+
+    /** @param int $cnt */
+    public function seeNumberOnMyReviewsBadge(int $cnt): void
     {
         $I = $this->user;
-        $I->waitForElement($this->listmaniaLink);
-        $I->click(Translator::translate('MY_LISTMANIA'), $this->listmaniaLink);
+        $I->see(
+            (string) $cnt,
+            sprintf(
+                '%s%s',
+                Locator::contains("$this->accountMenu li a", Translator::translate('MY_REVIEWS')),
+                Locator::find('span', ['class' => 'badge'])
+            )
+        );
+    }
+
+    /** @param string $title */
+    private function clickLinkOnAccountMenu(string $title): void
+    {
+        $I = $this->user;
+        $I->waitForElement($this->accountMenu);
+        $I->click(Translator::translate($title), $this->accountMenu);
         $I->waitForPageLoad();
-        $userListmania = new UserListmania($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST');
-        $userListmania->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST'), $userListmania->headerTitle);
-        return $userListmania;
+    }
+
+    /** @param string $title */
+    private function dontSeeLinkInAccountMenu(string $title): void
+    {
+        $I = $this->user;
+        $I->waitForElement($this->accountMenu);
+        $I->dontSee(Translator::translate($title), $this->accountMenu);
+    }
+
+    /**
+     * @param Page $page
+     * @param string $breadcrumb
+     */
+    private function seePageBreadcrumbs(Page $page, string $breadcrumb): void
+    {
+        $page->seeOnBreadCrumb(
+            Translator::translate('MY_ACCOUNT') . Translator::translate($breadcrumb)
+        );
+    }
+
+    /**
+     * @param Page $page
+     * @param string $title
+     */
+    private function seePageTitle(Page $page, string $title): void
+    {
+        $this->user->see(Translator::translate($title), $page->headerTitle);
+    }
+
+    /**
+     * @param Page $page
+     * @param string $title
+     */
+    private function dontSeePageTitle(Page $page, string $title): void
+    {
+        $this->user->dontSee(Translator::translate($title), $page->headerTitle);
     }
 }
