@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Changed
-- Update symfony components to version 5 
+- Update symfony components to version 5
+
+### Removed
+- Properties in `Page\Account\Component`
+    - `AccountNavigation:$newsletterSettingsLink`
+    - `AccountNavigation:$addressSettingsLink`
+    - `AccountNavigation:$giftRegistryLink`
+    - `AccountNavigation:$wishListLink`
+    - `AccountNavigation:$listmaniaLink`
 
 ## [1.3.1] - 2020-04-09
 
