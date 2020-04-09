@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1] - 2020-04-09
+
+### Added
+- Review elements:
+    - Classes:
+        - `Page\Account\MyReviews`
+    - Traits:
+        - `Page\Component\Modal`
+        - `Page\Component\Pagination`
+    - Methods in `Page\Account\Component`:
+        - `AccountNavigation::openMyReviewsPage`
+        - `AccountNavigation::dontSeeMyReviewsLink`
+        - `AccountNavigation::dontSeeMyReviewsPageTitle`
+        - `AccountNavigation::seeNumberOnMyReviewsBadge`
+        - `AccountNavigation::dontSeeGiftRegistryLink`
+
+### Deprecated
+- Properties in `Page\Account\Component`
+    - `AccountNavigation:$newsletterSettingsLink`
+    - `AccountNavigation:$addressSettingsLink`
+    - `AccountNavigation:$giftRegistryLink`
+    - `AccountNavigation:$wishListLink`
+    - `AccountNavigation:$listmaniaLink`
+
 ## [1.3.0] - 2020-03-12
 
 ### Added
@@ -68,6 +92,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
+[1.3.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.0..v1.3.1
 [1.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.1..v1.2.0
 [1.1.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.0..v1.1.1

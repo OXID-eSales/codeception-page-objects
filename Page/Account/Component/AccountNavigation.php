@@ -21,7 +21,19 @@ use OxidEsales\Codeception\Page\Page;
 
 trait AccountNavigation
 {
+    /** @var string  */
     public $accountMenu = 'nav#account_menu';
+
+    /** @deprecated since v1.3.1 (2020-04-09); Property will be removed. */
+    public $newsletterSettingsLink = '//nav[@id="account_menu"]';
+    /** @deprecated since v1.3.1 (2020-04-09); Property will be removed. */
+    public $addressSettingsLink = '//nav[@id="account_menu"]';
+    /** @deprecated since v1.3.1 (2020-04-09); Property will be removed. */
+    public $giftRegistryLink = '//nav[@id="account_menu"]';
+    /** @deprecated since v1.3.1 (2020-04-09); Property will be removed. */
+    public $wishListLink = '//nav[@id="account_menu"]';
+    /** @deprecated since v1.3.1 (2020-04-09); Property will be removed. */
+    public $listmaniaLink = '//nav[@id="account_menu"]';
 
     /** @return NewsletterSettings */
     public function openNewsletterSettingsPage(): NewsletterSettings
