@@ -1,11 +1,15 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Step;
 
+use Codeception\Actor;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Page\Checkout\Basket as BasketPage;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -20,28 +24,21 @@ class Basket extends Step
     use MiniBasket;
 
     /**
-     * Add product to the basket without any redirects
+     * Add product to the basket without redirection
      *
-     * This method requires existing of name='stoken' element to present in Currently loaded page.
-     *
-     * @param string $productId
-     * @param int    $amount
+     * @param string $productId The id of the product.
+     * @param int    $amount    The amount of the product.
      */
     public function addProductToBasket(string $productId, int $amount)
     {
         $I = $this->user;
         //add Product to basket
-        // $params['cl'] = $controller;
         $params['fnc'] = 'tobasket';
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
 
-        if ($I->seePageHasElement('input[name=stoken]')) {
-            $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
-        }
-
-        $I->amOnPage('/index.php?'.http_build_query($params));
+        $this->openPage($I, $params);
         $I->waitForElement($this->miniBasketMenuElement);
         $I->waitForPageLoad();
     }
@@ -50,7 +47,11 @@ class Basket extends Step
      * Add product to the basket and open given controller:
      * 'user' for  UserCheckout page, else opens Basket page.
      *
-     * This method requires existing of name='stoken' element to present in Currently loaded page.
+     * This method requires existing of name='stoken' element to present
+     * in Currently loaded page.
+     *
+     * @deprecated please use addProductToBasketAndOpenBasket()
+     * or addProductToBasketAndOpenUserCheckout()
      *
      * @param string $productId
      * @param int    $amount
@@ -60,30 +61,81 @@ class Basket extends Step
      */
     public function addProductToBasketAndOpen(string $productId, int $amount, string $controller)
     {
+        if ($controller === 'user') {
+            return $this->addProductToBasketAndOpenUserCheckout($productId, $amount);
+        }
+        return $this->addProductToBasketAndOpenBasket($productId, $amount);
+    }
+
+    /**
+     * Add product to the basket and open Basket page.
+     *
+     * @param string $productId The id of the product.
+     * @param int    $amount    The amount of the product.
+     *
+     * @return BasketPage
+     */
+    public function addProductToBasketAndOpenBasket(string $productId, int $amount): BasketPage
+    {
         $I = $this->user;
 
         //add Product to basket
-        $params['cl'] = $controller;
+        $params['cl'] = 'basket';
         $params['fnc'] = 'tobasket';
         $params['aid'] = $productId;
         $params['am'] = $amount;
         $params['anid'] = $productId;
 
+        $this->openPage($I, $params);
+        $basketPage = new BasketPage($I);
+        $breadCrumbName = Translator::translate('CART');
+        $basketPage->seeOnBreadCrumb($breadCrumbName);
+        return $basketPage;
+    }
+
+    /**
+     * Add product to the basket and open UserCheckout page.
+     *
+     * @param string $productId The id of the product.
+     * @param int    $amount    The amount of the product.
+     *
+     * @return UserCheckout
+     */
+    public function addProductToBasketAndOpenUserCheckout(string $productId, int $amount): UserCheckout
+    {
+        $I = $this->user;
+
+        //add Product to basket
+        $params['cl'] = 'user';
+        $params['fnc'] = 'tobasket';
+        $params['aid'] = $productId;
+        $params['am'] = $amount;
+        $params['anid'] = $productId;
+
+        $this->openPage($I, $params);
+        $userCheckoutPage = new UserCheckout($I);
+        $breadCrumbName = Translator::translate('ADDRESS');
+        $userCheckoutPage->seeOnBreadCrumb($breadCrumbName);
+        return $userCheckoutPage;
+    }
+
+    /**
+     * This method requires existing of name='stoken' element to present
+     * in Currently loaded page.
+     *
+     * @param Actor $I      Actor
+     * @param array $params The array with url parameters.
+     */
+    private function openPage(Actor $I, array $params): void
+    {
         if ($I->seePageHasElement('input[name=stoken]')) {
             $params['stoken'] = $I->grabValueFrom('input[name=stoken]');
         }
 
-        $I->amOnPage('/index.php?'.http_build_query($params));
-        if ($controller === 'user') {
-            $userCheckoutPage = new UserCheckout($I);
-            $breadCrumbName = Translator::translate("ADDRESS");
-            $userCheckoutPage->seeOnBreadCrumb($breadCrumbName);
-            return $userCheckoutPage;
-        } else {
-            $basketPage = new BasketPage($I);
-            $breadCrumbName = Translator::translate("CART");
-            $basketPage->seeOnBreadCrumb($breadCrumbName);
-            return $basketPage;
+        if ($I->seePageHasElement('input[name=force_sid]')) {
+            $params['force_sid'] = $I->grabValueFrom('input[name=force_sid]');
         }
+
+        $I->amOnPage('/index.php?' . http_build_query($params));
     }
 }

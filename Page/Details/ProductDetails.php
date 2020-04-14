@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Details;
 
@@ -22,7 +25,11 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ProductDetails extends Page
 {
-    use AccountMenu, LanguageMenu, MiniBasket, Navigation, ServiceWidget;
+    use AccountMenu;
+    use LanguageMenu;
+    use MiniBasket;
+    use Navigation;
+    use ServiceWidget;
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
@@ -110,13 +117,15 @@ class ProductDetails extends Page
     public $addToListmania = '#recommList';
 
     /**
-     * @param mixed $param
+     * Return the route to the product details page
+     *
+     * @param mixed $param The product Id.
      *
      * @return string
      */
     public function route($param)
     {
-        return $this->URL.'/index.php?'.http_build_query(['cl' => 'details', 'anid' => $param]);
+        return $this->URL . '/index.php?' . http_build_query(['cl' => 'details', 'anid' => $param]);
     }
 
     /**
@@ -532,8 +541,10 @@ class ProductDetails extends Page
         $I->waitForElementVisible(sprintf($this->amountPriceQuantity, 1));
         $itemPosition = 1;
         foreach ($amountPrices as $amountPrice) {
-            $fromAmount = Translator::translate('FROM').' '.$amountPrice['amountFrom'].' '.Translator::translate('PCS');
-            $discountText = $amountPrice['discount'].'% '.Translator::translate('DISCOUNT');
+            $fromAmount = Translator::translate('FROM')
+                . ' ' . $amountPrice['amountFrom']
+                . ' ' . Translator::translate('PCS');
+            $discountText = $amountPrice['discount'] . '% ' . Translator::translate('DISCOUNT');
             $I->see($fromAmount, sprintf($this->amountPriceQuantity, $itemPosition));
             $I->see($discountText, sprintf($this->amountPriceValue, $itemPosition));
             $itemPosition++;
@@ -580,6 +591,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->click($this->selectionList);
+        $I->waitForText($selectionItem);
         $I->click($selectionItem);
         $I->see($selectionItem, $this->selectionList);
         return $this;

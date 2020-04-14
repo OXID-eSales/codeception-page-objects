@@ -1,11 +1,15 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -14,6 +18,8 @@ use OxidEsales\Codeception\Page\Page;
  */
 class PaymentCheckout extends Page
 {
+    use AccountMenu;
+
     // include url of current page
     public $URL = 'index.php?lang=1&cl=payment';
 
@@ -35,7 +41,7 @@ class PaymentCheckout extends Page
     public function selectPayment(string $paymentMethod)
     {
         $I = $this->user;
-        $I->click('#payment_'.$paymentMethod);
+        $I->click('#payment_' . $paymentMethod);
         return $this;
     }
 

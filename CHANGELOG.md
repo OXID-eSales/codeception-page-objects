@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Page\Component\UserForm::$userNameField`
 - Methods:
     - `OxidEsales\Codeception\Page\Component\UserForm::modifyUserName`
+    - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpenUserCheckout`
+    - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpenBasket`
+
+### Deprecated
+- Methods:
+    - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
 ## [1.3.1] - 2020-04-09
 
