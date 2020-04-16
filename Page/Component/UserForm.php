@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component;
 
@@ -14,6 +17,7 @@ trait UserForm
 {
     // include form fields of current page
     public $userLoginNameField = ['id' => 'userLoginName'];
+    public $userNameField = 'invadr[oxuser__oxusername]';
     public $userPasswordField = ['id' => 'userPassword'];
     public $userPasswordConfirmField = ['id' => 'userPasswordConfirm'];
 
@@ -64,6 +68,16 @@ trait UserForm
     {
         $I = $this->user;
         $I->fillField($this->userLoginNameField, $userLoginName);
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function modifyUserName(string $name): self
+    {
+        $this->user->fillField($this->userNameField, $name);
         return $this;
     }
 

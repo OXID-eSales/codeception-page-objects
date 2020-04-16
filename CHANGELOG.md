@@ -17,6 +17,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `AccountNavigation:$wishListLink`
     - `AccountNavigation:$listmaniaLink`
 
+## [1.3.2] - unreleased
+
+### Added
+- Properties:
+    - `OxidEsales\Codeception\Page\Component\UserForm::$userNameField`
+- Methods:
+    - `OxidEsales\Codeception\Page\Component\UserForm::modifyUserName`
+
 ## [1.3.1] - 2020-04-09
 
 ### Added
