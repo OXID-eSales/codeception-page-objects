@@ -44,30 +44,6 @@ class Basket extends Step
     }
 
     /**
-     * Add product to the basket and open given controller:
-     * 'user' for  UserCheckout page, else opens Basket page.
-     *
-     * This method requires existing of name='stoken' element to present
-     * in Currently loaded page.
-     *
-     * @deprecated please use addProductToBasketAndOpenBasket()
-     * or addProductToBasketAndOpenUserCheckout()
-     *
-     * @param string $productId
-     * @param int    $amount
-     * @param string $controller
-     *
-     * @return BasketPage|UserCheckout
-     */
-    public function addProductToBasketAndOpen(string $productId, int $amount, string $controller)
-    {
-        if ($controller === 'user') {
-            return $this->addProductToBasketAndOpenUserCheckout($productId, $amount);
-        }
-        return $this->addProductToBasketAndOpenBasket($productId, $amount);
-    }
-
-    /**
      * Add product to the basket and open Basket page.
      *
      * @param string $productId The id of the product.

@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `AccountNavigation:$giftRegistryLink`
     - `AccountNavigation:$wishListLink`
     - `AccountNavigation:$listmaniaLink`
+- Methods:
+    - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
 ## [1.3.2] - unreleased
 
