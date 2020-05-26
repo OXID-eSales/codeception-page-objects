@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,11 +7,12 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
-use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Page\Component\Modal;
 use OxidEsales\Codeception\Page\Component\UserForm;
-use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
 /**
  * Class for my-address page
@@ -18,7 +20,10 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 class UserAddress extends Page
 {
-    use UserForm, AccountNavigation, AccountMenu;
+    use AccountMenu;
+    use AccountNavigation;
+    use Modal;
+    use UserForm;
 
     // include url of current page
     public $URL = '/en/my-address/';
@@ -53,6 +58,9 @@ class UserAddress extends Page
     public $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[2]/label';
 
     public $newShipAddressForm = '//div[@class="panel panel-default dd-add-delivery-address"]';
+
+    private $panelsWithShippingAddresses =
+        '#shippingAddress > div.row.dd-available-addresses > div > div.panel:not(.dd-add-delivery-address)';
 
     /**
      * Opens billing address form.
@@ -112,19 +120,18 @@ class UserAddress extends Page
     }
 
     /**
-     * Deletes selected shipping address.
-     *
      * @param int $position The position of the Address
-     *
      * @return $this
      */
     public function deleteShippingAddress(int $position)
     {
         $I = $this->user;
-        $I->click(sprintf($this->selectShipAddress, $position));
-        $I->waitForElementVisible(sprintf($this->deleteShipAddress, $position));
-        $I->click(sprintf($this->deleteShipAddress, $position));
-        $I->click(Translator::translate('DELETE'));
+        $selectBtn = sprintf($this->selectShipAddress, $position);
+        $deleteBtn = sprintf($this->deleteShipAddress, $position);
+        $I->click($selectBtn);
+        $I->waitForElementVisible($deleteBtn);
+        $I->click($deleteBtn);
+        $this->confirmDeletion();
         return $this;
     }
 
@@ -179,6 +186,17 @@ class UserAddress extends Page
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
         $selectedShippingAddress = sprintf($this->shippingAddress, $id);
         $I->assertEquals($I->clearString($addressInfo), $I->clearString($I->grabTextFrom($selectedShippingAddress)));
+        return $this;
+    }
+
+    /**
+     * @param int $cnt
+     * @return $this
+     */
+    public function seeNumberOfShippingAddresses(int $cnt): self
+    {
+        $I = $this->user;
+        $I->seeNumberOfElements($this->panelsWithShippingAddresses, $cnt);
         return $this;
     }
 
