@@ -14,15 +14,14 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait Modal
 {
-    private $confirmDeletionBtn = '.modal-dialog .modal-body form button.btn-danger';
+    private $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
 
     public function confirmDeletion(): void
     {
         $I = $this->user;
         $I->waitForPageLoad();
-        $I->click(
+        $I->seeAndClick(
             Locator::contains($this->confirmDeletionBtn, Translator::translate('DD_DELETE'))
         );
-        $I->waitForPageLoad();
     }
 }
