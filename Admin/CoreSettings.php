@@ -40,6 +40,9 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $I->selectEditFrame();
 
         $I->click($this->newShopButton);
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
         $I->waitForElementVisible($this->newShopNameField);
 
         //create new shop
@@ -48,7 +51,9 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $option = $I->grabTextFrom($this->masterShopInSelectOption);
         $I->selectOption($this->shopParentSelect, $option);
         $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForElementVisible($this->activeShopSelect);
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
         $I->checkOption($this->activeShopSelect);
         $I->click(Translator::translate('GENERAL_SAVE'));
 
