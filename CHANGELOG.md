@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
-## [1.3.3] - unreleased
+## [1.3.3] - 2020-07-06
 
 ### Added
 - Methods:
