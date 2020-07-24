@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -30,5 +31,36 @@ class Orders extends Page
         $I->submitForm($this->searchForm, [$this->orderNumberInput => $orderNumber]);
 
         return $this;
+    }
+
+    /**
+     * @param string $field
+     * @param string $value
+     */
+    public function find(string $field, string $value): void
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->fillField($field, $value);
+        $I->submitForm($this->searchForm, []);
+        $I->selectListFrame(); // Waits for list section to load
+
+        $I->click($value);
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+    }
+
+    public function openDownloadsTab(): void
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclorder_downloads'));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
     }
 }

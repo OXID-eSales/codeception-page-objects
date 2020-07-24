@@ -11,6 +11,7 @@ namespace OxidEsales\Codeception\Page\Account\Component;
 
 use Codeception\Util\Locator;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Account\MyDownloads;
 use OxidEsales\Codeception\Page\Account\MyReviews;
 use OxidEsales\Codeception\Page\Account\NewsletterSettings;
 use OxidEsales\Codeception\Page\Account\UserAddress;
@@ -112,6 +113,14 @@ trait AccountNavigation
                 Locator::find('span', ['class' => 'badge'])
             )
         );
+    }
+
+    public function openMyDownloadsPage(): void
+    {
+        $this->clickLinkOnAccountMenu('MY_DOWNLOADS');
+        $page = new MyDownloads($this->user);
+        $this->seePageBreadcrumbs($page, 'MY_DOWNLOADS');
+        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_DOWNLOADS');
     }
 
     /** @param string $title */

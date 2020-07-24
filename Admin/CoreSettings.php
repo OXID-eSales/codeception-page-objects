@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\B2BModule\ScheduledOrders\Tests\Codeception\AcceptanceTester;
+use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SystemTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
@@ -90,5 +91,22 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $I->selectEditFrame();
 
         return new SystemTab($I);
+    }
+
+    /**
+     * @return SettingsTab
+     */
+    public function openSettingsTab(): SettingsTab
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclshop_config'));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new SettingsTab($I);
     }
 }

@@ -6,7 +6,9 @@
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Admin\Product\MainTab;
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -60,5 +62,17 @@ class Products extends Page
         $I->selectEditFrame();
 
         return new MainTab($I);
+    }
+
+    public function openDownloadsTab(): void
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclarticle_files'));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
     }
 }
