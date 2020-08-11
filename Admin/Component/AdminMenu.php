@@ -8,10 +8,12 @@ namespace OxidEsales\Codeception\Admin\Component;
 
 use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Admin\CoreSettings;
+use OxidEsales\Codeception\Admin\Languages;
 use OxidEsales\Codeception\Admin\ModulesList;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
+use OxidEsales\Codeception\Admin\Tools;
 use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
@@ -150,5 +152,38 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Users($I);
+    }
+
+    /**
+     * @return Languages
+     */
+    public function openLanguages(): Languages
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxmainmenu'));
+        $I->click(Translator::translate('mxlanguages'));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new Languages($I);
+    }
+
+    /**
+     * @return Tools
+     */
+    public function openTools(): Tools
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxservice'));
+        $I->click(Translator::translate('mxtools'));
+
+        $I->selectEditFrame();
+
+        return new Tools($I);
     }
 }
