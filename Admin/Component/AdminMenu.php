@@ -7,6 +7,7 @@
 namespace OxidEsales\Codeception\Admin\Component;
 
 use OxidEsales\Codeception\Admin\AdminPanel;
+use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\Languages;
 use OxidEsales\Codeception\Admin\ModulesList;
@@ -185,5 +186,21 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Tools($I);
+    }
+
+    /**
+     * @return CMSPages
+     */
+    public function openCMSPages(): CMSPages
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->click(Translator::translate('mxcustnews'));
+        $I->click(Translator::translate('mxcontent'));
+
+        $I->selectEditFrame();
+
+        return new CMSPages($I);
     }
 }
