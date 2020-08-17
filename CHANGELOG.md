@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Page\Account\MyDownloads`
     - `OxidEsales\Codeception\Admin\Languages`
     - `OxidEsales\Codeception\Admin\Tools`
+    - `OxidEsales\Codeception\Admin\CMSPages`
 - Method:
     - `OxidEsales\Codeception\Admin\CoreSettings::openSettingsTab`
     - `OxidEsales\Codeception\Admin\Orders::find`
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Page\Account\Component\AccountNavigation::openMyDownloadsPage`
     - `OxidEsales\Codeception\Admin\Component\AdminMenu::openLanguages`
     - `OxidEsales\Codeception\Admin\Component\AdminMenu::openTools`
+    - `OxidEsales\Codeception\Admin\Component\AdminMenu::openCMSPages`
    
 ## [1.3.3] - 2020-07-06
 
