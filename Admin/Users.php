@@ -28,6 +28,7 @@ class Users extends Page
     public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
     public $newRemarkButton = '#btn.newremark';
     public $deleteRemarkButton = "//input[@value='Delete']";
+    public $remarktextSelector = "//textarea[@name='remarktext']";
 
     /**
      * @param string $field
@@ -60,7 +61,7 @@ class Users extends Page
         $I->selectEditFrame();
         $I->click($this->newButton);
 
-        $I->waitForElementVisible($this->activeField, 3);
+        $I->waitForElementVisible($this->activeFieldSelector, 3);
         $I->dontSeeCheckboxIsChecked($this->activeField);
 
         $this->fillAdminUserForm($I, $adminUser);
@@ -147,6 +148,8 @@ class Users extends Page
         $I->selectEditFrame();
 
         $I->click($this->newRemarkButton);
+
+        $I->waitForElementVisible($this->remarktextSelector, 3);
         $I->fillField("remarktext", $text);
         $I->click(Translator::translate('GENERAL_SAVE'));
 
