@@ -43,6 +43,7 @@ trait AdminUserForm
     Public $passwordField = 'newPassword';
     Public $userRightsField = 'editval[oxuser__oxrights]';
     public $newButton  = '#btn.new';
+    public $activeFieldSelector = "//input[@name='editval[oxuser__oxactive]']";
 
     /**
      * @param Actor     $I
