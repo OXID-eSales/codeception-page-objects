@@ -60,7 +60,9 @@ class Users extends Page
         $I->selectEditFrame();
         $I->click($this->newButton);
 
+        $I->waitForElementVisible($this->activeField, 3);
         $I->dontSeeCheckboxIsChecked($this->activeField);
+
         $this->fillAdminUserForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
