@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Admin\Languages`
     - `OxidEsales\Codeception\Admin\Tools`
     - `OxidEsales\Codeception\Admin\CMSPages`
+    - `OxidEsales\Codeception\Admin\Component\dminUserForm`
+    - `OxidEsales\Codeception\Admin\DataObject\AdminUser`
 - Method:
     - `OxidEsales\Codeception\Admin\CoreSettings::openSettingsTab`
     - `OxidEsales\Codeception\Admin\Orders::find`
@@ -37,6 +39,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Admin\Component\AdminMenu::openLanguages`
     - `OxidEsales\Codeception\Admin\Component\AdminMenu::openTools`
     - `OxidEsales\Codeception\Admin\Component\AdminMenu::openCMSPages`
+    - `OxidEsales\Codeception\Admin\Users::createNewUser`
+    - `OxidEsales\Codeception\Admin\Users::editUser`
+    - `OxidEsales\Codeception\Admin\Users::openExtendedTab`
+    - `OxidEsales\Codeception\Admin\Users::openHistoryTab`
+    - `OxidEsales\Codeception\Admin\Users::openProductsTab`
+    - `OxidEsales\Codeception\Admin\Users::openPaymentTab`
+    - `OxidEsales\Codeception\Admin\Users::createNewRemark`
+    - `OxidEsales\Codeception\Admin\Users::deleteRemark`
    
 ## [1.3.3] - 2020-07-06
 
