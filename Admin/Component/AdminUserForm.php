@@ -20,7 +20,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 trait AdminUserForm
 {
-    Public $activeField = 'editval[oxuser__oxactive]';
+    Public $activeField = "//input[@name='editval[oxuser__oxactive]'][@type='checkbox']";
     Public $usernameField = 'editval[oxuser__oxusername]';
     Public $customerNumberField = 'editval[oxuser__oxcustnr]';
     Public $titleField = 'editval[oxuser__oxsal]';
@@ -43,7 +43,6 @@ trait AdminUserForm
     Public $passwordField = 'newPassword';
     Public $userRightsField = 'editval[oxuser__oxrights]';
     public $newButton  = '#btn.new';
-    public $activeFieldSelector = "//input[@name='editval[oxuser__oxactive]']";
 
     /**
      * @param Actor     $I
@@ -146,6 +145,7 @@ trait AdminUserForm
      */
     private function fillActive(Actor $I, bool $active): self
     {
+        $I->waitForElementVisible($this->activeField, 3);
         ($active) ? $I->checkOption($this->activeField) : $I->uncheckOption($this->activeField);
         return $this;
     }

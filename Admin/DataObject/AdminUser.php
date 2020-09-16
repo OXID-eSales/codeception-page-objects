@@ -17,7 +17,7 @@ use function GuzzleHttp\Psr7\str;
 class AdminUser
 {
     /** @var bool */
-    private $active;
+    private $active = false;
 
     /** @var string */
     private $username;
