@@ -58,10 +58,11 @@ class Users extends Page
     {
         $I = $this->user;
 
-        $I->selectEditFrame();
         $I->click($this->newButton);
 
-        $I->waitForElementVisible($this->activeFieldSelector, 3);
+        $I->selectEditFrame();
+
+        $I->waitForElementVisible($this->activeField, 3);
         $I->dontSeeCheckboxIsChecked($this->activeField);
 
         $this->fillAdminUserForm($I, $adminUser);
@@ -75,6 +76,8 @@ class Users extends Page
     public function editUser(AdminUser $adminUser): void
     {
         $I = $this->user;
+
+        $I->selectEditFrame();
 
         $this->fillAdminUserForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
@@ -145,9 +148,9 @@ class Users extends Page
     {
         $I = $this->user;
 
-        $I->selectEditFrame();
-
         $I->click($this->newRemarkButton);
+
+        $I->selectEditFrame();
 
         $I->waitForElementVisible($this->remarktextSelector, 3);
         $I->fillField("remarktext", $text);
