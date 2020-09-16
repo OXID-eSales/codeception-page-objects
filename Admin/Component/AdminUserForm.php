@@ -13,12 +13,7 @@ use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Trait for user form
- *
- * @package OxidEsales\Codeception\Page\Component
- */
-trait AdminUserForm
+class AdminUserForm
 {
     Public $activeField = "//input[@name='editval[oxuser__oxactive]'][@type='checkbox']";
     Public $usernameField = 'editval[oxuser__oxusername]';
@@ -48,7 +43,7 @@ trait AdminUserForm
      * @param Actor     $I
      * @param AdminUser $adminUser
      */
-    public function fillAdminUserForm(Actor $I, AdminUser $adminUser): void
+    public function fillForm(Actor $I, AdminUser $adminUser): void
     {
         $this->fillActive($I, $adminUser->getActive());
 

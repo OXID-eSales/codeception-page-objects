@@ -7,11 +7,13 @@
 namespace OxidEsales\Codeception\Admin;
 
 use Codeception\Util\Locator;
+use OxidEsales\Codeception\Admin\Component\AdminUserAddressesForm;
 use OxidEsales\Codeception\Admin\Component\AdminUserForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\Users\ExtendedTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 
 /**
  * Class Users
@@ -20,15 +22,14 @@ use OxidEsales\Codeception\Page\Page;
  */
 class Users extends Page
 {
-
-    use AdminUserForm;
-
     public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
     public $searchForm = '#search';
     public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
     public $newRemarkButton = '#btn.newremark';
     public $deleteRemarkButton = "//input[@value='Delete']";
     public $remarktextSelector = "//textarea[@name='remarktext']";
+    public $deleteAddressInput = "//input[@value='Delete']";
+    public $newAddressButton = '#btn.newaddress';
 
     /**
      * @param string $field
@@ -65,7 +66,7 @@ class Users extends Page
         $I->waitForElementVisible($this->activeField, 3);
         $I->dontSeeCheckboxIsChecked($this->activeField);
 
-        $this->fillAdminUserForm($I, $adminUser);
+        (new AdminUserForm())->fillForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
     }
@@ -76,10 +77,9 @@ class Users extends Page
     public function editUser(AdminUser $adminUser): void
     {
         $I = $this->user;
-
         $I->selectEditFrame();
 
-        $this->fillAdminUserForm($I, $adminUser);
+        (new AdminUserForm())->fillForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
     }
@@ -166,6 +166,43 @@ class Users extends Page
         $I->selectEditFrame();
 
         $I->click($this->deleteRemarkButton);
+        $I->selectEditFrame();
+    }
+
+    public function deleteSelectedAddress(): void
+    {
+        $I = $this->user;
+
+        $I->selectEditFrame();
+        $I->waitForElementVisible($this->deleteAddressInput, 3);
+        $I->click($this->deleteAddressInput);
+
+        $I->selectEditFrame();
+    }
+
+    public function openAddressesTab(): self
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbcluser_address'));
+
+        $I->selectEditFrame();
+
+        return $this;
+    }
+
+    /**
+     * @param AdminUserAddresses $adminUserAddresses
+     */
+    public function createNewAddress(AdminUserAddresses $adminUserAddresses): void
+    {
+        $I = $this->user;
+
+        $I->click($this->newAddressButton);
+        $I->wait(3);
+        (new AdminUserAddressesForm())->fillForm($I, $adminUserAddresses);
+        $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
     }
 }
