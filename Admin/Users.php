@@ -6,10 +6,14 @@
 
 namespace OxidEsales\Codeception\Admin;
 
+use Codeception\Module\WebDriver;
 use Codeception\Util\Locator;
 use OxidEsales\Codeception\Admin\Component\AdminUserAddressesForm;
+use OxidEsales\Codeception\Admin\Component\AdminUserExtendedInfoForm;
 use OxidEsales\Codeception\Admin\Component\AdminUserForm;
+use OxidEsales\Codeception\Admin\Component\FillForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 use OxidEsales\Codeception\Admin\Users\ExtendedTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
@@ -22,6 +26,10 @@ use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
  */
 class Users extends Page
 {
+    use AdminUserForm;
+    use AdminUserAddressesForm;
+    use AdminUserExtendedInfoForm;
+
     public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
     public $searchForm = '#search';
     public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
@@ -29,13 +37,20 @@ class Users extends Page
     public $deleteRemarkButton = "//input[@value='Delete']";
     public $remarktextSelector = "//textarea[@name='remarktext']";
     public $deleteAddressInput = "//input[@value='Delete']";
-    public $newAddressButton = '#btn.newaddress';
+    public $extendedTabUserAddress = "#test_userAddress";
+    public $historyTabRemarkSelect = "//select[@name='rem_oxid']";
+    public $addressesTabAddressSelect = 'oxaddressid';
+    public $searchResultFirtRowUsernameColumn = "//tr[@id='row.1']/td[3]";
+    public $searchResultSecondRowUsernameColumn = "//tr[@id='row.2']/td[3]";
+    public $remarkField = 'remarktext';
+    public $usernameSearchField = "where[oxuser][oxusername]";
+    public $extendedInfoTabUserAddress = "#test_userAddress";
 
     /**
      * @param string $field
      * @param string $value
      */
-    public function find(string $field, string $value)
+    public function find(string $field, string $value): self
     {
         $I = $this->user;
 
@@ -48,6 +63,8 @@ class Users extends Page
         // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
+
+        return $this;
     }
 
     /**
@@ -55,33 +72,36 @@ class Users extends Page
      *
      * @return $this
      */
-    public function createNewUser(AdminUser $adminUser): void
+    public function createNewUser(AdminUser $adminUser): self
     {
         $I = $this->user;
 
-        $I->click($this->newButton);
-
         $I->selectEditFrame();
+        $I->click($this->newUserButton);
 
-        $I->waitForElementVisible($this->activeField, 3);
-        $I->dontSeeCheckboxIsChecked($this->activeField);
+        $I->waitForPageLoad();
+        $I->dontSeeCheckboxIsChecked($this->userActiveField);
 
-        (new AdminUserForm())->fillForm($I, $adminUser);
+        $this->fillUserMainForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
+
+        return $this;
     }
 
     /**
      * @param AdminUser $adminUser
      */
-    public function editUser(AdminUser $adminUser): void
+    public function editUser(AdminUser $adminUser): self
     {
         $I = $this->user;
         $I->selectEditFrame();
 
-        (new AdminUserForm())->fillForm($I, $adminUser);
+        $this->fillUserMainForm($I, $adminUser);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
+
+        return $this;
     }
 
     public function openExtendedTab(): self
@@ -144,7 +164,7 @@ class Users extends Page
     /**
      * @param string $text
      */
-    public function createNewRemark(string $text): void
+    public function createNewRemark(string $text): self
     {
         $I = $this->user;
 
@@ -152,14 +172,16 @@ class Users extends Page
 
         $I->selectEditFrame();
 
-        $I->waitForElementVisible($this->remarktextSelector, 3);
+        $I->waitForPageLoad();
         $I->fillField("remarktext", $text);
         $I->click(Translator::translate('GENERAL_SAVE'));
 
         $I->selectEditFrame();
+
+        return $this;
     }
 
-    public function deleteRemark(): void
+    public function deleteRemark(): self
     {
         $I = $this->user;
 
@@ -167,17 +189,20 @@ class Users extends Page
 
         $I->click($this->deleteRemarkButton);
         $I->selectEditFrame();
+
+        return $this;
     }
 
-    public function deleteSelectedAddress(): void
+    public function deleteSelectedAddress(): self
     {
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->waitForElementVisible($this->deleteAddressInput, 3);
         $I->click($this->deleteAddressInput);
 
         $I->selectEditFrame();
+
+        return $this;
     }
 
     public function openAddressesTab(): self
@@ -195,14 +220,33 @@ class Users extends Page
     /**
      * @param AdminUserAddresses $adminUserAddresses
      */
-    public function createNewAddress(AdminUserAddresses $adminUserAddresses): void
+    public function createNewAddress(AdminUserAddresses $adminUserAddresses): self
     {
         $I = $this->user;
 
         $I->click($this->newAddressButton);
-        $I->wait(3);
-        (new AdminUserAddressesForm())->fillForm($I, $adminUserAddresses);
+
+        $I->waitForPageLoad();
+        $this->fillUserAddressForm($I, $adminUserAddresses);
+
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
+
+        return $this;
+    }
+
+    /**
+     * @param AdminUserExtendedInfo $adminUserExtendedInfo
+     */
+    public function editExtentedInfo(AdminUserExtendedInfo $adminUserExtendedInfo): self
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+
+        $this->fillUserExtendedInfoForm($I, $adminUserExtendedInfo);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->selectEditFrame();
+
+        return $this;
     }
 }
