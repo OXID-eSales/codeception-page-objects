@@ -10,9 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Component;
 
 use Codeception\Actor;
-use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
-use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AdminUserAddressesForm
 {
@@ -29,13 +27,12 @@ trait AdminUserAddressesForm
     Public $addressCountryIdField = 'editval[oxaddress__oxcountryid]';
     Public $addressPhoneField = 'editval[oxaddress__oxfon]';
     Public $addressFaxField = 'editval[oxaddress__oxfax]';
-    public $newAddressButton = '#btn.newaddress';
 
     /**
      * @param Actor     $I
      * @param AdminUserAddresses $adminUserAddresses
      */
-    private function fillUserAddressForm(Actor $I, AdminUserAddresses $adminUserAddresses): void
+    public function fillUserAddressForm(Actor $I, AdminUserAddresses $adminUserAddresses): void
     {
         $fillForm = new FillForm();
 

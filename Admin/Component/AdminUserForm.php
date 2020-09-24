@@ -11,7 +11,6 @@ namespace OxidEsales\Codeception\Admin\Component;
 
 use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
-use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AdminUserForm
 {
@@ -38,13 +37,12 @@ trait AdminUserForm
     Public $userPasswordField = 'newPassword';
     Public $userRightsField = 'editval[oxuser__oxrights]';
     public $userHasPasswordSelector = '#myedit table tr:nth-child(17) td:nth-child(2)';
-    public $newUserButton  = '#btn.new';
 
     /**
      * @param Actor     $I
      * @param AdminUser $adminUser
      */
-    private function fillUserMainForm(Actor $I, AdminUser $adminUser): void
+    public function fillUserMainForm(Actor $I, AdminUser $adminUser)
     {
         $fillForm = new FillForm();
 
@@ -134,5 +132,4 @@ trait AdminUserForm
             $fillForm->chooseFormSelect($I, $this->userRightsField, $adminUser->getUserRights());
         }
     }
-
 }

@@ -14,18 +14,18 @@ use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 
 trait AdminUserExtendedInfoForm
 {
-    public $extendedInfoEveningPhoneField = 'editval[oxuser__oxprivfon]';
-    public $extendedInfoCelluarPhoneField = 'editval[oxuser__oxmobfon]';
+    public $extendedInfoEveningPhoneField = "//input[@name='editval[oxuser__oxprivfon]']";
+    public $extendedInfoCelluarPhoneField = "//input[@name='editval[oxuser__oxmobfon]']";
     public $extendedInfoRecievesNewsletterField = "/descendant::input[@name='editnews'][2]";
     public $extendedInfoEmailInvalidField = "/descendant::input[@name='emailfailed'][2]";
-    public $extendedInfoCreditRatingField = 'editval[oxuser__oxboni]';
-    public $extendedInfoUrlField = 'editval[oxuser__oxurl]';
+    public $extendedInfoCreditRatingField = "//input[@name='editval[oxuser__oxboni]']";
+    public $extendedInfoUrlField = "//input[@name='editval[oxuser__oxurl]']";
 
     /**
      * @param Actor                 $I
      * @param AdminUserExtendedInfo $adminUserExtendedInfo
      */
-    private function fillUserExtendedInfoForm(Actor $I, AdminUserExtendedInfo $adminUserExtendedInfo): void
+    public function fillUserExtendedInfoForm(Actor $I, AdminUserExtendedInfo $adminUserExtendedInfo): void
     {
         $fillForm = new FillForm();
 

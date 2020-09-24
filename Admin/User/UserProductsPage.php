@@ -7,17 +7,16 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\Codeception\Admin;
+namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Admin\User\UserList;
 
 /**
  * Class Users
  *
- * @package OxidEsales\Codeception\Admin
+ * @package OxidEsales\Codeception\Admin\User
  */
-class Users extends Page
+class UserProductsPage extends Page
 {
     use UserList;
 }
