@@ -28,8 +28,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Admin\Languages`
     - `OxidEsales\Codeception\Admin\Tools`
     - `OxidEsales\Codeception\Admin\CMSPages`
-    - `OxidEsales\Codeception\Admin\Component\dminUserForm`
     - `OxidEsales\Codeception\Admin\DataObject\AdminUser`
+    - `OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses`
+    - `OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo`
+    - `OxidEsales\Codeception\Admin\Component\FillForm`
+-Trait
+    - `OxidEsales\Codeception\Admin\Component\AdminUserForm`
+    - `OxidEsales\Codeception\Admin\Component\AdminUserAddressesForm`
+    - `OxidEsales\Codeception\Admin\Component\AdminUserExtendedInfoForm`
 - Method:
     - `OxidEsales\Codeception\Admin\CoreSettings::openSettingsTab`
     - `OxidEsales\Codeception\Admin\Orders::find`
@@ -47,7 +53,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Admin\Users::openPaymentTab`
     - `OxidEsales\Codeception\Admin\Users::createNewRemark`
     - `OxidEsales\Codeception\Admin\Users::deleteRemark`
-   
+    - `OxidEsales\Codeception\Admin\Users::openAddressesTab`
+    - `OxidEsales\Codeception\Admin\Users::createNewAddress`
+    - `OxidEsales\Codeception\Admin\Users::deleteSelectedAddress`  
+    - `OxidEsales\Codeception\Admin\Users::editExtentedInfo`  
+
 ## [1.3.3] - 2020-07-06
 
 ### Added
