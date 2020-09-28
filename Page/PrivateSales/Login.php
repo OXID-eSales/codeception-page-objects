@@ -67,6 +67,7 @@ class Login extends Page
     {
         $I = $this->user;
         $I->click($this->userRegistration);
+        $I->waitForPageLoad();
         return new Registration($I);
     }
 }
