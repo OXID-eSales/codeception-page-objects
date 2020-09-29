@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,14 +7,9 @@
 
 namespace OxidEsales\Codeception\Page\PrivateSales;
 
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\UserAccount;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class Login
- * @package OxidEsales\Codeception\Page\PrivateSales
- */
 class Login extends Page
 {
     public $URL = '/';
@@ -45,6 +41,7 @@ class Login extends Page
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
         $I->click($this->userAccountLoginButton);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -52,6 +49,7 @@ class Login extends Page
     {
         $I = $this->user;
         $I->click($this->forgotPassword);
+        $I->waitForPageLoad();
         return new UserPasswordReminder($I);
     }
 
@@ -60,6 +58,7 @@ class Login extends Page
         $I = $this->user;
         $I->checkOption($this->confirmAGBOption);
         $I->click($this->confirmAGBButton);
+        $I->waitForPageLoad();
         return new UserAccount($I);
     }
 
@@ -67,6 +66,7 @@ class Login extends Page
     {
         $I = $this->user;
         $I->click($this->userRegistration);
+        $I->waitForPageLoad();
         return new Registration($I);
     }
 }
