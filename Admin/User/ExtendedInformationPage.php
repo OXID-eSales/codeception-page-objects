@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\Component\AdminUserExtendedInfoForm;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
@@ -44,11 +45,23 @@ class ExtendedInformationPage extends Page
     }
 
     /**
-     * @param string $addressInformation
+     * @param AdminUserAddresses $adminUserAddress
      * @return $this
      */
-    public function seeUserAddress(string $addressInformation): self
+    public function seeUserAddress(AdminUserAddresses $adminUserAddress): self
     {
+        $addressInformation = $adminUserAddress->getTitle() . ' '
+            . $adminUserAddress->getFirstName() . ' '
+            . $adminUserAddress->getLastName() . ' '
+            . $adminUserAddress->getCompany() . ' '
+            . $adminUserAddress->getStreet() . ' '
+            . $adminUserAddress->getStreetNumber() . ' '
+            . $adminUserAddress->getStateId() . ' '
+            . $adminUserAddress->getZip() . ' '
+            . $adminUserAddress->getCity() . ' '
+            . $adminUserAddress->getAdditionalInfo() . ' '
+            . $adminUserAddress->getCountryId() . ' '
+            . $adminUserAddress->getPhone();
         $I = $this->user;
         $I->see($addressInformation, $this->extendedInfoTabUserAddress);
         return $this;

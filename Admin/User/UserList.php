@@ -64,7 +64,7 @@ trait UserList
      *
      * @return MainUserPage
      */
-    public function createNewUser(AdminUser $adminUser): MainUserPage
+    public function createNewUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): MainUserPage
     {
         $I = $this->user;
 
@@ -74,7 +74,7 @@ trait UserList
         $I->waitForPageLoad();
         $mainUserPage = new MainUserPage($I);
         $I->dontSeeCheckboxIsChecked($mainUserPage->userActiveField);
-        $mainUserPage->fillUserMainForm($I, $adminUser);
+        $mainUserPage->fillUserMainForm($I, $adminUser, $adminUserAddress);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
 

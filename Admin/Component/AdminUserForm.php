@@ -11,6 +11,7 @@ namespace OxidEsales\Codeception\Admin\Component;
 
 use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 
 trait AdminUserForm
 {
@@ -39,10 +40,11 @@ trait AdminUserForm
     public $userHasPasswordSelector = '#myedit table tr:nth-child(17) td:nth-child(2)';
 
     /**
-     * @param Actor     $I
+     * @param Actor $I
      * @param AdminUser $adminUser
+     * @param AdminUserAddresses $adminUserAddress
      */
-    public function fillUserMainForm(Actor $I, AdminUser $adminUser)
+    public function fillUserMainForm(Actor $I, AdminUser $adminUser, AdminUserAddresses $adminUserAddress)
     {
         $fillForm = new FillForm();
 
@@ -56,60 +58,60 @@ trait AdminUserForm
             $fillForm->fillFormInput($I, $this->userCustomerNumberField, $adminUser->getCustomerNumber());
         }
 
-        if($adminUser->getTitle() != NULL){
-            $fillForm->chooseFormSelect($I, $this->userTitleField, $adminUser->getTitle());
+        if($adminUserAddress->getTitle() != NULL){
+            $fillForm->chooseFormSelect($I, $this->userTitleField, $adminUserAddress->getTitle());
         }
 
-        if($adminUser->getFirstName() != NULL){
-            $fillForm->fillFormInput($I, $this->userFirstNameField, $adminUser->getFirstName());
+        if($adminUserAddress->getFirstName() != NULL){
+            $fillForm->fillFormInput($I, $this->userFirstNameField, $adminUserAddress->getFirstName());
         }
 
-        if($adminUser->getFamilyName() != NULL){
-            $fillForm->fillFormInput($I, $this->userLastNameField, $adminUser->getFamilyName());
+        if($adminUserAddress->getLastName() != NULL){
+            $fillForm->fillFormInput($I, $this->userLastNameField, $adminUserAddress->getLastName());
         }
 
-        if($adminUser->getCompany() != NULL){
-            $fillForm->fillFormInput($I, $this->userCompanyField, $adminUser->getCompany());
+        if($adminUserAddress->getCompany() != NULL){
+            $fillForm->fillFormInput($I, $this->userCompanyField, $adminUserAddress->getCompany());
         }
 
-        if($adminUser->getStreet() != NULL){
-            $fillForm->fillFormInput($I, $this->userStreetField, $adminUser->getStreet());
+        if($adminUserAddress->getStreet() != NULL){
+            $fillForm->fillFormInput($I, $this->userStreetField, $adminUserAddress->getStreet());
         }
 
-        if($adminUser->getStreetNumber() != NULL){
-            $fillForm->fillFormInput($I, $this->userStreetNumberField, $adminUser->getStreetNumber());
+        if($adminUserAddress->getStreetNumber() != NULL){
+            $fillForm->fillFormInput($I, $this->userStreetNumberField, $adminUserAddress->getStreetNumber());
         }
 
-        if($adminUser->getZipCode() != NULL){
-            $fillForm->fillFormInput($I, $this->userZipCodeField, $adminUser->getZipCode());
+        if($adminUserAddress->getZip() != NULL){
+            $fillForm->fillFormInput($I, $this->userZipCodeField, $adminUserAddress->getZip());
         }
 
-        if($adminUser->getCity() != NULL){
-            $fillForm->fillFormInput($I, $this->userCityField, $adminUser->getCity());
+        if($adminUserAddress->getCity() != NULL){
+            $fillForm->fillFormInput($I, $this->userCityField, $adminUserAddress->getCity());
         }
 
         if($adminUser->getUstid() != NULL){
             $fillForm->fillFormInput($I, $this->userUstidField, $adminUser->getUstid());
         }
 
-        if($adminUser->getAdditionalInfo() != NULL){
-            $fillForm->fillFormInput($I, $this->userAdditonalInformationField, $adminUser->getAdditionalInfo());
+        if($adminUserAddress->getAdditionalInfo() != NULL){
+            $fillForm->fillFormInput($I, $this->userAdditonalInformationField, $adminUserAddress->getAdditionalInfo());
         }
 
-        if($adminUser->getCountryId() != NULL){
-            $fillForm->chooseFormSelect($I, $this->userCountryIdField, $adminUser->getCountryId());
+        if($adminUserAddress->getCountryId() != NULL){
+            $fillForm->chooseFormSelect($I, $this->userCountryIdField, $adminUserAddress->getCountryId());
         }
 
-        if($adminUser->getStateId() != NULL){
-            $fillForm->fillFormInput($I, $this->userStateIdField, $adminUser->getStateId());
+        if($adminUserAddress->getStateId() != NULL){
+            $fillForm->fillFormInput($I, $this->userStateIdField, $adminUserAddress->getStateId());
         }
 
-        if($adminUser->getPhone() != NULL){
-            $fillForm->fillFormInput($I, $this->userPhoneField, $adminUser->getPhone());
+        if($adminUserAddress->getPhone() != NULL){
+            $fillForm->fillFormInput($I, $this->userPhoneField, $adminUserAddress->getPhone());
         }
 
-        if($adminUser->getFax() != NULL){
-            $fillForm->fillFormInput($I, $this->userFaxField, $adminUser->getFax());
+        if($adminUserAddress->getFax() != NULL){
+            $fillForm->fillFormInput($I, $this->userFaxField, $adminUserAddress->getFax());
         }
 
         if($adminUser->getBirthday() != NULL){

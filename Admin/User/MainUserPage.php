@@ -11,6 +11,7 @@ namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\Component\AdminUserForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
@@ -26,9 +27,10 @@ class MainUserPage extends Page
 
     /**
      * @param AdminUser $adminUser
+     * @param AdminUserAddresses $adminUserAddress
      * @return $this
      */
-    public function seeUserInformation(AdminUser $adminUser): self
+    public function seeUserInformation(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;
         if ($adminUser->getActive()) {
@@ -39,20 +41,20 @@ class MainUserPage extends Page
         $I->seeOptionIsSelected($this->userRightsField, $adminUser->getUserRights());
         $I->seeInField($this->usernameField, $adminUser->getUsername());
         $I->seeInField($this->userCustomerNumberField, $adminUser->getCustomerNumber());
-        $I->seeOptionIsSelected($this->userTitleField, $adminUser->getTitle());
-        $I->seeInField($this->userFirstNameField, $adminUser->getFirstName());
-        $I->seeInField($this->userLastNameField, $adminUser->getFamilyName());
-        $I->seeInField($this->userCompanyField, $adminUser->getCompany());
-        $I->seeInField($this->userStreetField, $adminUser->getStreet());
-        $I->seeInField($this->userStreetNumberField, $adminUser->getStreetNumber());
-        $I->seeInField($this->userZipCodeField, $adminUser->getZipCode());
-        $I->seeInField($this->userCityField, $adminUser->getCity());
+        $I->seeOptionIsSelected($this->userTitleField, $adminUserAddress->getTitle());
+        $I->seeInField($this->userFirstNameField, $adminUserAddress->getFirstName());
+        $I->seeInField($this->userLastNameField, $adminUserAddress->getLastName());
+        $I->seeInField($this->userCompanyField, $adminUserAddress->getCompany());
+        $I->seeInField($this->userStreetField, $adminUserAddress->getStreet());
+        $I->seeInField($this->userStreetNumberField, $adminUserAddress->getStreetNumber());
+        $I->seeInField($this->userZipCodeField, $adminUserAddress->getZip());
+        $I->seeInField($this->userCityField, $adminUserAddress->getCity());
         $I->seeInField($this->userUstidField, $adminUser->getUstid());
-        $I->seeInField($this->userAdditonalInformationField, $adminUser->getAdditionalInfo());
-        $I->seeOptionIsSelected($this->userCountryIdField, $adminUser->getCountryId());
-        $I->seeInField($this->userStateIdField, $adminUser->getStateId());
-        $I->seeInField($this->userPhoneField, $adminUser->getPhone());
-        $I->seeInField($this->userFaxField, $adminUser->getFax());
+        $I->seeInField($this->userAdditonalInformationField, $adminUserAddress->getAdditionalInfo());
+        $I->seeOptionIsSelected($this->userCountryIdField, $adminUserAddress->getCountryId());
+        $I->seeInField($this->userStateIdField, $adminUserAddress->getStateId());
+        $I->seeInField($this->userPhoneField, $adminUserAddress->getPhone());
+        $I->seeInField($this->userFaxField, $adminUserAddress->getFax());
         $I->seeInField($this->userBirthDayField, $adminUser->getBirthday());
         $I->seeInField($this->userBirthMonthField, $adminUser->getBirthMonth());
         $I->seeInField($this->userBirthYearField, $adminUser->getBirthYear());
@@ -71,12 +73,12 @@ class MainUserPage extends Page
      * @param AdminUser $adminUser
      * @return $this
      */
-    public function editUser(AdminUser $adminUser): self
+    public function editUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;
         $I->selectEditFrame();
 
-        $this->fillUserMainForm($I, $adminUser);
+        $this->fillUserMainForm($I, $adminUser, $adminUserAddress);
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
 
