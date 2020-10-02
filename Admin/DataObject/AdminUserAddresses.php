@@ -50,6 +50,8 @@ class AdminUserAddresses
     /** @var string */
     private $fax;
 
+    /** @var string */
+    private $stateId;
 
     /**
      * @return string|null
@@ -242,4 +244,21 @@ class AdminUserAddresses
     {
         $this->fax = $fax;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getStateId(): ?string
+    {
+        return $this->stateId;
+    }
+
+    /**
+     * @param string $stateId
+     */
+    public function setStateId(string $stateId): void
+    {
+        $this->stateId = $stateId;
+    }
+
 }
