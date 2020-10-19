@@ -243,6 +243,7 @@ trait UserForm
         $I = $this->user;
         $I->waitForElement($locator);
         $I->click($locator);
+        $I->waitForElement('[role=menu]');
         $I->click($value, $valueLocator);
     }
 
