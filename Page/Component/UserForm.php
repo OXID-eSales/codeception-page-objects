@@ -9,10 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component;
 
-/**
- * Trait for user form
- * @package OxidEsales\Codeception\Page\Component
- */
 trait UserForm
 {
     // include form fields of current page
@@ -58,6 +54,8 @@ trait UserForm
     public $delFaxNr = 'deladr[oxaddress__oxfax]';
     public $delCountryId = "//button[@data-id='delCountrySelect']";
     public $delStateId = "//button[@data-id='oxStateSelect_deladr[oxaddress__oxstateid]']";
+
+    public $dropdownMenu = '[role=menu]';
 
     /**
      * @param string $userLoginName
@@ -155,17 +153,14 @@ trait UserForm
     public function enterAddressData(array $userData)
     {
         $I = $this->user;
-        $this->selectUserData($this->billUserSalutation, $userData['userSalutation'], '');
-        unset($userData['userSalutation']);
+        $this->selectBillingAddressSalutation($userData['userSalutation']);
         $this->selectBillingCountry($userData['countryId']);
-        unset($userData['countryId']);
         if (isset($userData['stateId'])) {
-            $this->selectUserData($this->billStateId, $userData['stateId'], '');
-            unset($userData['stateId']);
+            $this->selectBillingAddressState($userData['stateId']);
         }
 
-        foreach ($userData as $key => $value) {
-            $locatorName = 'bill' . ucwords($key);
+        foreach ($this->removeSelectFieldsFromUserData($userData) as $textField => $value) {
+            $locatorName = 'bill' . ucwords($textField);
             $I->fillField($this->{$locatorName}, $value);
         }
         return $this;
@@ -178,7 +173,9 @@ trait UserForm
      */
     public function selectBillingCountry(string $country)
     {
-        $this->selectUserData($this->billCountryId, $country, '');
+        $I = $this->user;
+        $this->openDropdown($this->billCountryId);
+        $I->click($country);
         return $this;
     }
 
@@ -189,7 +186,9 @@ trait UserForm
      */
     public function selectShippingCountry(string $country)
     {
-        $this->selectUserData($this->delCountryId, $country, '#shippingAddress');
+        $I = $this->user;
+        $this->openDropdown($this->delCountryId);
+        $I->click($country, '#shippingAddress');
         return $this;
     }
 
@@ -217,33 +216,25 @@ trait UserForm
     public function enterShippingAddressData(array $userData)
     {
         $I = $this->user;
-        $this->selectUserData($this->delUserSalutation, $userData['userSalutation'], '#shippingAddress');
-        unset($userData['userSalutation']);
+        $this->selectShippingAddressSalutation($userData['userSalutation']);
         $this->selectShippingCountry($userData['countryId']);
-        unset($userData['countryId']);
         if (isset($userData['stateId'])) {
-            $this->selectUserData($this->delStateId, $userData['stateId'], '#shippingAddress');
-            unset($userData['stateId']);
+            $this->selectShippingAddressState($userData['stateId']);
         }
 
-        foreach ($userData as $key => $value) {
-            $locatorName = 'del' . ucwords($key);
+        foreach ($this->removeSelectFieldsFromUserData($userData) as $textField => $value) {
+            $locatorName = 'del' . ucwords($textField);
             $I->fillField($this->{$locatorName}, $value);
         }
         return $this;
     }
 
-    /**
-     * @param string $locator
-     * @param string $value
-     * @param string $valueLocator
-     */
-    private function selectUserData($locator, $value, $valueLocator)
+    private function openDropdown(string $dropdown): void
     {
         $I = $this->user;
-        $I->waitForElement($locator);
-        $I->click($locator);
-        $I->click($value, $valueLocator);
+        $I->waitForElement($dropdown);
+        $I->click($dropdown);
+        $I->waitForElement($this->dropdownMenu);
     }
 
     /**
@@ -251,8 +242,44 @@ trait UserForm
      *
      * @return string
      */
-    private function getBirthDateMonthItem($month)
+    private function getBirthDateMonthItem($month): string
     {
-        return "//div[@class='btn-group bootstrap-select oxMonth form-control dropup open']/div/ul/li[".($month+1)."]/a";
+        return "//div[@class='btn-group bootstrap-select oxMonth form-control dropup open']/div/ul/li["
+            . ($month + 1)
+            . ']/a';
+    }
+
+    private function selectBillingAddressSalutation($userSalutation): void
+    {
+        $I = $this->user;
+        $this->openDropdown($this->billUserSalutation);
+        $I->click($userSalutation);
+    }
+
+    private function selectBillingAddressState($stateId): void
+    {
+        $I = $this->user;
+        $this->openDropdown($this->billStateId);
+        $I->click($stateId);
+    }
+
+    private function removeSelectFieldsFromUserData(array $userData): array
+    {
+        unset($userData['userSalutation'], $userData['countryId'], $userData['stateId']);
+        return $userData;
+    }
+
+    private function selectShippingAddressSalutation($userSalutation): void
+    {
+        $I = $this->user;
+        $this->openDropdown($this->delUserSalutation);
+        $I->click($userSalutation, '#shippingAddress');
+    }
+
+    private function selectShippingAddressState($stateId): void
+    {
+        $I = $this->user;
+        $this->openDropdown($this->delStateId);
+        $I->click($stateId, '#shippingAddress');
     }
 }
