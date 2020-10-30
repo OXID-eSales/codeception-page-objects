@@ -7,17 +7,16 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\Codeception\Admin;
+namespace OxidEsales\Codeception\Admin\Order;
 
-use OxidEsales\Codeception\Admin\Order\OrderList;
 use OxidEsales\Codeception\Page\Page;
 
 /**
- * Class Orders
+ * class MainOrderPage
  *
- * @package OxidEsales\Codeception\Admin
+ * @package OxidEsales\Codeception\Admin\Order
  */
-class Orders extends Page
+class MainOrderPage extends Page
 {
     use OrderList;
 }
