@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -58,5 +59,40 @@ class MainTab extends Page
         $I->selectListFrame();
 
         return $this;
+    }
+
+    /** @param string $value */
+    public function seeInArtNum(string $value): void
+    {
+        $I = $this->user;
+        $I->seeInField($this->numberInput, $value);
+    }
+
+    /** @return $this */
+    public function waitForTab(): self
+    {
+        $I = $this->user;
+        $I->waitForElementClickable($this->numberInput);
+        return $this;
+    }
+
+    /** @return SelectionTab */
+    public function openSelectionTab(): SelectionTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclarticle_attribute'));
+        $I->selectEditFrame();
+        return (new SelectionTab($I))->waitForTab();
+    }
+
+    /** @return VariantsTab */
+    public function openVariantsTab(): VariantsTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclarticle_variant'));
+        $I->selectEditFrame();
+        return (new VariantsTab($I))->waitForTab();
     }
 }

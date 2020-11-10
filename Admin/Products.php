@@ -1,21 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Admin;
 
-use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Admin\Product\MainTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class Products
- *
- * @package OxidEsales\Codeception\Admin
- */
 class Products extends Page
 {
     public $numberInput = "//input[@name='where[oxarticles][oxartnum]']";
@@ -62,6 +59,15 @@ class Products extends Page
         $I->selectEditFrame();
 
         return new MainTab($I);
+    }
+
+    /**
+     * @param string $artNum
+     * @return MainTab
+     */
+    public function filterByArtNum(string $artNum): MainTab
+    {
+        return $this->find($this->numberInput, $artNum);
     }
 
     public function openDownloadsTab(): void
