@@ -6,16 +6,12 @@
 
 namespace OxidEsales\Codeception\Admin\Product;
 
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class MainTab
- *
- * @package OxidEsales\Codeception\Admin\Product
- */
-class MainTab extends Page
+class MainProductPage extends Page
 {
+    use ProductList;
+
     public $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
     public $titleInput = "//input[@name='editval[oxarticles__oxtitle]']";
     public $numberInput = "//input[@name='editval[oxarticles__oxartnum]']";
@@ -29,9 +25,9 @@ class MainTab extends Page
      * @param string|null $number
      * @param int|null    $price
      *
-     * @return MainTab
+     * @return $this
      */
-    public function create(string $title, ?string $number = null, ?int $price = null): MainTab
+    public function create(string $title, ?string $number = null, ?int $price = null): self
     {
         $I = $this->user;
 
@@ -54,45 +50,9 @@ class MainTab extends Page
 
         $I->waitForElementClickable($this->saveButton);
         $I->click($this->saveButton);
-        // Wait for list and edit sections to load
         $I->selectEditFrame();
         $I->selectListFrame();
 
         return $this;
-    }
-
-    /** @param string $value */
-    public function seeInArtNum(string $value): void
-    {
-        $I = $this->user;
-        $I->seeInField($this->numberInput, $value);
-    }
-
-    /** @return $this */
-    public function waitForTab(): self
-    {
-        $I = $this->user;
-        $I->waitForElementClickable($this->numberInput);
-        return $this;
-    }
-
-    /** @return SelectionTab */
-    public function openSelectionTab(): SelectionTab
-    {
-        $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_attribute'));
-        $I->selectEditFrame();
-        return (new SelectionTab($I))->waitForTab();
-    }
-
-    /** @return VariantsTab */
-    public function openVariantsTab(): VariantsTab
-    {
-        $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_variant'));
-        $I->selectEditFrame();
-        return (new VariantsTab($I))->waitForTab();
     }
 }

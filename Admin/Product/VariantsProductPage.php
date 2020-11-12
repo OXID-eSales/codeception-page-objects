@@ -12,27 +12,24 @@ namespace OxidEsales\Codeception\Admin\Product;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-class VariantsTab extends Page
+class VariantsProductPage extends Page
 {
+    use ProductList;
+
     public $editVariantButton = '#test_variant\.%d > td:nth-child(1) > a';
-    public $selectionListsTitle = 'ARTICLE_VARIANT_SELECTLIST';
 
     /**
      * @param int $variant
-     * @return MainTab
+     *
+     * @return MainProductPage
      */
-    public function openEditProductVariant(int $variant): MainTab
+    public function openEditProductVariant(int $variant): MainProductPage
     {
         $I = $this->user;
-        $I->click(sprintf($this->editVariantButton, $variant));
-        return (new MainTab($I))->waitForTab();
-    }
 
-    /** @return $this */
-    public function waitForTab(): self
-    {
-        $I = $this->user;
-        $I->waitForText(Translator::translate($this->selectionListsTitle));
-        return $this;
+        $I->click(sprintf($this->editVariantButton, $variant));
+        $I->waitForPageLoad();
+
+        return new MainProductPage($I);
     }
 }

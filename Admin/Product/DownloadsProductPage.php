@@ -7,12 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\Codeception\Admin;
+namespace OxidEsales\Codeception\Admin\Product;
 
-use OxidEsales\Codeception\Admin\Product\ProductList;
 use OxidEsales\Codeception\Page\Page;
 
-class Products extends Page
+class DownloadsProductPage extends Page
 {
     use ProductList;
 }
