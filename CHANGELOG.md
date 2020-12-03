@@ -18,8 +18,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `AccountNavigation:$listmaniaLink`
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
-    
-## [1.3.4] - Unreleased
+
+## [1.5.0] - Unreleased
+### Added
+- Support of codeception v4
+
+
+## [1.4.0] - 2020-11-10
 
 ### Added
 - Class:
@@ -170,7 +175,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
-[1.3.4]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.3.4
+[1.4.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.4.0
 [1.3.3]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.2..v1.3.3
 [1.3.2]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.1..v1.3.2
 [1.3.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.0..v1.3.1
