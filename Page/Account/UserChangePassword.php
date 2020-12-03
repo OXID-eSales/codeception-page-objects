@@ -8,6 +8,7 @@ namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
+use Facebook\WebDriver\WebDriverKeys;
 
 /**
  * Class for my-password page
@@ -45,11 +46,11 @@ class UserChangePassword extends Page
     public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
     {
         $I = $this->user;
-        $I->pressKey($this->userOldPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userOldPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userOldPassword, $oldPassword);
-        $I->pressKey($this->userNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userNewPassword, $newPassword);
-        $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], \WebDriverKeys::DELETE);
+        $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
         return $this;
     }

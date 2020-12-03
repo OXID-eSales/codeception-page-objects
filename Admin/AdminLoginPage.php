@@ -36,6 +36,7 @@ class AdminLoginPage extends AdminPanel
 
         $adminPanel = new AdminPanel($I);
         $I->selectBaseFrame();
+        $I->waitForText(Translator::translate('NAVIGATION_HOME'));
         $I->see(Translator::translate('HOME_DESC'));
 
         return $adminPanel;
