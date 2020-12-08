@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product\Popup;
 
+use Facebook\WebDriver\WebDriverKeys;
 use OxidEsales\Codeception\Page\Page;
 
 class AssignSelectionListsPopup extends Page
@@ -28,7 +29,7 @@ class AssignSelectionListsPopup extends Page
         $I = $this->user;
 
         $I->fillField("$this->unassignedList $this->titleFilter", $itemTitle);
-        $I->pressKey("$this->unassignedList $this->titleFilter", \WebDriverKeys::ENTER);
+        $I->pressKey("$this->unassignedList $this->titleFilter", WebDriverKeys::ENTER);
         $I->waitForText($itemTitle, 10, "$this->unassignedList $this->firstRow");
         $I->dragAndDrop("$this->unassignedList $this->firstRow", $this->assignedList);
         $I->waitForText($itemTitle, 15, $this->assignedList);
