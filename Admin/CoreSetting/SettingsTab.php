@@ -36,4 +36,30 @@ class SettingsTab extends Page
 
         return $this;
     }
+
+    public function openShopFrontendDropdown(): SettingsTab
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+
+        $I->selectEditFrame();
+        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_SHOP_FRONTEND'));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return $this;
+    }
+
+    public function openStartCategoryPopup(): StartCategoryFrontendPopup
+    {
+        $I = $this->user;
+        $I->click("//input[@value='---']");
+
+        $I->switchToNextTab();
+        $I->waitForElementVisible(['class' => 'yui-dt-data']);
+
+        return new StartCategoryFrontendPopup($I);
+    }
 }
