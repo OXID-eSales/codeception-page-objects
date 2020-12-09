@@ -8,13 +8,10 @@ namespace OxidEsales\Codeception\Admin\Product;
 
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class MainTab
- *
- * @package OxidEsales\Codeception\Admin\Product
- */
-class MainTab extends Page
+class MainProductPage extends Page
 {
+    use ProductList;
+
     public $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
     public $titleInput = "//input[@name='editval[oxarticles__oxtitle]']";
     public $numberInput = "//input[@name='editval[oxarticles__oxartnum]']";
@@ -28,9 +25,9 @@ class MainTab extends Page
      * @param string|null $number
      * @param int|null    $price
      *
-     * @return MainTab
+     * @return $this
      */
-    public function create(string $title, ?string $number = null, ?int $price = null): MainTab
+    public function create(string $title, ?string $number = null, ?int $price = null): self
     {
         $I = $this->user;
 
@@ -53,7 +50,6 @@ class MainTab extends Page
 
         $I->waitForElementClickable($this->saveButton);
         $I->click($this->saveButton);
-        // Wait for list and edit sections to load
         $I->selectEditFrame();
         $I->selectListFrame();
 

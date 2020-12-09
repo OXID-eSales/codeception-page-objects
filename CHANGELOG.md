@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.4.0] - 2020-11-10
 
 ### Added
+- Admin Product page objects:
+    - Selection tab
+    - Variants tab
+    - Assign selection lists Popup window
 - Class:
     - `OxidEsales\Codeception\Admin\CoreSetting\SettingsTab`
     - `OxidEsales\Codeception\Page\Account\MyDownloads`
