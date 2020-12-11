@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
-use OxidEsales\B2BModule\ScheduledOrders\Tests\Codeception\AcceptanceTester;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
