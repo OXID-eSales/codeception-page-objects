@@ -138,6 +138,7 @@ class Basket extends Page
         $I = $this->user;
         $I->fillField($this->addBasketCouponField, $couponNumber);
         $I->click($this->addBasketCouponButton);
+        $I->waitForElementVisible('.couponData');
         return $this;
     }
 
