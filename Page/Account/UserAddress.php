@@ -128,10 +128,9 @@ class UserAddress extends Page
         $I = $this->user;
         $selectBtn = sprintf($this->selectShipAddress, $position);
         $deleteBtn = sprintf($this->deleteShipAddress, $position);
-        $I->click($selectBtn);
-        $I->waitForElementVisible($deleteBtn);
-        $I->click($deleteBtn);
-        $this->confirmDeletion();
+        $I->retryClick($selectBtn);
+        $I->retryClick($deleteBtn);
+        $this->confirmShippingAddressDeletion($position);
         return $this;
     }
 
