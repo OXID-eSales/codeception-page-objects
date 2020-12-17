@@ -175,7 +175,7 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->billCountryId);
-        $I->click($country);
+        $I->retryClick($country);
         return $this;
     }
 
@@ -188,7 +188,7 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->delCountryId);
-        $I->click($country, '#shippingAddress');
+        $I->retryClick($country, '#shippingAddress');
         return $this;
     }
 
@@ -233,7 +233,8 @@ trait UserForm
     {
         $I = $this->user;
         $I->waitForElement($dropdown);
-        $I->click($dropdown);
+        $I->scrollTo($dropdown);
+        $I->retryClick($dropdown);
         $I->waitForElement($this->dropdownMenu);
     }
 
@@ -253,14 +254,14 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->billUserSalutation);
-        $I->click($userSalutation);
+        $I->retryClick($userSalutation);
     }
 
     private function selectBillingAddressState($stateId): void
     {
         $I = $this->user;
         $this->openDropdown($this->billStateId);
-        $I->click($stateId);
+        $I->retryClick($stateId);
     }
 
     private function removeSelectFieldsFromUserData(array $userData): array
@@ -273,13 +274,13 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->delUserSalutation);
-        $I->click($userSalutation, '#shippingAddress');
+        $I->retryClick($userSalutation, '#shippingAddress');
     }
 
     private function selectShippingAddressState($stateId): void
     {
         $I = $this->user;
         $this->openDropdown($this->delStateId);
-        $I->click($stateId, '#shippingAddress');
+        $I->retryClick($stateId, '#shippingAddress');
     }
 }

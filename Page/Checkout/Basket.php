@@ -158,7 +158,7 @@ class Basket extends Page
     public function openGiftSelection(int $itemPosition)
     {
         $I = $this->user;
-        $I->click(sprintf($this->openGiftSelection, $itemPosition));
+        $I->retryClick(sprintf($this->openGiftSelection, $itemPosition));
         $I->waitForText(Translator::translate('GIFT_OPTION'));
         return new GiftSelection($I);
     }

@@ -31,7 +31,7 @@ class AssignSelectionListsPopup extends Page
         $I->fillField("$this->unassignedList $this->titleFilter", $itemTitle);
         $I->pressKey("$this->unassignedList $this->titleFilter", WebDriverKeys::ENTER);
         $I->wait(3);
-        $I->dragAndDrop("$this->unassignedList $this->firstRow", $this->assignedList);
+        $I->retryDragAndDrop("$this->unassignedList $this->firstRow", $this->assignedList);
         $I->wait(3);
 
         return $this;

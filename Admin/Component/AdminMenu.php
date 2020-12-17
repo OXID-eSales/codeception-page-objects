@@ -25,20 +25,19 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 trait AdminMenu
 {
-    public $coreSettingsLink = '/html/body/table/tbody/tr/td[1]/dl[1]/dd/ul/li[1]/a';
-    public $categoryTitle = "//input[@name='editval[oxcategories__oxtitle]']";
-
     /**
      * @return CoreSettings
      */
     public function openCoreSettings(): CoreSettings
     {
         $I = $this->user;
-        $I->selectBaseFrame();
-        $I->waitForElementVisible($this->coreSettingsLink);
-        $I->click($this->coreSettingsLink);
-        //bad solution, but it works. try to figure out something reasonable
-        $I->wait(3);
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxmainmenu'));
+        $I->retryClick(Translator::translate('mxcoresett'));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
 
         return new CoreSettings($I);
     }
@@ -53,7 +52,7 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectHeaderFrame();
-        $I->click(Translator::translate('NAVIGATION_HOME'));
+        $I->retryClick(Translator::translate('NAVIGATION_HOME'));
         $I->selectBaseFrame();
         $I->waitForText(Translator::translate('NAVIGATION_HOME'));
 
@@ -68,8 +67,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxmanageprod'));
-        $I->click(Translator::translate('mxcategories'));
+        $I->retryClick(Translator::translate('mxmanageprod'));
+        $I->retryClick(Translator::translate('mxcategories'));
         $I->selectEditFrame();
         $I->waitForElement($this->categoryTitle);
 
@@ -84,8 +83,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxextensions'));
-        $I->click(Translator::translate('mxmodule'));
+        $I->retryClick(Translator::translate('mxextensions'));
+        $I->retryClick(Translator::translate('mxmodule'));
         $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
@@ -100,8 +99,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxorders'));
-        $I->click(Translator::translate('mxdisplayorders'));
+        $I->retryClick(Translator::translate('mxorders'));
+        $I->retryClick(Translator::translate('mxdisplayorders'));
         $I->waitForDocumentReadyState();
 
         return new Orders($I);
@@ -115,8 +114,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxmanageprod'));
-        $I->click(Translator::translate('mxarticles'));
+        $I->retryClick(Translator::translate('mxmanageprod'));
+        $I->retryClick(Translator::translate('mxarticles'));
 
         // After clicking on Products link two requests are executed:
         // - load product list section
@@ -139,8 +138,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxuadmin'));
-        $I->click(Translator::translate('mxusers'));
+        $I->retryClick(Translator::translate('mxuadmin'));
+        $I->retryClick(Translator::translate('mxusers'));
 
         // After clicking on Users link two requests are executed:
         // - load user list section
@@ -163,8 +162,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxmainmenu'));
-        $I->click(Translator::translate('mxlanguages'));
+        $I->retryClick(Translator::translate('mxmainmenu'));
+        $I->retryClick(Translator::translate('mxlanguages'));
 
         $I->selectListFrame();
         $I->selectEditFrame();
@@ -180,8 +179,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxservice'));
-        $I->click(Translator::translate('mxtools'));
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('mxtools'));
 
         $I->selectEditFrame();
 
@@ -196,8 +195,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->click(Translator::translate('mxcustnews'));
-        $I->click(Translator::translate('mxcontent'));
+        $I->retryClick(Translator::translate('mxcustnews'));
+        $I->retryClick(Translator::translate('mxcontent'));
 
         $I->selectEditFrame();
 
