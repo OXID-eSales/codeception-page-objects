@@ -70,7 +70,7 @@ trait AdminMenu
         $I->retryClick(Translator::translate('mxmanageprod'));
         $I->retryClick(Translator::translate('mxcategories'));
         $I->selectEditFrame();
-        $I->waitForElement($this->categoryTitle);
+        $I->waitForDocumentReadyState();
 
         return new ProductCategories($I);
     }
