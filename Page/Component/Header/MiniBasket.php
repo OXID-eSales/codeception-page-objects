@@ -104,4 +104,18 @@ trait MiniBasket
         $I->see(Translator::translate('CART'));
         return new Basket($I);
     }
+
+    public function checkBasketEmpty(): void
+    {
+        $I = $this->user;
+        $I->click($this->miniBasketMenuElement);
+        $I->see(Translator::translate('BASKET_EMPTY'));
+    }
+
+    public function seeCountdownWithinBasket(): void
+    {
+        $I = $this->user;
+        $I->click($this->miniBasketMenuElement);
+        $I->seeElement('#countdown');
+    }
 }
