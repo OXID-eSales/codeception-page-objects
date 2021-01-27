@@ -68,13 +68,12 @@ class ProductSearchList extends Page
      *
      * @return ProductDetails
      */
-    public function selectVariant(int $itemId, string $variantValue, string $waitForText = '')
+    public function selectVariant(int $itemId, string $variantValue)
     {
         $I = $this->user;
         $I->click(sprintf($this->variantSelection, $itemId));
         $I->click($variantValue);
-        //wait for JS to finish
-        $I->waitForJS("return $.active == 0;",10);
+        $I->waitForText($variantValue);
         return new ProductDetails($I);
     }
 
