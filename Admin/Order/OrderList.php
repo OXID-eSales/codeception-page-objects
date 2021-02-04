@@ -103,4 +103,34 @@ trait OrderList
 
         return new ProductsOrderPage($I);
     }
+
+    /**
+     * @return MainOrderPage
+     */
+    public function deleteOrder($columNumber = '1'): MainOrderPage
+    {
+        $this->executeListModifier("#del.$columNumber");
+
+        return new MainOrderPage($this->user);
+    }
+
+    /**
+     * @return MainOrderPage
+     */
+    public function cancelOrder($columNumber = '1'): MainOrderPage
+    {
+        $this->executeListModifier("#pau.$columNumber");
+
+        return new MainOrderPage($this->user);
+    }
+
+    private function executeListModifier($modifierId): void
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->click($modifierId);
+        $I->acceptPopup();
+        $I->waitForDocumentReadyState();
+    }
 }
