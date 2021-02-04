@@ -124,7 +124,7 @@ trait OrderList
         return new MainOrderPage($this->user);
     }
 
-    private function executeListModifier($modifierId)
+    private function executeListModifier($modifierId): void
     {
         $I = $this->user;
 
