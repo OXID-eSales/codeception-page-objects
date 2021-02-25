@@ -11,6 +11,7 @@ use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\Languages;
 use OxidEsales\Codeception\Admin\ModulesList;
+use OxidEsales\Codeception\Admin\Newsletter;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
@@ -201,5 +202,23 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new CMSPages($I);
+    }
+
+
+    /**
+     * @return Newsletter
+     */
+    public function openNewsletter(): Newsletter
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxcustnews'));
+        $I->retryClick(Translator::translate('mxnewsletter'));
+
+        $I->waitForPageLoad();
+        $I->selectBaseFrame();
+
+        return new Newsletter($I);
     }
 }
