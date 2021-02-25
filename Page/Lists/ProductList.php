@@ -61,6 +61,7 @@ class ProductList extends Page
     {
         $I = $this->user;
         $I->click(sprintf($this->listItemTitle, $itemId));
+        $I->waitForPageLoad();
         return new ProductDetails($I);
     }
 }
