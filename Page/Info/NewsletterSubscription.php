@@ -59,4 +59,17 @@ class NewsletterSubscription extends Page
         $I->click($this->newsletterSubmitButton);
         return $this;
     }
+
+    /**
+     * Submit the newsletter subscription form to quit
+     *
+     * @return $this
+     */
+    public function unsubscribe()
+    {
+        $I = $this->user;
+        $I->checkOption($this->unSubscribeCheckbox);
+        $I->click($this->newsletterSubmitButton);
+        return $this;
+    }
 }
