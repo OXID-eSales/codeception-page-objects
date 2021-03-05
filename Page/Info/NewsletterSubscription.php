@@ -38,7 +38,7 @@ class NewsletterSubscription extends Page
      *
      * @return $this
      */
-    public function enterUserData(string $userEmail, string $userFirstName, string $userLastName)
+    public function enterUserData(string $userEmail = '', string $userFirstName = '', string $userLastName = '')
     {
         $I = $this->user;
         $I->fillField($this->userFirstName, $userFirstName);
@@ -56,6 +56,19 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->checkOption($this->subscribeCheckbox);
+        $I->click($this->newsletterSubmitButton);
+        return $this;
+    }
+
+    /**
+     * Submit the newsletter subscription form to quit
+     *
+     * @return $this
+     */
+    public function unsubscribe()
+    {
+        $I = $this->user;
+        $I->checkOption($this->unSubscribeCheckbox);
         $I->click($this->newsletterSubmitButton);
         return $this;
     }
