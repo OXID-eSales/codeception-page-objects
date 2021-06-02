@@ -35,6 +35,7 @@ class AdminLoginPage extends AdminPanel
         $I->click($this->userAccountLoginButton);
 
         $adminPanel = new AdminPanel($I);
+        $I->waitForElement($adminPanel->adminNavigation);
         $I->selectBaseFrame();
         $I->waitForText(Translator::translate('NAVIGATION_HOME'));
         $I->see(Translator::translate('HOME_DESC'));
