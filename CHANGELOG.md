@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
+## [2.1.0] - 2021-07-09
+
+### Added
+- Method:
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::seeSearchCount`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectProductsPerPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectListDisplayType`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openNextListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openPreviousListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openListPageNumber`
+
 ## [2.0.0] - 2021-03-25
 
 ### Added
@@ -181,6 +192,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - First version of the module introduced
 
 [3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v3.0.0
+[2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0
 [1.4.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.4.0
 [1.3.3]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.2..v1.3.3
