@@ -20,13 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support of codeception v4
 - Add usage of codeception retry
-- Method:
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::seeSearchCount`
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectProductsPerPage`
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectListDisplayType`
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openNextListPage`
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openPreviousListPage`
-  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openListPageNumber`
 
 ## [1.4.0] - 2020-11-10
 
@@ -183,6 +176,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
+[2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0
 [1.4.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.4.0
 [1.3.3]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.2..v1.3.3
