@@ -4,11 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2021-07-09
+
+### Added
+- Method:
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::seeSearchCount`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectProductsPerPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectListDisplayType`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openNextListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openPreviousListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openListPageNumber`
+
 ## [2.0.0] - 2021-03-25
 
 ### Added
 - Support of codeception v4
 - Add usage of codeception retry
+- Method:
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::seeSearchCount`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectProductsPerPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::selectListDisplayType`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openNextListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openPreviousListPage`
+  - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openListPageNumber`
 
 ## [1.4.0] - 2020-11-10
 
