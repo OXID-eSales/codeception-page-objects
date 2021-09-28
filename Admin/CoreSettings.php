@@ -9,16 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\CoreSetting\PerformanceTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SystemTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class CoreSettings
- *
- * @package OxidEsales\Codeception\Admin
- */
-class CoreSettings extends \OxidEsales\Codeception\Page\Page
+class CoreSettings extends Page
 {
     public $newShopButton = '#btn.new';
     public $newShopNameField = '#shopname';
@@ -27,6 +24,7 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
     public $masterShopInSelectOption = '#shopparent option:nth-child(2)';
     public $inheritParentProductsOption = 'editval[oxshops__oxisinherited]';
     public $shopName = 'editval[oxshops__oxname]';
+    public $tabPerformance = 'tbclshop_performance';
 
     /**
      * @param string $shopName
@@ -104,5 +102,21 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $I->selectEditFrame();
 
         return new SettingsTab($I);
+    }
+
+    /**
+     * @return PerformanceTab
+     */
+    public function openPerformanceTab(): PerformanceTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate($this->tabPerformance));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new PerformanceTab($I);
     }
 }
