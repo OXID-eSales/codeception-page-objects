@@ -69,7 +69,7 @@ class CoreSettings extends \OxidEsales\Codeception\Page\Page
         $I->selectListFrame();
         $I->click($subShopName);
         $I->selectEditFrame();
-        $I->waitForText($subShopName, 30, $this->shopName);
+        $I->seeInField($this->shopName, $subShopName);
 
         return $this;
     }
