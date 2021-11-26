@@ -6,7 +6,9 @@
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 class MainProductPage extends Page
 {
@@ -53,6 +55,16 @@ class MainProductPage extends Page
         $I->selectEditFrame();
         $I->selectListFrame();
 
+        return $this;
+    }
+
+    public function save(): MainProductPage
+    {
+        /** @var AcceptanceTester $I */
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->click($this->saveButton);
+        $I->waitForPageLoad();
         return $this;
     }
 }

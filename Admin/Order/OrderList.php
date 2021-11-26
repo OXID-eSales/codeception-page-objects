@@ -10,10 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Order;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Admin\Order\MainOrderPage;
-use OxidEsales\Codeception\Admin\Order\AddressesOrderPage;
-use OxidEsales\Codeception\Admin\Order\ProductsOrderPage;
-use OxidEsales\Codeception\Admin\Order\DownloadsOrderPage;
 
 /**
  * Trait OrderList
@@ -24,6 +20,7 @@ trait OrderList
 {
     public $searchForm = '#search';
     public $orderNumberInput = 'where[oxorder][oxordernr]';
+    public $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
 
     /**
      * @param int $orderNumber
