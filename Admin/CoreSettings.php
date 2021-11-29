@@ -65,8 +65,10 @@ class CoreSettings extends Page
     {
         $I = $this->user;
         $I->selectListFrame();
+        $I->waitForText($subShopName);
         $I->click($subShopName);
         $I->selectEditFrame();
+        $I->waitForPageLoad();
         $I->seeInField($this->shopName, $subShopName);
 
         return $this;
