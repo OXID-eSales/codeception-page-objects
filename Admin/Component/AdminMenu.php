@@ -216,7 +216,6 @@ trait AdminMenu
         $I->retryClick(Translator::translate('mxcustnews'));
         $I->retryClick(Translator::translate('mxnewsletter'));
 
-        $I->waitForPageLoad();
         $I->selectBaseFrame();
 
         return new Newsletter($I);
