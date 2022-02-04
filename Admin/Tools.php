@@ -12,9 +12,7 @@ namespace OxidEsales\Codeception\Admin;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 /**
- * Class Tools
- *
- * @package OxidEsales\Codeception\Admin
+ * @deprecated use Admin\Service\Tools
  */
 class Tools extends \OxidEsales\Codeception\Page\Page
 {

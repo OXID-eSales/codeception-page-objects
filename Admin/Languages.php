@@ -34,19 +34,15 @@ class Languages extends \OxidEsales\Codeception\Page\Page
         $I = $this->user;
 
         $I->selectEditFrame();
-
         $I->click($this->newLanguageButton);
-        $I->wait(3);
 
-        //create new Language
-        $I->checkOption($this->activeCheckbox);
+        $I->retryCheckOption($this->activeCheckbox);
         $I->fillField($this->abbreviationField, $abbreviation);
         $I->fillField($this->nameField, $name);
         $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->wait(5);
 
-        $I->selectListFrame();
-        $I->waitForText($name, 10);
+        $I->retrySelectListFrame();
+        $I->waitForText($name);
 
         return $this;
     }
