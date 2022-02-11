@@ -9,19 +9,18 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Component\FrameLoader;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class Languages
- *
- * @package OxidEsales\Codeception\Admin
- */
-class Languages extends \OxidEsales\Codeception\Page\Page
+class Languages extends Page
 {
+    use FrameLoader;
+
     public $newLanguageButton = '#btn.new';
-    public $activeCheckbox = 'editval[active]';
-    public $abbreviationField = 'editval[abbr]';
-    public $nameField = 'editval[desc]';
+    public $activeCheckbox = "//input[@name='editval[active]'][@type='checkbox']";
+    public $abbreviationField = "//input[@name='editval[abbr]']";
+    public $nameField = "//input[@name='editval[desc]']";
 
     /**
      * @param string $abbreviation
@@ -34,13 +33,15 @@ class Languages extends \OxidEsales\Codeception\Page\Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->newLanguageButton);
+        $this->loadForm($this->newLanguageButton, $this->nameField);
 
-        $I->retryCheckOption($this->activeCheckbox);
+        $I->amGoingTo('fill and submit the form');
+        $I->checkOption($this->activeCheckbox);
         $I->fillField($this->abbreviationField, $abbreviation);
         $I->fillField($this->nameField, $name);
         $I->click(Translator::translate('GENERAL_SAVE'));
 
+        $I->expect('to see the new language in the list');
         $I->retrySelectListFrame();
         $I->waitForText($name);
 
