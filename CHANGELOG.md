@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
+## [2.2.1] - Unreleased
+
+### Added
+- Check for page object availability in:
+  - `Page\Lists\ProductList::openDetailsPage()`
+
 ## [2.2.0] - 2021-11-26
 
 ### Added
