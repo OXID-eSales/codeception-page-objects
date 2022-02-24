@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -61,6 +62,9 @@ class ProductList extends Page
     {
         $I = $this->user;
         $I->click(sprintf($this->listItemTitle, $itemId));
-        return new ProductDetails($I);
+        $I->waitForPageLoad();
+        $productDetails = new ProductDetails($I);
+        $I->waitForElement($productDetails->productTitle);
+        return $productDetails;
     }
 }
