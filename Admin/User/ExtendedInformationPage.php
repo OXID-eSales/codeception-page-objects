@@ -9,24 +9,22 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
-use OxidEsales\Codeception\Admin\Component\AdminUserExtendedInfoForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class ExtendedInformationPage
- *
- * @package OxidEsales\Codeception\Admin\User
- */
 class ExtendedInformationPage extends Page
 {
     use UserList;
-    use AdminUserExtendedInfoForm;
 
-    public $extendedTabUserAddress = "#test_userAddress";
     public $extendedInfoTabUserAddress = "#test_userAddress";
+    public string $extendedInfoEveningPhoneField = "//input[@name='editval[oxuser__oxprivfon]']";
+    public string $extendedInfoCellularPhoneField = "//input[@name='editval[oxuser__oxmobfon]']";
+    public string $extendedInfoReceivesNewsletterField = "/descendant::input[@name='editnews'][2]";
+    public string $extendedInfoEmailInvalidField = "/descendant::input[@name='emailfailed'][2]";
+    public string $extendedInfoCreditRatingField = "//input[@name='editval[oxuser__oxboni]']";
+    public string $extendedInfoUrlField = "//input[@name='editval[oxuser__oxurl]']";
 
     /**
      * @param AdminUserExtendedInfo $adminUserExtendedInfo
@@ -35,11 +33,23 @@ class ExtendedInformationPage extends Page
     public function editExtendedInfo(AdminUserExtendedInfo $adminUserExtendedInfo): self
     {
         $I = $this->user;
-        $I->selectEditFrame();
 
-        $this->fillUserExtendedInfoForm($I, $adminUserExtendedInfo);
+        $I->fillField($this->extendedInfoEveningPhoneField, $adminUserExtendedInfo->getEveningPhone());
+        $I->fillField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCelluarPhone());
+        if ($adminUserExtendedInfo->getRecievesNewsletter()) {
+            $I->checkOption($this->extendedInfoReceivesNewsletterField);
+        } else {
+            $I->uncheckOption($this->extendedInfoReceivesNewsletterField);
+        }
+        if ($adminUserExtendedInfo->getEmailInvalid()) {
+            $I->checkOption($this->extendedInfoEmailInvalidField);
+        } else {
+            $I->uncheckOption($this->extendedInfoEmailInvalidField);
+        }
+        $I->fillField($this->extendedInfoCreditRatingField, $adminUserExtendedInfo->getCreditRating());
+        $I->fillField($this->extendedInfoUrlField, $adminUserExtendedInfo->getUrl());
         $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
 
         return $this;
     }
@@ -75,16 +85,16 @@ class ExtendedInformationPage extends Page
     {
         $I = $this->user;
         $I->seeInField($this->extendedInfoEveningPhoneField, $adminUserExtendedInfo->getEveningPhone());
-        $I->seeInField($this->extendedInfoCelluarPhoneField, $adminUserExtendedInfo->getCelluarPhone());
+        $I->seeInField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCelluarPhone());
         if ($adminUserExtendedInfo->getEmailInvalid()) {
             $I->seeCheckboxIsChecked($this->extendedInfoEmailInvalidField);
         } else {
             $I->dontSeeCheckboxIsChecked($this->extendedInfoEmailInvalidField);
         }
         if ($adminUserExtendedInfo->getRecievesNewsletter()) {
-            $I->seeCheckboxIsChecked($this->extendedInfoRecievesNewsletterField);
+            $I->seeCheckboxIsChecked($this->extendedInfoReceivesNewsletterField);
         } else {
-            $I->dontSeeCheckboxIsChecked($this->extendedInfoRecievesNewsletterField);
+            $I->dontSeeCheckboxIsChecked($this->extendedInfoReceivesNewsletterField);
         }
         $I->seeInField($this->extendedInfoCreditRatingField, $adminUserExtendedInfo->getCreditRating());
         $I->seeInField($this->extendedInfoUrlField, $adminUserExtendedInfo->getUrl());

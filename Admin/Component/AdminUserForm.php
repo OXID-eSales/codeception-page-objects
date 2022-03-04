@@ -13,6 +13,9 @@ use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 
+/**
+ * @deprecated class will be removed. Use \OxidEsales\Codeception\Admin\User\MainUserPage.
+ */
 trait AdminUserForm
 {
     Public $userActiveField = "//input[@name='editval[oxuser__oxactive]'][@type='checkbox']";

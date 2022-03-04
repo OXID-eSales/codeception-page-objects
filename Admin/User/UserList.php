@@ -9,17 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\Component\FrameLoader;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class Users
- *
- * @package OxidEsales\Codeception\Admin\User
- */
 trait UserList
 {
+    use FrameLoader;
+
     public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
     public $searchForm = '#search';
     public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
@@ -67,16 +65,11 @@ trait UserList
     public function createNewUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): MainUserPage
     {
         $I = $this->user;
-
-        $I->selectEditFrame();
-        $I->click($this->newUserButton);
-
-        $I->waitForPageLoad();
         $mainUserPage = new MainUserPage($I);
-        $I->dontSeeCheckboxIsChecked($mainUserPage->userActiveField);
-        $mainUserPage->fillUserMainForm($I, $adminUser, $adminUserAddress);
-        $I->click(Translator::translate('GENERAL_SAVE'));
+
         $I->selectEditFrame();
+        $this->loadForm($this->newUserButton, $mainUserPage->userFirstNameField);
+        $mainUserPage->editUser($adminUser, $adminUserAddress);
 
         return $mainUserPage;
     }
@@ -186,15 +179,11 @@ trait UserList
     public function createNewAddress(AdminUserAddresses $adminUserAddresses): UserAddressPage
     {
         $I = $this->user;
-
-        $I->click($this->newAddressButton);
-
-        $I->waitForPageLoad();
         $addressPage = new UserAddressPage($I);
-        $addressPage->fillUserAddressForm($I, $adminUserAddresses);
 
-        $I->click(Translator::translate('GENERAL_SAVE'));
         $I->selectEditFrame();
+        $this->loadForm($this->newAddressButton, $addressPage->addressFirstNameField);
+        $addressPage->editUserAddress($adminUserAddresses);
 
         return $addressPage;
     }
