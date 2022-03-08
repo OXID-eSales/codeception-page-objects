@@ -34,7 +34,9 @@ class SelectionProductPage extends Page
         );
 
         $I->click($assignSelectionListButtonSelector);
+        $I->waitForDocumentReadyState();
         $I->switchToNextTab();
+        $I->waitForDocumentReadyState();
         $I->maximizeWindow();
 
         $I->waitForText(Translator::translate($this->unassignedSelectionsListTitle));
