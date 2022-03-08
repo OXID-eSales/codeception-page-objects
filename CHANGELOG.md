@@ -19,11 +19,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
-## [2.2.1] - Unreleased
+## [2.3.0] - Unreleased
 
 ### Added
 - Check for page object availability in:
   - `Page\Lists\ProductList::openDetailsPage()`
+- Properties with input selectors in:
+  - `Admin\User\ExtendedInformationPage`
+  - `Admin\User\MainUserPage`
+  - `Admin\User\UserAddressPage`
+- Methods:
+  - `Admin\User\MainUserPage::editUserInformation()`
+  - `Admin\User\UserAddressPage::editUserAddress()`
+- Trait:
+  - `Admin\Component\FrameLoader`
+
+### Deprecated
+- `Admin\Component\AdminUserAddressesForm`
+- `Admin\Component\AdminUserExtendedInfoForm`
+- `Admin\Component\AdminUserForm`
+- `Admin\Component\FillForm`
 
 ## [2.2.0] - 2021-11-26
 

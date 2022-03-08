@@ -11,6 +11,10 @@ namespace OxidEsales\Codeception\Admin\Component;
 
 use Codeception\Actor;
 
+/**
+ * @deprecated class will be removed.
+ * Use corresponding Codeception methods directly.
+ */
 class FillForm
 {
     /**

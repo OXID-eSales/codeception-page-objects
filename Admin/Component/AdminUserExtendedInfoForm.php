@@ -12,6 +12,9 @@ namespace OxidEsales\Codeception\Admin\Component;
 use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 
+/**
+ * @deprecated class will be removed. Use \OxidEsales\Codeception\Admin\User\ExtendedInformationPage.
+ */
 trait AdminUserExtendedInfoForm
 {
     public $extendedInfoEveningPhoneField = "//input[@name='editval[oxuser__oxprivfon]']";

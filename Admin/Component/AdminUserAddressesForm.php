@@ -12,6 +12,9 @@ namespace OxidEsales\Codeception\Admin\Component;
 use Codeception\Actor;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 
+/**
+ * @deprecated class will be removed. Use OxidEsales\Codeception\Admin\User\UserAddressPage.
+ */
 trait AdminUserAddressesForm
 {
     Public $addressTitleField = 'editval[oxaddress__oxsal]';
