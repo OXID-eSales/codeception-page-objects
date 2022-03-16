@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -15,15 +16,12 @@ use OxidEsales\Codeception\Admin\Newsletter;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
-use OxidEsales\Codeception\Admin\Tools;
+use OxidEsales\Codeception\Admin\Service\SystemHealth;
+use OxidEsales\Codeception\Admin\Service\SystemInfo;
+use OxidEsales\Codeception\Admin\Service\Tools;
 use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Trait AdminMenu
- *
- * @package OxidEsales\Codeception\Admin\Component
- */
 trait AdminMenu
 {
     /**
@@ -186,6 +184,30 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Tools($I);
+    }
+
+    public function openSystemInfo(): SystemInfo
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('mxsysinfo'));
+        $I->selectBaseFrame();
+
+        return new SystemInfo($I);
+    }
+
+    public function openSystemHealth(): SystemHealth
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('mxsysreq'));
+        $I->selectEditFrame();
+
+        return new SystemHealth($I);
     }
 
     /**
