@@ -30,6 +30,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.3.0] - Unreleased
 
 ### Added
+- Page objects:
+  - `Admin\Service\SystemHealth`
+  - `Admin\Service\SystemInfo`
+  - `Admin\Service\Tools`
 - Check for page object availability in:
   - `Page\Lists\ProductList::openDetailsPage()`
 - Properties with input selectors in:
@@ -43,10 +47,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Admin\Component\FrameLoader`
 
 ### Deprecated
-- `Admin\Component\AdminUserAddressesForm`
-- `Admin\Component\AdminUserExtendedInfoForm`
-- `Admin\Component\AdminUserForm`
-- `Admin\Component\FillForm`
+- Page object:
+  - `Admin\Component\AdminUserAddressesForm`
+  - `Admin\Component\AdminUserExtendedInfoForm`
+  - `Admin\Component\AdminUserForm`
+  - `Admin\Component\FillForm`
+  - `Admin\Tools`
 
 ## [2.2.0] - 2021-11-26
 
