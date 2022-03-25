@@ -213,10 +213,9 @@ trait AccountMenu
     public function openAccountMenu()
     {
         $I = $this->user;
-        $I->click($this->accountMenuButton);
         $I->waitForPageLoad();
-        $I->waitForJS("return $.active == 0;", 10);
-        $I->waitForElement($this->openAccountMenuButton);
+        $I->click($this->accountMenuButton);
+        $I->waitForElementClickable($this->openAccountMenuButton);
         return $this;
     }
 
