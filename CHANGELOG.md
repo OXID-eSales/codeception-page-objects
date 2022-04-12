@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `Admin\Component\AdminUserExtendedInfoForm`
 - `Admin\Component\AdminUserForm`
 - `Admin\Component\FillForm`
+- `Admin\Tools`
 
 ## [3.0.0] - 2021-07-06
 
