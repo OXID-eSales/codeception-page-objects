@@ -206,6 +206,7 @@ class ProductDetails extends Page
     public function addToCompareList()
     {
         $I = $this->user;
+        $I->waitForElementClickable($this->addToCompareListLink);
         $I->click($this->addToCompareListLink);
         $I->waitForPageLoad();
         return $this;
@@ -228,6 +229,7 @@ class ProductDetails extends Page
     public function addToWishList()
     {
         $I = $this->user;
+        $I->waitForElementClickable($this->addToWishListLink);
         $I->click($this->addToWishListLink);
         $I->waitForPageLoad();
         return $this;
@@ -239,6 +241,7 @@ class ProductDetails extends Page
     public function addToListmania()
     {
         $I = $this->user;
+        $I->waitForElementClickable($this->addToListmania);
         $I->click($this->addToListmania);
         $I->waitForPageLoad();
         return new ProductListmania($I);
@@ -250,6 +253,7 @@ class ProductDetails extends Page
     public function addProductToGiftRegistryList()
     {
         $I = $this->user;
+        $I->waitForElementClickable($this->addToGiftRegistryLink);
         $I->click($this->addToGiftRegistryLink);
         $I->waitForPageLoad();
         return $this;
