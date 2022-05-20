@@ -56,6 +56,7 @@ trait UserForm
     public $delStateId = "//button[@data-id='oxStateSelect_deladr[oxaddress__oxstateid]']";
 
     public $dropdownMenu = '[role=menu]';
+    public $nextOpenedDropdownMenu = '//following::div[contains(@class, "dropdown-menu") and contains(@class, "open")]';
 
     /**
      * @param string $userLoginName
@@ -229,13 +230,16 @@ trait UserForm
         return $this;
     }
 
-    private function openDropdown(string $dropdown): void
+    private function openDropdown(string $dropdownButton): void
     {
         $I = $this->user;
-        $I->waitForElement($dropdown);
-        $I->scrollTo($dropdown);
-        $I->retryClick($dropdown);
-        $I->waitForElement($this->dropdownMenu);
+        $I->waitForElement($dropdownButton);
+        $I->scrollTo($dropdownButton);
+        $I->waitForElementClickable($dropdownButton);
+        $I->click($dropdownButton);
+        $I->waitForElementClickable(
+            $this->getActiveDropdown($dropdownButton)
+        );
     }
 
     /**
@@ -282,5 +286,10 @@ trait UserForm
         $I = $this->user;
         $this->openDropdown($this->delStateId);
         $I->retryClick($stateId, '#shippingAddress');
+    }
+
+    private function getActiveDropdown(string $dropdownButton): string
+    {
+        return $dropdownButton . $this->nextOpenedDropdownMenu;
     }
 }
