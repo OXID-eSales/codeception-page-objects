@@ -118,6 +118,7 @@ trait UserForm
     public function enterUserData(array $userData)
     {
         $I = $this->user;
+        $I->waitForPageLoad();
         $I->fillField($this->userUstIDField, $userData['userUstIDField']);
         $I->fillField($this->userMobFonField, $userData['userMobFonField']);
         $I->fillField($this->userPrivateFonField, $userData['userPrivateFonField']);
@@ -154,6 +155,7 @@ trait UserForm
     public function enterAddressData(array $userData)
     {
         $I = $this->user;
+        $I->waitForPageLoad();
         $this->selectBillingAddressSalutation($userData['userSalutation']);
         $this->selectBillingCountry($userData['countryId']);
         if (isset($userData['stateId'])) {
@@ -176,7 +178,8 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->billCountryId);
-        $I->retryClick($country);
+        $I->click($country);
+        $this->waitForDropdownNotVisible($this->billCountryId);
         return $this;
     }
 
@@ -189,7 +192,8 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->delCountryId);
-        $I->retryClick($country, '#shippingAddress');
+        $I->click($country, '#shippingAddress');
+        $this->waitForDropdownNotVisible($this->delCountryId);
         return $this;
     }
 
@@ -217,6 +221,7 @@ trait UserForm
     public function enterShippingAddressData(array $userData)
     {
         $I = $this->user;
+        $I->waitForPageLoad();
         $this->selectShippingAddressSalutation($userData['userSalutation']);
         $this->selectShippingCountry($userData['countryId']);
         if (isset($userData['stateId'])) {
@@ -258,14 +263,16 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->billUserSalutation);
-        $I->retryClick($userSalutation);
+        $I->click($userSalutation);
+        $this->waitForDropdownNotVisible($this->billUserSalutation);
     }
 
     private function selectBillingAddressState($stateId): void
     {
         $I = $this->user;
         $this->openDropdown($this->billStateId);
-        $I->retryClick($stateId);
+        $I->click($stateId);
+        $this->waitForDropdownNotVisible($this->billStateId);
     }
 
     private function removeSelectFieldsFromUserData(array $userData): array
@@ -278,18 +285,29 @@ trait UserForm
     {
         $I = $this->user;
         $this->openDropdown($this->delUserSalutation);
-        $I->retryClick($userSalutation, '#shippingAddress');
+        $I->click($userSalutation, '#shippingAddress');
+        $this->waitForDropdownNotVisible($this->delUserSalutation);
+
     }
 
     private function selectShippingAddressState($stateId): void
     {
         $I = $this->user;
         $this->openDropdown($this->delStateId);
-        $I->retryClick($stateId, '#shippingAddress');
+        $I->click($stateId, '#shippingAddress');
+        $this->waitForDropdownNotVisible($this->delStateId);
     }
 
     private function getActiveDropdown(string $dropdownButton): string
     {
         return $dropdownButton . $this->nextOpenedDropdownMenu;
+    }
+
+    private function waitForDropdownNotVisible(string $dropdownButton): void
+    {
+        $I = $this->user;
+        $I->waitForElementNotVisible(
+            $this->getActiveDropdown($dropdownButton)
+        );
     }
 }
