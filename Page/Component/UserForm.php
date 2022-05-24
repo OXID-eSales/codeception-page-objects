@@ -298,11 +298,6 @@ trait UserForm
         $this->waitForDropdownNotVisible($this->delStateId);
     }
 
-    private function getActiveDropdown(string $dropdownButton): string
-    {
-        return $dropdownButton . $this->nextOpenedDropdownMenu;
-    }
-
     private function waitForDropdownNotVisible(string $dropdownButton): void
     {
         $I = $this->user;
