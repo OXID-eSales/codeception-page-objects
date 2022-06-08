@@ -66,10 +66,10 @@ trait MiniBasket
     public function openMiniBasket()
     {
         $I = $this->user;
-        $I->waitForElement($this->miniBasketMenuElement);
-        $I->click($this->miniBasketMenuElement);
         $I->waitForPageLoad();
-        $I->see(Translator::translate('DISPLAY_BASKET'));
+        $I->waitForElementClickable($this->miniBasketMenuElement);
+        $I->click($this->miniBasketMenuElement);
+        $I->waitForText(Translator::translate('DISPLAY_BASKET'));
         return $this;
     }
 
