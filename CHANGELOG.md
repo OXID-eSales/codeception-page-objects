@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.0] - Unreleased
+## [2.3.0] - 2022-07-19
 
 ### Added
 - Page objects:
@@ -219,6 +219,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
+[2.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v2.3.0
 [2.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.1.0..v2.2.0
 [2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0
