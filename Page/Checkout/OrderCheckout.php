@@ -1,66 +1,43 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for final order step
- * @package OxidEsales\Codeception\Page\Checkout
- */
 class OrderCheckout extends Page
 {
     // include url of current page
     public $URL = '/index.php?cl=order&lang=1';
-
-    public $billingAddress = '//div[@id="orderAddress"]/div[1]/form/div[2]/div[2]';
-
-    public $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
-
-    public $userRemarkHeader = '//div[@class="panel panel-default orderRemarks"]/div[1]/h3';
-
-    public $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
-
-    public $paymentMethod = '#orderPayment';
-
-    public $shippingMethod = '#orderShipping';
-
-    public $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
-
-    public $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/b';
-
-    public $basketItemId = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/div[1]';
-
-    public $basketItemAmount = '//tr[@id="table_cartItem_%s"]/td[@class="quantity"]';
-
-    public $basketSummaryNet = '#basketTotalProductsNetto';
-
-    public $basketSummaryVat = '//div[@id="basketSummary"]//tr[%s]/td';
-
-    public $basketSummaryGross = '#basketTotalProductsGross';
-
-    public $basketShippingGross = '#basketDeliveryGross';
-
-    public $basketPaymentGross = '#basketPaymentGross';
-
-    public $basketWrappingGross = '#basketWrappingGross';
-
-    public $basketGiftCardGross = '#basketGiftCardGross';
-
-    public $basketTotalPrice = '#basketGrandTotal';
-
-    public $couponInformation = '.couponData';
-
-    public $previousStepLink = '//li[@class="step3 passed "]/a/div[2]';
-
-    public $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
-
-    public $editPayment = '//div[@id="orderShipping"]/div[1]//button';
+    public string $billingAddress = '//div[@id="orderAddress"]/div[1]/form/div[2]/div[2]';
+    public string $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
+    public string $userRemarkHeader = '//div[@class="panel panel-default orderRemarks"]/div[1]/h3';
+    public string $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
+    public string $paymentMethod = '#orderPayment';
+    public string $shippingMethod = '#orderShipping';
+    public string $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+    public string $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/b';
+    public string $basketItemId = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/div[1]';
+    public string $basketItemAmount = '//tr[@id="table_cartItem_%s"]/td[@class="quantity"]';
+    public string $basketSummaryNet = '#basketTotalProductsNetto';
+    public string $basketSummaryVat = '//div[@id="basketSummary"]//tr[%s]/td';
+    public string $basketSummaryGross = '#basketTotalProductsGross';
+    public string $basketShippingGross = '#basketDeliveryGross';
+    public string $basketPaymentGross = '#basketPaymentGross';
+    public string $basketWrappingGross = '#basketWrappingGross';
+    public string $basketGiftCardGross = '#basketGiftCardGross';
+    public string $basketTotalPrice = '#basketGrandTotal';
+    public string $couponInformation = '.couponData';
+    public string $previousStepLink = '//li[@class="step3 passed "]/a/div[2]';
+    public string $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
+    public string $editPayment = '//div[@id="orderShipping"]/div[1]//button';
 
     /**
      * Clicks on submit order button.
@@ -190,20 +167,19 @@ class OrderCheckout extends Page
      *                   'title' => productTitle,
      *                   'amount' => productAmount,
      *                   'totalPrice' => productTotalPrice]
-     *
-     * @param array $basketProducts
-     *
-     * @return $this
      */
-    public function validateOrderItems(array $basketProducts)
+    public function validateOrderItems(array $basketProducts): self
     {
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
-            $itemPosition = $key + 1;
-            $I->see(Translator::translate('PRODUCT_NO') . ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+            $itemPosition = (string)++$key;
+            $I->see(
+                sprintf('%s %s', Translator::translate('PRODUCT_NO'), $basketProduct['id']),
+                sprintf($this->basketItemId, $itemPosition)
+            );
             $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
-            $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
-            $I->see($basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
+            $I->see((string)$basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
+            $I->see((string)$basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
         }
         return $this;
     }
