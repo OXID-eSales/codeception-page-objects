@@ -35,8 +35,8 @@ class ExtendedInformationPage extends Page
         $I = $this->user;
 
         $I->fillField($this->extendedInfoEveningPhoneField, $adminUserExtendedInfo->getEveningPhone());
-        $I->fillField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCelluarPhone());
-        if ($adminUserExtendedInfo->getRecievesNewsletter()) {
+        $I->fillField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCellularPhone());
+        if ($adminUserExtendedInfo->getReceivesNewsletter()) {
             $I->checkOption($this->extendedInfoReceivesNewsletterField);
         } else {
             $I->uncheckOption($this->extendedInfoReceivesNewsletterField);
@@ -85,13 +85,13 @@ class ExtendedInformationPage extends Page
     {
         $I = $this->user;
         $I->seeInField($this->extendedInfoEveningPhoneField, $adminUserExtendedInfo->getEveningPhone());
-        $I->seeInField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCelluarPhone());
+        $I->seeInField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCellularPhone());
         if ($adminUserExtendedInfo->getEmailInvalid()) {
             $I->seeCheckboxIsChecked($this->extendedInfoEmailInvalidField);
         } else {
             $I->dontSeeCheckboxIsChecked($this->extendedInfoEmailInvalidField);
         }
-        if ($adminUserExtendedInfo->getRecievesNewsletter()) {
+        if ($adminUserExtendedInfo->getReceivesNewsletter()) {
             $I->seeCheckboxIsChecked($this->extendedInfoReceivesNewsletterField);
         } else {
             $I->dontSeeCheckboxIsChecked($this->extendedInfoReceivesNewsletterField);

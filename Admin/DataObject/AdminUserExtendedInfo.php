@@ -9,120 +9,70 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\DataObject;
 
-/**
- * Class AdminUserExtendedInfo
- */
 class AdminUserExtendedInfo
 {
-    /** @var string */
-    private $eveningPhone;
+    private string $eveningPhone = '';
+    private string $cellularPhone = '';
+    private bool $receivesNewsletter = false;
+    private bool $emailInvalid = false;
+    private string $creditRating = '';
+    private string $url = '';
 
-    /** @var string */
-    private $celluarPhone;
-
-    /** @var bool */
-    private $recievesNewsletter = false;
-
-    /** @var bool */
-    private $emailInvalid = false;
-
-    /** @var string */
-    private $creditRating;
-
-    /** @var string */
-    private $url;
-
-    /**
-     * @return string|null
-     */
     public function getEveningPhone(): ?string
     {
         return $this->eveningPhone;
     }
 
-    /**
-     * @param string $eveningPhone
-     */
     public function setEveningPhone(string $eveningPhone): void
     {
         $this->eveningPhone = $eveningPhone;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCelluarPhone(): ?string
+    public function getCellularPhone(): ?string
     {
-        return $this->celluarPhone;
+        return $this->cellularPhone;
     }
 
-    /**
-     * @param string $celluarPhone
-     */
-    public function setCelluarPhone(string $celluarPhone): void
+    public function setCellularPhone(string $cellularPhone): void
     {
-        $this->celluarPhone = $celluarPhone;
+        $this->cellularPhone = $cellularPhone;
     }
 
-    /**
-     * @return bool
-     */
-    public function getRecievesNewsletter(): bool
+    public function getReceivesNewsletter(): bool
     {
-        return $this->recievesNewsletter;
+        return $this->receivesNewsletter;
     }
 
-    /**
-     * @param bool $recievesNewsletter
-     */
-    public function setRecievesNewsletter(bool $recievesNewsletter): void
+    public function setReceivesNewsletter(bool $receivesNewsletter): void
     {
-        $this->recievesNewsletter = $recievesNewsletter;
+        $this->receivesNewsletter = $receivesNewsletter;
     }
 
-    /**
-     * @return bool
-     */
     public function getEmailInvalid(): bool
     {
         return $this->emailInvalid;
     }
 
-    /**
-     * @param bool $emailInvalid
-     */
     public function setEmailInvalid(bool $emailInvalid): void
     {
         $this->emailInvalid = $emailInvalid;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCreditRating(): ?string
+    public function getCreditRating(): string
     {
         return $this->creditRating;
     }
 
-    /**
-     * @param string $creditRating
-     */
     public function setCreditRating(string $creditRating): void
     {
         $this->creditRating = $creditRating;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUrl(): ?string
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;
