@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.0.0] - Unreleased
 
+### Added
+- Compatibility with Codeception v5
+
 ### Removed
 - `Admin\Component\AdminUserAddressesForm`
 - `Admin\Component\AdminUserExtendedInfoForm`
