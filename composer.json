@@ -1,6 +1,10 @@
 {
   "name": "oxid-esales/codeception-page-objects",
   "description": "Page Objects for OXID eShop acceptance tests on codeception",
+  "license": [
+    "GPL-3.0-only",
+    "proprietary"
+  ],
   "keywords": [
     "oxid",
     "codeception",
@@ -8,10 +12,6 @@
     "eShop"
   ],
   "homepage": "https://www.oxid-esales.com/en/home.html",
-  "license": [
-    "GPL-3.0-only",
-    "proprietary"
-  ],
   "autoload": {
     "psr-4": {
       "OxidEsales\\Codeception\\Admin\\": "Admin",
