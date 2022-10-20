@@ -13,7 +13,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class AdminPanel extends Page
 {
-    public $adminNavigation = '#navigation';
+    public $adminNavigation = '#navigationfrm';
 
     use AdminMenu;
     use HeaderLinks;
