@@ -65,6 +65,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userRegistrationLink);
         $I->click($this->userRegistrationLink);
         $userRegistrationPage = new UserRegistration($I);
         $breadCrumb = Translator::translate('PAGE_TITLE_REGISTER');
@@ -81,6 +82,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userForgotPasswordButton);
         $I->click($this->userForgotPasswordButton);
         $userPasswordReminderPage = new UserPasswordReminder($I);
         $breadCrumb = Translator::translate('FORGOT_PASSWORD');
@@ -100,6 +102,7 @@ trait AccountMenu
         $I = $this->user;
         // logging in
         $this->openAccountMenu();
+        $I->waitForElement($this->userLoginName);
         $I->fillField($this->userLoginName, $userName);
         $I->fillField($this->userLoginPassword, $userPassword);
         $I->click($this->userLoginButton);
@@ -115,6 +118,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('LOGOUT'));
         $I->click(Translator::translate('LOGOUT'));
         $I->waitForPageLoad();
         Context::resetActiveUser();
@@ -130,6 +134,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userAccountLink);
         $I->click($this->userAccountLink);
         $I->waitForPageLoad();
         return new UserAccount($I);
@@ -144,6 +149,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userAccountGiftRegistryLink);
         $I->click($this->userAccountGiftRegistryLink);
         $I->waitForPageLoad();
         $userGiftRegistryPage = new UserGiftRegistry($I);

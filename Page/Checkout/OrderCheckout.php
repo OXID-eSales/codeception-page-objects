@@ -272,7 +272,8 @@ class OrderCheckout extends Page
     private function convertBillInformationIntoString($userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= Translator::translate('EMAIL').' ';
+       # $transformedAddress .= Translator::translate('EMAIL').' ';
+        $transformedAddress .= Translator::translate('E-mail').' ';  //TODO: fix translation Email vs E-mail
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
