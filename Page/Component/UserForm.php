@@ -254,7 +254,7 @@ trait UserForm
      */
     private function getBirthDateMonthItem($month): string
     {
-        return "//div[@class='btn-group bootstrap-select oxMonth form-control dropup open']/div/ul/li["
+        return "//div[contains(@class,'btn-group bootstrap-select oxMonth form-control')]/div/ul/li["
             . ($month + 1)
             . ']/a';
     }
