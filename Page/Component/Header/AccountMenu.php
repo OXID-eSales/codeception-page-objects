@@ -168,6 +168,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userAccountWishListLink);
         $I->click($this->userAccountWishListLink);
         $I->waitForPageLoad();
         $userWishListPage = new UserWishList($I);
@@ -186,6 +187,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElement($this->userAccountCompareListLink);
         $I->click($this->userAccountCompareListLink);
         $I->waitForPageLoad();
         $productComparePage = new ProductCompare($I);
@@ -220,6 +222,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $I->waitForPageLoad();
+        $I->waitForElement($this->accountMenuButton);
         $I->click($this->accountMenuButton);
         $I->waitForElementClickable($this->openAccountMenuButton);
         return $this;
@@ -245,6 +248,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('MY_PRODUCT_COMPARISON'));
         $cnt = ($count) ? ' '.$count : '';
         $I->see(Translator::translate('MY_PRODUCT_COMPARISON').$cnt, $this->userAccountCompareListText);
         $this->closeAccountMenu();
@@ -259,6 +263,7 @@ trait AccountMenu
     public function checkWishListItemCount(int $count)
     {
         $I = $this->user;
+        $I->waitForText(Translator::translate('MY_WISH_LIST'));
         $cnt = ($count) ? ' '.$count : '';
         $I->see(Translator::translate('MY_WISH_LIST').$cnt, $this->userAccountWishListText);
         return $this;
@@ -272,6 +277,7 @@ trait AccountMenu
     public function checkGiftRegistryItemCount(int $count)
     {
         $I = $this->user;
+        $I->waitForText(Translator::translate('MY_GIFT_REGISTRY'));
         $cnt = ($count) ? ' '.$count : '';
         $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, $this->userAccountGiftRegistryText);
         return $this;
