@@ -14,6 +14,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait Modal
 {
+    private string $modalCloseBtn = '.modal-dialog .modal-content button.close';
     private string $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
     private string $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
 
@@ -36,5 +37,12 @@ trait Modal
         $I->click(
             Locator::contains($button, Translator::translate('DD_DELETE'))
         );
+    }
+
+    public function closeModalBox(): void
+    {
+        $I = $this->user;
+        $I->waitForElementClickable($this->modalCloseBtn);
+        $I->click($this->modalCloseBtn);
     }
 }
