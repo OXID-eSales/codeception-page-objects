@@ -9,6 +9,7 @@ namespace OxidEsales\Codeception\Page\Lists;
 
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
+use OxidEsales\Codeception\Page\Lists\Component\ListOptions;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -17,7 +18,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ProductList extends Page
 {
-    use AccountMenu;
+    use AccountMenu, ListOptions;
 
     public $listItemTitle = '#productList_%s';
 

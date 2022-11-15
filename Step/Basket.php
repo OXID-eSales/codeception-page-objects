@@ -14,6 +14,7 @@ use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Page\Checkout\Basket as BasketPage;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Component\Modal;
 
 /**
  * Class Basket
@@ -21,7 +22,7 @@ use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
  */
 class Basket extends Step
 {
-    use MiniBasket;
+    use MiniBasket, Modal;
 
     /**
      * Add product to the basket without redirection
