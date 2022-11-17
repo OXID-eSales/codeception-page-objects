@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
-## [2.3.0] - Unreleased
+## [2.3.0] - 2022-07-19
 
 ### Added
 - Page objects:
@@ -247,7 +247,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - First version of the module introduced
 
 [4.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v3.0.0..v4.0.0
-[3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v3.0.0
+[3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.3.0..v3.0.0
+[2.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v2.3.0
 [2.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.1.0..v2.2.0
 [2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0

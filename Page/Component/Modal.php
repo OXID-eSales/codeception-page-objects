@@ -14,13 +14,14 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait Modal
 {
-    private $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
-    private $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
+    private string $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
+    private string $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
 
     public function confirmDeletion(): void
     {
         $I = $this->user;
         $I->waitForPageLoad();
+        $I->waitForElementClickable($this->confirmDeletionBtn);
         $I->seeAndClick(
             Locator::contains($this->confirmDeletionBtn, Translator::translate('DD_DELETE'))
         );
@@ -30,11 +31,10 @@ trait Modal
     {
         $I = $this->user;
         $I->waitForPageLoad();
-        $I->retryClick(
-            Locator::contains(
-                sprintf($this->deleteShippingAddressBtn, $position),
-                Translator::translate('DD_DELETE')
-            )
+        $button = sprintf($this->deleteShippingAddressBtn, $position);
+        $I->waitForElementClickable($button);
+        $I->click(
+            Locator::contains($button, Translator::translate('DD_DELETE'))
         );
     }
 }

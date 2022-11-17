@@ -65,6 +65,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userRegistrationLink);
         $I->click($this->userRegistrationLink);
         $userRegistrationPage = new UserRegistration($I);
         $breadCrumb = Translator::translate('PAGE_TITLE_REGISTER');
@@ -81,6 +82,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userForgotPasswordButton);
         $I->click($this->userForgotPasswordButton);
         $userPasswordReminderPage = new UserPasswordReminder($I);
         $breadCrumb = Translator::translate('FORGOT_PASSWORD');
@@ -100,6 +102,7 @@ trait AccountMenu
         $I = $this->user;
         // logging in
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userLoginName);
         $I->fillField($this->userLoginName, $userName);
         $I->fillField($this->userLoginPassword, $userPassword);
         $I->click($this->userLoginButton);
@@ -115,6 +118,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('LOGOUT'));
         $I->click(Translator::translate('LOGOUT'));
         $I->waitForPageLoad();
         Context::resetActiveUser();
@@ -130,6 +134,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userAccountLink);
         $I->click($this->userAccountLink);
         $I->waitForPageLoad();
         return new UserAccount($I);
@@ -144,6 +149,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userAccountGiftRegistryLink);
         $I->click($this->userAccountGiftRegistryLink);
         $I->waitForPageLoad();
         $userGiftRegistryPage = new UserGiftRegistry($I);
@@ -162,6 +168,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userAccountWishListLink);
         $I->click($this->userAccountWishListLink);
         $I->waitForPageLoad();
         $userWishListPage = new UserWishList($I);
@@ -180,6 +187,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userAccountCompareListLink);
         $I->click($this->userAccountCompareListLink);
         $I->waitForPageLoad();
         $productComparePage = new ProductCompare($I);
@@ -197,6 +205,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForElementVisible($this->userAccountLink);
         $I->click($this->userAccountLink);
         $I->waitForPageLoad();
         $userLoginPage = new UserLogin($I);
@@ -214,6 +223,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $I->waitForPageLoad();
+        $I->waitForElementVisible($this->accountMenuButton);
         $I->click($this->accountMenuButton);
         $I->waitForElementClickable($this->openAccountMenuButton);
         return $this;
@@ -225,6 +235,7 @@ trait AccountMenu
     public function closeAccountMenu()
     {
         $I = $this->user;
+        $I->waitForElementVisible($this->accountMenuButton);
         $I->click($this->accountMenuButton);
         $I->waitForElementNotVisible($this->openAccountMenuButton);
         return $this;
@@ -240,6 +251,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $cnt = ($count) ? ' '.$count : '';
+        $I->waitForText(Translator::translate('MY_PRODUCT_COMPARISON'));
         $I->see(Translator::translate('MY_PRODUCT_COMPARISON').$cnt, $this->userAccountCompareListText);
         $this->closeAccountMenu();
         return $this;
@@ -254,6 +266,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
+        $I->waitForText(Translator::translate('MY_WISH_LIST'));
         $I->see(Translator::translate('MY_WISH_LIST').$cnt, $this->userAccountWishListText);
         return $this;
     }
@@ -267,6 +280,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $cnt = ($count) ? ' '.$count : '';
+        $I->waitForText(Translator::translate('MY_GIFT_REGISTRY'));
         $I->see(Translator::translate('MY_GIFT_REGISTRY').$cnt, $this->userAccountGiftRegistryText);
         return $this;
     }

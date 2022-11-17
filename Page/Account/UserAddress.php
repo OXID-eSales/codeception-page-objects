@@ -112,9 +112,13 @@ class UserAddress extends Page
     public function selectShippingAddress(int $position)
     {
         $I = $this->user;
-        $I->click(sprintf($this->selectShipAddress, $position));
-        $I->waitForElementVisible(sprintf($this->openShipAddressForm, $position));
-        $I->click(sprintf($this->openShipAddressForm, $position));
+        $selectAddressBtn = sprintf($this->selectShipAddress, $position);
+        $I->waitForElementClickable($selectAddressBtn);
+        $I->click($selectAddressBtn);
+        $openFormBtn = sprintf($this->openShipAddressForm, $position);
+        $I->waitForElementClickable($openFormBtn);
+        $I->click($openFormBtn);
+        $I->waitForPageLoad();
         $I->waitForElementVisible($this->shipAddressForm);
         return $this;
     }
@@ -127,9 +131,11 @@ class UserAddress extends Page
     {
         $I = $this->user;
         $selectBtn = sprintf($this->selectShipAddress, $position);
+        $I->waitForElementClickable($selectBtn);
+        $I->click($selectBtn);
         $deleteBtn = sprintf($this->deleteShipAddress, $position);
-        $I->retryClick($selectBtn);
-        $I->retryClick($deleteBtn);
+        $I->waitForElementClickable($deleteBtn);
+        $I->click($deleteBtn);
         $this->confirmShippingAddressDeletion($position);
         return $this;
     }
