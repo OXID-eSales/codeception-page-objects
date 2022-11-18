@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -30,7 +31,10 @@ trait NewsletterBox
         $I = $this->user;
         $I->fillField($this->newsletterUserEmail, $userEmail);
         $I->click(Translator::translate('SUBSCRIBE'), $this->newsletterSubscribeButton);
+        $newsletterSubscriptionPage = new NewsletterSubscription($I);
+        $I->waitForElementVisible($newsletterSubscriptionPage->userEmail);
         $I->waitForPageLoad();
-        return new NewsletterSubscription($I);
+
+        return $newsletterSubscriptionPage;
     }
 }
