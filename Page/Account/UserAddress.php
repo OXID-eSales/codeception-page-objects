@@ -215,8 +215,7 @@ class UserAddress extends Page
     private function convertBillInformationIntoString(array $userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        #$transformedAddress .= Translator::translate('EMAIL').' ';
-        $transformedAddress .= Translator::translate('E-mail').' ';  //TODO: fix translation Email vs E-mail
+        $transformedAddress .= Translator::translate('EMAIL').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
