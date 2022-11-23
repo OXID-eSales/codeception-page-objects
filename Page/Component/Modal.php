@@ -14,7 +14,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait Modal
 {
-    private string $modalCloseBtn = '.modal-dialog .modal-content button.close';
+    public string $modalCloseBtn = '.modal-dialog .modal-content button.close';
     private string $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
     private string $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
 
