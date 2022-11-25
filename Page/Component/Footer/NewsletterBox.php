@@ -30,6 +30,7 @@ trait NewsletterBox
     {
         $I = $this->user;
         $I->fillField($this->newsletterUserEmail, $userEmail);
+        $I->waitForElementClickable($this->newsletterSubscribeButton);
         $I->click(Translator::translate('SUBSCRIBE'), $this->newsletterSubscribeButton);
         $newsletterSubscriptionPage = new NewsletterSubscription($I);
         $I->waitForElementVisible($newsletterSubscriptionPage->userEmail);
