@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Component\Footer;
 
 use OxidEsales\Codeception\Page\Info\NewsletterSubscription;
@@ -16,8 +18,8 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 trait NewsletterBox
 {
-    public $newsletterUserEmail = "#footer_newsletter_oxusername";
-    public $newsletterSubscribeButton = "//section[@class='footer-box footer-box-newsletter']";
+    public string $newsletterUserEmail = "#footer_newsletter_oxusername";
+    public string $newsletterSubscribeButton = "//section[@class='footer-box footer-box-newsletter']";
 
     /**
      * Opens newsletter page.
@@ -26,7 +28,7 @@ trait NewsletterBox
      *
      * @return NewsletterSubscription
      */
-    public function subscribeForNewsletter(string $userEmail)
+    public function subscribeForNewsletter(string $userEmail): NewsletterSubscription
     {
         $I = $this->user;
         $I->fillField($this->newsletterUserEmail, $userEmail);

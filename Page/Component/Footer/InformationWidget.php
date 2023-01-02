@@ -15,5 +15,5 @@ namespace OxidEsales\Codeception\Page\Component\Footer;
  */
 trait InformationWidget
 {
-    public $informationWrapper = '.footer-box-information';
+    public string $informationWrapper = '.footer-box-information';
 }

@@ -15,5 +15,5 @@ namespace OxidEsales\Codeception\Page\Component\Footer;
  */
 trait CategoryWidget
 {
-    public $categoriesWrapper = '.footer-box-categories';
+    public string $categoriesWrapper = '.footer-box-categories';
 }

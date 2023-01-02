@@ -1,16 +1,13 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\Codeception\Page\Component\Footer;
+declare(strict_types=1);
 
-use OxidEsales\Codeception\Page\Component\Footer\NewsletterBox;
-use OxidEsales\Codeception\Page\Component\Footer\ServiceWidget;
-use OxidEsales\Codeception\Page\Component\Footer\ManufacturerWidget;
-use OxidEsales\Codeception\Page\Component\Footer\CategoryWidget;
-use OxidEsales\Codeception\Page\Component\Footer\InformationWidget;
+namespace OxidEsales\Codeception\Page\Component\Footer;
 
 /**
  * Trait for service menu widget in footer

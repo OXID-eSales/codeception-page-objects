@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component\Footer;
 
@@ -16,14 +19,14 @@ use OxidEsales\Codeception\Page\PrivateSales\Invitation;
  */
 trait ServiceWidget
 {
-    public $basketLink = '//ul[@class="services list-unstyled"]';
+    public string $basketLink = '//ul[@class="services list-unstyled"]';
 
-    public $privateSalesInvitationLink = '//ul[@class="services list-unstyled"]';
+    public string $privateSalesInvitationLink = '//ul[@class="services list-unstyled"]';
 
     /**
      * @return Basket
      */
-    public function openBasket()
+    public function openBasket(): Basket
     {
         $I = $this->user;
         $I->click(Translator::translate('CART'), $this->basketLink);
@@ -34,7 +37,7 @@ trait ServiceWidget
     /**
      * @return Invitation
      */
-    public function openPrivateSalesInvitationPage()
+    public function openPrivateSalesInvitationPage(): Invitation
     {
         $I = $this->user;
         $invitationPage = new Invitation($I);

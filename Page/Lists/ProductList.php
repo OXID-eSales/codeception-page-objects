@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Lists;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -14,44 +16,43 @@ use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Page\Page;
 
 /**
- * Class for product list page
  * @package OxidEsales\Codeception\Page\Lists
  */
 class ProductList extends Page
 {
     use AccountMenu, MiniBasket;
     
-    public $listItemTitle = '#productList_%s';
+    public string $listItemTitle = '#productList_%s';
 
-    public $listItemDescription = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
+    public string $listItemDescription = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
 
-    public $listItemPrice = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
+    public string $listItemPrice = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
 
-    public $listItemForm = '//form[@name="tobasketproductList_%s"]';
+    public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
-    public $listFilter = "#filterList";
+    public string $listFilter = "#filterList";
 
-    public $resetListFilter = "//*[@id='resetFilter']/button";
+    public string $resetListFilter = "//*[@id='resetFilter']/button";
 
-    public $nextListPage = '//ol[@id="itemsPager"]/li[@class="next"]/a';
+    public string $nextListPage = '//ol[@id="itemsPager"]/li[@class="next"]/a';
 
-    public $previousListPage = '//ol[@id="itemsPager"]/li[@class="prev"]/a';
+    public string $previousListPage = '//ol[@id="itemsPager"]/li[@class="prev"]/a';
 
-    public $sortingSelection = '//a[@title="%s"]';
+    public string $sortingSelection = '//a[@title="%s"]';
 
-    public $variantSelection = '#variantselector_productList_%s button';
+    public string $variantSelection = '#variantselector_productList_%s button';
 
-    public $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
+    public string $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
 
-    public $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
+    public string $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
 
-    public $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
+    public string $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
 
-    public $activePageNumber = '//ol[@id="itemsPager"]/li[@class="active"]/a[contains(text(),"%s")]';
+    public string $activePageNumber = '//ol[@id="itemsPager"]/li[@class="active"]/a[contains(text(),"%s")]';
 
-    public $headerTitle = 'h1';
+    public string $headerTitle = 'h1';
     
-    public $listPageDescription = '#catDescLocator';
+    public string $listPageDescription = '#catDescLocator';
 
     /**
      * @param mixed $param

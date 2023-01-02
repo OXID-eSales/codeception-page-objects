@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component\Footer;
 
@@ -16,9 +19,9 @@ use OxidEsales\Codeception\Page\Lists\ManufacturerList;
  */
 trait ManufacturerWidget
 {
-    public $manufacturerLink = '//ul[@class="manufacturers list-unstyled"]';
+    public string $manufacturerLink = '//ul[@class="manufacturers list-unstyled"]';
     
-    public $manufacturersWrapper = '.footer-box-manufacturers';
+    public string $manufacturersWrapper = '.footer-box-manufacturers';
 
     public function openManufacturerPage(string $manufacturerTitle): ProductList
     {
