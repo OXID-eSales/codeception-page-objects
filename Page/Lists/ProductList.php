@@ -9,6 +9,7 @@ namespace OxidEsales\Codeception\Page\Lists;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Page\Page;
 
@@ -18,13 +19,15 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ProductList extends Page
 {
-    use AccountMenu;
-
+    use AccountMenu, MiniBasket;
+    
     public $listItemTitle = '#productList_%s';
 
     public $listItemDescription = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
 
     public $listItemPrice = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
+
+    public $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
     public $listFilter = "#filterList";
 
@@ -35,6 +38,20 @@ class ProductList extends Page
     public $previousListPage = '//ol[@id="itemsPager"]/li[@class="prev"]/a';
 
     public $sortingSelection = '//a[@title="%s"]';
+
+    public $variantSelection = '#variantselector_productList_%s button';
+
+    public $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
+
+    public $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
+
+    public $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
+
+    public $activePageNumber = '//ol[@id="itemsPager"]/li[@class="active"]/a[contains(text(),"%s")]';
+
+    public $headerTitle = 'h1';
+    
+    public $listPageDescription = '#catDescLocator';
 
     /**
      * @param mixed $param
@@ -47,6 +64,22 @@ class ProductList extends Page
     }
 
     /**
+     * Check if page information is displayed correctly.
+     * $pageData = ['title', 'description']
+     *
+     * @param array $pageData
+     *
+     * @return $this
+     */
+    public function seePageInformation(array $pageData): self
+    {
+        $I = $this->user;
+        $I->see($pageData['title'], $this->headerTitle);
+        $I->see($pageData['description'], $this->listPageDescription);
+        return $this;
+    }
+
+    /**
      * Check if Product data is displayed correctly.
      * $productData = ['title', 'description', 'price']
      *
@@ -55,7 +88,7 @@ class ProductList extends Page
      *
      * @return $this
      */
-    public function seeProductData($productData, $itemId = 1)
+    public function seeProductData(array $productData, int $itemId = 1): self
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
@@ -64,7 +97,15 @@ class ProductList extends Page
         return $this;
     }
 
-    public function dontSeeProductData(array $productData, int $itemId = 1)
+    /**
+     * @param array $productData
+     * @param int $itemId
+     * 
+     * $productData = ['title']
+     * 
+     * @return $this
+     */
+    public function dontSeeProductData(array $productData, int $itemId = 1): self
     {
         $I = $this->user;
         $I->dontSee($productData['title'], sprintf($this->listItemTitle, $itemId));
@@ -76,7 +117,7 @@ class ProductList extends Page
      *
      * @return ProductDetails
      */
-    public function openDetailsPage($itemId)
+    public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
         $I->click(sprintf($this->listItemTitle, $itemId));
@@ -116,8 +157,9 @@ class ProductList extends Page
     {
         $I = $this->user;
         $I->click(Translator::translate('PRODUCTS_PER_PAGE'));
-        $I->click($itemsPerPage);
+        $I->click(sprintf($this->itemsPerPageSelection, $itemsPerPage));
         $I->waitForPageLoad();
+        $I->waitForText(Translator::translate('PRODUCTS_PER_PAGE') . ' ' . $itemsPerPage);
         return $this;
     }
 
@@ -134,6 +176,15 @@ class ProductList extends Page
         $I = $this->user;
         $I->click($this->previousListPage);
         $I->waitForPageLoad();
+        return $this;
+    }
+
+    public function openListPageNumber(int $pageNumber): self
+    {
+        $I = $this->user;
+        $I->click(sprintf($this->pageNumberSelection, $pageNumber));
+        $I->waitForElement(sprintf($this->activePageNumber, $pageNumber));
+
         return $this;
     }
 
@@ -162,5 +213,44 @@ class ProductList extends Page
         $sortingNameTranslated = Translator::translate(strtoupper($sortingName));
 
         return $sortingNameTranslated . ' ' . $sortingOrderTranslated;
+    }
+
+    public function selectVariant(int $itemId, string $variantValue): ProductDetails
+    {
+        $I = $this->user;
+        $I->click(sprintf($this->variantSelection, $itemId));
+        $I->click($variantValue);
+        $I->waitForText($variantValue);
+        return new ProductDetails($I);
+    }
+
+    public function addProductToBasket(int $itemId): self
+    {
+        $I = $this->user;
+        $I->submitForm(sprintf($this->listItemForm, $itemId), []);
+
+        return $this;
+    }
+
+    public function selectListDisplayType(string $view): self
+    {
+        $I = $this->user;
+        $I->click(Translator::translate('LIST_DISPLAY_TYPE'));
+        $I->click(sprintf($this->listViewSelection, $view));
+        $I->waitForText(Translator::translate('LIST_DISPLAY_TYPE') . ' ' . $view);
+
+        return $this;
+    }
+
+    /**
+     * @param int $itemId The position of the item in the list.
+     *
+     * @deprecated please use openProductDetailsPage() method
+     *
+     * @return ProductDetails
+     */
+    public function openDetailsPage(int $itemId): ProductDetails
+    {
+        return $this->openProductDetailsPage($itemId);
     }
 }

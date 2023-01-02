@@ -51,6 +51,7 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
+        $I->waitForElement($this->noRegistrationOption);
         $I->click($this->noRegistrationOption);
         return $this;
     }
@@ -63,6 +64,7 @@ class UserCheckout extends Page
     public function selectOptionRegisterNewAccount()
     {
         $I = $this->user;
+        $I->waitForElement($this->registrationOption);
         $I->click($this->registrationOption);
         return $this;
     }

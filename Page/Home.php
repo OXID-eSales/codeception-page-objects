@@ -6,13 +6,8 @@
 
 namespace OxidEsales\Codeception\Page;
 
-use OxidEsales\Codeception\Page\Component\Footer\NewsletterBox;
-use OxidEsales\Codeception\Page\Component\Footer\ServiceWidget;
-use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
-use OxidEsales\Codeception\Page\Component\Header\LanguageMenu;
-use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
-use OxidEsales\Codeception\Page\Component\Header\Navigation;
-use OxidEsales\Codeception\Page\Component\Header\SearchWidget;
+use OxidEsales\Codeception\Page\Component\Footer\Footer;
+use OxidEsales\Codeception\Page\Component\Header\Header;
 
 /**
  * Class for home page
@@ -20,7 +15,7 @@ use OxidEsales\Codeception\Page\Component\Header\SearchWidget;
  */
 class Home extends Page
 {
-    use AccountMenu, NewsletterBox, SearchWidget, Navigation, MiniBasket, ServiceWidget, LanguageMenu;
+    use Header, Footer;
 
     // include url of current page
     public $URL = '/';

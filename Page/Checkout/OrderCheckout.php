@@ -49,6 +49,7 @@ class OrderCheckout extends Page
         $I = $this->user;
         $I->waitForText(Translator::translate('SUBMIT_ORDER'));
         $I->click(Translator::translate('SUBMIT_ORDER'));
+        $I->waitForPageLoad();
         return $this;
     }
 
