@@ -36,7 +36,7 @@ class UserCheckout extends Page
 
     public $nextStepButton = '#userNextStepBottom';
 
-    public $previousStepButton = '.prevStep';
+    public $previousStepButton = '';
 
     public $openShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[1]';
 
@@ -56,7 +56,7 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
         $I->waitForElement($this->noRegistrationOption);
-        $I->click($this->noRegistrationOption);
+        $I->retryClick($this->noRegistrationOption);
         return $this;
     }
 
@@ -94,7 +94,7 @@ class UserCheckout extends Page
     public function goToPreviousStep()
     {
         $I = $this->user;
-        $I->click($this->previousStepButton);
+        $I->click(Translator::translate('PREVIOUS_STEP'));
         $I->waitForElement($this->breadCrumb);
         return new Basket($I);
     }
@@ -117,7 +117,7 @@ class UserCheckout extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->click($this->openShipAddressForm);
+        $I->retryClick($this->openShipAddressForm);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressForm);
         return $this;
     }

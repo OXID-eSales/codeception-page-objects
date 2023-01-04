@@ -25,10 +25,9 @@ class UserPasswordReminder extends Page
 
     public function seePageOpen(): self
     {
-        $this->seeOnBreadCrumb(Translator::translate('FORGOT_PASSWORD'));
+        $this->user->see(Translator::translate('FORGOT_PASSWORD'), $this->headerTitle);
         return $this;
     }
-
     public function resetPassword(string $userEmail): self
     {
         $I = $this->user;

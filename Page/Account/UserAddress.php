@@ -33,13 +33,13 @@ class UserAddress extends Page
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
 
-    public $headerTitle = 'h1';
+    public $headerTitle = 'h3';
 
     public $openBillingAddressFormButton = '#userChangeAddress';
 
     public $userEmail = 'invadr[oxuser__oxusername]';
 
-    public $userPassword = '//input[@name="user_password"]';
+    public $userPassword = '#user_password';
 
     public $saveUserAddressButton = '#accUserSaveTop';
 
@@ -53,16 +53,16 @@ class UserAddress extends Page
 
     public $shipAddressForm = '#shippingAddressForm';
 
-    public $openShipAddressForm = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[1]';
+    public $openShipAddressForm = '//div[@id="shippingAddress"]/div[%s]//button[contains(@class,"dd-edit-shipping-address")]';
 
-    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[1]/button[2]';
+    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[%s]//button[contains(@class,"dd-delete-shipping-address")]';
 
-    public $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[%s]/div/div[2]/label';
+    public $selectShipAddress = '//div[@id="shippingAddress"]/div[%s]//label[contains(@class,"setToThisShippingAddress")]';
 
     public $newShipAddressForm = '//div[@class="panel panel-default dd-add-delivery-address"]';
 
     private $panelsWithShippingAddresses =
-        '#shippingAddress > div.row.dd-available-addresses > div > div.panel:not(.dd-add-delivery-address)';
+        '//div[@id="shippingAddress"]//label[contains(@class,"setToThisShippingAddress")]';
 
     /**
      * Opens billing address form.
@@ -85,7 +85,7 @@ class UserAddress extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->click($this->openShipAddressPanel);
+        $I->retryClick($this->openShipAddressPanel);
         $I->waitForElementVisible($this->shipAddressPanel);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressPanel);
         return $this;
@@ -148,7 +148,7 @@ class UserAddress extends Page
     public function saveAddress()
     {
         $I = $this->user;
-        $I->click($this->saveUserAddressButton);
+        $I->retryClick($this->saveUserAddressButton);
         $I->waitForPageLoad();
         return $this;
     }
@@ -163,6 +163,7 @@ class UserAddress extends Page
     {
         $I = $this->user;
         $I->fillField($this->userEmail, $newEmail);
+        $I->waitForPageLoad();
         $I->waitForElementVisible($this->userPassword);
         $I->fillField($this->userPassword, $password);
         return $this->saveAddress();
@@ -221,7 +222,7 @@ class UserAddress extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX') . ' ';
+        $transformedAddress .= ' | ' . Translator::translate('FAX').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');

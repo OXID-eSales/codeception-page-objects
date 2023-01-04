@@ -20,26 +20,28 @@ class Basket extends Page
     use MiniBasket;
 
     public $URL = '';
-    public $breadCrumb = '#breadcrumb';
-    public string $basketSummary = '#basketGrandTotal';
-    public string $basketItemAmount = '#basketcontents_table #am_%s';
-    public string $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
-    public string $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
-    public string $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
-    public string $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
-    public string $basketUpdateButton = '#basketcontents_table #basketUpdate';
+    public $breadCrumb = '.breadcrumb';
+    public string $basketSummary = '//div[contains(text(),"%s")]/span';
+    public string $basketItemAmount = '#am_%s';
+    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//div[contains(@class,"totalPrice")]/strong';
+    public string $basketItemTitle = '//div[@id="list_cartItem_%s"]//div[@class="h5"]';
+    public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
+    public string $basketBundledItemAmount = '//div[@id="list_cartItem_%s"]//div[contains(@class,"quantity")]';
+    public string $basketUpdateButton = '//input[@id="am_%s"]/following-sibling::button';
+    public string $openBasketCouponField = '//h4[contains(text(),"%s")]';
     public string $addBasketCouponField = '#input_voucherNr';
-    public string $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
-    public string $removeBasketCoupon = '.couponData .removeFn';
-    public string $openGiftSelection = '//tr[@id="table_cartItem_%s"]/td[3]/a';
-    public string $basketItemAttributes = '#table_cartItem_%s';
+    public string $addBasketCouponButton = '//div[@id="voucherCollapse"]//button';
+    public string $removeBasketCoupon = '//a[@class="btn removeFn py-0"]';
+    public string $openGiftSelection = '//div[@id="list_cartItem_%s"]//div[@class="wrapping"]/a';
+    public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
     public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
 
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
         $I = $this->user;
-        $I->fillField(sprintf($this->basketItemAmount, $itemPosition), $amount);
-        $I->click($this->basketUpdateButton);
+        $I->clearField(sprintf($this->basketItemAmount, $itemPosition));
+        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), $amount, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForPageLoad();
         return $this;
     }
 
@@ -60,7 +62,7 @@ class Basket extends Page
             $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
         }
-        $I->see($basketSummaryPrice, $this->basketSummary);
+        $I->see($basketSummaryPrice, sprintf($this->basketSummary, Translator::translate('GRAND_TOTAL')));
         return $this;
     }
 
@@ -79,44 +81,51 @@ class Basket extends Page
         return $this;
     }
 
-    public function seeBasketContainsAttribute(string $basketProductAttribute, int $itemPosition): self
+    public function seeBasketContainsAttribute(string $basketProductAttribute, int $itemPosition)
     {
-        $this->user->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
+        $I = $this->user;
+        $I->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
         return $this;
     }
 
-    public function seeBasketContainsSelectionList(string $selectionListTitle, string $selectionListValue, int $itemPosition): self
+    public function seeBasketContainsSelectionList(string $selectionListTitle, string $selectionListValue, int $itemPosition)
     {
-        $this->user->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
+        $I = $this->user;
+        $I->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
         return $this;
     }
 
     public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
-        $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
-        $I->waitForElement($this->breadCrumb);
-        return new UserCheckout($I);
+        $I->click(Translator::translate('CHECKOUT'));
+        $userStep = new UserCheckout($I);
+        $I->waitForElement($userStep->breadCrumb);
+        return $userStep;
     }
 
     public function seeNextStep(): self
     {
-        $this->user->see(Translator::translate('CONTINUE_TO_NEXT_STEP'));
+        $I = $this->user;
+        $I->see(Translator::translate('CHECKOUT'));
         return $this;
     }
 
     public function dontSeeNextStep(): self
     {
-        $this->user->dontSee(Translator::translate('CONTINUE_TO_NEXT_STEP'));
+        $I = $this->user;
+        $I->dontSee(Translator::translate('CHECKOUT'));
         return $this;
     }
 
     public function addCouponToBasket(string $couponNumber): self
     {
         $I = $this->user;
+        $I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
+        $I->waitForElementVisible($this->addBasketCouponField);
         $I->fillField($this->addBasketCouponField, $couponNumber);
         $I->click($this->addBasketCouponButton);
-        $I->waitForElementVisible('.couponData');
+        $I->waitForElementVisible($this->removeBasketCoupon);
         return $this;
     }
 

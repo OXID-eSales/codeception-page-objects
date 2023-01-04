@@ -24,9 +24,9 @@ class NewsletterSettings extends Page
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
 
-    public $headerTitle = 'h1';
+    public $headerTitle = 'h3';
 
-    public $newsletterStatusSelect = '//button[@data-id="status"]';
+    public $newsletterStatusSelect = '//select[@id="status"]';
 
     public $newsletterSubscribeButton = '#newsletterSettingsSave';
 
@@ -38,9 +38,7 @@ class NewsletterSettings extends Page
     public function subscribeNewsletter()
     {
         $I = $this->user;
-        $I->click($this->newsletterStatusSelect);
-        $I->waitForText(Translator::translate('YES'));
-        $I->click(Translator::translate('YES'));
+        $I->selectOption($this->newsletterStatusSelect, Translator::translate('YES'));
         $I->retryClick($this->newsletterSubscribeButton);
         $I->waitForPageLoad();
         $I->waitForText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
@@ -55,9 +53,7 @@ class NewsletterSettings extends Page
     public function unSubscribeNewsletter()
     {
         $I = $this->user;
-        $I->click($this->newsletterStatusSelect);
-        $I->waitForText(Translator::translate('NO'));
-        $I->click(Translator::translate('NO'));
+        $I->selectOption($this->newsletterStatusSelect, Translator::translate('NO'));
         $I->retryClick($this->newsletterSubscribeButton);
         $I->waitForPageLoad();
         $I->waitForText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
@@ -84,7 +80,7 @@ class NewsletterSettings extends Page
     public function seeNewsletterUnSubscribed()
     {
         $I = $this->user;
-        $I->see(Translator::translate('NO'), $this->newsletterStatusSelect);
+        $I->seeOptionIsSelected($this->newsletterStatusSelect, Translator::translate('NO'));
         return $this;
     }
 }

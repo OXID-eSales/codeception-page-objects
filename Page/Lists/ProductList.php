@@ -17,26 +17,25 @@ use OxidEsales\Codeception\Page\Page;
 class ProductList extends Page
 {
     use Header;
-
-    public string $listItemTitle = '#productList_%s';
-    public string $listItemDescription =
-        '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
-    public string $listItemPrice =
-        '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
-    public string $listItemDescriptionTypeList = '//div[@id="searchList"]/div[%s]//div[@class="description"]';
+    
+    public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//*[@class="h5 card-title"]';
+    public string $listItemDescription = '//div[@id="productList"]/div/div[%s]//div[@class="short-desc"]';
+    public string $listItemPrice = '//div[@id="productList"]/div/div[%s]//div[contains(@class,"price")]/span';
+    public string $listItemDescriptionTypeList = '//div[@id="productList"]/div/div[%s]//div[@class="card-text"]';
     public string $listItemPriceTypeList = '#productPrice_searchList_%s';
     public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
-    public string $listFilter = "#filterList";
+    public string $listFilter = '//select[contains(@aria-label,"%s")]';
     public string $resetListFilter = "//*[@id='resetFilter']/button";
-    public string $nextListPage = '//ol[@id="itemsPager"]/li[@class="next"]/a';
-    public string $previousListPage = '//ol[@id="itemsPager"]/li[@class="prev"]/a';
+    public string $nextListPage = '//ul[contains(@class,"pagination")]//a[@aria-label="Next"]';
+    public string $previousListPage = '//ul[contains(@class,"pagination")]//a[@aria-label="Previous"]';
+    public string $sortingButton = '#sort';
     public string $sortingSelection = '//a[@title="%s"]';
     public string $variantSelection = '#variantselector_productList_%s button';
-    public string $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
-    public string $listView = '//strong[contains(text(),"%s")]';
-    public string $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
-    public string $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
-    public string $activePageNumber = '//ol[@id="itemsPager"]/li[@class="active"]/a[contains(text(),"%s")]';
+    public string $itemsPerPageSelection = '//ul[@class="dropdown-menu show"]//*[contains(text(),"%s")]';
+    public string $listView = '';
+    public string $listViewSelection = '//a[@title="%s"]';
+    public string $pageNumberSelection = '//ul[contains(@class,"pagination")]//a[contains(text(),"%s")]';
+    public string $activePageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a[contains(text(),"%s")]';
     public string $headerTitle = 'h1';
     public string $listPageDescription = '#catDescLocator';
 
@@ -74,14 +73,20 @@ class ProductList extends Page
     }
 
     /**
+     * Check if Product data is displayed correctly.
      * $productData = ['title', 'description', 'price']
+     *
+     * @param array $productData
+     * @param int   $itemId      The position of the item in the list.
+     *
+     * @return $this
      */
     public function seeProductDataInDisplayTypeList(array $productData, int $itemId = 1): self
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
         $I->see($productData['description'], sprintf($this->listItemDescriptionTypeList, $itemId));
-        $I->see($productData['price'], sprintf($this->listItemPriceTypeList, $itemId));
+        $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
         return $this;
     }
 
@@ -97,7 +102,8 @@ class ProductList extends Page
     public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
-        $I->click(sprintf($this->listItemTitle, $itemId));
+        $I->moveMouseOver(sprintf($this->listItemTitle, $itemId));
+        $I->clickWithLeftButton(sprintf($this->listItemTitle, $itemId));
         $I->waitForPageLoad();
         $productDetails = new ProductDetails($I);
         $I->waitForElement($productDetails->productTitle);
@@ -107,30 +113,30 @@ class ProductList extends Page
     public function selectFilter($attributeName, $attributeValue): self
     {
         $I = $this->user;
-        $this->openFilter($attributeName);
-        $I->waitForText($attributeValue);
-        $I->click($attributeValue);
+        $I->selectOption(sprintf($this->listFilter, $attributeName), $attributeValue);
         $I->waitForPageLoad();
         $I->waitForElementVisible($this->resetListFilter);
         return $this;
     }
 
-    public function seeSelectedFilter(string $attributeName, string $attributeValue): self
+    public function seeSelectedFilter($attributeName, $attributeValue): self
     {
-        $this->user->see($attributeValue, $this->listFilter);
+        $I = $this->user;
+        $I->seeOptionIsSelected(sprintf($this->listFilter, $attributeName), $attributeValue);
         return $this;
     }
 
-    public function dontSeeSelectedFilter(string $attributeName, string $attributeValue): self
+    public function dontSeeSelectedFilter($attributeName, $attributeValue): self
     {
-        $this->openFilter($attributeName);
-        $this->user->dontSee($attributeValue, $this->listFilter);
+        $I = $this->user;
+        $I->click(sprintf($this->listFilter, $attributeName));
+        $I->dontSee($attributeValue);
         return $this;
     }
 
     public function openFilter(string $attributeName): self
     {
-        $this->user->click($attributeName . ':', $this->listFilter);
+        $this->user->click(sprintf($this->listFilter, $attributeName));
         return $this;
     }
 
@@ -155,7 +161,7 @@ class ProductList extends Page
     public function openNextListPage(): self
     {
         $I = $this->user;
-        $I->click($this->nextListPage);
+        $I->retryClick($this->nextListPage);
         $I->waitForPageLoad();
         return $this;
     }
@@ -180,7 +186,7 @@ class ProductList extends Page
     public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
     {
         $I = $this->user;
-        $I->click(Translator::translate('SORT_BY'));
+        $I->click($this->sortingButton);
         $I->waitForElement(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         $I->click(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         return $this;
@@ -204,9 +210,8 @@ class ProductList extends Page
     public function selectListDisplayType(string $view): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->listView, Translator::translate('LIST_DISPLAY_TYPE')));
         $I->click(sprintf($this->listViewSelection, $view));
-        $I->waitForText(Translator::translate('LIST_DISPLAY_TYPE') . ' ' . $view);
+        $I->waitForPageLoad();
 
         return $this;
     }

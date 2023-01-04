@@ -63,8 +63,8 @@ trait Modal
     {
         $I = $this->user;
         $I->waitForPageLoad();
-        $I->waitForElementVisible($this->rootCatChangedModal, 5);
-        $I->click(Translator::translate('CHECKOUT'), $this->rootCatChangedModal);
+        $I->waitForText(Translator::translate('ROOT_CATEGORY_CHANGED'));
+        $I->click(Translator::translate('CHECKOUT'));
         return new Basket($I);
     }
 }

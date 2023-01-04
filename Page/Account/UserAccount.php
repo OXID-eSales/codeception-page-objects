@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
@@ -20,18 +21,19 @@ class UserAccount extends Page
     use AccountNavigation;
 
     public $URL = '/en/my-account/';
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
+    public string $headerTitle = '';
     public string $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
     public string $dashboardCompareListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[1]';
     public string $dashboardCompareListPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[2]';
     public string $dashboardWishListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[1]/div[1]';
     public string $dashboardWishListPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[1]/div[2]';
-    public string $dashboardGiftRegistryPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[2]/div[1]';
-    public string $dashboardGiftRegistryPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[2]/div[2]';
+    public string $dashboardGiftRegistryPanelHeader = '//h4';
+    public string $dashboardGiftRegistryPanelContent = '//h4[contains(text(),"%s")]/following-sibling::div';
     public string $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
     public string $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
     public string $dashboardOrderHistoryHeader = '#linkAccountOrder';
-    public string $openReviewPageOnDashboard = '//a[contains(text(),"%s")]';
+    public string $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
 
     public function seePageOpened(): self
     {
@@ -41,7 +43,7 @@ class UserAccount extends Page
 
     public function seeUserAccount(array $userData): self
     {
-        $this->user->see(Translator::translate('MY_ACCOUNT') . ' - ' . $userData['userLoginName']);
+        $this->user->see(Translator::translate('HELLO') . ' ' .$userData['userName']);
         return $this;
     }
 
@@ -51,21 +53,14 @@ class UserAccount extends Page
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
         $userLoginPage = new UserLogin($I);
-        $userLoginPage->seeOnBreadCrumb(Translator::translate('LOGIN'));
+        $I->see(Translator::translate('LOGIN'));
 
         return $userLoginPage;
     }
 
     public function openChangePasswordPage(): UserChangePassword
     {
-        $I = $this->user;
-        $I->click($this->dashboardChangePasswordPanelHeader);
-        $userChangePasswordPage = new UserChangePassword($I);
-        $userChangePasswordPage->seeOnBreadCrumb(
-            Translator::translate('MY_ACCOUNT') . Translator::translate('CHANGE_PASSWORD')
-        );
-
-        return $userChangePasswordPage;
+        return $this->openChangePasswordPageInAccountMenu();
     }
 
     public function openOrderHistory(): UserOrderHistory
@@ -84,7 +79,10 @@ class UserAccount extends Page
     {
         $I = $this->user;
         $I->see(Translator::translate('MY_GIFT_REGISTRY'), $this->dashboardGiftRegistryPanelHeader);
-        $I->see(Translator::translate('PRODUCT') . ' ' . $number, $this->dashboardGiftRegistryPanelContent);
+        $I->see(
+            Translator::translate('PRODUCT') . ' ' . $number,
+            sprintf($this->dashboardGiftRegistryPanelContent, Translator::translate('MY_GIFT_REGISTRY'))
+        );
         return $this;
     }
 

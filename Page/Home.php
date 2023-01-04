@@ -19,10 +19,16 @@ class Home extends Page
     use Footer;
 
     public $URL = '/';
-    public string $openManufacturerList = '//div[@class="top-brands my-5"]/div/div[%s]';
+    public string $openManufacturerList = '//div[@class="row manufacturer-list"]/div[%s]';
 
     public function openManufacturerFromStarPage(string $manufacturerTitle, int $position = 1): ProductList
     {
-        return $this->openManufacturerPage($manufacturerTitle);
+        $I = $this->user;
+        $productListPage = new ProductList($I);
+        $I->moveMouseOver(sprintf($this->openManufacturerList, $position));
+        $I->retryClick(sprintf($this->openManufacturerList, $position));
+        $I->waitForPageLoad();
+        return $productListPage;
     }
+
 }

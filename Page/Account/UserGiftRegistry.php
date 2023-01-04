@@ -133,8 +133,7 @@ class UserGiftRegistry extends Page
      */
     public function removeFromGiftRegistry(int $itemPosition)
     {
-        $I = $this->user;
-        $I->click(sprintf($this->removeFromGitRegistry, $itemPosition));
+        $this->user->retryClick(sprintf($this->removeFromGitRegistry, $itemPosition));
         return $this;
     }
 

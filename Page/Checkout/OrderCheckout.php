@@ -15,37 +15,38 @@ use OxidEsales\Codeception\Page\Page;
 class OrderCheckout extends Page
 {
     public $URL = '/index.php?cl=order&lang=1';
-    public string $billingAddress = '//div[@id="orderAddress"]/div[1]/form/div[2]/div[2]';
-    public string $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
-    public string $userRemarkHeader = '//div[@class="panel panel-default orderRemarks"]/div[1]/h3';
-    public string $userRemark = '//div[@class="panel panel-default orderRemarks"]/div[2]';
-    public string $paymentMethod = '#orderPayment';
-    public string $shippingMethod = '#orderShipping';
-    public string $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
-    public string $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/b';
-    public string $basketItemId = '//tr[@id="table_cartItem_%s"]/td[1]/div[2]/div[1]';
-    public string $basketItemAmount = '//tr[@id="table_cartItem_%s"]/td[@class="quantity"]';
-    public string $basketSummaryNet = '#basketTotalProductsNetto';
-    public string $basketSummaryVat = '//div[@id="basketSummary"]//tr[%s]/td';
-    public string $basketSummaryGross = '#basketTotalProductsGross';
-    public string $basketShippingGross = '#basketDeliveryGross';
-    public string $basketPaymentGross = '#basketPaymentGross';
-    public string $basketWrappingGross = '#basketWrappingGross';
-    public string $basketGiftCardGross = '#basketGiftCardGross';
-    public string $basketTotalPrice = '#basketGrandTotal';
-    public string $couponInformation = '.couponData';
-    public string $previousStepLink = '//li[@class="step3 passed "]/a/div[2]';
-    public string $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
-    public string $editPayment = '//div[@id="orderPayment"]//button';
-    public string $editShippingMethod = '//div[@id="orderShipping"]//button';
+    public string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
+    public string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
+    public string $userRemarkHeader = 'h4';
+    public string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
+    public string $paymentMethod = '//form[@id="orderPayment"]/div';
+    public string $shippingMethod = '//form[@id="orderShipping"]/div';
+    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
+    public string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
+    public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
+    public string $basketItemAmount = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
+    public string $basketSummaryNet = '//div[contains(text(),"%s")]/span';
+    public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
+    public string $basketSummaryGross = '//div[contains(text(),"%s")]/span';
+    public string $basketShippingGross = '//div[contains(text(),"%s")]/span';
+    public string $basketPaymentGross = '//div[contains(text(),"%s")]/span';
+    public string $basketWrappingGross = '//div[contains(text(),"%s")]/span';
+    public string $basketGiftCardGross = '//div[contains(text(),"%s")]/span';
+    public string $basketTotalPrice = '//div[contains(text(),"%s")]/span';
+    public string $couponInformation = '//div[contains(@class,"list-group-item")]';
+    public string $previousStepLink = '';
+    public string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
+    public string $editPayment = '//form[@id="orderPayment"]/h4/button';
+    public string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
     public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
     public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
+    public $breadCrumb = '//div[@class="step step-3 active"]';
 
     public function submitOrder(): self
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('SUBMIT_ORDER'));
-        $I->click(Translator::translate('SUBMIT_ORDER'));
+        $I->retryClick(Translator::translate('SUBMIT_ORDER'));
         $I->waitForPageLoad();
         return $this;
     }
@@ -53,9 +54,9 @@ class OrderCheckout extends Page
     public function submitOrderSuccessfully(): ThankYou
     {
         $I = $this->user;
+        $I->waitForElementClickable($this->submitOrder);
+        $I->retryClick($this->submitOrder);
         $thankYouPage = new ThankYou($I);
-        $this->submitOrder();
-        $this->seeOnBreadCrumb(Translator::translate('ORDER_COMPLETED'));
         $I->waitForElement($thankYouPage->thankYouPage);
         return $thankYouPage;
     }
@@ -64,9 +65,17 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $I->checkOption($this->downloadableProductsAgreement);
+        $I->seeCheckboxIsChecked($this->downloadableProductsAgreement);
         return $this;
     }
 
+    /**
+     * Opens previous page: payment checkout.
+     *
+     * Does not exists in apex theme
+     *
+     * @return PaymentCheckout
+     */
     public function goToPreviousStep(): PaymentCheckout
     {
         $I = $this->user;
@@ -88,7 +97,7 @@ class OrderCheckout extends Page
     public function editPaymentMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $I->click($this->previousStepLink);
+        $I->retryClick($this->editPayment);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
@@ -118,10 +127,8 @@ class OrderCheckout extends Page
     public function validateCoupon(string $couponId, string $couponDiscount): self
     {
         $I = $this->user;
-        $informationText = sprintf(
-            '%s (%s %s) %s',
+        $informationText = sprintf('%s (%s) %s',
             Translator::translate('COUPON'),
-            Translator::translate('NUMBER'),
             $couponId,
             $couponDiscount
         );
@@ -143,23 +150,25 @@ class OrderCheckout extends Page
     public function validateTotalPrice(array $priceInformation): self
     {
         $I = $this->user;
-        $I->see($priceInformation['net'], $this->basketSummaryNet);
-        $I->see($priceInformation['gross'], $this->basketSummaryGross);
-        $I->see($priceInformation['shipping'], $this->basketShippingGross);
-        $I->see($priceInformation['payment'], $this->basketPaymentGross);
-        $I->see($priceInformation['total'], $this->basketTotalPrice);
+        $I->see($priceInformation['net'], sprintf($this->basketSummaryNet, Translator::translate('TOTAL_NET')));
+        $I->see($priceInformation['gross'], sprintf($this->basketSummaryGross, Translator::translate('TOTAL_GROSS')));
+        $I->see($priceInformation['shipping'], sprintf($this->basketShippingGross, Translator::translate('SHIPPING_COST')));
+        $I->see($priceInformation['payment'], sprintf($this->basketPaymentGross, Translator::translate('PAYMENT_METHOD')));
+        $I->see($priceInformation['total'], sprintf($this->basketTotalPrice, Translator::translate('GRAND_TOTAL')));
         return $this;
     }
 
     public function validateWrappingPrice(string $priceInformation): self
     {
-        $this->user->see($priceInformation, $this->basketWrappingGross);
+        $I = $this->user;
+        $I->see($priceInformation, sprintf($this->basketWrappingGross, Translator::translate('GIFT_WRAPPING')));
         return $this;
     }
 
     public function validateGiftCardPrice(string $priceInformation): self
     {
-        $this->user->see($priceInformation, $this->basketGiftCardGross);
+        $I = $this->user;
+        $I->see($priceInformation, sprintf($this->basketGiftCardGross, Translator::translate('GREETING_CARD')));
         return $this;
     }
 
@@ -244,7 +253,7 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $I->see(Translator::translate('WHAT_I_WANTED_TO_SAY'), $this->userRemarkHeader);
-        $I->see($userRemarkText, $this->userRemark);
+        $I->see($userRemarkText, sprintf($this->userRemark, Translator::translate('WHAT_I_WANTED_TO_SAY')));
         return $this;
     }
 
@@ -255,7 +264,7 @@ class OrderCheckout extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX') . ' ';
+        $transformedAddress .= ' | ' . Translator::translate('FAX').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');

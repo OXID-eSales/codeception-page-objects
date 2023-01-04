@@ -8,6 +8,7 @@
 namespace OxidEsales\Codeception\Page\Account;
 
 use Facebook\WebDriver\WebDriverKeys;
+use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
@@ -17,13 +18,15 @@ use OxidEsales\Codeception\Page\Page;
  */
 class UserChangePassword extends Page
 {
-    use AccountMenu;
+    use AccountMenu, AccountNavigation;
 
     // include url of current page
     public $URL = '/en/my-password/';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
+
+    public $headerTitle = 'h3';
 
     public $userOldPassword = '#passwordOld';
 
@@ -36,13 +39,7 @@ class UserChangePassword extends Page
     public $errorMessage = '//div[@class="alert alert-danger"]';
 
     /**
-     * Fill the password fields.
-     *
-     * @param string $oldPassword     The current password
-     * @param string $newPassword     The new password
-     * @param string $confirmPassword The new password
-     *
-     * @return $this
+     * Fill the password fields, for apex we also need to confirm. There is no JS validation for this part
      */
     public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
     {
@@ -53,6 +50,7 @@ class UserChangePassword extends Page
         $I->pressKey($this->userNewPassword, $newPassword);
         $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
+        $I->click($this->userChangePasswordButton);
         return $this;
     }
 
@@ -69,8 +67,6 @@ class UserChangePassword extends Page
     {
         $I = $this->user;
         $this->fillPasswordFields($oldPassword, $newPassword, $confirmPassword);
-        $I->clickWithLeftButton($this->userChangePasswordButton);
-        $I->click($this->userChangePasswordButton);
         $I->waitForPageLoad();
         return $this;
     }

@@ -32,7 +32,6 @@ class UserRegistration extends Step
             ->enterAddressData($addressDataToFill)
             ->registerUser();
 
-        $registrationPage->seeOnBreadCrumb($breadCrumbName);
         $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
     }
 }

@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component\Footer;
 
+use Codeception\Util\Locator;
 use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\UserAccount;
 use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Checkout\Basket;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\PrivateSales\Invitation;
+use Prophecy\Argument\Token\LogicalNotToken;
 
 /**
  * Trait for service menu widget in footer
@@ -22,18 +25,18 @@ use OxidEsales\Codeception\Page\PrivateSales\Invitation;
  */
 trait ServiceWidget
 {
-    public string $basketLink = '//ul[@class="services list-unstyled"]';
+    public string $basketLink = '//div[@class="footer-content"]';
 
-    public string $privateSalesInvitationLink = '//ul[@class="services list-unstyled"]';
+    public string $privateSalesInvitationLink = '//div[@class="footer-content"]';
 
-    public string $userAccountPageLink = '//ul[@class="services list-unstyled"]';
+    public string $userAccountPageLink = '//div[@class="footer-content"]';
     /**
      * @return Basket
      */
     public function openBasket(): Basket
     {
         $I = $this->user;
-        $I->click(Translator::translate('CART'), $this->basketLink);
+        $I->retryClick(Translator::translate('CART'), $this->basketLink);
         $I->waitForPageLoad();
         return new Basket($I);
     }
@@ -45,15 +48,15 @@ trait ServiceWidget
     {
         $I = $this->user;
         $invitationPage = new Invitation($I);
-        $I->click(Translator::translate('INVITE_YOUR_FRIENDS'), $this->privateSalesInvitationLink);
+        $I->retryClick(Translator::translate('INVITE_YOUR_FRIENDS'), Locator::elementAt($this->privateSalesInvitationLink, 1));
         $I->waitForText(Translator::translate('INVITE_YOUR_FRIENDS'));
         return $invitationPage;
     }
 
-    public function openUserAccountPage(): UserAccount|UserLogin
+    public function openUserAccountPage()
     {
         $I = $this->user;
-        $I->click(Translator::translate('ACCOUNT'), $this->userAccountPageLink);
+        $I->retryClick(Translator::translate('ACCOUNT'), Locator::elementAt($this->userAccountPageLink, 1));
         if (Context::isUserLoggedIn()) {
             return new UserAccount($I);
         } else {

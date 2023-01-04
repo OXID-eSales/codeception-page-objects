@@ -17,14 +17,14 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait MiniBasket
 {
-    public string $miniBasketMenuElement = '//div[@class="btn-group minibasket-menu"]/button';
-    public string $miniBasketTitle = '//div[@class="minibasket-menu-box"]/p';
-    public string $miniBasketItemTitle = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[2]/a';
-    public string $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[1]/span';
-    public string $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[3]';
-    public string $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
+    public string $miniBasketMenuElement = '//button[contains(@class,"btn-minibasket")]';
+    public string $miniBasketTitle = '#basketModalLabel';
+    public string $miniBasketItemTitle = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
+    public string $miniBasketItemAmount = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
+    public string $miniBasketItemPrice = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
+    public string $miniBasketSummaryPrice = '//div[contains(@class,"minibasket-total-row")]/div[2]';
     public string $miniBasketCountDown = '#countdown';
-    public string $miniBasketClose = '//div[@class="btn-group minibasket-menu open"]/button';
+    public string $miniBasketClose = '//div[@id="basketModal"]//button';
 
     /**
      * $basketProducts[] = ['title' => productTitle,
@@ -52,7 +52,8 @@ trait MiniBasket
         $I->waitForPageLoad();
         $I->waitForElementClickable($this->miniBasketMenuElement);
         $I->click($this->miniBasketMenuElement);
-        $I->waitForText(Translator::translate('DISPLAY_BASKET'));
+        $I->waitForPageLoad();
+        $I->waitForElementVisible($this->miniBasketTitle);
         return $this;
     }
 
@@ -60,7 +61,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
-        $I->click($this->miniBasketClose);
+        $I->retryClick($this->miniBasketClose);
         $I->waitForElementNotVisible($this->miniBasketTitle);
         return $this;
     }
@@ -89,16 +90,18 @@ trait MiniBasket
     public function checkBasketEmpty(): self
     {
         $I = $this->user;
-        $I->click($this->miniBasketMenuElement);
+        $this->openMiniBasket();
         $I->see(Translator::translate('BASKET_EMPTY'));
+        $this->closeMiniBasket();
         return $this;
     }
 
     public function seeCountdownWithinBasket(): self
     {
         $I = $this->user;
-        $I->click($this->miniBasketMenuElement);
-        $I->seeElement($this->miniBasketCountDown);
+        $this->openMiniBasket();
+        $I->waitForElementVisible($this->miniBasketCountDown);
+        $this->closeMiniBasket();
         return $this;
     }
 }

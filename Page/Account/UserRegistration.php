@@ -20,8 +20,8 @@ class UserRegistration extends Page
     use AccountMenu;
 
     public $URL = '/en/open-account';
-    public $breadCrumb = '#breadcrumb';
-    public $headerTitle = 'h1';
+    public $breadCrumb = '.breadcrumb';
+    public $headerTitle = 'h3';
     public string $saveFormButton = '#accUserSaveTop';
 
     public function seePageOpen(): self
@@ -33,8 +33,8 @@ class UserRegistration extends Page
     public function registerUser(): self
     {
         $I = $this->user;
-        $I->click($this->saveFormButton);
-        $I->waitForElement($this->breadCrumb);
+        $I->retryClick($this->saveFormButton);
+        $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'), $this->headerTitle);
         return $this;
     }
 }

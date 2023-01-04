@@ -21,14 +21,14 @@ class UserWishList extends Page
     use AccountMenu;
 
     public $URL = '/en/my-wish-list/';
-    public $breadCrumb = '#breadcrumb';
-    public $headerTitle = 'h1';
-    public string $productTitle = '#noticelistProductList_%s';
-    public string $productDescription = '//div[@id="noticelistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
+    public $breadCrumb = '.breadcrumb';
+    public $headerTitle = 'h3';
+    public string $productTitle = '//div[@id="noticelistProductList"]/div/div[%s]//a';
+    public string $productDescription = '//div[@id="noticelistProductList"]/div/div[%s]//div[@class="card-text"]';
     public string $productPrice = '#productPrice_noticelistProductList_%s';
     public string $basketAmount = '#amountToBasket_noticelistProductList_%s';
     public string $toBasketButton = '#toBasket_noticelistProductList_%s';
-    public string $removeButton = '//button[@triggerform="remove_tonoticelistnoticelistProductList_%s"]';
+    public string $removeButton = '//button[@data-triggerform="remove_tonoticelistnoticelistProductList_%s"]';
 
     public function seePageOpen(): self
     {
