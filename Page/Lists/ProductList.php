@@ -44,6 +44,8 @@ class ProductList extends Page
 
     public string $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
 
+    public string $listView = '//strong[contains(text(),"%s")]';
+
     public string $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
 
     public string $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
@@ -236,7 +238,7 @@ class ProductList extends Page
     public function selectListDisplayType(string $view): self
     {
         $I = $this->user;
-        $I->click(Translator::translate('LIST_DISPLAY_TYPE'));
+        $I->click(sprintf($this->listView, Translator::translate('LIST_DISPLAY_TYPE')));
         $I->click(sprintf($this->listViewSelection, $view));
         $I->waitForText(Translator::translate('LIST_DISPLAY_TYPE') . ' ' . $view);
 
