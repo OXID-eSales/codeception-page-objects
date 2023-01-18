@@ -12,9 +12,9 @@ namespace OxidEsales\Codeception\Page\Component\Header;
  */
 trait LanguageMenu
 {
-    public $languageMenuButton = "//div[@class='btn-group languages-menu']/button";
+    public $languageMenuButton = '//div[@class="meta"]//div[contains(@class,"dropdowns")]/button';
 
-    public $openLanguageMenu = "//div[@class='btn-group languages-menu open']";
+    public $openLanguageMenu = '//div[@class="meta"]//div[contains(@class,"dropdown-menu")]/form/div/button';
 
     /**
      * @param string $language
@@ -26,8 +26,9 @@ trait LanguageMenu
         $I = $this->user;
         $I->click($this->languageMenuButton);
         $I->waitForElement($this->openLanguageMenu);
+        $I->click($this->openLanguageMenu);
         $I->click($language);
-        $I->waitForElement($this->languageMenuButton);
+        $I->waitForElementNotVisible($this->openLanguageMenu);
         return $this;
     }
 }

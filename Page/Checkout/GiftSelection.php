@@ -16,7 +16,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class GiftSelection extends Page
 {
-    public $selectWrapping = '//div[@id="wrapp_%s"]//input[@id="wrapping_%s"]';
+    public $selectWrapping = '//form[@id="giftoptions_modal_form"]/div/div[%s]//input[@value="%s"]/following-sibling::label';
 
     public $selectGiftCard = '//div[@id="wrappCard"]//input[@id="chosen_%s"]';
 
@@ -77,7 +77,7 @@ class GiftSelection extends Page
         $I = $this->user;
         $basketPage = new Basket($I);
         $I->click(Translator::translate('APPLY'));
-        $I->waitForElement($basketPage->breadCrumb);
+        $I->waitForText(Translator::translate('CART'));
         return $basketPage;
     }
 }

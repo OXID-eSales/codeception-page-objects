@@ -22,11 +22,11 @@ class ProductList extends Page
 {
     use AccountMenu, MiniBasket;
     
-    public string $listItemTitle = '#productList_%s';
+    public string $listItemTitle = '//div[@id="productList"]/div[%s]//div[@class="h5 card-title"]';
 
-    public string $listItemDescription = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
+    public string $listItemDescription = '//div[@id="productList"]/div[%s]//div[@class="short-desc"]';
 
-    public string $listItemPrice = '//form[@name="tobasketproductList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
+    public string $listItemPrice = '//div[@id="productList"]/div[%s]//div[contains(@class,"price")]/span';
 
     public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
@@ -123,7 +123,8 @@ class ProductList extends Page
     public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
-        $I->click(sprintf($this->listItemTitle, $itemId));
+        $I->moveMouseOver(sprintf($this->listItemTitle, $itemId));
+        $I->clickWithLeftButton(sprintf($this->listItemTitle, $itemId));
         $I->waitForPageLoad();
         $productDetails = new ProductDetails($I);
         $I->waitForElement($productDetails->productTitle);

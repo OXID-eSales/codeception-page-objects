@@ -25,29 +25,33 @@ class Basket extends Page
     public $URL = '';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
-    public $basketSummary = '#basketGrandTotal';
+    public $basketSummary = '//div[contains(text(),"%s")]/span';
 
-    public $basketItemAmount = '#basketcontents_table #am_%s';
+    public $basketItemAmount = '#am_%s';
 
-    public $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+    public $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//div[contains(@class,"totalPrice")]/strong';
 
-    public $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
+    public $basketItemTitle = '//div[@id="list_cartItem_%s"]//div[@class="h5"]';
 
-    public $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
+    public $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
 
-    public $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
+    public $basketBundledItemAmount = '//div[@id="list_cartItem_%s"]//div[contains(@class,"quantity")]';
 
-    public $basketUpdateButton = '#basketcontents_table #basketUpdate';
+    public $basketUpdateButton = '//input[@id="am_%s"]/following-sibling::button';
+
+    public $openBasketCouponField = '//h4[contains(text(),"%s")]';
 
     public $addBasketCouponField = '#input_voucherNr';
 
-    public $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
+    public $addBasketCouponButton = '//div[@id="voucherCollapse"]//button';
 
     public $removeBasketCoupon = '.couponData .removeFn';
 
-    public $openGiftSelection = '//tr[@id="table_cartItem_%s"]/td[3]/a';
+    public $openGiftSelection = '//div[@id="list_cartItem_%s"]//div[@class="wrapping"]/a';
+
+    public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
 
     /**
      * Update product amount in the basket
@@ -61,7 +65,7 @@ class Basket extends Page
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketItemAmount, $itemPosition), $amount);
-        $I->click($this->basketUpdateButton);
+        $I->click(sprintf($this->basketUpdateButton, $itemPosition));
         return $this;
     }
 
@@ -89,7 +93,7 @@ class Basket extends Page
             $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
         }
-        $I->see($basketSummaryPrice, $this->basketSummary);
+        $I->see($basketSummaryPrice, sprintf($this->basketSummary, Translator::translate('GRAND_TOTAL')));
         return $this;
     }
 
@@ -115,6 +119,13 @@ class Basket extends Page
         return $this;
     }
 
+    public function seeBasketContainsAttribute(string $basketProductAttribute, int $itemPosition)
+    {
+        $I = $this->user;
+        $I->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
+        return $this;
+    }
+
     /**
      * Opens next step: user checkout page
      *
@@ -123,9 +134,24 @@ class Basket extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
-        $I->waitForElement($this->breadCrumb);
-        return new UserCheckout($I);
+        $I->click(Translator::translate('CHECKOUT'));
+        $userStep = new UserCheckout($I);
+        $I->waitForElement($userStep->breadCrumb);
+        return $userStep;
+    }
+
+    public function seeNextStep(): self
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('CHECKOUT'));
+        return $this;
+    }
+
+    public function dontSeeNextStep(): self
+    {
+        $I = $this->user;
+        $I->dontSee(Translator::translate('CHECKOUT'));
+        return $this;
     }
 
     /**
@@ -136,9 +162,12 @@ class Basket extends Page
     public function addCouponToBasket(string $couponNumber)
     {
         $I = $this->user;
+        $I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
+        $I->waitForElementVisible($this->addBasketCouponField);
         $I->fillField($this->addBasketCouponField, $couponNumber);
         $I->click($this->addBasketCouponButton);
-        $I->waitForElementVisible('.couponData');
+        //TODO: missing functionality
+        //$I->waitForElementVisible($this->removeBasketCoupon);
         return $this;
     }
 

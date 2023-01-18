@@ -22,7 +22,7 @@ class UserRegistration extends Page
     public $URL = '/en/open-account';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     //save form button
     public $saveFormButton = '#accUserSaveTop';

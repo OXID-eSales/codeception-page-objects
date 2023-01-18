@@ -25,9 +25,9 @@ class UserGiftRegistry extends Page
     public $URL = '/en/my-gift-registry/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h1';
+    public $headerTitle = 'h3';
 
     public $publicSelection = '#wishlist_blpublic';
 
@@ -35,7 +35,7 @@ class UserGiftRegistry extends Page
 
     public $giftRegistrySearch = '#input_account_wishlist';
 
-    public $searchButton = '';
+    public $searchButton = '//form[@name="wishlist_searchbox"]//button';
 
     public $foundListLink = '//ul[@class="wishlistResults"]/li/a';
 
@@ -47,11 +47,11 @@ class UserGiftRegistry extends Page
 
     public $sendEmailButton = '';
 
-    public $removeFromGitRegistry = '//button[@triggerform="remove_towishlistwishlistProductList_%s"]';
+    public $removeFromGitRegistry = '//button[@data-triggerform="remove_towishlistwishlistProductList_%s"]';
 
-    public $productTitle = '#wishlistProductList_%s';
+    public $productTitle = '//div[@id="wishlistProductList"]/div/div[%s]/div/div[2]/div/div/div/a';
 
-    public $productDescription = '//div[@id="wishlistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
+    public $productDescription = '//div[@id="wishlistProductList"]/div/div[%s]/div/div[2]/div/div/div/div';
 
     public $productPrice = '#productPrice_wishlistProductList_%s';
 
@@ -70,7 +70,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->fillField($this->giftRegistrySearch, $userName);
-        $I->click(Translator::translate('SEARCH'));
+        $I->click($this->searchButton);
         return $this;
     }
 
@@ -84,8 +84,7 @@ class UserGiftRegistry extends Page
         $I = $this->user;
         $I->click($this->foundListLink);
         $giftRegistryPage = new GiftRegistry($I);
-        $breadCrumb = Translator::translate('PUBLIC_GIFT_REGISTRIES');
-        $giftRegistryPage->seeOnBreadCrumb($breadCrumb);
+        $I->waitForText(Translator::translate('GIFT_REGISTRY_OF'));
         return $giftRegistryPage;
     }
 
@@ -115,8 +114,6 @@ class UserGiftRegistry extends Page
         $I = $this->user;
         $I->click(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
         $I->waitForText(Translator::translate('SEND_GIFT_REGISTRY'));
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $this->seeOnBreadCrumb($breadCrumb);
         return $this;
     }
 

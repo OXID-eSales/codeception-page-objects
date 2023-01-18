@@ -18,9 +18,9 @@ class UserCheckout extends Page
     // include url of current page
     public $URL = '/index.php?lang=1&cl=user';
 
-    public $noRegistrationOption = '//div[@id="optionNoRegistration"]/div/button';
+    public $noRegistrationOption = '//form[@id="optionNoRegistration"]/button';
 
-    public $registrationOption = '//div[@id="optionRegistration"]/div[3]/button';
+    public $registrationOption = '//form[@id="optionRegistration"]/button';
 
     public $openShipAddressForm = '#showShipAddress';
 
@@ -28,9 +28,9 @@ class UserCheckout extends Page
 
     public $orderRemark = '#orderRemark';
 
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '//div[@class="step step-1 active"]';
 
-    public $nextStepButton = '#userNextStepBottom';
+    public $nextStepButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
 
     public $previousStepButton = '.prevStep';
 
@@ -77,9 +77,10 @@ class UserCheckout extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click($this->nextStepButton);
-        $I->waitForElement($this->breadCrumb);
-        return new PaymentCheckout($I);
+        $I->click(Translator::translate('NEXT'));
+        $paymentPage = new PaymentCheckout($I);
+        $I->waitForElement($paymentPage->breadCrumb);
+        return $paymentPage;
     }
 
     /**

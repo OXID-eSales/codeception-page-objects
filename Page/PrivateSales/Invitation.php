@@ -22,7 +22,7 @@ class Invitation extends Page
     public $URL = '';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h1';
 
@@ -78,7 +78,7 @@ class Invitation extends Page
         if (isset($suggestionEmailData['subject'])) {
             $I->fillField($this->emailSubject, $senderData['subject']);
         }
-        $I->click(Translator::translate('SEND'));
+        $I->retryClick(Translator::translate('SEND'));
         return $this;
     }
 }

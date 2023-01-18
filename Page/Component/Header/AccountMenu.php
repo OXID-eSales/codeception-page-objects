@@ -22,9 +22,9 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 trait AccountMenu
 {
-    public $accountMenuButton = "//div[contains(@class,'service-menu')]/button";
+    public $accountMenuButton = '//div[contains(@class,"menu-dropdowns")]/button';
 
-    public $openAccountMenuButton = "//div[contains(@class,'service-menu')]/ul";
+    public $openAccountMenuButton = '//div[contains(@class,"menu-dropdowns")]/ul';
 
     public $userRegistrationLink = '#registerLink';
 
@@ -34,7 +34,7 @@ trait AccountMenu
 
     public $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
 
-    public $userLoginButton = '//div[@id="loginBox"]/button';
+    public $userLoginButton = '//form[@name="login"]/button';
 
     public $userLogoutButton = '';
 
@@ -42,17 +42,17 @@ trait AccountMenu
 
     public $userAccount = '//ul[@id="services"]';
 
-    public $userAccountLink = '//ul[@id="services"]/li[1]/a';
+    public $userAccountLink = '//div[contains(@class,"menu-dropdowns")]/ul/li[1]/a';
 
-    public $userAccountCompareListLink = '//ul[@id="services"]/li[2]/a';
+    public $userAccountCompareListLink = '//a[@class="dropdown-item"]';
 
-    public $userAccountWishListLink = '//ul[@id="services"]/li[3]/a';
+    public $userAccountWishListLink = '//a[@class="dropdown-item"]';
 
-    public $userAccountGiftRegistryLink = '//ul[@id="services"]/li[4]/a';
+    public $userAccountGiftRegistryLink = '//a[@class="dropdown-item"]';
 
-    public $userAccountCompareListText = '//ul[@id="services"]/li[2]';
+    public $userAccountCompareListText = '//a[@class="dropdown-item"]';
 
-    public $userAccountWishListText = '//ul[@id="services"]/li[3]';
+    public $userAccountWishListText = '//a[@class="dropdown-item"]';
 
     public $userAccountGiftRegistryText = '//ul[@id="services"]/li[4]';
 
@@ -149,12 +149,10 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible($this->userAccountGiftRegistryLink);
-        $I->click($this->userAccountGiftRegistryLink);
+        $I->waitForElementVisible($this->openAccountMenuButton);
+        $I->click(Translator::translate('MY_GIFT_REGISTRY'), $this->openAccountMenuButton);
         $I->waitForPageLoad();
         $userGiftRegistryPage = new UserGiftRegistry($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
-        $userGiftRegistryPage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
         return $userGiftRegistryPage;
     }
@@ -186,15 +184,16 @@ trait AccountMenu
     public function openProductComparePage()
     {
         $I = $this->user;
-        $this->openAccountMenu();
-        $I->waitForElementVisible($this->userAccountCompareListLink);
-        $I->click($this->userAccountCompareListLink);
-        $I->waitForPageLoad();
+        //$this->openAccountMenu();
+        //TODO: does not exists will open in differnt way $I->waitForElementVisible($this->userAccountCompareListLink);
+        /* $I->click($this->userAccountCompareListLink);
+       //I->waitForPageLoad();
         $productComparePage = new ProductCompare($I);
         $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('PRODUCT_COMPARISON');
         $productComparePage->seeOnBreadCrumb($breadCrumb);
         $I->see(Translator::translate('COMPARE'), $productComparePage->headerTitle);
-        return $productComparePage;
+        return $productComparePage;*/
+        return $this->openAccountPage()->openMyCompareListPage();
     }
 
     /**
@@ -225,7 +224,6 @@ trait AccountMenu
         $I->waitForPageLoad();
         $I->waitForElementVisible($this->accountMenuButton);
         $I->click($this->accountMenuButton);
-        $I->waitForElementClickable($this->openAccountMenuButton);
         return $this;
     }
 

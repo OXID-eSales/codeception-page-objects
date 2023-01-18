@@ -25,7 +25,7 @@ class UserAccount extends Page
     public $URL = '/en/my-account/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
 
@@ -37,9 +37,9 @@ class UserAccount extends Page
 
     public $dashboardWishListPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[1]/div[2]';
 
-    public $dashboardGiftRegistryPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[2]/div[1]';
+    public $dashboardGiftRegistryPanelHeader = '//h4';
 
-    public $dashboardGiftRegistryPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[2]/div[2]';
+    public $dashboardGiftRegistryPanelContent = '//h4[contains(text(),"%s")]/following-sibling::div';
 
     public $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
 
@@ -56,8 +56,7 @@ class UserAccount extends Page
         $this->openAccountMenu();
         $I->click(Translator::translate('LOGOUT'));
         $userLoginPage = new UserLogin($I);
-        $breadCrumb = Translator::translate('LOGIN');
-        $userLoginPage->seeOnBreadCrumb($breadCrumb);
+        $I->see(Translator::translate('LOGIN'));
 
         return $userLoginPage;
     }
@@ -92,5 +91,16 @@ class UserAccount extends Page
         $userOrderHistoryPage->seeOnBreadCrumb($breadCrumb);
 
         return $userOrderHistoryPage;
+    }
+
+    public function seeItemNumberOnGiftRegistryPanel(string $number)
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('MY_GIFT_REGISTRY'), $this->dashboardGiftRegistryPanelHeader);
+        $I->see(
+            Translator::translate('PRODUCT') . ' ' . $number,
+            sprintf($this->dashboardGiftRegistryPanelContent, Translator::translate('MY_GIFT_REGISTRY'))
+        );
+        return $this;
     }
 }

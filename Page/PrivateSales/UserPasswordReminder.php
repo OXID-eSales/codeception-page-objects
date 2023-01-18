@@ -19,7 +19,7 @@ class UserPasswordReminder extends Page
     public $URL = '/en/forgot-password/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';
 

@@ -23,15 +23,15 @@ class ProductCompare extends Page
     public $URL = '/en/my-product-comparison/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h1';
+    public $headerTitle = 'h3';
 
-    public $productTitle = '//tr[@class="products"]/td[%s]/div[2]/strong/a';
+    public $productTitle = '//tr[@class="compare-products"]/td[%s]//strong[@class="title"]';
 
-    public $productNumber = '//tr[@class="products"]/td[%s]/div[2]/span';
+    public $productNumber = '//tr[@class="compare-products"]/td[%s]//span[@class="identifier"]/small[2]';
 
-    public $productPrice = '//tr[@class="products"]/td[%s]/div[2]/form[1]/div[2]/div[1]/span[1]';
+    public $productPrice = '//tr[@class="compare-products"]/td[%s]//div[@class="price h5"]/span';
 
     public $attributeName = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/th';
 
@@ -55,10 +55,9 @@ class ProductCompare extends Page
     public function seeProductData(array $productData, int $position = 1)
     {
         $I = $this->user;
-        $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf($this->productNumber, $position));
+        $I->see($productData['id'], sprintf($this->productNumber, $position));
         $I->see($productData['title'], sprintf($this->productTitle, $position));
-        // TODO: uncomment
-        //$I->see($productData['price'], sprintf($this->productPrice, $id));
+        //$I->see($productData['price'], sprintf($this->productPrice, $position));
         return $this;
     }
 

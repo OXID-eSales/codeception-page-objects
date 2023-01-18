@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
+use OxidEsales\Codeception\Page\Component\Header\Navigation;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -18,20 +20,18 @@ use OxidEsales\Codeception\Page\Page;
  */
 class PaymentCheckout extends Page
 {
-    use AccountMenu;
+    use Navigation;
 
     // include url of current page
     public $URL = 'index.php?lang=1&cl=payment';
 
     public $paymentMethod = '';
 
-    //save form button
-    public $nextStepButton = '#paymentNextStepBottom';
+    public $nextStepButton = '//div[@class="row"]/div[2]//button';
 
-    public $previousStepButton = '.prevStep';
+    public $previousStepButton = '';
 
-    // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '//div[@class="step step-2 active"]';
 
     /**
      * @param string $paymentMethod The id of a payment method.
@@ -53,9 +53,10 @@ class PaymentCheckout extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click($this->nextStepButton);
-        $I->waitForElement($this->breadCrumb);
-        return new OrderCheckout($I);
+        $I->click(Translator::translate('NEXT'));
+        $orderPage = new OrderCheckout($I);
+        $I->waitForElement($orderPage->breadCrumb);
+        return $orderPage;
     }
 
     /**
@@ -66,8 +67,9 @@ class PaymentCheckout extends Page
     public function goToPreviousStep()
     {
         $I = $this->user;
-        $I->click($this->previousStepButton);
-        $I->waitForElement($this->breadCrumb);
-        return new UserCheckout($I);
+        $I->click(Translator::translate('PREVIOUS_STEP'));
+        $userCheckout = new UserCheckout($I);
+        $I->waitForElement($userCheckout->breadCrumb);
+        return $userCheckout;
     }
 }
