@@ -44,9 +44,11 @@ class ProductDetails extends Page
 
     public $productArtNum = '';
 
-    public $productOldPrice = '.pricebox del';
+    public $productOldPrice = '.price-old';
 
     public $productPrice = '#productPrice';
+
+    public $productPricePlus = '//div[@class="price-wrapper h1"]/div[@class="vat-info-text"]';
 
     public $productUnitPrice = '#productPriceUnit';
 
@@ -98,7 +100,7 @@ class ProductDetails extends Page
 
     public $disabledBasketButton = '//button[@id="toBasket" and @disabled="disabled"]';
 
-    public $variantSelection = '/descendant::button[@class="btn btn-default btn-sm dropdown-toggle"][%s]';
+    public $variantSelection = '//div[@id="variants"]/div[%s]/select';
 
     public $variantOpenSelection = '//ul[@class="dropdown-menu  vardrop"]';
 
@@ -108,7 +110,7 @@ class ProductDetails extends Page
 
     public $amountPriceCloseButton = '//div[@class="modal-content"]/div[3]/button';
 
-    public $selectionList = '#productSelections button';
+    public $selectionList = '#productSelections select';
 
     public $attributeName = '#attrTitle_%s';
 
@@ -162,11 +164,10 @@ class ProductDetails extends Page
     public function selectVariant(int $variant, string $variantValue, string $waitForText = '')
     {
         $I = $this->user;
-        $I->click(sprintf($this->variantSelection, $variant));
-        $I->click($variantValue);
+        $I->selectOption(sprintf($this->variantSelection, $variant), $variantValue);
         $I->waitForElementNotVisible($this->variantOpenSelection);
         $I->waitForPageLoad();
-        $I->see($variantValue);
+        $I->waitForText($variantValue);
         return $this;
     }
 
@@ -363,8 +364,7 @@ class ProductDetails extends Page
      */
     public function openAttributes()
     {
-        $I = $this->user;
-        $I->click(Translator::translate('SPECIFICATION'));
+        //is alredy open
         return $this;
     }
 
@@ -375,8 +375,7 @@ class ProductDetails extends Page
      */
     public function openDescription()
     {
-        $I = $this->user;
-        $I->click(Translator::translate('DESCRIPTION'));
+        //is alredy open
         return $this;
     }
 
@@ -397,6 +396,7 @@ class ProductDetails extends Page
         $I->see($productData['description'], $this->productShortDesc);
         $I->see($productData['id']);
         $I->see($productData['price'], $this->productPrice);
+        $I->see(Translator::translate('PLUS_SHIPPING'), $this->productPricePlus);
         return $this;
     }
 
@@ -594,9 +594,7 @@ class ProductDetails extends Page
     public function selectSelectionListItem(string $selectionItem)
     {
         $I = $this->user;
-        $I->click($this->selectionList);
-        $I->waitForText($selectionItem);
-        $I->click($selectionItem);
+        $I->selectOption($this->selectionList, $selectionItem);
         $I->see($selectionItem, $this->selectionList);
         return $this;
     }
