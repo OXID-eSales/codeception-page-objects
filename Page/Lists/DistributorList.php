@@ -21,9 +21,9 @@ class DistributorList extends Page
 
     public string $listItemTitle = '#moreSubCat_%s';
 
-    public string $listItemCount = '//div[@class="subcatList"]/div[2]/div[%s]/div/div';
+    public string $listItemCount = '//div[@class="subcatList"]/div/div[%s]//div[@class="panel-heading"]';
 
-    public string $listItemLink = '//div[@class="subcatList"]/div[2]/div[%s]/div/div[2]';
+    public string $listItemLink = '//div[@class="subcatList"]/div/div[%s]/div/div[2]';
 
     /**
      * @param mixed $param
