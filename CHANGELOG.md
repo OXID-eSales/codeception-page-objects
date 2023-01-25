@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Checks for Page objects' availability
 ### Added
 - Page objects:
+  - `Admin\Manufacturer`
   - `Page\Lists\DistributorList`
   - `Page\Lists\ManufacturerList`
 - Traits:
