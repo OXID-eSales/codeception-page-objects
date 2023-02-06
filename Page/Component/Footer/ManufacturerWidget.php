@@ -19,24 +19,25 @@ use OxidEsales\Codeception\Page\Lists\ManufacturerList;
  */
 trait ManufacturerWidget
 {
-    public string $manufacturerLink = '//ul[@class="manufacturers list-unstyled"]';
+    public string $manufacturerLink = '';
     
-    public string $manufacturersWrapper = '.footer-box-manufacturers';
+    public string $manufacturersWrapper = '';
 
     public function openManufacturerPage(string $manufacturerTitle): ProductList
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->click($manufacturerTitle, $this->manufacturerLink);
+        $I->click($manufacturerTitle);
         $I->waitForPageLoad();
         return $productListPage;
     }
 
     public function openManufacturerListPage(): ManufacturerList
     {
+        //In apex does not exist in footer, we need to call it per url
         $I = $this->user;
         $listPage = new ManufacturerList($I);
-        $I->click(Translator::translate('ALL_BRANDS'), $this->manufacturerLink);
+        $I->amOnPage($listPage->URL);
         $I->waitForPageLoad();
         $I->see(Translator::translate('BY_MANUFACTURER'), $listPage->headerTitle);
         return $listPage;

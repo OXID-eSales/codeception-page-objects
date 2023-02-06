@@ -19,11 +19,11 @@ class DistributorList extends Page
 {
     public string $headerTitle = 'h1';
 
-    public string $listItemTitle = '#moreSubCat_%s';
+    public string $listItemTitle = '//div[contains(@class,"cat-list")]/a[%s]/span';
 
-    public string $listItemCount = '//div[@class="subcatList"]/div/div[%s]//div[@class="panel-heading"]';
+    public string $listItemCount = '//div[contains(@class,"cat-list")]/a[%s]/span';
 
-    public string $listItemLink = '//div[@class="subcatList"]/div/div[%s]/div/div[2]';
+    public string $listItemLink = '//div[contains(@class,"cat-list")]/a[%s]';
 
     /**
      * @param mixed $param
@@ -48,7 +48,7 @@ class DistributorList extends Page
     {
         $I = $this->user;
         $I->see($itemData['title'], sprintf($this->listItemTitle, $itemId));
-        $I->see($itemData['count'], sprintf($this->listItemCount, $itemId));
+        //TODO: does not exists - OXDEV-6723 $I->see($itemData['count'], sprintf($this->listItemCount, $itemId));
         return $this;
     }
 
@@ -61,7 +61,7 @@ class DistributorList extends Page
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->click(Translator::translate('DD_LIST_SHOW_MORE'), sprintf($this->listItemLink, $itemId));
+        $I->click(sprintf($this->listItemLink, $itemId));
         $I->waitForPageLoad();
         return $productListPage;
     }

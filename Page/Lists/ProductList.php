@@ -22,11 +22,11 @@ class ProductList extends Page
 {
     use AccountMenu, MiniBasket;
     
-    public string $listItemTitle = '//div[@id="productList"]/div[%s]//div[@class="h5 card-title"]';
+    public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//div[@class="h5 card-title"]';
 
-    public string $listItemDescription = '//div[@id="productList"]/div[%s]//div[@class="short-desc"]';
+    public string $listItemDescription = '//div[@id="productList"]/div/div[%s]//div[@class="short-desc"]';
 
-    public string $listItemPrice = '//div[@id="productList"]/div[%s]//div[contains(@class,"price")]/span';
+    public string $listItemPrice = '//div[@id="productList"]/div/div[%s]//div[contains(@class,"price")]/span';
 
     public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
@@ -34,15 +34,17 @@ class ProductList extends Page
 
     public string $resetListFilter = "//*[@id='resetFilter']/button";
 
-    public string $nextListPage = '//ol[@id="itemsPager"]/li[@class="next"]/a';
+    public string $nextListPage = '//ul[contains(@class,"pagination")]//a[@aria-label="Next"]';
 
-    public string $previousListPage = '//ol[@id="itemsPager"]/li[@class="prev"]/a';
+    public string $previousListPage = '//ul[contains(@class,"pagination")]//a[@aria-label="Previous"]';
+
+    public string $sortingButton = '#sort';
 
     public string $sortingSelection = '//a[@title="%s"]';
 
     public string $variantSelection = '#variantselector_productList_%s button';
 
-    public string $itemsPerPageSelection = '//div[@class="btn-group open"]//*[contains(text(),"%s")]';
+    public string $itemsPerPageSelection = '//ul[@class="dropdown-menu show"]//*[contains(text(),"%s")]';
 
     public string $listView = '//strong[contains(text(),"%s")]';
 
@@ -195,7 +197,7 @@ class ProductList extends Page
     public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
     {
         $I = $this->user;
-        $I->click(Translator::translate('SORT_BY'));
+        $I->click($this->sortingButton);
         $I->waitForElement(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         $I->click(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         return $this;

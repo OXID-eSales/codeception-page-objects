@@ -47,6 +47,8 @@ class UserAccount extends Page
 
     public $dashboardOrderHistoryHeader = '#linkAccountOrder';
 
+    public $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
+
     /**
      * @return UserLogin
      */
@@ -103,4 +105,26 @@ class UserAccount extends Page
         );
         return $this;
     }
+
+    public function seeItemNumberOnReviewPanel(int $number)
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('MY_REVIEWS') . ' ' . $number);
+        return $this;
+    }
+
+    /**
+     * Opens order-hisotry page.
+     *
+     * @return MyReviews
+     */
+    public function openMyReviewsPage()
+    {
+        $I = $this->user;
+        $I->retryClick(sprintf($this->openReviewPageOnDashboard, Translator::translate('MY_REVIEWS')));
+        $page = new MyReviews($this->user);
+        $this->seePageTitle($page, 'MY_REVIEWS');
+        return $page;
+    }
+
 }

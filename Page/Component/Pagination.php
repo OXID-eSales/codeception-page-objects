@@ -14,7 +14,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 trait Pagination
 {
     private $paginationControlsBottom = '#itemsPagerbottom';
-    private $paginationNextBtn = 'ol.pagination>li.next>a';
+    private $paginationNextBtn = '//ul[contains(@class,"pagination")]//a[@aria-label="Next"]';
 
     public function dontSeeBottomPaginationElements(): void
     {
@@ -27,7 +27,7 @@ trait Pagination
     public function goToNextPage(): void
     {
         $I = $this->user;
-        $I->click($this->paginationNextBtn);
+        $I->retryClick($this->paginationNextBtn);
         $I->waitForPageLoad();
     }
 }

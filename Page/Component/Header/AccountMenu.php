@@ -208,8 +208,7 @@ trait AccountMenu
         $I->click($this->userAccountLink);
         $I->waitForPageLoad();
         $userLoginPage = new UserLogin($I);
-        $breadCrumb = Translator::translate('LOGIN');
-        $userLoginPage->seeOnBreadCrumb($breadCrumb);
+        $I->see(Translator::translate('LOGIN'));
         return $userLoginPage;
     }
 

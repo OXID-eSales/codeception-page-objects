@@ -50,7 +50,7 @@ class ProductDetails extends Page
 
     public $productPricePlus = '//div[@class="price-wrapper h1"]/div[@class="vat-info-text"]';
 
-    public $productUnitPrice = '#productPriceUnit';
+    public $productUnitPrice = '.ppu';
 
     public $toBasketButton = '#toBasket';
 
@@ -64,9 +64,9 @@ class ProductDetails extends Page
 
     public $addToGiftRegistryLink = '#linkToWishList';
 
-    public $reviewLoginLink = '#reviewsLogin';
+    public $reviewLoginLink = '//div[@id="review"]//a';
 
-    public $openReviewForm = '#writeNewReview';
+    public $openReviewForm = '//div[@id="review"]//a';
 
     public $reviewTextForm = '[name=rvw_txt]';
 
@@ -74,11 +74,11 @@ class ProductDetails extends Page
 
     public $saveRatingAndReviewButton = '#reviewSave';
 
-    public $productReviewAuthor = '//div[@id="reviewName_%s"]/div[2]/div/div[1]/span[1]';
+    public $productReviewAuthor = '//div[@id="reviewName_%s"]//div[@class="rater"]/span';
 
     public $productReviewText = '#reviewText_%s';
 
-    public $userProductRating = '//div[@id="reviewName_%s"]/div[2]/div/div[2]/div[1]/i[@class="fa fa-star"]';
+    public $userProductRating = '//div[@id="reviewName_%s"]//*[@class="star active"]';
 
     public $productSuggestionLink = '#suggest';
 
@@ -86,17 +86,19 @@ class ProductDetails extends Page
 
     public $priceAlertSuggestedPrice = 'pa[price]';
 
-    public $accessoriesProductTitle = '#accessories_%s';
+    public $accessoriesProductTitle = '//div[@id="accessories"]/div/div[%s]//div[@class="h5 card-title"]';
 
-    public $accessoriesProductPrice = '//form[@name="tobasketaccessories_%s"]/div/div[@class="price text-center"]';
+    public $accessoriesProductPrice = '//div[@id="accessories"]/div/div[%s]//div[contains(@class,"price")]';
+    public $openAccessoriesProduct = '//div[@id="accessories"]/div/div[%s]';
+    public $similarProductTitle = '//div[@id="similar"]/div/div[%s]//div[@class="h5 card-title"]';
 
-    public $similarProductTitle = '#similar_%s';
+    public $similarProductPrice = '//div[@id="similar"]/div/div[%s]//div[contains(@class,"price")]';
+    public $openSimilarProduct = '//div[@id="similar"]/div/div[%s]';
 
-    public $similarProductPrice = '//form[@name="tobasketsimilar_%s"]/div/div[@class="price text-center"]';
+    public $crossSellingProductTitle = '//div[@id="cross"]/div/div[%s]//div[@class="h5 card-title"]';
 
-    public $crossSellingProductTitle = '#cross_%s';
-
-    public $crossSellingProductPrice = '//form[@name="tobasketcross_%s"]/div/div[@class="price text-center"]';
+    public $crossSellingProductPrice = '//div[@id="cross"]/div/div[%s]//div[contains(@class,"price")]';
+    public $openCrossSellingProduct = '//div[@id="cross"]/div/div[%s]';
 
     public $disabledBasketButton = '//button[@id="toBasket" and @disabled="disabled"]';
 
@@ -108,7 +110,7 @@ class ProductDetails extends Page
 
     public $amountPriceValue = '//div[@class="modal-content"]/div[2]/dl/dd[%s]';
 
-    public $amountPriceCloseButton = '//div[@class="modal-content"]/div[3]/button';
+    public $amountPriceCloseButton = '//div[@class="modal fade show"]//button';
 
     public $selectionList = '#productSelections select';
 
@@ -269,10 +271,9 @@ class ProductDetails extends Page
     public function loginUserForReview(string $userName, string $userPassword)
     {
         $I = $this->user;
-        $I->click($this->reviewLoginLink);
+        $I->retryClick($this->reviewLoginLink);
         $userLoginPage = new UserLogin($I);
-        $breadCrumb = Translator::translate('LOGIN');
-        $userLoginPage->seeOnBreadCrumb($breadCrumb);
+        $I->see(Translator::translate('LOGIN'));
         $userLoginPage->login($userName, $userPassword);
         return $this;
     }
@@ -286,11 +287,11 @@ class ProductDetails extends Page
     public function addReviewAndRating(string $review, int $rating)
     {
         $I = $this->user;
-        $I->click($this->openReviewForm);
+        $I->retryClick($this->openReviewForm);
         $I->waitForElement($this->reviewTextForm);
         $I->fillField($this->reviewTextForm, $review);
-        $I->click(sprintf($this->ratingSelection, $rating));
-        $I->click($this->saveRatingAndReviewButton);
+        $I->retryClick(sprintf($this->ratingSelection, $rating));
+        $I->retryClick($this->saveRatingAndReviewButton);
         return $this;
     }
 
@@ -465,7 +466,9 @@ class ProductDetails extends Page
     public function openAccessoryDetailsPage(int $position = 1)
     {
         $I = $this->user;
-        $I->click(sprintf($this->accessoriesProductTitle, $position));
+        $I->retryClick(sprintf($this->openAccessoriesProduct, $position));
+        $I->waitForPageLoad();
+        $I->waitForElement($this->productTitle);
         return $this;
     }
 
@@ -494,7 +497,9 @@ class ProductDetails extends Page
     public function openSimilarProductDetailsPage(int $position = 1)
     {
         $I = $this->user;
-        $I->click(sprintf($this->similarProductTitle, $position));
+        $I->retryClick(sprintf($this->openSimilarProduct, $position));
+        $I->waitForPageLoad();
+        $I->waitForElement($this->productTitle);
         return $this;
     }
 
@@ -523,7 +528,9 @@ class ProductDetails extends Page
     public function openCrossSellingDetailsPage(int $position = 1)
     {
         $I = $this->user;
-        $I->click(sprintf($this->crossSellingProductTitle, $position));
+        $I->retryClick(sprintf($this->openCrossSellingProduct, $position));
+        $I->waitForPageLoad();
+        $I->waitForElement($this->productTitle);
         return $this;
     }
 

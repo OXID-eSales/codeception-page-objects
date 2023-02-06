@@ -78,13 +78,14 @@ trait AccountNavigation
     }
 
     /** @return MyReviews */
-    public function openMyReviewsPage(): MyReviews
+    /* TODO: does not exist OXDEV
+     * public function openMyReviewsPage(): MyReviews
     {
         $this->clickLinkOnAccountMenu('MY_REVIEWS');
         $page = new MyReviews($this->user);
         $this->seePageTitle($page, 'MY_REVIEWS');
         return $page;
-    }
+    }*/
 
     public function dontSeeMyReviewsLink(): void
     {
