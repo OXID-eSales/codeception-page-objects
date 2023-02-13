@@ -52,6 +52,8 @@ class Basket extends Page
     public $openGiftSelection = '//div[@id="list_cartItem_%s"]//div[@class="wrapping"]/a';
 
     public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
+    
+    public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
 
     /**
      * Update product amount in the basket
@@ -123,6 +125,13 @@ class Basket extends Page
     {
         $I = $this->user;
         $I->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
+        return $this;
+    }
+
+    public function seeBasketContainsSelectionList(string $selectionListTitle, string $selectionListValue, int $itemPosition)
+    {
+        $I = $this->user;
+        $I->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
         return $this;
     }
 

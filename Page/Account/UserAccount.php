@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
@@ -26,6 +27,8 @@ class UserAccount extends Page
 
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
+    
+    public $headerTitle = '';
 
     public $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
 
@@ -49,6 +52,13 @@ class UserAccount extends Page
 
     public $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
 
+    public function seePageOpened()
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('LOGOUT'));
+        return $this;
+    }
+    
     /**
      * @return UserLogin
      */
@@ -63,6 +73,20 @@ class UserAccount extends Page
         return $userLoginPage;
     }
 
+    public function loginUserInAccountPage()
+    {
+        $I = $this->user;
+        // logging in
+        $this->openAccountMenu();
+        $I->waitForElementVisible($this->userLoginName);
+        $I->fillField($this->userLoginName, $userName);
+        $I->fillField($this->userLoginPassword, $userPassword);
+        $I->click($this->userLoginButton);
+        $I->waitForPageLoad();
+        Context::setActiveUser($userName);
+        return $this;
+    }
+
     /**
      * Opens my-password page
      *
@@ -70,13 +94,7 @@ class UserAccount extends Page
      */
     public function openChangePasswordPage()
     {
-        $I = $this->user;
-        $I->click($this->dashboardChangePasswordPanelHeader);
-        $userChangePasswordPage = new UserChangePassword($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT') . Translator::translate('CHANGE_PASSWORD');
-        $userChangePasswordPage->seeOnBreadCrumb($breadCrumb);
-
-        return $userChangePasswordPage;
+        return $this->openChangePasswordPageInAccountMenu();
     }
 
     /**

@@ -46,6 +46,22 @@ class UserLogin extends Page
     }
 
     /**
+     * @param string $userName
+     * @param string $userPassword
+     *
+     * @return self
+     */
+    public function loginWithError(string $userName, string $userPassword)
+    {
+        $I = $this->user;
+        $I->fillField($this->userAccountLoginName, $userName);
+        $I->fillField($this->userAccountLoginPassword, $userPassword);
+        $I->click($this->userAccountLoginButton);
+        $I->see(Translator::translate('LOGIN'));
+        return $this;
+    }
+
+    /**
      * Opens forgot-password page
      *
      * @return UserPasswordReminder

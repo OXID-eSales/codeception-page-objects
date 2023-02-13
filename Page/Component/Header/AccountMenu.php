@@ -32,7 +32,7 @@ trait AccountMenu
 
     public $userLoginPassword = '#loginPasword';
 
-    public $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
+    public $userForgotPasswordButton = '//a[contains(@class,"forgotPasswordOpener")]';
 
     public $userLoginButton = '//form[@name="login"]/button';
 
@@ -85,8 +85,7 @@ trait AccountMenu
         $I->waitForElementVisible($this->userForgotPasswordButton);
         $I->click($this->userForgotPasswordButton);
         $userPasswordReminderPage = new UserPasswordReminder($I);
-        $breadCrumb = Translator::translate('FORGOT_PASSWORD');
-        $userPasswordReminderPage->seeOnBreadCrumb($breadCrumb);
+        $userPasswordReminderPage->seePageOpen();
         return $userPasswordReminderPage;
     }
 
@@ -122,6 +121,24 @@ trait AccountMenu
         $I->click(Translator::translate('LOGOUT'));
         $I->waitForPageLoad();
         Context::resetActiveUser();
+        return $this;
+    }
+
+    public function seeUserLoggedIn(): self
+    {
+        $I = $this->user;
+        $this->openAccountMenu();
+        $I->waitForElementNotVisible($this->userRegistrationLink);
+        $I->click($this->accountMenuButton);
+        return $this;
+    }
+
+    public function seeUserLoggedOut(): self
+    {
+        $I = $this->user;
+        $this->openAccountMenu();
+        $I->waitForElementVisible($this->userRegistrationLink);
+        $I->click($this->accountMenuButton);
         return $this;
     }
 

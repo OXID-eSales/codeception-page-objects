@@ -16,6 +16,7 @@ use OxidEsales\Codeception\Page\Account\MyReviews;
 use OxidEsales\Codeception\Page\Account\NewsletterSettings;
 use OxidEsales\Codeception\Page\Account\ProductCompare;
 use OxidEsales\Codeception\Page\Account\UserAddress;
+use OxidEsales\Codeception\Page\Account\UserChangePassword;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;
 use OxidEsales\Codeception\Page\Account\UserListmania;
 use OxidEsales\Codeception\Page\Account\UserWishList;
@@ -74,6 +75,19 @@ trait AccountNavigation
         $this->clickLinkOnAccountMenu('MY_LISTMANIA');
         $page = new UserListmania($this->user);
         $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_RECOMMLIST');
+        return $page;
+    }
+
+    /**
+     * Opens my-password page
+     *
+     * @return UserChangePassword
+     */
+    public function openChangePasswordPageInAccountMenu()
+    {
+        $this->clickLinkOnAccountMenu('CHANGE_PASSWORD');
+        $page = new UserChangePassword($this->user);
+        $this->seePageTitle($page, 'CHANGE_PASSWORD');
         return $page;
     }
 

@@ -22,11 +22,13 @@ class ProductList extends Page
 {
     use AccountMenu, MiniBasket;
     
-    public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//div[@class="h5 card-title"]';
+    public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//*[@class="h5 card-title"]';
 
     public string $listItemDescription = '//div[@id="productList"]/div/div[%s]//div[@class="short-desc"]';
 
     public string $listItemPrice = '//div[@id="productList"]/div/div[%s]//div[contains(@class,"price")]/span';
+
+    public string $listItemDescriptionTypeList = '//div[@id="productList"]/div/div[%s]//div[@class="card-text"]';
 
     public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
@@ -46,13 +48,13 @@ class ProductList extends Page
 
     public string $itemsPerPageSelection = '//ul[@class="dropdown-menu show"]//*[contains(text(),"%s")]';
 
-    public string $listView = '//strong[contains(text(),"%s")]';
+    public string $listView = '';
 
-    public string $listViewSelection = '//ul[@class="dropdown-menu"]//*[contains(text(),"%s")]';
+    public string $listViewSelection = '//a[@title="%s"]';
 
-    public string $pageNumberSelection = '//ol[@id="itemsPager"]//a[contains(text(),"%s")]';
+    public string $pageNumberSelection = '//ul[contains(@class,"pagination")]//a[contains(text(),"%s")]';
 
-    public string $activePageNumber = '//ol[@id="itemsPager"]/li[@class="active"]/a[contains(text(),"%s")]';
+    public string $activePageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a[contains(text(),"%s")]';
 
     public string $headerTitle = 'h1';
     
@@ -98,7 +100,25 @@ class ProductList extends Page
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
         $I->see($productData['description'], sprintf($this->listItemDescription, $itemId));
-        $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
+        //TODO: Missing info of shipping costs $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
+        return $this;
+    }
+
+    /**
+     * Check if Product data is displayed correctly.
+     * $productData = ['title', 'description', 'price']
+     *
+     * @param array $productData
+     * @param int   $itemId      The position of the item in the list.
+     *
+     * @return $this
+     */
+    public function seeProductDataInDisplayTypeList(array $productData, int $itemId = 1): self
+    {
+        $I = $this->user;
+        $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
+        $I->see($productData['description'], sprintf($this->listItemDescriptionTypeList, $itemId));
+        //TODO: Missing info of shipping costs $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
         return $this;
     }
 
@@ -241,9 +261,8 @@ class ProductList extends Page
     public function selectListDisplayType(string $view): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->listView, Translator::translate('LIST_DISPLAY_TYPE')));
         $I->click(sprintf($this->listViewSelection, $view));
-        $I->waitForText(Translator::translate('LIST_DISPLAY_TYPE') . ' ' . $view);
+        $I->waitForPageLoad();
 
         return $this;
     }

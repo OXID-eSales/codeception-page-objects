@@ -19,11 +19,13 @@ class ProductSearchList extends ProductList
 {
     use SearchWidget;
 
-    public string $listItemTitle = '#searchList_%s';
+    public string $listItemTitle = '//div[@id="searchList"]/div/div[%s]//*[@class="h5 card-title"]';
 
-    public string $listItemDescription = '//form[@name="tobasketsearchList_%s"]/div[2]/div[2]/div/div[@class="shortdesc"]';
+    public string $listItemDescription = '//div[@id="searchList"]/div/div[%s]//div[@class="short-desc"]';
 
-    public string $listItemPrice = '//form[@name="tobasketsearchList_%s"]/div[2]/div[2]/div/div[@class="price"]/div/span[@class="lead text-nowrap"]';
+    public string $listItemPrice = '//div[@id="searchList"]/div/div[%s]//div[contains(@class,"price")]/span';
+
+    public string $listItemDescriptionTypeList = '//div[@id="searchList"]/div/div[%s]//div[@class="card-text"]';
 
     public string $listItemForm = '//form[@name="tobasketsearchList_%s"]';
 

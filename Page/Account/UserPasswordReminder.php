@@ -24,9 +24,18 @@ class UserPasswordReminder extends Page
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
 
+    public $headerTitle = 'h3';
+
     public $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';
 
     public $resetPasswordButton = '';
+
+    public function seePageOpen()
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('FORGOT_PASSWORD'), $this->headerTitle);
+        return $this;
+    }
 
     /**
      * @param string $userEmail

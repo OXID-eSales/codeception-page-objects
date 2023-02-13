@@ -25,19 +25,27 @@ class MyReviews extends Page
     public $breadCrumb = '.breadcrumb';
     public $headerTitle = 'h3';
     private $reviewEntry = '//div[@class="reviews-landscape"]/div[@class="card"]';
-    private $deleteReviewBtn = '[itemprop="review"] button';
+    private $deleteReviewBtn = '//div[@id="reviewName_%s"]//button';
 
     /** @param int $cnt */
-    public function seeNumberOfReviews(int $cnt): void
+    public function seeNumberOfReviews(int $cnt): self
     {
         $I = $this->user;
         $I->seeNumberOfElements($this->reviewEntry, $cnt);
+        return $this;
     }
 
-    public function deleteFirstReviewInList(): void
+    public function deleteFirstReviewInList(): self
+    {
+        $this->deleteReviewInList(1);
+        return $this;
+    }
+
+    public function deleteReviewInList(int $position): self
     {
         $I = $this->user;
-        $I->click(Locator::firstElement($this->deleteReviewBtn));
+        $I->click(sprintf($this->deleteReviewBtn, $position));
         $this->confirmDeletion();
+        return $this;
     }
 }

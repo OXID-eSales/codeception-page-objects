@@ -8,6 +8,7 @@
 namespace OxidEsales\Codeception\Page\Account;
 
 use Facebook\WebDriver\WebDriverKeys;
+use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
@@ -17,13 +18,15 @@ use OxidEsales\Codeception\Page\Page;
  */
 class UserChangePassword extends Page
 {
-    use AccountMenu;
+    use AccountMenu, AccountNavigation;
 
     // include url of current page
     public $URL = '/en/my-password/';
 
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
+
+    public $headerTitle = 'h3';
 
     public $userOldPassword = '#passwordOld';
 

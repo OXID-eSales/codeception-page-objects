@@ -78,7 +78,7 @@ class ProductDetails extends Page
 
     public $productReviewText = '#reviewText_%s';
 
-    public $userProductRating = '//div[@id="reviewName_%s"]//*[@class="star active"]';
+    public $userProductRating = '//div[@id="reviewName_%s"]/div/div/*[@class="star active"]';
 
     public $productSuggestionLink = '#suggest';
 
@@ -170,6 +170,7 @@ class ProductDetails extends Page
         $I->waitForElementNotVisible($this->variantOpenSelection);
         $I->waitForPageLoad();
         $I->waitForText($variantValue);
+        $I->wait(1);
         return $this;
     }
 
