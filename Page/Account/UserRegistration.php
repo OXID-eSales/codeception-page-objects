@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\UserForm;
 use OxidEsales\Codeception\Page\Page;
@@ -24,8 +25,17 @@ class UserRegistration extends Page
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
 
+    public $headerTitle = 'h3';
+
     //save form button
     public $saveFormButton = '#accUserSaveTop';
+
+    public function seePageOpen()
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('OPEN_ACCOUNT'), $this->headerTitle);
+        return $this;
+    }
 
     /**
      * @return $this
@@ -33,8 +43,8 @@ class UserRegistration extends Page
     public function registerUser()
     {
         $I = $this->user;
-        $I->click($this->saveFormButton);
-        $I->waitForElement($this->breadCrumb);
+        $I->retryClick($this->saveFormButton);
+        $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'), $this->headerTitle);
         return $this;
     }
 }

@@ -52,7 +52,7 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
         $I->waitForElement($this->noRegistrationOption);
-        $I->click($this->noRegistrationOption);
+        $I->retryClick($this->noRegistrationOption);
         return $this;
     }
 
@@ -114,7 +114,7 @@ class UserCheckout extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->click($this->openShipAddressForm);
+        $I->retryClick($this->openShipAddressForm);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressForm);
         return $this;
     }

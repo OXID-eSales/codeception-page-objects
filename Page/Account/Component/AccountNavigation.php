@@ -26,7 +26,11 @@ trait AccountNavigation
 {
     /** @var string  */
     public $accountMenu = '#dropdownMenuButton';
+
     public $accountWidget = '//div[@class="dropdown-menu dropdown-menu-end show"]';
+
+    public $userAccountWishListLink = '//div[contains(@class,"menu-dropdowns")]/a';
+
 
     /** @return NewsletterSettings */
     public function openNewsletterSettingsPage(): NewsletterSettings
@@ -60,13 +64,20 @@ trait AccountNavigation
         $this->dontSeeLinkInAccountMenu('MY_GIFT_REGISTRY');
     }
 
-    /** @return UserWishList */
-    public function openWishListPage(): UserWishList
+    /**
+     * Opens my-wish-list page.
+     *
+     * @return UserWishList
+     */
+    public function openWishListPage()
     {
-        $this->clickLinkOnAccountMenu('MY_WISH_LIST');
-        $page = new UserWishList($this->user);
-        $this->seePageTitle($page, 'PAGE_TITLE_ACCOUNT_NOTICELIST');
-        return $page;
+        $I = $this->user;
+        $I->waitForElementVisible($this->userAccountWishListLink);
+        $I->click($this->userAccountWishListLink);
+        $I->waitForPageLoad();
+        $userWishListPage = new UserWishList($I);
+        $userWishListPage->seePageOpen();
+        return $userWishListPage;
     }
 
     /** @return UserListmania */

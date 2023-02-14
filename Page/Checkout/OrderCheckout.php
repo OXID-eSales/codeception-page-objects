@@ -334,7 +334,7 @@ class OrderCheckout extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX').' ';
+        $transformedAddress .= ' | ' . Translator::translate('FAX').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE').' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');

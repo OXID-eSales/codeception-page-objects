@@ -32,7 +32,7 @@ class ProductList extends Page
 
     public string $listItemForm = '//form[@name="tobasketproductList_%s"]';
 
-    public string $listFilter = "#filterList";
+    public string $listFilter = '//select[contains(@aria-label,"%s")]';
 
     public string $resetListFilter = "//*[@id='resetFilter']/button";
 
@@ -156,18 +156,16 @@ class ProductList extends Page
     public function selectFilter($attributeName, $attributeValue): self
     {
         $I = $this->user;
-        $this->openFilter($attributeName);
-        $I->waitForText($attributeValue);
-        $I->click($attributeValue);
+        $I->selectOption(sprintf($this->listFilter, $attributeName), $attributeValue);
         $I->waitForPageLoad();
-        $I->waitForElementVisible($this->resetListFilter);
+        //TODO: missing OXDEV-6791 $I->waitForElementVisible($this->resetListFilter);
         return $this;
     }
 
     public function openFilter(string $attributeName): self
     {
         $I = $this->user;
-        $I->click($attributeName, $this->listFilter);
+        $I->click(sprintf($this->listFilter, $attributeName));
         return $this;
     }
 
@@ -192,7 +190,7 @@ class ProductList extends Page
     public function openNextListPage(): self
     {
         $I = $this->user;
-        $I->click($this->nextListPage);
+        $I->retryClick($this->nextListPage);
         $I->waitForPageLoad();
         return $this;
     }

@@ -234,7 +234,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToWishListLink);
-        $I->click($this->addToWishListLink);
+        $I->retryClick($this->addToWishListLink);
         $I->waitForPageLoad();
         return $this;
     }

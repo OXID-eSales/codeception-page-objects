@@ -46,13 +46,13 @@ trait AccountMenu
 
     public $userAccountCompareListLink = '//a[@class="dropdown-item"]';
 
-    public $userAccountWishListLink = '//a[@class="dropdown-item"]';
+    public $userAccountWishListLink = '//div[contains(@class,"menu-dropdowns")]/a';
 
     public $userAccountGiftRegistryLink = '//a[@class="dropdown-item"]';
 
     public $userAccountCompareListText = '//a[@class="dropdown-item"]';
 
-    public $userAccountWishListText = '//a[@class="dropdown-item"]';
+    public $userAccountWishListText = '//div[contains(@class,"menu-dropdowns")]/a/span';
 
     public $userAccountGiftRegistryText = '//ul[@id="services"]/li[4]';
 
@@ -68,8 +68,7 @@ trait AccountMenu
         $I->waitForElementVisible($this->userRegistrationLink);
         $I->click($this->userRegistrationLink);
         $userRegistrationPage = new UserRegistration($I);
-        $breadCrumb = Translator::translate('PAGE_TITLE_REGISTER');
-        $userRegistrationPage->seeOnBreadCrumb($breadCrumb);
+        $userRegistrationPage->seePageOpen();
         return $userRegistrationPage;
     }
 
@@ -182,14 +181,11 @@ trait AccountMenu
     public function openUserWishListPage()
     {
         $I = $this->user;
-        $this->openAccountMenu();
         $I->waitForElementVisible($this->userAccountWishListLink);
         $I->click($this->userAccountWishListLink);
         $I->waitForPageLoad();
         $userWishListPage = new UserWishList($I);
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_WISH_LIST');
-        $userWishListPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $userWishListPage->headerTitle);
+        $userWishListPage->seePageOpen();
         return $userWishListPage;
     }
 
@@ -279,9 +275,9 @@ trait AccountMenu
     public function checkWishListItemCount(int $count)
     {
         $I = $this->user;
-        $cnt = ($count) ? ' '.$count : '';
-        $I->waitForText(Translator::translate('MY_WISH_LIST'));
-        $I->see(Translator::translate('MY_WISH_LIST').$cnt, $this->userAccountWishListText);
+        $cnt = ($count) ?
+            $I->see((string) $count, $this->userAccountWishListText) :
+            $I->waitForElementNotVisible($this->userAccountWishListText);
         return $this;
     }
 

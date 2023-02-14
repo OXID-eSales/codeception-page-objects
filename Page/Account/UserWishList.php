@@ -6,6 +6,7 @@
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
@@ -25,11 +26,11 @@ class UserWishList extends Page
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h1';
+    public $headerTitle = 'h3';
 
-    public $productTitle = '#noticelistProductList_%s';
+    public $productTitle = '//div[@id="noticelistProductList"]/div/div[%s]//a';
 
-    public $productDescription = '//div[@id="noticelistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
+    public $productDescription = '//div[@id="noticelistProductList"]/div/div[%s]//div[@class="card-text"]';
 
     public $productPrice = '#productPrice_noticelistProductList_%s';
 
@@ -37,7 +38,14 @@ class UserWishList extends Page
 
     public $toBasketButton = '#toBasket_noticelistProductList_%s';
 
-    public $removeButton = '//button[@triggerform="remove_tonoticelistnoticelistProductList_%s"]';
+    public $removeButton = '//button[@data-triggerform="remove_tonoticelistnoticelistProductList_%s"]';
+
+    public function seePageOpen()
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $this->headerTitle);
+        return $this;
+    }
 
     /**
      * Checks if given product data is shown correctly:
