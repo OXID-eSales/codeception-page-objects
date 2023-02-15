@@ -160,7 +160,7 @@ trait UserForm
         $this->selectBillingAddressSalutation($userData['userSalutation']);
         $this->selectBillingCountry($userData['countryId']);
         if (isset($userData['stateId'])) {
-            $this->selectBillingAddressState($userData['stateId']);
+            //$this->selectBillingAddressState($userData['stateId']);
         }
 
         foreach ($this->removeSelectFieldsFromUserData($userData) as $textField => $value) {
