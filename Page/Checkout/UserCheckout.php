@@ -79,7 +79,6 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->click(Translator::translate('NEXT'));
         $paymentPage = new PaymentCheckout($I);
-        $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
     }
 

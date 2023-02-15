@@ -27,7 +27,7 @@ class UserAccount extends Page
 
     // include bread crumb of current page
     public $breadCrumb = '.breadcrumb';
-    
+
     public $headerTitle = '';
 
     public $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
@@ -58,7 +58,7 @@ class UserAccount extends Page
         $I->see(Translator::translate('LOGOUT'));
         return $this;
     }
-    
+
     /**
      * @return UserLogin
      */
