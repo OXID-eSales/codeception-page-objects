@@ -16,11 +16,13 @@ use OxidEsales\Codeception\Admin\Newsletter;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
+use OxidEsales\Codeception\Admin\Service\DiagnosticsTool;
 use OxidEsales\Codeception\Admin\Service\SystemHealth;
 use OxidEsales\Codeception\Admin\Service\SystemInfo;
 use OxidEsales\Codeception\Admin\Service\Tools;
 use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\EshopCommunity\Application\Model\Diagnostics;
 
 trait AdminMenu
 {
@@ -168,6 +170,23 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Languages($I);
+    }
+
+    /**
+     * @return DiagnotsicsTool
+     */
+    public function openDiagnosticsTool(): DiagnosticsTool
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('oxdiag_menu'));
+        $I->selectEditFrame();
+        $I->see(Translator::translate('OXDIAG_HOME'));
+
+
+        return new DiagnosticsTool($I);
     }
 
     /**
