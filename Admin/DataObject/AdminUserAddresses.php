@@ -154,5 +154,4 @@ class AdminUserAddresses
     {
         $this->stateId = $stateId;
     }
-
 }

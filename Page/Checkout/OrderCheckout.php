@@ -14,7 +14,6 @@ use OxidEsales\Codeception\Page\Page;
 
 class OrderCheckout extends Page
 {
-    // include url of current page
     public $URL = '/index.php?cl=order&lang=1';
     public string $billingAddress = '//div[@id="orderAddress"]/div[1]/form/div[2]/div[2]';
     public string $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
@@ -37,14 +36,12 @@ class OrderCheckout extends Page
     public string $couponInformation = '.couponData';
     public string $previousStepLink = '//li[@class="step3 passed "]/a/div[2]';
     public string $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
-    public string $editPayment = '//div[@id="orderShipping"]/div[1]//button';
+    public string $editPayment = '//div[@id="orderPayment"]//button';
+    public string $editShippingMethod = '//div[@id="orderShipping"]//button';
+    public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
+    public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
 
-    /**
-     * Clicks on submit order button.
-     *
-     * @return $this
-     */
-    public function submitOrder()
+    public function submitOrder(): self
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('SUBMIT_ORDER'));
@@ -53,11 +50,24 @@ class OrderCheckout extends Page
         return $this;
     }
 
-    /**
-     * Opens previous page: payment checkout.
-     *
-     * @return PaymentCheckout
-     */
+    public function submitOrderSuccessfully(): ThankYou
+    {
+        $I = $this->user;
+        $thankYouPage = new ThankYou($I);
+        $this->submitOrder();
+        $this->seeOnBreadCrumb(Translator::translate('ORDER_COMPLETED'));
+        $I->waitForElement($thankYouPage->thankYouPage);
+        return $thankYouPage;
+    }
+
+    public function confirmDownloadableProductsAgreement(): self
+    {
+        $I = $this->user;
+        $I->checkOption($this->downloadableProductsAgreement);
+        $I->seeCheckboxIsChecked($this->downloadableProductsAgreement);
+        return $this;
+    }
+
     public function goToPreviousStep(): PaymentCheckout
     {
         $I = $this->user;
@@ -67,11 +77,6 @@ class OrderCheckout extends Page
         return $paymentPage;
     }
 
-    /**
-     * Opens page: user checkout.
-     *
-     * @return UserCheckout
-     */
     public function editUserAddress(): UserCheckout
     {
         $I = $this->user;
@@ -81,11 +86,6 @@ class OrderCheckout extends Page
         return $userPage;
     }
 
-    /**
-     * Opens page: payment checkout.
-     *
-     * @return PaymentCheckout
-     */
     public function editPaymentMethod(): PaymentCheckout
     {
         $I = $this->user;
@@ -95,62 +95,42 @@ class OrderCheckout extends Page
         return $paymentPage;
     }
 
-    /**
-     * Asset payment method
-     *
-     * @param string $paymentMethod
-     *
-     * @return $this
-     */
-    public function validatePaymentMethod(string $paymentMethod)
+    public function validatePaymentMethod(string $paymentMethod): self
     {
-        $I = $this->user;
-        $I->see($paymentMethod, $this->paymentMethod);
+        $this->user->see($paymentMethod, $this->paymentMethod);
         return $this;
     }
 
-    /**
-     * Asset shipping method
-     *
-     * @param string $shippingMethod
-     *
-     * @return $this
-     */
-    public function validateShippingMethod(string $shippingMethod)
+    public function validateShippingMethod(string $shippingMethod): self
     {
-        $I = $this->user;
-        $I->see($shippingMethod, $this->shippingMethod);
+        $this->user->see($shippingMethod, $this->shippingMethod);
         return $this;
     }
 
-    /**
-     * Asset coupon information
-     *
-     * @param string $couponId
-     * @param string $couponDiscount
-     *
-     * @return $this
-     */
-    public function validateCoupon(string $couponId, string $couponDiscount)
+    public function editShippingMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $informationText = sprintf('%s (%s %s) %s',
+        $I->retryClick($this->editShippingMethod);
+        $paymentPage = new PaymentCheckout($I);
+        $I->waitForElement($paymentPage->breadCrumb);
+        return $paymentPage;
+    }
+
+    public function validateCoupon(string $couponId, string $couponDiscount): self
+    {
+        $I = $this->user;
+        $informationText = sprintf(
+            '%s (%s %s) %s',
             Translator::translate('COUPON'),
             Translator::translate('NUMBER'),
             $couponId,
-            $couponDiscount);
+            $couponDiscount
+        );
         $I->see($informationText, $this->couponInformation);
         return $this;
     }
 
-    /**
-     * Asset vat information
-     *
-     * @param array $vatInformation An Array of the Vat amount
-     *
-     * @return $this
-     */
-    public function validateVat(array $vatInformation)
+    public function validateVat(array $vatInformation): self
     {
         $I = $this->user;
         $position = 2;
@@ -161,9 +141,30 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    public function validateTotalPrice(array $priceInformation): self
+    {
+        $I = $this->user;
+        $I->see($priceInformation['net'], $this->basketSummaryNet);
+        $I->see($priceInformation['gross'], $this->basketSummaryGross);
+        $I->see($priceInformation['shipping'], $this->basketShippingGross);
+        $I->see($priceInformation['payment'], $this->basketPaymentGross);
+        $I->see($priceInformation['total'], $this->basketTotalPrice);
+        return $this;
+    }
+
+    public function validateWrappingPrice(string $priceInformation): self
+    {
+        $this->user->see($priceInformation, $this->basketWrappingGross);
+        return $this;
+    }
+
+    public function validateGiftCardPrice(string $priceInformation): self
+    {
+        $this->user->see($priceInformation, $this->basketGiftCardGross);
+        return $this;
+    }
+
     /**
-     * Assert order product
-     *
      * $basketProducts[] = ['id' => productId,
      *                   'title' => productTitle,
      *                   'amount' => productAmount,
@@ -186,7 +187,6 @@ class OrderCheckout extends Page
     }
 
     /**
-     * Checks if user billing address is correctly displayed.
      * $userBillAddress = [
      *  "userLoginNameField"
      *  "userUstIDField" => "",
@@ -208,12 +208,8 @@ class OrderCheckout extends Page
      *  "faxNr" => "111-111-111-$userId",
      *  "countryId" => $userCountry
      *  ];
-     *
-     * @param array $userBillAddress
-     *
-     * @return $this
      */
-    public function validateUserBillingAddress(array $userBillAddress)
+    public function validateUserBillingAddress(array $userBillAddress): self
     {
         $I = $this->user;
         $addressInfo = $this->convertBillInformationIntoString($userBillAddress);
@@ -222,7 +218,6 @@ class OrderCheckout extends Page
     }
 
     /**
-     * Checks if user shipping address is correctly displayed.
      * $userDelAddress = [
      *  "userSalutation" => 'Mrs',
      *  "userFirstName" => "user$userId name_šÄßüл",
@@ -237,12 +232,8 @@ class OrderCheckout extends Page
      *  "faxNr" => "111-111-111-$userId",
      *  "countryId" => $userCountry
      *  ];
-     *
-     * @param array $userDelAddress
-     *
-     * @return $this
      */
-    public function validateUserDeliveryAddress(array $userDelAddress)
+    public function validateUserDeliveryAddress(array $userDelAddress): self
     {
         $I = $this->user;
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
@@ -250,12 +241,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
-    /**
-     * @param string $userRemarkText
-     *
-     * @return $this
-     */
-    public function validateRemarkText(string $userRemarkText)
+    public function validateRemarkText(string $userRemarkText): self
     {
         $I = $this->user;
         $I->see(Translator::translate('WHAT_I_WANTED_TO_SAY'), $this->userRemarkHeader);
@@ -263,81 +249,55 @@ class OrderCheckout extends Page
         return $this;
     }
 
-    /**
-     * Forms a string from billing address information array.
-     *
-     * @param array $userAddress
-     *
-     * @return string
-     */
-    private function convertBillInformationIntoString($userAddress)
+    private function convertBillInformationIntoString(array $userAddress): string
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= Translator::translate('EMAIL').' ';
+        $transformedAddress .= Translator::translate('EMAIL') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
-        $transformedAddress .= Translator::translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
-        $transformedAddress .= Translator::translate('CELLUAR_PHONE').' ';
+        $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');
-        $transformedAddress .= Translator::translate('PERSONAL_PHONE').' ';
+        $transformedAddress .= Translator::translate('PERSONAL_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userPrivateFonField');
         return $transformedAddress;
     }
 
-    /**
-     * Forms a string from delivery address information array.
-     *
-     * @param array $userAddress
-     *
-     * @return string
-     */
-    private function convertDeliveryAddressIntoString($userAddress)
+    private function convertDeliveryAddressIntoString(array $userAddress): string
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= Translator::translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         return $transformedAddress;
     }
 
-    /**
-     * Forms a string from address information array.
-     *
-     * @param array $userAddress
-     *
-     * @return string
-     */
-    private function convertAddressArrayIntoString($userAddress)
+    private function convertAddressArrayIntoString(array $userAddress): string
     {
         $transformedAddress = $this->getAddressElement($userAddress, 'companyName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'additionalInfo');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'userUstIDField', Translator::translate('VAT_ID_NUMBER').' ');
+        $transformedAddress .= $this->getAddressElement(
+            $userAddress,
+            'userUstIDField',
+            Translator::translate('VAT_ID_NUMBER') . ' '
+        );
         $transformedAddress .= $this->getAddressElement($userAddress, 'userSalutation');
         $transformedAddress .= $this->getAddressElement($userAddress, 'userFirstName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLastName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'street');
         $transformedAddress .= $this->getAddressElement($userAddress, 'streetNr');
-        $transformedAddress .= (isset($userAddress['stateId']) && $userAddress['stateId']) ? 'BE ': '';
+        $transformedAddress .= (isset($userAddress['stateId']) && $userAddress['stateId']) ? 'BE ' : '';
         $transformedAddress .= $this->getAddressElement($userAddress, 'ZIP');
         $transformedAddress .= $this->getAddressElement($userAddress, 'city');
         $transformedAddress .= $this->getAddressElement($userAddress, 'countryId');
         return $transformedAddress;
     }
 
-    /**
-     * Returns address element value if is set.
-     *
-     * @param array  $address
-     * @param string $element
-     * @param string $label
-     *
-     * @return string
-     */
-    private function getAddressElement($address, $element, $label = '')
+    private function getAddressElement(array $address, string $element, string $label = ''): string
     {
-        return (isset($address[$element]) && $address[$element]) ? $label.$address[$element].' ': '';
+        return (isset($address[$element]) && $address[$element]) ? $label . $address[$element] . ' ' : '';
     }
 }

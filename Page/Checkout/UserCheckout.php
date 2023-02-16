@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
@@ -13,7 +16,8 @@ use OxidEsales\Codeception\Page\Component\UserForm;
 
 class UserCheckout extends Page
 {
-    use UserForm, Navigation;
+    use UserForm;
+    use Navigation;
 
     // include url of current page
     public $URL = '/index.php?lang=1&cl=user';

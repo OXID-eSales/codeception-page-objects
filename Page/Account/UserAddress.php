@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -215,15 +217,15 @@ class UserAddress extends Page
     private function convertBillInformationIntoString(array $userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= Translator::translate('EMAIL').' ';
+        $transformedAddress .= Translator::translate('EMAIL') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
-        $transformedAddress .= Translator::translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
-        $transformedAddress .= Translator::translate('CELLUAR_PHONE').' ';
+        $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');
-        $transformedAddress .= Translator::translate('PERSONAL_PHONE').' ';
+        $transformedAddress .= Translator::translate('PERSONAL_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userPrivateFonField');
         return $transformedAddress;
     }
@@ -238,9 +240,9 @@ class UserAddress extends Page
     private function convertDeliveryAddressIntoString(array $userAddress)
     {
         $transformedAddress = $this->convertAddressArrayIntoString($userAddress);
-        $transformedAddress .= Translator::translate('PHONE').' ';
+        $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= Translator::translate('FAX').' ';
+        $transformedAddress .= Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         return $transformedAddress;
     }
@@ -256,13 +258,17 @@ class UserAddress extends Page
     {
         $transformedAddress = $this->getAddressElement($userAddress, 'companyName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'additionalInfo');
-        $transformedAddress .= $this->getAddressElement($userAddress, 'userUstIDField', Translator::translate('VAT_ID_NUMBER').' ');
+        $transformedAddress .= $this->getAddressElement(
+            $userAddress,
+            'userUstIDField',
+            Translator::translate('VAT_ID_NUMBER') . ' '
+        );
         $transformedAddress .= $this->getAddressElement($userAddress, 'userSalutation');
         $transformedAddress .= $this->getAddressElement($userAddress, 'userFirstName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLastName');
         $transformedAddress .= $this->getAddressElement($userAddress, 'street');
         $transformedAddress .= $this->getAddressElement($userAddress, 'streetNr');
-        $transformedAddress .= (isset($userAddress['stateId']) && $userAddress['stateId']) ? 'BE ': '';
+        $transformedAddress .= (isset($userAddress['stateId']) && $userAddress['stateId']) ? 'BE ' : '';
         $transformedAddress .= $this->getAddressElement($userAddress, 'ZIP');
         $transformedAddress .= $this->getAddressElement($userAddress, 'city');
         $transformedAddress .= $this->getAddressElement($userAddress, 'countryId');
@@ -280,6 +286,6 @@ class UserAddress extends Page
      */
     private function getAddressElement($address, $element, $label = '')
     {
-        return (isset($address[$element])) ? $label.$address[$element].' ': '';
+        return (isset($address[$element])) ? $label . $address[$element] . ' ' : '';
     }
 }

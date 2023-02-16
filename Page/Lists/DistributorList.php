@@ -32,7 +32,7 @@ class DistributorList extends Page
      */
     public function route($param)
     {
-        return $this->URL.'/index.php?'.http_build_query(['cl' => 'vendorlist', 'cnid' => 'root']);
+        return $this->URL . '/index.php?' . http_build_query(['cl' => 'vendorlist', 'cnid' => 'root']);
     }
 
     /**
@@ -54,7 +54,7 @@ class DistributorList extends Page
 
     /**
      * @param int $itemId The position of the item in the list.
-     * 
+     *
      * @return ProductList
      */
     public function openDistributorPage(int $itemId): ProductList

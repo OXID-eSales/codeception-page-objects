@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\PrivateSales;
 
 use OxidEsales\Codeception\Page\Account\UserAccount;

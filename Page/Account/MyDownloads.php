@@ -9,11 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use Codeception\Util\Locator;
-use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
-use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
-use OxidEsales\Codeception\Page\Component\Modal;
-use OxidEsales\Codeception\Page\Component\Pagination;
 use OxidEsales\Codeception\Page\Page;
 
 class MyDownloads extends Page

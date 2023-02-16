@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
@@ -55,7 +58,10 @@ class ProductCompare extends Page
     public function seeProductData(array $productData, int $position = 1)
     {
         $I = $this->user;
-        $I->see(Translator::translate('PRODUCT_NO').': '.$productData['id'], sprintf($this->productNumber, $position));
+        $I->see(
+            Translator::translate('PRODUCT_NO') . ': ' . $productData['id'],
+            sprintf($this->productNumber, $position)
+        );
         $I->see($productData['title'], sprintf($this->productTitle, $position));
         // TODO: uncomment
         //$I->see($productData['price'], sprintf($this->productPrice, $id));
@@ -73,7 +79,7 @@ class ProductCompare extends Page
     public function seeProductAttributeName(string $attributeName, int $attributeId)
     {
         $I = $this->user;
-        $I->see($attributeName, sprintf($this->attributeName, ($attributeId+1)));
+        $I->see($attributeName, sprintf($this->attributeName, ($attributeId + 1)));
         return $this;
     }
 
@@ -89,7 +95,7 @@ class ProductCompare extends Page
     public function seeProductAttributeValue(string $attributeValue, int $attributeId, int $position)
     {
         $I = $this->user;
-        $I->see($attributeValue, sprintf($this->attributeValue, ($attributeId+1), $position));
+        $I->see($attributeValue, sprintf($this->attributeValue, ($attributeId + 1), $position));
         return $this;
     }
 

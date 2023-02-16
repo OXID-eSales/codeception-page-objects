@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
@@ -19,7 +22,8 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 class UserGiftRegistry extends Page
 {
-    use MiniBasket, AccountMenu;
+    use MiniBasket;
+    use AccountMenu;
 
     // include url of current page
     public $URL = '/en/my-gift-registry/';
@@ -115,7 +119,7 @@ class UserGiftRegistry extends Page
         $I = $this->user;
         $I->click(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
         $I->waitForText(Translator::translate('SEND_GIFT_REGISTRY'));
-        $breadCrumb = Translator::translate('MY_ACCOUNT').Translator::translate('MY_GIFT_REGISTRY');
+        $breadCrumb = Translator::translate('MY_ACCOUNT') . Translator::translate('MY_GIFT_REGISTRY');
         $this->seeOnBreadCrumb($breadCrumb);
         return $this;
     }

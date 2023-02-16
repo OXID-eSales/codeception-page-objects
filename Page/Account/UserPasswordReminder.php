@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
@@ -10,30 +13,23 @@ use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class for forgot-password page
- * @package OxidEsales\Codeception\Page\Account
- */
 class UserPasswordReminder extends Page
 {
     use AccountMenu;
 
-    // include url of current page
     public $URL = '/en/forgot-password/';
-
-    // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
+    public $headerTitle = 'h3';
+    public string $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';
+    public string $resetPasswordButton = '';
 
-    public $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';
+    public function seePageOpen(): self
+    {
+        $this->seeOnBreadCrumb(Translator::translate('FORGOT_PASSWORD'));
+        return $this;
+    }
 
-    public $resetPasswordButton = '';
-
-    /**
-     * @param string $userEmail
-     *
-     * @return $this
-     */
-    public function resetPassword(string $userEmail)
+    public function resetPassword(string $userEmail): self
     {
         $I = $this->user;
         $I->fillField($this->forgotPasswordUserEmail, $userEmail);

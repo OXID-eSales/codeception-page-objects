@@ -1,36 +1,36 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\UserForm;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for open-account page
- * @package OxidEsales\Codeception\Page\Account
- */
 class UserRegistration extends Page
 {
-    use UserForm, AccountMenu;
+    use UserForm;
+    use AccountMenu;
 
-    // include url of current page
     public $URL = '/en/open-account';
-
-    // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
+    public $headerTitle = 'h1';
+    public string $saveFormButton = '#accUserSaveTop';
 
-    //save form button
-    public $saveFormButton = '#accUserSaveTop';
+    public function seePageOpen(): self
+    {
+        $this->user->see(Translator::translate('OPEN_ACCOUNT'), $this->headerTitle);
+        return $this;
+    }
 
-    /**
-     * @return $this
-     */
-    public function registerUser()
+    public function registerUser(): self
     {
         $I = $this->user;
         $I->click($this->saveFormButton);

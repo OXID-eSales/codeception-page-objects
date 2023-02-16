@@ -44,7 +44,7 @@ class ManufacturerList extends Page
 
     /**
      * @param int $itemId The position of the item in the list.
-     * 
+     *
      * @return ProductList
      */
     public function openManufacturerPage(int $itemId): ProductList

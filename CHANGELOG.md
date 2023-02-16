@@ -20,6 +20,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Component\Header\Header`
 - Methods:
   - `Page\Component\Modal::closeModalBox()`
+  - `Page\Component\Header\AccountMenu::seeUserLoggedIn()`
+  - `Page\Component\Header\AccountMenu::seeUserLoggedOut()`
+  - `Page\Component\Header\MiniBasket::closeMiniBasket()`
+  - `Page\Account\UserPasswordReminder::seePageOpened()`
+  - `Page\Account\UserRegistration::seePageOpened()`
+  - `Page\Account\UserWishList::seePageOpened()`
+  - `Page\Account\UserAccount::seePageOpened()`
+  - `Page\Account\UserAccount::seeUserAccount()`
+  - `Page\Account\UserAccount::seeItemNumberOnGiftRegistryPanel()`
+  - `Page\Account\UserAccount::seeItemNumberOnReviewPanel()`
+  - `Page\Account\UserAccount::openMyReviewsPage()`
+  - `Page\Account\UserLogin::loginWithError()`
+  - `Page\Checkout\Basket::seeBasketContainsAttribute()`
+  - `Page\Checkout\Basket::seeBasketContainsSelectionList()`
+  - `Page\Checkout\Basket::seeNextStep()`
+  - `Page\Checkout\Basket::dontSeeNextStep()`
+  - `Page\Checkout\OrderCheckout::submitOrderSuccessfully()`
+  - `Page\Checkout\OrderCheckout::confirmDownloadableProductsAgreement()`
+  - `Page\Checkout\OrderCheckout::editShippingMethod()`
+  - `Page\Checkout\OrderCheckout::validateTotalPrice()`
+  - `Page\Checkout\OrderCheckout::validateWrappingPrice()`
+  - `Page\Checkout\OrderCheckout::validateGiftCardPrice()`
+  - `Page\Lists\ProductList::seeProductDataInDisplayTypeList()`
+  - `Page\Home::openManufacturerFromStarPage()`
 ### Deprecated
 - `Page\Lists\ProductList::openDetailsPage()`
 

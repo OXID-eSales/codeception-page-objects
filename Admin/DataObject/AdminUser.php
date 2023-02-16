@@ -110,5 +110,4 @@ class AdminUser
     {
         $this->userRights = $userRights;
     }
-
 }

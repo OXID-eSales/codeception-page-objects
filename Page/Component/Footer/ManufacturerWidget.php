@@ -20,7 +20,7 @@ use OxidEsales\Codeception\Page\Lists\ManufacturerList;
 trait ManufacturerWidget
 {
     public string $manufacturerLink = '//ul[@class="manufacturers list-unstyled"]';
-    
+
     public string $manufacturersWrapper = '.footer-box-manufacturers';
 
     public function openManufacturerPage(string $manufacturerTitle): ProductList

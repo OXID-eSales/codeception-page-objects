@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
@@ -72,7 +75,7 @@ class GiftSelection extends Page
      *
      * @return Basket
      */
-    public function submitChanges() : Basket
+    public function submitChanges(): Basket
     {
         $I = $this->user;
         $basketPage = new Basket($I);

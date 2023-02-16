@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Step;
 
@@ -27,8 +30,8 @@ class UserRegistrationInCheckout extends Step
         array $userLoginData,
         array $userData,
         array $addressData,
-        array $shippingAddressData = [])
-    {
+        array $shippingAddressData = []
+    ) {
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 
         if (!empty($shippingAddressData)) {
@@ -53,8 +56,8 @@ class UserRegistrationInCheckout extends Step
         string $userLogin,
         array $userData,
         array $addressData,
-        array $shippingAddressData = [])
-    {
+        array $shippingAddressData = []
+    ) {
         $userCheckout = $this->enterNotRegisteredUserData($userLogin, $userData, $addressData);
 
         if (!empty($shippingAddressData)) {
@@ -79,8 +82,8 @@ class UserRegistrationInCheckout extends Step
         array $userLoginData,
         array $userData,
         array $addressData,
-        array $shippingAddressData = [])
-    {
+        array $shippingAddressData = []
+    ) {
         $I = $this->user;
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 

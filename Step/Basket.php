@@ -22,7 +22,8 @@ use OxidEsales\Codeception\Page\Component\Modal;
  */
 class Basket extends Step
 {
-    use MiniBasket, Modal;
+    use MiniBasket;
+    use Modal;
 
     /**
      * Add product to the basket without redirection

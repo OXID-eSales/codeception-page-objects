@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Admin\Component;
 
 use OxidEsales\Codeception\Admin\AdminPanel;

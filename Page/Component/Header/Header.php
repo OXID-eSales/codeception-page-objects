@@ -15,5 +15,10 @@ namespace OxidEsales\Codeception\Page\Component\Header;
  */
 trait Header
 {
-    use AccountMenu, SearchWidget, Navigation, MiniBasket, LanguageMenu, CurrencyMenu;
+    use AccountMenu;
+    use SearchWidget;
+    use Navigation;
+    use MiniBasket;
+    use LanguageMenu;
+    use CurrencyMenu;
 }

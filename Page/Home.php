@@ -11,15 +11,18 @@ namespace OxidEsales\Codeception\Page;
 
 use OxidEsales\Codeception\Page\Component\Footer\Footer;
 use OxidEsales\Codeception\Page\Component\Header\Header;
+use OxidEsales\Codeception\Page\Lists\ProductList;
 
-/**
- * Class for home page
- * @package OxidEsales\Codeception\Page
- */
 class Home extends Page
 {
-    use Header, Footer;
+    use Header;
+    use Footer;
 
-    // include url of current page
     public $URL = '/';
+    public string $openManufacturerList = '//div[@class="top-brands my-5"]/div/div[%s]';
+
+    public function openManufacturerFromStarPage(string $manufacturerTitle, int $position = 1): ProductList
+    {
+        return $this->openManufacturerPage($manufacturerTitle);
+    }
 }

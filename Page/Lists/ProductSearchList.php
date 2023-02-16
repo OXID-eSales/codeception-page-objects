@@ -36,7 +36,7 @@ class ProductSearchList extends ProductList
      */
     public function route($param)
     {
-        return $this->URL.'/index.php?'.http_build_query(['cl' => 'search', 'searchparam' => $param]);
+        return $this->URL . '/index.php?' . http_build_query(['cl' => 'search', 'searchparam' => $param]);
     }
 
     public function seeSearchCount(int $count): self

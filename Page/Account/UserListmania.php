@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
@@ -17,7 +20,8 @@ use OxidEsales\Codeception\Page\Page;
  */
 class UserListmania extends Page
 {
-    use AccountNavigation, AccountMenu;
+    use AccountNavigation;
+    use AccountMenu;
 
     // include url of current page
     public $URL = '/en/my-listmania-list/';

@@ -15,5 +15,9 @@ namespace OxidEsales\Codeception\Page\Component\Footer;
  */
 trait Footer
 {
-    use NewsletterBox, ServiceWidget, ManufacturerWidget, CategoryWidget, InformationWidget;
+    use NewsletterBox;
+    use ServiceWidget;
+    use ManufacturerWidget;
+    use CategoryWidget;
+    use InformationWidget;
 }

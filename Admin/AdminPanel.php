@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Admin\Component\AdminMenu;
@@ -13,8 +15,8 @@ use OxidEsales\Codeception\Page\Page;
 
 class AdminPanel extends Page
 {
-    public $adminNavigation = '#navigation';
-
     use AdminMenu;
     use HeaderLinks;
+
+    public $adminNavigation = '#navigation';
 }

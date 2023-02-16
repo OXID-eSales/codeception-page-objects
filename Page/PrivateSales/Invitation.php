@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\PrivateSales;
 
@@ -43,7 +46,7 @@ class Invitation extends Page
      */
     public function route($param)
     {
-        return $this->URL.'/index.php?lang=0&cl=invite';
+        return $this->URL . '/index.php?lang=0&cl=invite';
     }
 
     /**

@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Admin\Product;
 
-use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 

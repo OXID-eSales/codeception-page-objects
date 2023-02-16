@@ -1,43 +1,40 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 
-/**
- * Class for my-wish-list page
- * @package OxidEsales\Codeception\Page\Account
- */
 class UserWishList extends Page
 {
-    use MiniBasket, AccountMenu;
+    use MiniBasket;
+    use AccountMenu;
 
-    // include url of current page
     public $URL = '/en/my-wish-list/';
-
-    // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
-
     public $headerTitle = 'h1';
+    public string $productTitle = '#noticelistProductList_%s';
+    public string $productDescription = '//div[@id="noticelistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
+    public string $productPrice = '#productPrice_noticelistProductList_%s';
+    public string $basketAmount = '#amountToBasket_noticelistProductList_%s';
+    public string $toBasketButton = '#toBasket_noticelistProductList_%s';
+    public string $removeButton = '//button[@triggerform="remove_tonoticelistnoticelistProductList_%s"]';
 
-    public $productTitle = '#noticelistProductList_%s';
-
-    public $productDescription = '//div[@id="noticelistProductList"]/div[%s]/div/form[1]/div[2]/div[2]/div[2]';
-
-    public $productPrice = '#productPrice_noticelistProductList_%s';
-
-    public $basketAmount = '#amountToBasket_noticelistProductList_%s';
-
-    public $toBasketButton = '#toBasket_noticelistProductList_%s';
-
-    public $removeButton = '//button[@triggerform="remove_tonoticelistnoticelistProductList_%s"]';
+    public function seePageOpen(): self
+    {
+        $this->user->see(Translator::translate('PAGE_TITLE_ACCOUNT_NOTICELIST'), $this->headerTitle);
+        return $this;
+    }
 
     /**
      * Checks if given product data is shown correctly:

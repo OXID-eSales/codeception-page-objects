@@ -287,7 +287,6 @@ trait UserForm
         $this->openDropdown($this->delUserSalutation);
         $I->click($userSalutation, '#shippingAddress');
         $this->waitForDropdownNotVisible($this->delUserSalutation);
-
     }
 
     private function selectShippingAddressState($stateId): void

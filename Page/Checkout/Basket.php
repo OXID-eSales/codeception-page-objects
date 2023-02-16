@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
@@ -12,52 +14,28 @@ use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for cart page
- * @package OxidEsales\Codeception\Page\Checkout
- */
 class Basket extends Page
 {
     use AccountMenu;
     use MiniBasket;
 
-    // include url of current page
     public $URL = '';
-
-    // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';
+    public string $basketSummary = '#basketGrandTotal';
+    public string $basketItemAmount = '#basketcontents_table #am_%s';
+    public string $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
+    public string $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
+    public string $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
+    public string $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
+    public string $basketUpdateButton = '#basketcontents_table #basketUpdate';
+    public string $addBasketCouponField = '#input_voucherNr';
+    public string $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
+    public string $removeBasketCoupon = '.couponData .removeFn';
+    public string $openGiftSelection = '//tr[@id="table_cartItem_%s"]/td[3]/a';
+    public string $basketItemAttributes = '#table_cartItem_%s';
+    public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
 
-    public $basketSummary = '#basketGrandTotal';
-
-    public $basketItemAmount = '#basketcontents_table #am_%s';
-
-    public $basketItemTotalPrice = '//tr[@id="table_cartItem_%s"]/td[@class="totalPrice"]';
-
-    public $basketItemTitle = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/a';
-
-    public $basketItemId = '//tr[@id="table_cartItem_%s"]/td[2]/div[2]/div[1]';
-
-    public $basketBundledItemAmount = '//tr[@id="table_cartItem_%s"]/td[4]';
-
-    public $basketUpdateButton = '#basketcontents_table #basketUpdate';
-
-    public $addBasketCouponField = '#input_voucherNr';
-
-    public $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
-
-    public $removeBasketCoupon = '.couponData .removeFn';
-
-    public $openGiftSelection = '//tr[@id="table_cartItem_%s"]/td[3]/a';
-
-    /**
-     * Update product amount in the basket
-     *
-     * @param float $amount
-     * @param int   $itemPosition
-     *
-     * @return $this
-     */
-    public function updateProductAmount(float $amount, int $itemPosition = 1)
+    public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketItemAmount, $itemPosition), $amount);
@@ -66,19 +44,12 @@ class Basket extends Page
     }
 
     /**
-     * Assert basket product
-     *
      * $basketProducts[] = ['id' => productId,
      *                   'title' => productTitle,
      *                   'amount' => productAmount,
      *                   'totalPrice' => productTotalPrice]
-     *
-     * @param array $basketProducts
-     * @param string $basketSummaryPrice
-     *
-     * @return $this
      */
-    public function seeBasketContains(array $basketProducts, string $basketSummaryPrice)
+    public function seeBasketContains(array $basketProducts, string $basketSummaryPrice): self
     {
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
@@ -94,18 +65,11 @@ class Basket extends Page
     }
 
     /**
-     * Assert basket product
-     *
      * $basketProduct = ['id' => productId,
      *                   'title' => productTitle,
      *                   'amount' => productAmount]
-     *
-     * @param array $basketProduct
-     * @param int   $itemPosition
-     *
-     * @return $this
      */
-    public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition)
+    public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition): self
     {
         $I = $this->user;
         $I->see(Translator::translate('PRODUCT_NO') .
@@ -115,12 +79,19 @@ class Basket extends Page
         return $this;
     }
 
-    /**
-     * Opens next step: user checkout page
-     *
-     * @return UserCheckout
-     */
-    public function goToNextStep()
+    public function seeBasketContainsAttribute(string $basketProductAttribute, int $itemPosition): self
+    {
+        $this->user->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
+        return $this;
+    }
+
+    public function seeBasketContainsSelectionList(string $selectionListTitle, string $selectionListValue, int $itemPosition): self
+    {
+        $this->user->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
+        return $this;
+    }
+
+    public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
         $I->click(Translator::translate('CONTINUE_TO_NEXT_STEP'));
@@ -128,12 +99,19 @@ class Basket extends Page
         return new UserCheckout($I);
     }
 
-    /**
-     * @param string $couponNumber
-     *
-     * @return $this
-     */
-    public function addCouponToBasket(string $couponNumber)
+    public function seeNextStep(): self
+    {
+        $this->user->see(Translator::translate('CONTINUE_TO_NEXT_STEP'));
+        return $this;
+    }
+
+    public function dontSeeNextStep(): self
+    {
+        $this->user->dontSee(Translator::translate('CONTINUE_TO_NEXT_STEP'));
+        return $this;
+    }
+
+    public function addCouponToBasket(string $couponNumber): self
     {
         $I = $this->user;
         $I->fillField($this->addBasketCouponField, $couponNumber);
@@ -142,24 +120,13 @@ class Basket extends Page
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function removeCouponFromBasket()
+    public function removeCouponFromBasket(): self
     {
-        $I = $this->user;
-        $I->click($this->removeBasketCoupon);
+        $this->user->click($this->removeBasketCoupon);
         return $this;
     }
 
-    /**
-     * Open gift selection widget (wrapping and gift card)
-     *
-     * @param int $itemPosition
-     *
-     * @return GiftSelection
-     */
-    public function openGiftSelection(int $itemPosition)
+    public function openGiftSelection(int $itemPosition): GiftSelection
     {
         $I = $this->user;
         $I->retryClick(sprintf($this->openGiftSelection, $itemPosition));

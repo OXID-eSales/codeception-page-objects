@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\GiftRegistry;
 
@@ -48,5 +51,4 @@ class GiftRegistry extends Page
         $I->see($productData['price'], sprintf($this->productPrice, $itemPosition));
         return $this;
     }
-
 }

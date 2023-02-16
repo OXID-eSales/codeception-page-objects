@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class VariantsProductPage extends Page

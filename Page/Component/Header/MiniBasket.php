@@ -23,10 +23,10 @@ trait MiniBasket
     public string $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[1]/span';
     public string $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[3]';
     public string $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
+    public string $miniBasketCountDown = '#countdown';
+    public string $miniBasketClose = '//div[@class="btn-group minibasket-menu open"]/button';
 
     /**
-     * Assert basket product
-     *
      * $basketProducts[] = ['title' => productTitle,
      *                   'price' => productPrice,
      *                   'amount' => productAmount,]
@@ -46,12 +46,7 @@ trait MiniBasket
         return $this;
     }
 
-    /**
-     * Opens mini basket box.
-     *
-     * @return $this
-     */
-    public function openMiniBasket()
+    public function openMiniBasket(): self
     {
         $I = $this->user;
         $I->waitForPageLoad();
@@ -61,14 +56,16 @@ trait MiniBasket
         return $this;
     }
 
-    /**
-     * Open checkout page.
-     * If user is logged in, open PaymentCheckout page.
-     * If user is not logged in, open UserCheckout page.
-     *
-     * @return UserCheckout|PaymentCheckout
-     */
-    public function openCheckout()
+    public function closeMiniBasket(): self
+    {
+        $I = $this->user;
+        $I->waitForElementClickable($this->miniBasketClose);
+        $I->click($this->miniBasketClose);
+        $I->waitForElementNotVisible($this->miniBasketTitle);
+        return $this;
+    }
+
+    public function openCheckout(): UserCheckout|PaymentCheckout
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('CHECKOUT'));
@@ -81,12 +78,7 @@ trait MiniBasket
         }
     }
 
-    /**
-     * Open cart page.
-     *
-     * @return Basket
-     */
-    public function openBasketDisplay()
+    public function openBasketDisplay(): Basket
     {
         $I = $this->user;
         $I->click(Translator::translate('DISPLAY_BASKET'));
@@ -94,17 +86,19 @@ trait MiniBasket
         return new Basket($I);
     }
 
-    public function checkBasketEmpty(): void
+    public function checkBasketEmpty(): self
     {
         $I = $this->user;
         $I->click($this->miniBasketMenuElement);
         $I->see(Translator::translate('BASKET_EMPTY'));
+        return $this;
     }
 
-    public function seeCountdownWithinBasket(): void
+    public function seeCountdownWithinBasket(): self
     {
         $I = $this->user;
         $I->click($this->miniBasketMenuElement);
-        $I->seeElement('#countdown');
+        $I->seeElement($this->miniBasketCountDown);
+        return $this;
     }
 }
