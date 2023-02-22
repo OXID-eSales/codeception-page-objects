@@ -13,10 +13,11 @@ use OxidEsales\Codeception\Page\Page;
 
 class Tools extends Page
 {
-    public $sqlTextInput = '#myedit textarea[name="updatesql"]';
-    public $uploadSqlFileInput = '#myedit input[name="myfile[SQL1@usqlfile]"]';
-    public $runUpdateSqlButton = '#myedit input[name="save"]';
-    public $updateDbViewsButton = '#regerateviews input.confinput';
+    public string $sqlTextInput = '#myedit textarea[name="updatesql"]';
+    public string $uploadSqlFileInput = '#myedit input[name="myfile[SQL1@usqlfile]"]';
+    public string $runUpdateSqlButton = '#myedit input[name="save"]';
+    public string $updateDbViewsButton = '#regerateviews input.confinput';
+    public string $sqlOutputElement = '.editnavigation';
 
     public function updateDbViews(): Tools
     {
@@ -28,4 +29,24 @@ class Tools extends Page
 
         return $this;
     }
+
+    public function runSqlUpdate(string $sqlCommand): self
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->fillField($this->sqlTextInput, $sqlCommand);
+        $I->click($this->runUpdateSqlButton);
+        $I->waitForDocumentReadyState();
+
+        return $this;
+    }
+
+    public function seeInSqlOutput(string $text): self
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->see($text, $this->sqlOutputElement);
+
+        return $this;
+   }
 }

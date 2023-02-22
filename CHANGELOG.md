@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Component\Footer\Footer`
   - `Page\Component\Header\Header`
 - Methods:
+  - `Admin\Service\Tools:runSqlUpdate()`
+  - `Admin\Service\Tools:seeInSqlOutput()`
   - `Page\Component\Modal::closeModalBox()`
   - `Page\Component\Header\AccountMenu::seeUserLoggedIn()`
   - `Page\Component\Header\AccountMenu::seeUserLoggedOut()`
