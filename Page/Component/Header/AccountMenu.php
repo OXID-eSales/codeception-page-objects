@@ -65,7 +65,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible($this->userLoginName);
+        $I->waitForText(Translator::translate('REMEMBER_ME'));
         $I->fillField($this->userLoginName, $userName);
         $I->fillField($this->userLoginPassword, $userPassword);
         $I->click($this->userLoginButton);
