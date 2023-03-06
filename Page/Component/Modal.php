@@ -11,12 +11,14 @@ namespace OxidEsales\Codeception\Page\Component;
 
 use Codeception\Util\Locator;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Checkout\Basket;
 
 trait Modal
 {
     public string $modalCloseBtn = '.modal-dialog .modal-content button.close';
     private string $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
     private string $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
+    private string $rootCatChangedModal = '#scRootCatChanged';
 
     public function confirmDeletion(): void
     {
@@ -44,5 +46,25 @@ trait Modal
         $I = $this->user;
         $I->waitForElementClickable($this->modalCloseBtn);
         $I->click($this->modalCloseBtn);
+    }
+
+    //Only for private sales
+    public function confirmMainCategoryChanged(): self
+    {
+        $I = $this->user;
+        $I->waitForPageLoad();
+        $I->waitForText(Translator::translate('ROOT_CATEGORY_CHANGED'));
+        $I->click(Translator::translate('CONTINUE_SHOPPING'));
+        return $this;
+    }
+
+    //Only for private sales
+    public function openBasketIfMainCategoryChanged(): Basket
+    {
+        $I = $this->user;
+        $I->waitForPageLoad();
+        $I->waitForElementVisible($this->rootCatChangedModal, 5);
+        $I->click(Translator::translate('CHECKOUT'), $this->rootCatChangedModal);
+        return new Basket($I);
     }
 }

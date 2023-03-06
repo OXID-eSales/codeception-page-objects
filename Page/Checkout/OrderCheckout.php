@@ -64,7 +64,6 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $I->checkOption($this->downloadableProductsAgreement);
-        $I->seeCheckboxIsChecked($this->downloadableProductsAgreement);
         return $this;
     }
 

@@ -16,10 +16,17 @@ class UserLogin extends Page
 {
     public $URL = '/en/my-account/';
     public $breadCrumb = '#breadcrumb';
+    public string $headerTitle = 'h1';
     public string $userAccountLoginName = '#loginUser';
     public string $userAccountLoginPassword = '#loginPwd';
     public string $userAccountLoginButton = '#loginButton';
     public string $userForgotPasswordLink = '#forgotPasswordLink';
+
+    public function seePageOpened(): self
+    {
+        $this->user->see(Translator::translate('LOGIN'), $this->headerTitle);
+        return $this;
+    }
 
     public function login(string $userName, string $userPassword): UserAccount
     {

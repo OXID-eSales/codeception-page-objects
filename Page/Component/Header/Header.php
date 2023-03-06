@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component\Header;
 
+use OxidEsales\Codeception\Page\Component\Modal;
+
 /**
  * Trait for account menu widget.
  * @package OxidEsales\Codeception\Page\Component\Header
@@ -21,4 +23,5 @@ trait Header
     use MiniBasket;
     use LanguageMenu;
     use CurrencyMenu;
+    use Modal;
 }

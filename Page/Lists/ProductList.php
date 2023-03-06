@@ -10,15 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page\Lists;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
-use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
+use OxidEsales\Codeception\Page\Component\Header\Header;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Page\Page;
 
 class ProductList extends Page
 {
-    use AccountMenu;
-    use MiniBasket;
+    use Header;
 
     public string $listItemTitle = '#productList_%s';
     public string $listItemDescription =
@@ -117,9 +115,22 @@ class ProductList extends Page
         return $this;
     }
 
+    public function seeSelectedFilter(string $attributeName, string $attributeValue): self
+    {
+        $this->user->see($attributeValue, $this->listFilter);
+        return $this;
+    }
+
+    public function dontSeeSelectedFilter(string $attributeName, string $attributeValue): self
+    {
+        $this->openFilter($attributeName);
+        $this->user->dontSee($attributeValue, $this->listFilter);
+        return $this;
+    }
+
     public function openFilter(string $attributeName): self
     {
-        $this->user->click($attributeName, $this->listFilter);
+        $this->user->click($attributeName . ':', $this->listFilter);
         return $this;
     }
 
