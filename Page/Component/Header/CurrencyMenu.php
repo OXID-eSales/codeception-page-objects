@@ -16,9 +16,10 @@ namespace OxidEsales\Codeception\Page\Component\Header;
  */
 trait CurrencyMenu
 {
-    public $currencyMenuButton = "//div[@class='btn-group currencies-menu']/button";
+    public $currencyMenuButton = '//div[@class="meta"]//div[contains(@class,"dropdowns")]/button';
 
-    public $openCurrencyMenu = "//div[@class='btn-group currencies-menu open']";
+    public $openCurrencyMenu = '//div[@class="meta"]//div[contains(@class,"dropdown-menu")]/form/div[2]/button';
+
 
     /**
      * @param string $currency
@@ -31,9 +32,9 @@ trait CurrencyMenu
 
         $I->click($this->currencyMenuButton);
         $I->waitForElement($this->openCurrencyMenu);
+        $I->click($this->openCurrencyMenu);
         $I->click($currency);
-        $I->waitForElement($this->currencyMenuButton);
-
+        $I->waitForElementNotVisible($this->openCurrencyMenu);
         return $this;
     }
 }

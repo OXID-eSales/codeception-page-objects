@@ -70,7 +70,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('CHECKOUT'));
-        $I->click(Translator::translate('CHECKOUT'));
+        $I->retryClick(Translator::translate('CHECKOUT'));
         $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
