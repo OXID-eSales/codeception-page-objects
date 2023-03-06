@@ -65,6 +65,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('MY_ACCOUNT'));
         $I->waitForElementVisible($this->userLoginName);
         $I->fillField($this->userLoginName, $userName);
         $I->fillField($this->userLoginPassword, $userPassword);
@@ -78,6 +79,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('MY_ACCOUNT'));
         $I->waitForText(Translator::translate('LOGOUT'));
         $I->click(Translator::translate('LOGOUT'));
         $I->waitForPageLoad();

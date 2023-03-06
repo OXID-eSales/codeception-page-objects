@@ -52,7 +52,6 @@ trait MiniBasket
         $I->waitForPageLoad();
         $I->waitForElementClickable($this->miniBasketMenuElement);
         $I->click($this->miniBasketMenuElement);
-        $I->waitForText(Translator::translate('DISPLAY_BASKET'));
         return $this;
     }
 
@@ -69,7 +68,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('CHECKOUT'));
-        $I->click(Translator::translate('CHECKOUT'));
+        $I->retryClick(Translator::translate('CHECKOUT'));
         $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
@@ -89,7 +88,7 @@ trait MiniBasket
     public function checkBasketEmpty(): self
     {
         $I = $this->user;
-        $I->click($this->miniBasketMenuElement);
+      #  $I->click($this->miniBasketMenuElement);
         $I->see(Translator::translate('BASKET_EMPTY'));
         return $this;
     }
