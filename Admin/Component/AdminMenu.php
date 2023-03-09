@@ -20,12 +20,12 @@ use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
 use OxidEsales\Codeception\Admin\Service\DiagnosticsTool;
+use OxidEsales\Codeception\Admin\Service\GenericImport;
 use OxidEsales\Codeception\Admin\Service\SystemHealth;
 use OxidEsales\Codeception\Admin\Service\SystemInfo;
 use OxidEsales\Codeception\Admin\Service\Tools;
 use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\EshopCommunity\Application\Model\Diagnostics;
 
 trait AdminMenu
 {
@@ -276,5 +276,19 @@ trait AdminMenu
         $I->selectBaseFrame();
 
         return new Newsletter($I);
+    }
+
+    public function openGenericImport(): GenericImport
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('mxgenimp'));
+
+        $I->selectBaseFrame();
+        $I->waitForDocumentReadyState();
+
+        return new GenericImport($I);
     }
 }
