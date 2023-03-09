@@ -10,27 +10,19 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Product;
 
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 class MainProductPage extends Page
 {
     use ProductList;
 
-    public $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
-    public $titleInput = "//input[@name='editval[oxarticles__oxtitle]']";
-    public $numberInput = "//input[@name='editval[oxarticles__oxartnum]']";
-    public $priceInput = "//input[@name='editval[oxarticles__oxprice]']";
+    public string $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
+    public string $titleInput = "//input[@name='editval[oxarticles__oxtitle]']";
+    public string $numberInput = "//input[@name='editval[oxarticles__oxartnum]']";
+    public string $priceInput = "//input[@name='editval[oxarticles__oxprice]']";
+    public string $longDescriptionInput = '#editor_oxarticles__oxlongdesc';
+    public string $createButton = "//a[@id='btn.new']";
+    public string $saveButton = "//input[@name='saveArticle']";
 
-    public $createButton = "//a[@id='btn.new']";
-    public $saveButton = "//input[@name='saveArticle']";
-
-    /**
-     * @param string      $title
-     * @param string|null $number
-     * @param int|null    $price
-     *
-     * @return $this
-     */
     public function create(string $title, ?string $number = null, ?int $price = null): self
     {
         $I = $this->user;
@@ -62,7 +54,6 @@ class MainProductPage extends Page
 
     public function save(): MainProductPage
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
         $I->click($this->saveButton);
