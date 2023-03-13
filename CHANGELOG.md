@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Component\Header\AccountMenu::seeUserLoggedIn()`
   - `Page\Component\Header\AccountMenu::seeUserLoggedOut()`
   - `Page\Component\Header\MiniBasket::closeMiniBasket()`
+  - `Page\Component\Footer\ServiceWidget:openUserAccountPage()`
+  - `Page\Component\Modal:confirmMainCategoryChanged()`
+  - `Page\Component\Modal:openBasketIfMainCategoryChanged()`
   - `Page\Account\UserPasswordReminder::seePageOpened()`
   - `Page\Account\UserRegistration::seePageOpened()`
   - `Page\Account\UserWishList::seePageOpened()`
@@ -35,6 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Account\UserAccount::seeItemNumberOnReviewPanel()`
   - `Page\Account\UserAccount::openMyReviewsPage()`
   - `Page\Account\UserLogin::loginWithError()`
+  - `Page\Account\UserLogin:seePageOpened()`
   - `Page\Checkout\Basket::seeBasketContainsAttribute()`
   - `Page\Checkout\Basket::seeBasketContainsSelectionList()`
   - `Page\Checkout\Basket::seeNextStep()`
@@ -46,6 +50,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Checkout\OrderCheckout::validateWrappingPrice()`
   - `Page\Checkout\OrderCheckout::validateGiftCardPrice()`
   - `Page\Lists\ProductList::seeProductDataInDisplayTypeList()`
+  - `Page\Lists\ProductList::seeSelectedFilter()`
+  - `Page\Lists\ProductList::dontSeeSelectedFilter()`
   - `Page\Home::openManufacturerFromStarPage()`
 ### Deprecated
 - `Page\Lists\ProductList::openDetailsPage()`
