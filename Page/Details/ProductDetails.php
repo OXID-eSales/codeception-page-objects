@@ -32,13 +32,13 @@ class ProductDetails extends Page
     use ServiceWidget;
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $nextProductLink = '#linkNextArticle';
 
     public $previousProductLink = '#linkPrevArticle';
 
-    public $productTitle = '#productTitle';
+    public $productTitle = '//h1[contains(@class,"details-title")]';
 
     public $productShortDesc = '#productShortdesc';
 

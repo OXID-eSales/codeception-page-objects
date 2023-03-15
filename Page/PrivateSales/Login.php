@@ -17,7 +17,7 @@ class Login extends Page
     public $URL = '/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h1';
 

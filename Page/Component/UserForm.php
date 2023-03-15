@@ -22,11 +22,11 @@ trait UserForm
     public $userMobFonField = 'invadr[oxuser__oxmobfon]';
     public $userPrivateFonField = 'invadr[oxuser__oxprivfon]';
     public $userBirthDateDayField = 'invadr[oxuser__oxbirthdate][day]';
-    public $userBirthDateMonthField = "//div[@class='btn-group bootstrap-select oxMonth form-control']/button";
+    public $userBirthDateMonthField = "//select[@id='oxMonth']";
     public $userBirthDateYearField = 'invadr[oxuser__oxbirthdate][year]';
 
     //user address data
-    public $billUserSalutation = '//button[@data-id="invadr_oxuser__oxfname"]';
+    public $billUserSalutation = '//select[@id="invadr_oxuser__oxfname"]';
     public $billUserFirstName = 'invadr[oxuser__oxfname]';
     public $billUserLastName = 'invadr[oxuser__oxlname]';
     public $billCompanyName = 'invadr[oxuser__oxcompany]';
@@ -37,11 +37,11 @@ trait UserForm
     public $billAdditionalInfo = 'invadr[oxuser__oxaddinfo]';
     public $billFonNr = 'invadr[oxuser__oxfon]';
     public $billFaxNr = 'invadr[oxuser__oxfax]';
-    public $billCountryId = "//button[@data-id='invCountrySelect']";
-    public $billStateId = "//button[@data-id='oxStateSelect_invadr[oxuser__oxstateid]']";
+    public $billCountryId = "//select[@id='invCountrySelect']";
+    public $billStateId = "//select[@id='oxStateSelect_invadr[oxuser__oxstateid]']";
 
     //user delivery address data
-    public $delUserSalutation = '//button[@data-id="deladr_oxaddress__oxsal"]';
+    public $delUserSalutation = '//select[@id="deladr_oxaddress__oxsal"]';
     public $delUserFirstName = 'deladr[oxaddress__oxfname]';
     public $delUserLastName = 'deladr[oxaddress__oxlname]';
     public $delCompanyName = 'deladr[oxaddress__oxcompany]';
@@ -52,8 +52,8 @@ trait UserForm
     public $delAdditionalInfo = 'deladr[oxaddress__oxaddinfo]';
     public $delFonNr = 'deladr[oxaddress__oxfon]';
     public $delFaxNr = 'deladr[oxaddress__oxfax]';
-    public $delCountryId = "//button[@data-id='delCountrySelect']";
-    public $delStateId = "//button[@data-id='oxStateSelect_deladr[oxaddress__oxstateid]']";
+    public $delCountryId = "//select[@id='delCountrySelect']";
+    public $delStateId = "//select[@id='oxStateSelect_deladr[oxaddress__oxstateid]']";
 
     public $dropdownMenu = '[role=menu]';
     public $nextOpenedDropdownMenu = '//following::div[contains(@class, "dropdown-menu") and contains(@class, "open")]';
@@ -126,8 +126,7 @@ trait UserForm
         $I->fillField($this->userBirthDateDayField, $userData['userBirthDateDayField']);
         $I->fillField($this->userBirthDateYearField, $userData['userBirthDateYearField']);
 
-        $I->click($this->userBirthDateMonthField);
-        $I->click($this->getBirthDateMonthItem($userData['userBirthDateMonthField']));
+        $I->selectOption($this->userBirthDateMonthField, $userData['userBirthDateMonthField']);
         return $this;
     }
 
@@ -177,8 +176,7 @@ trait UserForm
     public function selectBillingCountry(string $country)
     {
         $I = $this->user;
-        $this->openDropdown($this->billCountryId);
-        $I->click($country);
+        $I->selectOption($this->billCountryId, $country);
         $this->waitForDropdownNotVisible($this->billCountryId);
         return $this;
     }
@@ -191,8 +189,7 @@ trait UserForm
     public function selectShippingCountry(string $country)
     {
         $I = $this->user;
-        $this->openDropdown($this->delCountryId);
-        $I->click($country, '#shippingAddress');
+        $I->selectOption($this->delCountryId, $country);
         $this->waitForDropdownNotVisible($this->delCountryId);
         return $this;
     }
@@ -247,31 +244,17 @@ trait UserForm
         );
     }
 
-    /**
-     * @param int $month
-     *
-     * @return string
-     */
-    private function getBirthDateMonthItem($month): string
-    {
-        return "//div[contains(@class,'btn-group bootstrap-select oxMonth form-control')]/div/ul/li["
-            . ($month + 1)
-            . ']/a';
-    }
-
     private function selectBillingAddressSalutation($userSalutation): void
     {
         $I = $this->user;
-        $this->openDropdown($this->billUserSalutation);
-        $I->click($userSalutation);
+        $I->selectOption($this->billUserSalutation, $userSalutation);
         $this->waitForDropdownNotVisible($this->billUserSalutation);
     }
 
     private function selectBillingAddressState($stateId): void
     {
         $I = $this->user;
-        $this->openDropdown($this->billStateId);
-        $I->click($stateId);
+        $I->selectOption($this->billStateId, $stateId);
         $this->waitForDropdownNotVisible($this->billStateId);
     }
 
@@ -284,16 +267,14 @@ trait UserForm
     private function selectShippingAddressSalutation($userSalutation): void
     {
         $I = $this->user;
-        $this->openDropdown($this->delUserSalutation);
-        $I->click($userSalutation, '#shippingAddress');
+        $I->selectOption($this->delUserSalutation, $userSalutation);
         $this->waitForDropdownNotVisible($this->delUserSalutation);
     }
 
     private function selectShippingAddressState($stateId): void
     {
         $I = $this->user;
-        $this->openDropdown($this->delStateId);
-        $I->click($stateId, '#shippingAddress');
+        $I->selectOption($this->delStateId, $stateId);
         $this->waitForDropdownNotVisible($this->delStateId);
     }
 

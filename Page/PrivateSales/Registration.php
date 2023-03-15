@@ -36,7 +36,7 @@ class Registration extends Page
     public function registerUser()
     {
         $I = $this->user;
-        $I->click($this->saveFormButton);
+        $I->retryClick($this->saveFormButton);
         $I->waitForPageLoad();
         return $this;
     }
@@ -48,6 +48,7 @@ class Registration extends Page
     {
         $I = $this->user;
         $I->checkOption($this->confirmAGBOption);
+        $I->seeCheckboxIsChecked($this->confirmAGBOption);
         return $this;
     }
 
@@ -58,6 +59,7 @@ class Registration extends Page
     {
         $I = $this->user;
         $I->checkOption($this->confirmNewsletter);
+        $I->seeCheckboxIsChecked($this->confirmNewsletter);
         return $this;
     }
 }

@@ -24,7 +24,7 @@ class UserChangePassword extends Page
     public $URL = '/en/my-password/';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h3';
 

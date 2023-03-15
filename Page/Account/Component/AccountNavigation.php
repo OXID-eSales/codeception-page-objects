@@ -14,6 +14,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\MyDownloads;
 use OxidEsales\Codeception\Page\Account\MyReviews;
 use OxidEsales\Codeception\Page\Account\NewsletterSettings;
+use OxidEsales\Codeception\Page\Account\ProductCompare;
 use OxidEsales\Codeception\Page\Account\UserAddress;
 use OxidEsales\Codeception\Page\Account\UserChangePassword;
 use OxidEsales\Codeception\Page\Account\UserGiftRegistry;

@@ -129,8 +129,7 @@ class ProductList extends Page
     public function dontSeeSelectedFilter($attributeName, $attributeValue): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->listFilter, $attributeName));
-        $I->dontSee($attributeValue);
+        $I->dontSeeOptionIsSelected(sprintf($this->listFilter, $attributeName), $attributeValue);
         return $this;
     }
 

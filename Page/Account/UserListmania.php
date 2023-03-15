@@ -26,7 +26,7 @@ class UserListmania extends Page
     // include url of current page
     public $URL = '/en/my-listmania-list/';
 
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h1';
 

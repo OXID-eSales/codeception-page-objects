@@ -18,7 +18,7 @@ use OxidEsales\Codeception\Page\Lists\ProductList;
  */
 trait Navigation
 {
-    public $homeLink = '//ul[@id="navigation"]/li[1]/a';
+    public $homeLink = '//a[contains(@class,"logo-link")]';
 
     /**
      * @return Home

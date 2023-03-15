@@ -22,7 +22,7 @@ class ThankYou extends Page
     public $URL = '/index.php?cl=thankyou&lang=1';
 
     // include bread crumb of current page
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     public $thankYouPage = '#thankyouPage';
 

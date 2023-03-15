@@ -30,7 +30,7 @@ class Page
     /**
      * @var string
      */
-    public $breadCrumb = '#breadcrumb';
+    public $breadCrumb = '.breadcrumb';
 
     /**
      * Page constructor.
