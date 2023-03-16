@@ -34,15 +34,17 @@ class UserCheckout extends Page
 
     public $breadCrumb = '//div[@class="step step-1 active"]';
 
-    public $nextStepButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
+    public $registerUserButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
+
+    public $nextStepButton = '#userFormSubmit';
 
     public $previousStepButton = '';
 
-    public $openShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[1]';
+    public $openShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[1]';
 
-    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[1]/button[2]';
+    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[2]';
 
-    public $selectShipAddress = '//div[@id="shippingAddress"]/div[1]/div[1]/div[%s]/div/div[2]/label';
+    public $selectShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[1]/label';
 
     public $shipAddressForm = '#shippingAddressForm';
 
@@ -106,7 +108,7 @@ class UserCheckout extends Page
     public function clickOnRegisterUserButton()
     {
         $I = $this->user;
-        $I->click($this->nextStepButton);
+        $I->click($this->registerUserButton);
         $I->waitForPageLoad();
         $I->waitForElement($this->breadCrumb);
         return $this;
