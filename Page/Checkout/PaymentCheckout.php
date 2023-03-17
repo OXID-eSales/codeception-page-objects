@@ -53,7 +53,8 @@ class PaymentCheckout extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click(Translator::translate('NEXT'));
+        $I->waitForElementClickable($this->nextStepButton);
+        $I->retryClick($this->nextStepButton);
         $orderPage = new OrderCheckout($I);
         $I->waitForElement($orderPage->breadCrumb);
         return $orderPage;
