@@ -61,6 +61,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
+        $I->wait(1);
         $I->retryClick($this->miniBasketClose);
         $I->waitForElementNotVisible($this->miniBasketTitle);
         return $this;
