@@ -22,6 +22,8 @@ class MainProductPage extends Page
     public $createButton = "//a[@id='btn.new']";
     public $saveButton = "//input[@name='saveArticle']";
 
+    public $longDescriptionSelector = '#editor_oxarticles__oxlongdesc';
+
     /**
      * @param string      $title
      * @param string|null $number

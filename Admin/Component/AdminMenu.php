@@ -10,6 +10,7 @@ namespace OxidEsales\Codeception\Admin\Component;
 use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
+use OxidEsales\Codeception\Admin\Service\GenericImport;
 use OxidEsales\Codeception\Admin\Languages;
 use OxidEsales\Codeception\Admin\ModulesList;
 use OxidEsales\Codeception\Admin\Orders;
@@ -223,5 +224,18 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new CMSPages($I);
+    }
+
+    public function openGenericImport(): GenericImport
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxservice'));
+        $I->retryClick(Translator::translate('mxgenimp'));
+
+        $I->selectBaseFrame();
+
+        return new GenericImport($I);
     }
 }
