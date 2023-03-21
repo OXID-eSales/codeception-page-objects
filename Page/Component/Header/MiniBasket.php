@@ -88,7 +88,7 @@ trait MiniBasket
     public function checkBasketEmpty(): self
     {
         $I = $this->user;
-      #  $I->click($this->miniBasketMenuElement);
+        $I->click($this->miniBasketMenuElement);
         $I->see(Translator::translate('BASKET_EMPTY'));
         return $this;
     }
