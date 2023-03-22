@@ -17,7 +17,7 @@ use OxidEsales\Codeception\Page\Page;
 class ProductList extends Page
 {
     use Header;
-    
+
     public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//*[@class="h5 card-title"]';
     public string $listItemDescription = '//div[@id="productList"]/div/div[%s]//div[@class="short-desc"]';
     public string $listItemPrice = '//div[@id="productList"]/div/div[%s]//div[contains(@class,"price")]/span';
@@ -168,7 +168,7 @@ class ProductList extends Page
     public function openPreviousListPage(): self
     {
         $I = $this->user;
-        $I->click($this->previousListPage);
+        $I->retryClick($this->previousListPage);
         $I->waitForPageLoad();
         return $this;
     }
