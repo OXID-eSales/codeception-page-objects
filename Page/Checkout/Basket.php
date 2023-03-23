@@ -35,6 +35,7 @@ class Basket extends Page
     public string $openGiftSelection = '//div[@id="list_cartItem_%s"]//div[@class="wrapping"]/a';
     public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
     public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
+    public string $checkoutButton = '.content';
 
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
@@ -98,7 +99,7 @@ class Basket extends Page
     public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
-        $I->click(Translator::translate('CHECKOUT'));
+        $I->click(Translator::translate('CHECKOUT'), $this->checkoutButton);
         $userStep = new UserCheckout($I);
         $I->waitForElement($userStep->breadCrumb);
         return $userStep;
