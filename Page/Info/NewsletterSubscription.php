@@ -59,7 +59,7 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->checkOption($this->subscribeCheckbox);
-        $I->click($this->newsletterSubmitButton);
+        $I->retryClick($this->newsletterSubmitButton);
         return $this;
     }
 
@@ -71,8 +71,8 @@ class NewsletterSubscription extends Page
     public function unsubscribe()
     {
         $I = $this->user;
-        $I->checkOption($this->unSubscribeCheckbox);
-        $I->click($this->newsletterSubmitButton);
+        $I->retryCheckOption($this->unSubscribeCheckbox);
+        $I->retryClick($this->newsletterSubmitButton);
         return $this;
     }
 }

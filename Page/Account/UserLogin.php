@@ -33,7 +33,7 @@ class UserLogin extends Page
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->click($this->userAccountLoginButton);
+        $I->retryClick($this->userAccountLoginButton);
         $I->dontSee(Translator::translate('LOGIN'));
         return new UserAccount($I);
     }
@@ -43,7 +43,7 @@ class UserLogin extends Page
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->click($this->userAccountLoginButton);
+        $I->retryClick($this->userAccountLoginButton);
         $I->see(Translator::translate('LOGIN'));
         return $this;
     }

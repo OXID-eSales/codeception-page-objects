@@ -32,7 +32,7 @@ class UserPasswordReminder extends Page
     {
         $I = $this->user;
         $I->fillField($this->forgotPasswordUserEmail, $userEmail);
-        $I->click(Translator::translate('REQUEST_PASSWORD'));
+        $I->retryClick(Translator::translate('REQUEST_PASSWORD'));
         return $this;
     }
 }

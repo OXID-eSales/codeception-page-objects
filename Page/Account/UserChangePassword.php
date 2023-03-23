@@ -50,7 +50,7 @@ class UserChangePassword extends Page
         $I->pressKey($this->userNewPassword, $newPassword);
         $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
-        $I->click($this->userChangePasswordButton);
+        $I->retryClick($this->userChangePasswordButton);
         return $this;
     }
 

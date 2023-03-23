@@ -102,7 +102,7 @@ class ProductList extends Page
     public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
-        $I->moveMouseOver(sprintf($this->listItemTitle, $itemId));
+        $I->retryMoveMouseOver(sprintf($this->listItemTitle, $itemId));
         $I->clickWithLeftButton(sprintf($this->listItemTitle, $itemId));
         $I->waitForPageLoad();
         $productDetails = new ProductDetails($I);
@@ -176,7 +176,7 @@ class ProductList extends Page
     public function openListPageNumber(int $pageNumber): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->pageNumberSelection, $pageNumber));
+        $I->retryClick(sprintf($this->pageNumberSelection, $pageNumber));
         $I->waitForElement(sprintf($this->activePageNumber, $pageNumber));
 
         return $this;
@@ -185,17 +185,17 @@ class ProductList extends Page
     public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
     {
         $I = $this->user;
-        $I->click($this->sortingButton);
+        $I->retryClick($this->sortingButton);
         $I->waitForElement(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
-        $I->click(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
+        $I->retryClick(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         return $this;
     }
 
     public function selectVariant(int $itemId, string $variantValue): ProductDetails
     {
         $I = $this->user;
-        $I->click(sprintf($this->variantSelection, $itemId));
-        $I->click($variantValue);
+        $I->retryClick(sprintf($this->variantSelection, $itemId));
+        $I->retryClick($variantValue);
         $I->waitForText($variantValue);
         return new ProductDetails($I);
     }

@@ -105,7 +105,7 @@ class ProductCompare extends Page
     public function openProductDetailsPage(int $id)
     {
         $I = $this->user;
-        $I->click(sprintf($this->productTitle, $id));
+        $I->retryClick(sprintf($this->productTitle, $id));
         return new ProductDetails($I);
     }
 
@@ -149,7 +149,7 @@ class ProductCompare extends Page
     public function removeProductFromList(string $productId)
     {
         $I = $this->user;
-        $I->click(sprintf($this->removeButton, $productId));
+        $I->retryClick(sprintf($this->removeButton, $productId));
         $I->waitForPageLoad();
         return $this;
     }

@@ -25,7 +25,7 @@ class Home extends Page
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->moveMouseOver(sprintf($this->openManufacturerList, $position));
+        $I->retryMoveMouseOver(sprintf($this->openManufacturerList, $position));
         $I->retryClick(sprintf($this->openManufacturerList, $position));
         $I->waitForPageLoad();
         return $productListPage;

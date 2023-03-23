@@ -71,7 +71,7 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->waitForElement($this->registrationOption);
-        $I->click($this->registrationOption);
+        $I->retryClick($this->registrationOption);
         return $this;
     }
 

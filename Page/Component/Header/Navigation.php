@@ -41,7 +41,7 @@ trait Navigation
     public function openCategoryPage(string $category)
     {
         $I = $this->user;
-        $I->click(['link' => $category]);
+        $I->retryClick(['link' => $category]);
         return new ProductList($I);
     }
 }
