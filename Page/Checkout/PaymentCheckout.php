@@ -68,7 +68,7 @@ class PaymentCheckout extends Page
     public function goToPreviousStep()
     {
         $I = $this->user;
-        $I->click(Translator::translate('PREVIOUS_STEP'));
+        $I->retryClick(Translator::translate('PREVIOUS_STEP'));
         $userCheckout = new UserCheckout($I);
         $I->waitForElement($userCheckout->breadCrumb);
         return $userCheckout;
