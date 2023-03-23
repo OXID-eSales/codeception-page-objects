@@ -64,7 +64,7 @@ class OrderCheckout extends Page
     public function confirmDownloadableProductsAgreement(): self
     {
         $I = $this->user;
-        $I->checkOption($this->downloadableProductsAgreement);
+        $I->retryCheckOption($this->downloadableProductsAgreement);
         $I->seeCheckboxIsChecked($this->downloadableProductsAgreement);
         return $this;
     }
