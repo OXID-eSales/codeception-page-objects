@@ -19,6 +19,7 @@ trait Modal
     private string $confirmDeletionBtn = '.modal-dialog .modal-content button.btn-danger';
     private string $deleteShippingAddressBtn = '//*[@id="delete_shipping_address_%s"]/div/div/div[3]/button[2]';
     private string $rootCatChangedModal = '#scRootCatChanged';
+    private string $rootCatChangedConfirmation = '.modal-footer';
 
     public function confirmDeletion(): void
     {
@@ -64,7 +65,7 @@ trait Modal
         $I = $this->user;
         $I->waitForPageLoad();
         $I->waitForText(Translator::translate('ROOT_CATEGORY_CHANGED'));
-        $I->click(Translator::translate('CHECKOUT'));
+        $I->click(Translator::translate('CHECKOUT'), $this->rootCatChangedConfirmation);
         return new Basket($I);
     }
 }
