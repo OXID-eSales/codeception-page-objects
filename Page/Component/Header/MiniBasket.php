@@ -35,6 +35,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $this->openMiniBasket();
+        $I->waitForText(Translator::translate('ITEMS_IN_BASKET'));
         $I->see(sprintf('%s %s', $totalAmount, Translator::translate('ITEMS_IN_BASKET')));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = (string)++$key;
