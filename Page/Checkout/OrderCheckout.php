@@ -38,7 +38,7 @@ class OrderCheckout extends Page
     public string $editBillingAddress = '//div[@id="orderAddress"]/div[1]//button';
     public string $editPayment = '//div[@id="orderPayment"]//button';
     public string $editShippingMethod = '//div[@id="orderShipping"]//button';
-    public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
+    public string $downloadableProductsAgreement = 'oxdownloadableproductsagreement';
     public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
 
     public function submitOrder(): self
@@ -64,6 +64,7 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $I->checkOption($this->downloadableProductsAgreement);
+        $I->waitForPageLoad();
         return $this;
     }
 
