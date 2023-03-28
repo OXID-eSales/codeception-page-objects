@@ -23,7 +23,7 @@ class ManufacturerList extends Page
 
     public string $listItemCount = '//div[@class="subcatList"]/div/div[%s]//div[@class="panel-heading"]';
 
-    public string $listItemLink = '//div[@class="subcatList"]/div/div[%s]/div/div[2]';
+    public string $listItemLink = '#moreSubCat_%s';
 
     /**
      * Check if item data is displayed correctly.
@@ -51,7 +51,7 @@ class ManufacturerList extends Page
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->click(Translator::translate('DD_LIST_SHOW_MORE'), sprintf($this->listItemLink, $itemId));
+        $I->click(sprintf($this->listItemLink, $itemId));
         $I->waitForPageLoad();
         return $productListPage;
     }
