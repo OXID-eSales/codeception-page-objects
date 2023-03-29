@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Manufacturer;
 
-use OxidEsales\Codeception\Admin\DataObject\Manufacturer;
 use OxidEsales\Codeception\Admin\Component\FrameLoader;
+use OxidEsales\Codeception\Admin\DataObject\Manufacturer;
+use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ManufacturerList
 {
@@ -39,6 +40,19 @@ trait ManufacturerList
     public function findByManufacturerTitle(string $title): MainManufacturerPage
     {
         return $this->find($this->titleSearchField, $title);
+    }
+
+    public function openPictureTab(string $title): PictureManufacturerPage
+    {
+        $I = $this->user;
+
+        $this->find($this->titleSearchField, $title);
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclmanufacturer_picture'));
+        $I->selectEditFrame();
+
+        return new PictureManufacturerPage($I);
     }
 
     public function createManufacturer(Manufacturer $manufacturer): MainManufacturerPage
