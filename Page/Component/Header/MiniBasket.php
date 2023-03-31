@@ -81,7 +81,7 @@ trait MiniBasket
     public function openBasketDisplay(): Basket
     {
         $I = $this->user;
-        $I->click(Translator::translate('DISPLAY_BASKET'));
+        $I->retryClick(Translator::translate('DISPLAY_BASKET'));
         $I->see(Translator::translate('CART'));
         return new Basket($I);
     }
