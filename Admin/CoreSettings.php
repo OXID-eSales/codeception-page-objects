@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Admin\CoreSetting\PerformanceTab;
+use OxidEsales\Codeception\Admin\CoreSetting\SEOTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SystemTab;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -25,6 +26,7 @@ class CoreSettings extends Page
     public $inheritParentProductsOption = 'editval[oxshops__oxisinherited]';
     public $shopName = 'editval[oxshops__oxname]';
     public $tabPerformance = 'tbclshop_performance';
+    public $tabSEO = 'tbclshop_seo';
 
     /**
      * @param string $shopName
@@ -120,5 +122,18 @@ class CoreSettings extends Page
         $I->selectEditFrame();
 
         return new PerformanceTab($I);
+    }
+
+    public function openSEOTab(): SEOTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate($this->tabSEO));
+
+        // Wait for list and edit sections to load
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new SEOTab($I);
     }
 }
