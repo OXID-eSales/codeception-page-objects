@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Admin\Manufacturer`
   - `Page\Lists\DistributorList`
   - `Page\Lists\ManufacturerList`
+  - `Admin\CoreSetting\SEOTab`
 - Traits:
   - `Page\Component\Footer\CategoryWidget`
   - `Page\Component\Footer\InformationWidget`
