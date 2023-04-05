@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Page objects:
   - `Admin\Manufacturer`
+  - `Admin\Service\GenericExport`
   - `Admin\Service\GenericImport`
   - `Page\Lists\DistributorList`
   - `Page\Lists\ManufacturerList`
@@ -24,7 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
   - `Admin\Service\Tools:runSqlUpdate()`
   - `Admin\Service\Tools:seeInSqlOutput()`
-  - `Admin\Component\AdminMenu::openGenericImport()
+  - `Admin\Component\AdminMenu::openGenericExport()`
+  - `Admin\Component\AdminMenu::openGenericImport()`
   - `Page\Component\Modal::closeModalBox()`
   - `Page\Component\Header\AccountMenu::seeUserLoggedIn()`
   - `Page\Component\Header\AccountMenu::seeUserLoggedOut()`
