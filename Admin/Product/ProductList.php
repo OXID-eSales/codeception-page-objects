@@ -48,13 +48,15 @@ trait ProductList
         $I->selectListFrame();
         $I->fillField($field, $value);
         $I->submitForm($this->searchForm, []);
-        $I->selectListFrame();
 
+        $I->selectListFrame();
         $I->click($value);
-        $I->selectListFrame();
-        $I->selectEditFrame();
 
-        return new MainProductPage($I);
+        $mainProductPage = new MainProductPage($I);
+        $I->selectEditFrame();
+        $I->waitForElement($mainProductPage->numberInput);
+
+        return $mainProductPage;
     }
 
     /** @return SelectionProductPage */
