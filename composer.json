@@ -2,7 +2,6 @@
   "name": "oxid-esales/codeception-page-objects",
   "description": "Page Objects for OXID eShop acceptance tests on codeception",
   "license": [
-    "GPL-3.0-only",
     "proprietary"
   ],
   "keywords": [
