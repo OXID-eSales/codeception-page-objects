@@ -10,7 +10,7 @@
     "pageObject",
     "eShop"
   ],
-  "homepage": "https://www.oxid-esales.com/en/home.html",
+  "homepage": "https://www.oxid-esales.com/en",
   "autoload": {
     "psr-4": {
       "OxidEsales\\Codeception\\Admin\\": "Admin",
