@@ -99,7 +99,7 @@ class Basket extends Page
     public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
-        $I->click(Translator::translate('CHECKOUT'), $this->checkoutButton);
+        $I->retryClick(Translator::translate('CHECKOUT'), $this->checkoutButton);
         $userStep = new UserCheckout($I);
         $I->waitForElement($userStep->breadCrumb);
         return $userStep;
@@ -125,7 +125,7 @@ class Basket extends Page
         $I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
         $I->waitForElementVisible($this->addBasketCouponField);
         $I->fillField($this->addBasketCouponField, $couponNumber);
-        $I->click($this->addBasketCouponButton);
+        $I->retryClick($this->addBasketCouponButton);
         $I->waitForElementVisible($this->removeBasketCoupon);
         return $this;
     }
