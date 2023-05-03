@@ -15,6 +15,7 @@
     "psr-4": {
       "OxidEsales\\Codeception\\Admin\\": "Admin",
       "OxidEsales\\Codeception\\Page\\": "Page",
+      "OxidEsales\\Codeception\\ShopSetup\\": "ShopSetup",
       "OxidEsales\\Codeception\\Step\\": "Step"
     }
   }
