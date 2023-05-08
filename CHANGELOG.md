@@ -61,6 +61,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Deprecated
 - `Page\Lists\ProductList::openDetailsPage()`
 
+### Changed
+- License update
+
 ## [4.0.0] - 2022-10-28
 
 ### Added
