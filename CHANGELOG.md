@@ -4,10 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.1.0] - unreleased
+## [4.1.0] - 2023-05-09
 
 ### Fixed
 - Checks for Page objects' availability
+
 ### Added
 - Page objects:
   - `Admin\Manufacturer`
@@ -60,6 +61,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Home::openManufacturerFromStarPage()`
 ### Deprecated
 - `Page\Lists\ProductList::openDetailsPage()`
+
+## [4.0.1] - 2022-11-23
+
+### Fixed
+- Checks for Page objects' availability
 
 ## [4.0.0] - 2022-10-28
 
@@ -303,6 +309,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
+[4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.1..v4.1.0
+[4.0.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.0..v4.0.1
 [4.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v3.0.0..v4.0.0
 [3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.3.0..v3.0.0
 [2.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v2.3.0
