@@ -7,9 +7,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v4.2.0] - unreleased
 
 ### Added
+- Page objects:
+  - `Page\Component\Widget\Promotion`
+  - `Page\Component\Widget\ProductCard`
+- Methods:
+  - `Page\Component\Widget\Promotion::seeWidgetTitle` 
+  - `Page\Component\Widget\Promotion::getProduct`
+  - `Page\Component\Widget\ProductCard::productHasTitle`
+  - `Page\Component\Widget\ProductCard::setProductAmount`
+  - `Page\Component\Widget\ProductCard::addProductToCart`
+  - `Page\Component\Widget\ProductCard::openProductDetails`
+  - `Page\Component\Widget\ProductCard::getProductLocator`
+  - `Page\Component\Widget\ProductCard::getProductTitleLocator`
+  - `Page\Component\Widget\ProductCard::getProductAmountLocator`
+  - `Page\Component\Widget\ProductCard::getProductLocator`
+  - `Page\Component\Widget\ProductCard::getProductLocator`
+  - `Page\Home::getNewestArticles`
+  - `Page\Home::getPromotionTop5`
+  - `Page\Home::getBargainArticleList`
+  - `Page\Home::getPromotion`
 - Traits:
   - `OxidEsales\Codeception\Page\Component\CookieNotice`
-
 
 ### Changed
 - Page objects:
@@ -320,7 +338,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First version of the module introduced
 
-[v4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.1.0..v4.2.0
+[v4.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.1.0..v4.2.0
 [v4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.1..v4.1.0
 [v4.0.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.0..v4.0.1
 [v4.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v3.0.0..v4.0.0
