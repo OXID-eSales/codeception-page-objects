@@ -33,7 +33,7 @@ trait CurrencyMenu
         $I->click($this->currencyMenuButton);
         $I->waitForElement($this->openCurrencyMenu);
         $I->click($this->openCurrencyMenu);
-        $I->click($currency);
+        $I->click(['link'=>$currency]);
         $I->waitForElementNotVisible($this->openCurrencyMenu);
         return $this;
     }
