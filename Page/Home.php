@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page;
 
+use OxidEsales\Codeception\Page\Component\CookieNotice;
 use OxidEsales\Codeception\Page\Component\Footer\Footer;
 use OxidEsales\Codeception\Page\Component\Header\Header;
 use OxidEsales\Codeception\Page\Lists\ProductList;
@@ -31,4 +32,9 @@ class Home extends Page
         return $productListPage;
     }
 
+    public function getCookieNotice(): ?CookieNotice
+    {
+        $I = $this->user;
+        return new CookieNotice($I);
+    }
 }
