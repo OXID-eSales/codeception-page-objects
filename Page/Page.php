@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page;
 
 use Codeception\Actor;
+use OxidEsales\Codeception\Page\Component\CookieNotice;
 
 /**
  * Class Page
@@ -17,6 +18,7 @@ use Codeception\Actor;
  */
 class Page
 {
+    use CookieNotice;
     /**
      * @var Actor
      */

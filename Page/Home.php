@@ -30,5 +30,4 @@ class Home extends Page
         $I->waitForPageLoad();
         return $productListPage;
     }
-
 }

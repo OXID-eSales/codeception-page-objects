@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.1.0] - 2023-05-09
+## [v4.2.0] - unreleased
+
+### Added
+- Traits:
+  - `OxidEsales\Codeception\Page\Component\CookieNotice`
+- Methods:
+  - `OxidEsales\Codeception\Page\Component\CookieNotice::closeCookieNotice`
+  - `OxidEsales\Codeception\Page\Component\CookieNotice::seeRejectInfo`
+  - `OxidEsales\Codeception\Page\Component\CookieNotice::rejectCookies`
+  - `OxidEsales\Codeception\Page\Component\CookieNotice::seeCookieNotice`
+  - `OxidEsales\Codeception\Page\Component\CookieNotice::dontSeeCookieNotice`
+
+### Changed
+- Page objects:
+  - `OxidEsales\Codeception\Page\Page`
+
+## [v4.1.0] - 2023-05-09
 
 ### Fixed
 - Checks for Page objects' availability
@@ -62,12 +78,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Deprecated
 - `Page\Lists\ProductList::openDetailsPage()`
 
-## [4.0.1] - 2022-11-23
+## [v4.0.1] - 2022-11-23
 
 ### Fixed
 - Checks for Page objects' availability
 
-## [4.0.0] - 2022-10-28
+## [v4.0.0] - 2022-10-28
 
 ### Added
 - Compatibility with Codeception v5
@@ -79,7 +95,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `Admin\Component\FillForm`
 - `Admin\Tools`
 
-## [3.0.0] - 2021-07-06
+## [v3.0.0] - 2021-07-06
 
 ### Changed
 - Update symfony components to version 5
@@ -94,7 +110,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `OxidEsales\Codeception\Step\Basket::addProductToBasketAndOpen`
 
-## [2.3.0] - 2022-07-19
+## [v2.3.0] - 2022-07-19
 
 ### Added
 - Page objects:
@@ -121,7 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Admin\Component\FillForm`
   - `Admin\Tools`
 
-## [2.2.0] - 2021-11-26
+## [v2.2.0] - 2021-11-26
 
 ### Added
 - Trait:
@@ -137,7 +153,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Property:
   - `Admin\Order\OrderList::$orderBillingLastNameInput`
         
-## [2.1.0] - 2021-07-09
+## [v2.1.0] - 2021-07-09
 
 ### Added
 - Method:
@@ -148,13 +164,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openPreviousListPage`
   - `OxidEsales\Codeception\Page\Lists\ProductSearchList::openListPageNumber`
 
-## [2.0.0] - 2021-03-25
+## [v2.0.0] - 2021-03-25
 
 ### Added
 - Support of codeception v4
 - Add usage of codeception retry
 
-## [1.4.0] - 2020-11-10
+## [v1.4.0] - 2020-11-10
 
 ### Added
 - Admin Product page objects:
@@ -197,7 +213,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `OxidEsales\Codeception\Admin\Users::deleteSelectedAddress`  
     - `OxidEsales\Codeception\Admin\Users::editExtentedInfo`  
 
-## [1.3.3] - 2020-07-06
+## [v1.3.3] - 2020-07-06
 
 ### Added
 - Methods:
@@ -207,7 +223,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `Page\Account\UserAddress::deleteShippingAddress`
     - `Page\Component\Modal::confirmDeletion`
 
-## [1.3.2] - 2020-04-21
+## [v1.3.2] - 2020-04-21
 
 ### Added
 - Properties:
@@ -221,7 +237,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Methods:
     - `Step\Basket::addProductToBasketAndOpen`
 
-## [1.3.1] - 2020-04-09
+## [v1.3.1] - 2020-04-09
 
 ### Added
 - Review elements:
@@ -245,7 +261,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `AccountNavigation:$wishListLink`
     - `AccountNavigation:$listmaniaLink`
 
-## [1.3.0] - 2020-03-12
+## [v1.3.0] - 2020-03-12
 
 ### Added
 - New traits
@@ -258,7 +274,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - AccountMenu::userAccount
     - AccountNavigation::accountMenu
 
-## [1.2.0] - 2020-02-19
+## [v1.2.0] - 2020-02-19
 
 ### Added
 - Admin page objects
@@ -269,12 +285,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - AdminMenu::openOrders
     - AdminMenu::openProducts
 
-## [1.1.1] - 2020-02-07
+## [v1.1.1] - 2020-02-07
 
 ### Fixed
 - Variant selection
 
-## [1.1.0] - 2019-11-07
+## [v1.1.0] - 2019-11-07
 
 ### Added
 - Admin page objects
@@ -304,25 +320,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix ProductDetails page object to work with fixed add/remove compare links.
 - Improve password filling to work with improved javascript error displaying.
 
-## [1.0.0] -  2019-07-26
+## [v1.0.0] -  2019-07-26
 
 ### Added
 - First version of the module introduced
 
-[4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.1..v4.1.0
-[4.0.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.0..v4.0.1
-[4.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v3.0.0..v4.0.0
-[3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.3.0..v3.0.0
-[2.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v2.3.0
-[2.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.1.0..v2.2.0
-[2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
-[2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0
-[1.4.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.4.0
-[1.3.3]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.2..v1.3.3
-[1.3.2]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.1..v1.3.2
-[1.3.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.0..v1.3.1
-[1.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.2.0..v1.3.0
-[1.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.1..v1.2.0
-[1.1.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.0..v1.1.1
-[1.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.0.0..v1.1.0
-[1.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/81ac79e25ab110042e4d4020fe0b42e68a475ad6..v1.0.0
+[v4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.1.0..v4.2.0
+[v4.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.1..v4.1.0
+[v4.0.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v4.0.0..v4.0.1
+[v4.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v3.0.0..v4.0.0
+[v3.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.3.0..v3.0.0
+[v2.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.2.0..v2.3.0
+[v2.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.1.0..v2.2.0
+[v2.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v2.0.0..v2.1.0
+[v2.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.4.0..v2.0.0
+[v1.4.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.3..v1.4.0
+[v1.3.3]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.2..v1.3.3
+[v1.3.2]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.1..v1.3.2
+[v1.3.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.3.0..v1.3.1
+[v1.3.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.2.0..v1.3.0
+[v1.2.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.1..v1.2.0
+[v1.1.1]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.1.0..v1.1.1
+[v1.1.0]: https://github.com/OXID-eSales/codeception-page-object/compare/v1.0.0..v1.1.0
+[v1.0.0]: https://github.com/OXID-eSales/codeception-page-object/compare/81ac79e25ab110042e4d4020fe0b42e68a475ad6..v1.0.0
