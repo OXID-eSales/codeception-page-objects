@@ -109,8 +109,8 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible($this->userAccountLink);
-        $I->click($this->userAccountLink);
+        $I->waitForElementVisible(['link'=>Translator::translate('MY_ACCOUNT')]);
+        $I->click(['link'=>Translator::translate('MY_ACCOUNT')]);
         $I->waitForPageLoad();
         return new UserAccount($I);
     }
