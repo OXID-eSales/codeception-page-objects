@@ -15,9 +15,8 @@ use OxidEsales\Codeception\Page\Account\UserAccount;
 use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Checkout\Basket;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Page\Info\ContactPage;
 use OxidEsales\Codeception\Page\PrivateSales\Invitation;
-use Prophecy\Argument\Token\LogicalNotToken;
 
 /**
  * Trait for service menu widget in footer
@@ -48,7 +47,10 @@ trait ServiceWidget
     {
         $I = $this->user;
         $invitationPage = new Invitation($I);
-        $I->retryClick(Translator::translate('INVITE_YOUR_FRIENDS'), Locator::elementAt($this->privateSalesInvitationLink, 1));
+        $I->retryClick(
+            Translator::translate('INVITE_YOUR_FRIENDS'),
+            Locator::elementAt($this->privateSalesInvitationLink, 1)
+        );
         $I->waitForText(Translator::translate('INVITE_YOUR_FRIENDS'));
         return $invitationPage;
     }
@@ -59,8 +61,16 @@ trait ServiceWidget
         $I->retryClick(Translator::translate('ACCOUNT'), Locator::elementAt($this->userAccountPageLink, 1));
         if (Context::isUserLoggedIn()) {
             return new UserAccount($I);
-        } else {
-            return new UserLogin($I);
         }
+
+        return new UserLogin($I);
+    }
+
+    public function openContactPage(): ContactPage
+    {
+        $I = $this->user;
+        $I->retryClick(Translator::translate('CONTACT'));
+        $I->waitForPageLoad();
+        return new ContactPage($I);
     }
 }

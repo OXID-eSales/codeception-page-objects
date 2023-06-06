@@ -10,8 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Page objects:
   - `Page\Component\Widget\ProductCard`
   - `Page\Component\Widget\Promotion`
+  - `Page\Info\ContactPage`
   - `ShopSetup`
 - Methods:
+  - `Page\Component\Footer\ServiceWidget::openContactPage()`
   - `Page\Home::getBargainArticleList`
   - `Page\Home::getNewestArticles`
   - `Page\Home::getPromotionTop5`
@@ -43,8 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `Page\Component\Footer\Footer`
   - `Page\Component\Header\Header`
 - Methods:
-  - `Admin\Service\Tools:runSqlUpdate()`
-  - `Admin\Service\Tools:seeInSqlOutput()`
+  - `Admin\Service\Tools::runSqlUpdate()`
+  - `Admin\Service\Tools::seeInSqlOutput()`
   - `Admin\Component\AdminMenu::openGenericExport()`
   - `Admin\Component\AdminMenu::openGenericImport()`
   - `Page\Component\Modal::closeModalBox()`
