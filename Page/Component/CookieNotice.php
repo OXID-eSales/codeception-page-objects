@@ -31,7 +31,7 @@ trait CookieNotice
         return $this;
     }
 
-    public function  seeRejectInfo(): self
+    public function seeRejectInfo(): self
     {
         $I = $this->user;
         $I->see(Translator::translate('INFO_ABOUT_COOKIES'));

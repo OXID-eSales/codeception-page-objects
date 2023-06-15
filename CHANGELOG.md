@@ -9,12 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Traits:
   - `OxidEsales\Codeception\Page\Component\CookieNotice`
-- Methods:
-  - `OxidEsales\Codeception\Page\Component\CookieNotice::closeCookieNotice`
-  - `OxidEsales\Codeception\Page\Component\CookieNotice::seeRejectInfo`
-  - `OxidEsales\Codeception\Page\Component\CookieNotice::rejectCookies`
-  - `OxidEsales\Codeception\Page\Component\CookieNotice::seeCookieNotice`
-  - `OxidEsales\Codeception\Page\Component\CookieNotice::dontSeeCookieNotice`
+
 
 ### Changed
 - Page objects:
