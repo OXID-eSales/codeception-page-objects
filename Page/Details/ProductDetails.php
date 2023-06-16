@@ -211,7 +211,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToCompareListLink);
-        $I->click($this->addToCompareListLink);
+        $I->retryClick($this->addToCompareListLink);
         $I->waitForPageLoad();
         return $this;
     }
@@ -222,7 +222,7 @@ class ProductDetails extends Page
     public function removeFromCompareList()
     {
         $I = $this->user;
-        $I->click($this->removeFromCompareListLink);
+        $I->retryClick($this->removeFromCompareListLink);
         $I->waitForPageLoad();
         return $this;
     }
@@ -258,7 +258,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToGiftRegistryLink);
-        $I->click($this->addToGiftRegistryLink);
+        $I->retryClick($this->addToGiftRegistryLink);
         $I->waitForPageLoad();
         return $this;
     }
@@ -290,7 +290,7 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->retryClick($this->openReviewForm);
         $I->waitForElement($this->reviewTextForm);
-        $I->fillField($this->reviewTextForm, $review);
+        $I->retryFillField($this->reviewTextForm, $review);
         $I->retryClick(sprintf($this->ratingSelection, $rating));
         $I->retryClick($this->saveRatingAndReviewButton);
         return $this;
@@ -437,7 +437,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->fillField($this->basketAmountField, $amount);
-        $I->click($this->toBasketButton);
+        $I->retryClick($this->toBasketButton);
         $I->waitForPageLoad();
         return $this;
     }
@@ -549,7 +549,7 @@ class ProductDetails extends Page
     public function seeAmountPrices(array $amountPrices)
     {
         $I = $this->user;
-        $I->click(Translator::translate('BLOCK_PRICE'));
+        $I->retryClick(Translator::translate('BLOCK_PRICE'));
         $I->waitForElementVisible(sprintf($this->amountPriceQuantity, 1));
         $itemPosition = 1;
         foreach ($amountPrices as $amountPrice) {

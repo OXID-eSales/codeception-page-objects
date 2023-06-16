@@ -50,7 +50,7 @@ class Login extends Page
     public function openUserPasswordReminderPage()
     {
         $I = $this->user;
-        $I->click($this->forgotPassword);
+        $I->retryClick($this->forgotPassword);
         $I->waitForPageLoad();
         return new UserPasswordReminder($I);
     }

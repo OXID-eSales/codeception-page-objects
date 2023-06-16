@@ -61,6 +61,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
+        $I->wait(1);
         $I->retryClick($this->miniBasketClose);
         $I->waitForElementNotVisible($this->miniBasketTitle);
         return $this;
@@ -70,7 +71,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForText(Translator::translate('CHECKOUT'));
-        $I->click(Translator::translate('CHECKOUT'));
+        $I->retryClick(Translator::translate('CHECKOUT'));
         $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
@@ -82,7 +83,7 @@ trait MiniBasket
     public function openBasketDisplay(): Basket
     {
         $I = $this->user;
-        $I->click(Translator::translate('DISPLAY_BASKET'));
+        $I->retryClick(Translator::translate('DISPLAY_BASKET'));
         $I->see(Translator::translate('CART'));
         return new Basket($I);
     }

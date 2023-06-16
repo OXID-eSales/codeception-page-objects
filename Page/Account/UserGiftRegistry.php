@@ -106,7 +106,7 @@ class UserGiftRegistry extends Page
         $I->fillField($this->recipientName, $recipient);
         $I->fillField($this->recipientEmail, $email);
         $I->fillField($this->emailMessage, $message);
-        $I->click(Translator::translate('SUBMIT'));
+        $I->retryClick(Translator::translate('SUBMIT'));
         return $this;
     }
 

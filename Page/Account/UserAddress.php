@@ -116,10 +116,10 @@ class UserAddress extends Page
         $I = $this->user;
         $selectAddressBtn = sprintf($this->selectShipAddress, $position);
         $I->waitForElementClickable($selectAddressBtn);
-        $I->click($selectAddressBtn);
+        $I->retryClick($selectAddressBtn);
         $openFormBtn = sprintf($this->openShipAddressForm, $position);
         $I->waitForElementClickable($openFormBtn);
-        $I->click($openFormBtn);
+        $I->retryClick($openFormBtn);
         $I->waitForPageLoad();
         $I->waitForElementVisible($this->shipAddressForm);
         return $this;
@@ -137,7 +137,7 @@ class UserAddress extends Page
         $I->click($selectBtn);
         $deleteBtn = sprintf($this->deleteShipAddress, $position);
         $I->waitForElementClickable($deleteBtn);
-        $I->click($deleteBtn);
+        $I->retryClick($deleteBtn);
         $this->confirmShippingAddressDeletion($position);
         return $this;
     }

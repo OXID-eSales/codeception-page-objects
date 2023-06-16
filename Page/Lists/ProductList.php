@@ -17,7 +17,7 @@ use OxidEsales\Codeception\Page\Page;
 class ProductList extends Page
 {
     use Header;
-    
+
     public string $listItemTitle = '//div[@id="productList"]/div/div[%s]//*[@class="h5 card-title"]';
     public string $listItemDescription = '//div[@id="productList"]/div/div[%s]//div[@class="short-desc"]';
     public string $listItemPrice = '//div[@id="productList"]/div/div[%s]//div[contains(@class,"price")]/span';
@@ -102,7 +102,7 @@ class ProductList extends Page
     public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
-        $I->moveMouseOver(sprintf($this->listItemTitle, $itemId));
+        $I->retryMoveMouseOver(sprintf($this->listItemTitle, $itemId));
         $I->clickWithLeftButton(sprintf($this->listItemTitle, $itemId));
         $I->waitForPageLoad();
         $productDetails = new ProductDetails($I);
@@ -168,7 +168,7 @@ class ProductList extends Page
     public function openPreviousListPage(): self
     {
         $I = $this->user;
-        $I->click($this->previousListPage);
+        $I->retryClick($this->previousListPage);
         $I->waitForPageLoad();
         return $this;
     }
@@ -176,7 +176,7 @@ class ProductList extends Page
     public function openListPageNumber(int $pageNumber): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->pageNumberSelection, $pageNumber));
+        $I->retryClick(sprintf($this->pageNumberSelection, $pageNumber));
         $I->waitForElement(sprintf($this->activePageNumber, $pageNumber));
 
         return $this;
@@ -185,17 +185,17 @@ class ProductList extends Page
     public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
     {
         $I = $this->user;
-        $I->click($this->sortingButton);
+        $I->retryClick($this->sortingButton);
         $I->waitForElement(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
-        $I->click(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
+        $I->retryClick(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
         return $this;
     }
 
     public function selectVariant(int $itemId, string $variantValue): ProductDetails
     {
         $I = $this->user;
-        $I->click(sprintf($this->variantSelection, $itemId));
-        $I->click($variantValue);
+        $I->retryClick(sprintf($this->variantSelection, $itemId));
+        $I->retryClick($variantValue);
         $I->waitForText($variantValue);
         return new ProductDetails($I);
     }

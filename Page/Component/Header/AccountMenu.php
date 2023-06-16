@@ -65,10 +65,11 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('FORGOT_PASSWORD'));
         $I->waitForElementVisible($this->userLoginName);
-        $I->fillField($this->userLoginName, $userName);
-        $I->fillField($this->userLoginPassword, $userPassword);
-        $I->click($this->userLoginButton);
+        $I->retryFillField($this->userLoginName, $userName);
+        $I->retryFillField($this->userLoginPassword, $userPassword);
+        $I->retryClick($this->userLoginButton);
         $I->waitForPageLoad();
         Context::setActiveUser($userName);
         return $this;
@@ -78,6 +79,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
+        $I->waitForText(Translator::translate('MY_ACCOUNT'));
         $I->waitForText(Translator::translate('LOGOUT'));
         $I->click(Translator::translate('LOGOUT'));
         $I->waitForPageLoad();
@@ -107,8 +109,8 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible($this->userAccountLink);
-        $I->click($this->userAccountLink);
+        $I->waitForElementVisible(['link'=>Translator::translate('MY_ACCOUNT')]);
+        $I->click(['link'=>Translator::translate('MY_ACCOUNT')]);
         $I->waitForPageLoad();
         return new UserAccount($I);
     }

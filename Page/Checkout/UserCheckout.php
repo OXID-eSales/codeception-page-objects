@@ -71,7 +71,7 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->waitForElement($this->registrationOption);
-        $I->click($this->registrationOption);
+        $I->retryClick($this->registrationOption);
         return $this;
     }
 
@@ -83,7 +83,8 @@ class UserCheckout extends Page
     public function goToNextStep()
     {
         $I = $this->user;
-        $I->click(Translator::translate('NEXT'));
+        $I->waitForElementClickable($this->nextStepButton);
+        $I->retryClick($this->nextStepButton);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
