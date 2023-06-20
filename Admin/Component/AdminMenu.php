@@ -12,6 +12,7 @@ namespace OxidEsales\Codeception\Admin\Component;
 use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
+use OxidEsales\Codeception\Admin\CountryList;
 use OxidEsales\Codeception\Admin\Languages;
 use OxidEsales\Codeception\Admin\Manufacturers;
 use OxidEsales\Codeception\Admin\ModulesList;
@@ -45,6 +46,22 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new CoreSettings($I);
+    }
+
+    /**
+     * @return CountryList
+     */
+    public function openCountries(): CountryList
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxmainmenu'));
+        $I->retryClick(Translator::translate('mxcountries'));
+        $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
+
+        return new CountryList($I);
     }
 
     public function openManufacturers(): Manufacturers
