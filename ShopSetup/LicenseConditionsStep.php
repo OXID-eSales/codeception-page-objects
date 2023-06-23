@@ -9,82 +9,36 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
-use OxidEsales\Codeception\Page\Page;
-
-class LicenseConditionsStep extends Page
+class LicenseConditionsStep extends SetupStep
 {
-    private string $url = '/Setup/index.php?istep=300';
-    private string $submitButton = '#step2Submit';
-    private string $eulaTextarea = 'textarea.edittext';
+    private string $continueButton = '#step2Submit';
     private string $eulaRadio = '//input[@name="iEula"]';
-    private string $canceledSetupErrorMessage = 'Setup has been cancelled because you didn\'t accept the license conditions.';
+    private string $declinedLicenseConditionsMessage =
+        'Setup has been cancelled because you didn\'t accept the license conditions.';
 
-    public function openTab(): static
+    public function getWaitForStepLoadElement(): string
     {
-        $I = $this->user;
-
-        $I->amOnPage($this->url);
-        $this->seeEulaText();
-
-        return $this;
+        return $this->continueButton;
     }
 
-    public function seeEulaText(): static
+    public function proceedToDatabaseStep(): DatabaseStep
     {
         $I = $this->user;
-
-        $I->seeElement($this->eulaTextarea);
-
-        return $this;
-    }
-
-    public function seeInstallationCanceledErrorMessage(): static
-    {
-        $I = $this->user;
-
-        $I->see($this->canceledSetupErrorMessage);
-
-        return $this;
-    }
-
-    public function acceptLicenseConditions(): static
-    {
-        $I = $this->user;
-
-        $I->seeElement($this->eulaRadio);
         $I->selectOption($this->eulaRadio, '1');
+        $I->click($this->continueButton);
 
-        return $this;
+        return new DatabaseStep($I);
     }
 
-    public function doNotAcceptLicenseConditions(): static
+    public function returnToWelcomeStepIfLicenseConditionsDeclined(): WelcomeStep
     {
         $I = $this->user;
-
-        $I->seeElement($this->eulaRadio);
+        $I->waitForElementClickable($this->eulaRadio);
         $I->selectOption($this->eulaRadio, '0');
+        $I->click($this->continueButton);
 
-        return $this;
-    }
+        $I->waitForText($this->declinedLicenseConditionsMessage);
 
-    public function submit(): static
-    {
-        $I = $this->user;
-
-        $I->seeElement($this->submitButton);
-        $I->click($this->submitButton);
-
-        return $this;
-    }
-
-    public function goToDBStep(): DatabaseStep
-    {
-        $this->acceptLicenseConditions();
-        $this->submit();
-
-        $databaseStep = new DatabaseStep($this->user);
-        $databaseStep->waitForStep();
-
-        return $databaseStep;
+        return new WelcomeStep($I);
     }
 }

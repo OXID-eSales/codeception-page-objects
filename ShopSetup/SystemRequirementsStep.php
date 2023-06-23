@@ -9,28 +9,40 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
-use OxidEsales\Codeception\Page\Page;
-
-class SystemRequirementsStep extends Page
+class SystemRequirementsStep extends SetupStep
 {
-    private string $url = '/Setup/index.php';
+    public static string $setupStartingUrl = '/Setup/index.php';
     private string $modRewriteElement = '//li[@id="mod_rewrite"]';
     private string $passedModRewriteElement = '//li[@id="mod_rewrite" and @class="pass"]';
     private string $failedModRewriteElement = '//li[@id="mod_rewrite" and @class="fail"]';
     private string $unicodeSupportElement = "//li[@id='unicode_support']";
-    private string $gdInfo = "//li[@id='gd_info']";
-    private string $serverConfigurationGroup = "//li[@class='group'][1]";
-    private string $phpConfigurationGroup = "//li[@class='group'][2]";
-    private string $phpExtensionGroup = "//li[@class='group'][3]";
-    private string $notFitErrorMessage = "//div[@class='error-message']";
+    private string $gdInfoElement = "//li[@id='gd_info']";
+    private string $serverConfigurationGroup = "//ul[@class='req']/li[@class='group'][1]";
+    private string $phpConfigurationGroup = "//ul[@class='req']/li[@class='group'][2]";
+    private string $phpExtensionGroup = "//ul[@class='req']/li[@class='group'][3]";
+    private string $checkFailedErrorMessage = "//div[@class='error-message']";
     private string $installationLanguageSelect = '//select[@name="setup_lang"]';
-    private string $submitButton = '#step0Submit';
+    private string $continueButton = '#step0Submit';
 
-    public function openTab(): static
+    public function getWaitForStepLoadElement(): string
+    {
+        return $this->installationLanguageSelect;
+    }
+
+    public function proceedToWelcomeStep(): WelcomeStep
     {
         $I = $this->user;
+        $I->click($this->continueButton);
 
-        $I->amOnPage($this->url);
+        return new WelcomeStep($I);
+    }
+
+    public function returnToSystemRequirementsStepIfModRewriteCheckFailed(): static
+    {
+        $I = $this->user;
+        $I->seeElement($this->checkFailedErrorMessage);
+        $I->seeElement($this->failedModRewriteElement);
+        $I->dontSeeElement($this->continueButton);
 
         return $this;
     }
@@ -38,64 +50,44 @@ class SystemRequirementsStep extends Page
     public function selectInstallationLanguage(string $lang): static
     {
         $I = $this->user;
-
-        $I->seeElement($this->installationLanguageSelect);
         $I->selectOption($this->installationLanguageSelect, $lang);
-        $I->seeInField($this->installationLanguageSelect, $lang);
 
         return $this;
     }
 
-    public function clickToProceedWithSetup(): static
+    public function seeSystemRequirementsStatusPage(): static
+    {
+        $this->seeSystemRequirementGroups();
+        $this->seeGroupElements();
+
+        return $this;
+    }
+
+    public function dontSeeStatusCheckErrors(): static
     {
         $I = $this->user;
-
-        $I->seeElement($this->submitButton);
-        $I->click($this->submitButton);
-
-        return $this;
-    }
-
-    public function goToWelcomeStep(): WelcomeStep
-    {
-        $this->clickToProceedWithSetup();
-
-        $welcomeStep = new WelcomeStep($this->user);
-        $welcomeStep->seeDeliveryCountrySelect();
-
-        return $welcomeStep;
-    }
-
-    public function seeRequirementGroups(): static
-    {
-        $this->user->seeElement($this->serverConfigurationGroup);
-        $this->user->seeElement($this->phpConfigurationGroup);
-        $this->user->seeElement($this->phpExtensionGroup);
+        $I->dontSeeElement($this->checkFailedErrorMessage);
+        $I->seeElement($this->passedModRewriteElement);
 
         return $this;
     }
 
-    public function seeTranslatedModules(): static
+    private function seeSystemRequirementGroups(): static
     {
-        $this->user->seeElement($this->modRewriteElement);
-        $this->user->seeElement($this->unicodeSupportElement);
-        $this->user->seeElement($this->gdInfo);
+        $I = $this->user;
+        $I->seeElement($this->serverConfigurationGroup);
+        $I->seeElement($this->phpConfigurationGroup);
+        $I->seeElement($this->phpExtensionGroup);
 
         return $this;
     }
 
-    public function seeModRewriteFitting(): static
+    private function seeGroupElements(): static
     {
-        $this->user->dontSeeElement($this->notFitErrorMessage);
-        $this->user->seeElement($this->passedModRewriteElement);
-
-        return $this;
-    }
-
-    public function dontSeeModRewriteFitting(): static
-    {
-        $this->user->seeElement($this->notFitErrorMessage);
-        $this->user->seeElement($this->failedModRewriteElement);
+        $I = $this->user;
+        $I->seeElement($this->modRewriteElement);
+        $I->seeElement($this->unicodeSupportElement);
+        $I->seeElement($this->gdInfoElement);
 
         return $this;
     }

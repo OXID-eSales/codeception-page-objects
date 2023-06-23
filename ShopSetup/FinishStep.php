@@ -9,29 +9,35 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
-use OxidEsales\Codeception\Page\Page;
+use Codeception\Actor;
+use OxidEsales\Codeception\Admin\AdminLoginPage;
+use OxidEsales\Codeception\Page\Home;
 
-class FinishStep extends Page
+class FinishStep extends SetupStep
 {
     private string $shopLinkButton = '#linkToShop';
     private string $adminLinkButton = '#linkToAdmin';
 
-    public function goToShop(): static
+    public function getWaitForStepLoadElement(): string
     {
-        $I = $this->user;
-
-        $I->seeElement($this->shopLinkButton);
-        $I->click($this->shopLinkButton);
-
-        return $this;
+        return $this->adminLinkButton;
     }
 
-    public function seeAdminLink(): static
+    public function openShop(Actor $IShop): Home
     {
-        $I = $this->user;
+        $homePage = new Home($IShop);
+        $IShop->click($this->shopLinkButton);
+        $IShop->waitForPageLoad();
 
-        $I->waitForElement($this->adminLinkButton);
+        return $homePage;
+    }
 
-        return $this;
+    public function openAdmin(Actor $IAdmin): AdminLoginPage
+    {
+        $adminLogin = new AdminLoginPage($IAdmin);
+        $IAdmin->click($this->adminLinkButton);
+        $IAdmin->waitForPageLoad();
+
+        return $adminLogin;
     }
 }

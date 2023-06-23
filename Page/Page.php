@@ -11,14 +11,13 @@ namespace OxidEsales\Codeception\Page;
 
 use Codeception\Actor;
 use OxidEsales\Codeception\Page\Component\CookieNotice;
+use OxidEsales\Codeception\Page\Component\MaintenancePage;
 
-/**
- * Class Page
- * @package OxidEsales\Codeception\Page
- */
 class Page
 {
     use CookieNotice;
+    use MaintenancePage;
+
     /**
      * @var Actor
      */

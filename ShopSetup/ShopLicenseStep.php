@@ -9,19 +9,32 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
-use OxidEsales\Codeception\Page\Page;
-
-class ShopLicenseStep extends Page
+class ShopLicenseStep extends SetupStep
 {
-    private string $submitButton = '#step5Submit';
+    private string $continueButton = '#step5Submit';
     private string $licenseInput = '//input[@name="sLicence"]';
     private string $serialAddedMessage = 'License key successfully saved. Please wait ...';
+    private string $wrongLicenseMessage = 'ERROR: Wrong license key!';
 
-    public function waitForStep(): static
+    public function getWaitForStepLoadElement(): string
+    {
+        return $this->licenseInput;
+    }
+
+    public function proceedToFinishStep(): FinishStep
     {
         $I = $this->user;
+        $I->click($this->continueButton);
+        $I->waitForText($this->serialAddedMessage);
 
-        $I->waitForElement($this->licenseInput);
+        return new FinishStep($this->user);
+    }
+
+    public function retutnToShopLicenseStepIfInvalidLicense(): static
+    {
+        $I = $this->user;
+        $I->click($this->continueButton);
+        $I->waitForText($this->wrongLicenseMessage);
 
         return $this;
     }
@@ -29,33 +42,9 @@ class ShopLicenseStep extends Page
     public function fillLicenseInput(string $licenceKey): static
     {
         $I = $this->user;
-
         $I->seeElement($this->licenseInput);
         $I->fillField($this->licenseInput, $licenceKey);
 
         return $this;
-    }
-
-    public function submit(): static
-    {
-        $I = $this->user;
-
-        $I->seeElement($this->licenseInput);
-        $I->click($this->submitButton);
-
-        return $this;
-    }
-
-    public function goToFinalStep(): FinishStep
-    {
-        $I = $this->user;
-
-        $this->submit();
-        $I->waitForText($this->serialAddedMessage);
-
-        $finishStep = new FinishStep($this->user);
-        $finishStep->seeAdminLink();
-
-        return $finishStep;
     }
 }
