@@ -18,10 +18,12 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 class ProductCategories extends \OxidEsales\Codeception\Page\Page
 {
+    public $searchForm = '#search';
     public $newItemButtonId = '#btn.new';
     public $newCategoryName = 'editval[oxcategories__oxtitle]';
     public $activeCategoryCheckbox = 'editval[oxcategories__oxactive]';
     public $categoryInformation = '#transfer';
+    public $categoryInput = 'where[oxcategories][oxtitle]';
 
     /**
      * @param string $categoryName
@@ -92,6 +94,24 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->waitForAjax(10);
         $I->closeTab();
+
+        return $this;
+    }
+
+    /**
+     * @return ProductCategories
+     */
+    public function selectCategory(string $categoryName): ProductCategories
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->fillField($this->categoryInput, $categoryName);
+        $I->submitForm($this->searchForm, []);
+
+        $I->selectListFrame();
+        $I->click($categoryName);
+        $I->selectEditFrame();
 
         return $this;
     }
