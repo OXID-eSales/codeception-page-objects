@@ -21,6 +21,9 @@ class OrderCheckout extends Page
 
     public string $basketSummaryNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
     public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
+    public string $basketSummaryVatMorePreciseSelector =
+        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
+        '[contains(text(), "%s")]/span';
     public string $basketSummaryGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
     public string $basketGiftCardGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
 
@@ -30,6 +33,12 @@ class OrderCheckout extends Page
 
     private string $basketShippingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
     public string $basketShippingGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $surchargePaymentVat =
+        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
+        '[contains(text(), "%s")]/span';
+    public string $surchargePayment =
+        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
+        '[contains(text(), "%s")]/span';
     public string $basketTotalPrice = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
 
     public string $basketWrappingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
