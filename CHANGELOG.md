@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v4.2.0] - unreleased
 
 ### Added
+- New methods for Checkout testing
 - Page objects:
   - `Page\Component\Widget\ProductCard`
   - `Page\Component\Widget\Promotion`

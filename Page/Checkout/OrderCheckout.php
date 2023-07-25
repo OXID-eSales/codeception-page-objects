@@ -14,33 +14,50 @@ use OxidEsales\Codeception\Page\Page;
 
 class OrderCheckout extends Page
 {
+    private const DIV_CONTAINS_TEXT_SPAN_SELECTOR = '//div[contains(text(),"%s")]/span';
+
     public $URL = '/index.php?cl=order&lang=1';
+    public $breadCrumb = '//div[@class="step step-3 active"]';
+
+    public string $basketSummaryNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
+    public string $basketSummaryGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketGiftCardGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+
+    private string $basketPaymentNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    private string $basketPaymentVat = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketPaymentGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+
+    private string $basketShippingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketShippingGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketTotalPrice = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+
+    public string $basketWrappingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    private string $basketWrappingVat = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    public string $basketWrappingGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+
+    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
+    public string $basketItemAmount = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
+    public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
+    public string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
+
+    public string $couponInformation = '//div[contains(@class,"list-group-item")]';
     public string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
     public string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
-    public string $userRemarkHeader = 'h4';
-    public string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
-    public string $paymentMethod = '//form[@id="orderPayment"]/div';
-    public string $shippingMethod = '//form[@id="orderShipping"]/div';
-    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
-    public string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
-    public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
-    public string $basketItemAmount = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
-    public string $basketSummaryNet = '//div[contains(text(),"%s")]/span';
-    public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
-    public string $basketSummaryGross = '//div[contains(text(),"%s")]/span';
-    public string $basketShippingGross = '//div[contains(text(),"%s")]/span';
-    public string $basketPaymentGross = '//div[contains(text(),"%s")]/span';
-    public string $basketWrappingGross = '//div[contains(text(),"%s")]/span';
-    public string $basketGiftCardGross = '//div[contains(text(),"%s")]/span';
-    public string $basketTotalPrice = '//div[contains(text(),"%s")]/span';
-    public string $couponInformation = '//div[contains(@class,"list-group-item")]';
-    public string $previousStepLink = '';
+    public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
+
     public string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
+    private string $editCart = '//div[@id="orderEditCart"]//h4/button';
     public string $editPayment = '//form[@id="orderPayment"]/h4/button';
     public string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
-    public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
+
+    public string $paymentMethod = '//form[@id="orderPayment"]/div';
+    public string $shippingMethod = '//form[@id="orderShipping"]/div';
+
+    public string $previousStepLink = '';
     public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
-    public $breadCrumb = '//div[@class="step step-3 active"]';
+    public string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
+    public string $userRemarkHeader = 'h4';
 
     public function submitOrder(): self
     {
@@ -72,7 +89,7 @@ class OrderCheckout extends Page
     /**
      * Opens previous page: payment checkout.
      *
-     * Does not exists in apex theme
+     * Does not exist in apex theme
      *
      * @return PaymentCheckout
      */
@@ -109,12 +126,6 @@ class OrderCheckout extends Page
         return $this;
     }
 
-    public function validateShippingMethod(string $shippingMethod): self
-    {
-        $this->user->see($shippingMethod, $this->shippingMethod);
-        return $this;
-    }
-
     public function editShippingMethod(): PaymentCheckout
     {
         $I = $this->user;
@@ -124,10 +135,17 @@ class OrderCheckout extends Page
         return $paymentPage;
     }
 
+    public function validateShippingMethod(string $shippingMethod): self
+    {
+        $this->user->see($shippingMethod, $this->shippingMethod);
+        return $this;
+    }
+
     public function validateCoupon(string $couponId, string $couponDiscount): self
     {
         $I = $this->user;
-        $informationText = sprintf('%s (%s) %s',
+        $informationText = sprintf(
+            '%s (%s) %s',
             Translator::translate('COUPON'),
             $couponId,
             $couponDiscount
@@ -139,22 +157,183 @@ class OrderCheckout extends Page
     public function validateVat(array $vatInformation): self
     {
         $I = $this->user;
-        $position = 2;
         foreach ($vatInformation as $vatAmount) {
-            $I->see($vatAmount, sprintf($this->basketSummaryVat, $position));
-            $position++;
+            $I->see($vatAmount, $this->basketSummaryVat);
         }
         return $this;
     }
 
+
+    /**
+     * @deprecated will be removed in next major
+     * Use seeTotalNet(), seeTotalGross(), seeShippingGross(), seePaymentMethodGross(), seeGrandTotal()
+     */
     public function validateTotalPrice(array $priceInformation): self
     {
         $I = $this->user;
         $I->see($priceInformation['net'], sprintf($this->basketSummaryNet, Translator::translate('TOTAL_NET')));
         $I->see($priceInformation['gross'], sprintf($this->basketSummaryGross, Translator::translate('TOTAL_GROSS')));
-        $I->see($priceInformation['shipping'], sprintf($this->basketShippingGross, Translator::translate('SHIPPING_COST')));
-        $I->see($priceInformation['payment'], sprintf($this->basketPaymentGross, Translator::translate('PAYMENT_METHOD')));
+        $I->see(
+            $priceInformation['shipping'],
+            sprintf($this->basketShippingGross, Translator::translate('SHIPPING_COST'))
+        );
+        $I->see(
+            $priceInformation['payment'],
+            sprintf($this->basketPaymentGross, Translator::translate('PAYMENT_METHOD'))
+        );
         $I->see($priceInformation['total'], sprintf($this->basketTotalPrice, Translator::translate('GRAND_TOTAL')));
+        return $this;
+    }
+
+    public function seeVat(string $vat): static
+    {
+        $I = $this->user;
+        $I->see(
+            sprintf(
+                Translator::translate('VAT_PLUS_PERCENT_AMOUNT'),
+                $vat
+            ),
+            $this->basketSummaryVat
+        );
+        return $this;
+    }
+
+    public function seeTotalNet(string $totalNet): static
+    {
+        $I = $this->user;
+        $I->see(
+            $totalNet,
+            sprintf($this->basketSummaryNet, Translator::translate('TOTAL_NET'))
+        );
+        return $this;
+    }
+
+    public function seeTotalGross(string $totalGross): static
+    {
+        $I = $this->user;
+        $I->see(
+            $totalGross,
+            sprintf($this->basketSummaryGross, Translator::translate('TOTAL_GROSS'))
+        );
+        return $this;
+    }
+
+    public function seeShippingNet(string $shippingNet): static
+    {
+        $I = $this->user;
+        $I->see(
+            $shippingNet,
+            sprintf($this->basketShippingNet, Translator::translate('SHIPPING_NET'))
+        );
+        return $this;
+    }
+
+    public function seeShippingGross(string $shippingGross): static
+    {
+        $I = $this->user;
+        $I->see(
+            $shippingGross,
+            sprintf($this->basketShippingGross, Translator::translate('SHIPPING_COST'))
+        );
+        return $this;
+    }
+
+    public function seePaymentMethodNet(string $paymentMethodNet): static
+    {
+        $I = $this->user;
+        $I->see(
+            $paymentMethodNet,
+            sprintf(
+                $this->basketPaymentNet,
+                Translator::translate('SURCHARGE') . ' ' . Translator::translate('PAYMENT_METHOD')
+            )
+        );
+        return $this;
+    }
+
+    public function seePaymentMethodVat(string $paymentMethodVat, $percentSurcharge): static
+    {
+        $I = $this->user;
+        $I->see(
+            $paymentMethodVat,
+            sprintf(
+                $this->basketPaymentVat,
+                sprintf(
+                    Translator::translate('SURCHARGE_PLUS_PERCENT_AMOUNT'),
+                    $percentSurcharge
+                )
+            )
+        );
+        return $this;
+    }
+
+    public function seePaymentMethodGross(string $paymentMethodGross): static
+    {
+        $I = $this->user;
+        $I->see(
+            $paymentMethodGross,
+            sprintf(
+                $this->basketPaymentGross,
+                Translator::translate('SURCHARGE') . ' ' .  Translator::translate('PAYMENT_METHOD')
+            )
+        );
+        return $this;
+    }
+
+    public function seeWrappingNet(string $wrappingNet): static
+    {
+        $I = $this->user;
+        $I->see(
+            $wrappingNet,
+            sprintf($this->basketWrappingNet, Translator::translate('BASKET_TOTAL_WRAPPING_COSTS_NET'))
+        );
+        return $this;
+    }
+
+    public function seeWrappingVat(string $wrappingVat): static
+    {
+        $I = $this->user;
+        $I->see(
+            $wrappingVat,
+            sprintf($this->basketWrappingVat, Translator::translate('PLUS_VAT'))
+        );
+        return $this;
+    }
+
+    public function seeWrappingGross(string $wrappingGross): static
+    {
+        $I = $this->user;
+        $I->see(
+            $wrappingGross,
+            sprintf($this->basketWrappingGross, Translator::translate('GIFT_WRAPPING'))
+        );
+        return $this;
+    }
+
+
+    public function seeGrandTotal(string $grandTotal): static
+    {
+        $I = $this->user;
+        $I->see(
+            $grandTotal,
+            sprintf($this->basketTotalPrice, Translator::translate('GRAND_TOTAL'))
+        );
+        return $this;
+    }
+
+    public function seePaymentSurchargePrice(string $price): static
+    {
+        $I = $this->user;
+        $surchargeVAT = Translator::translate('SURCHARGE') . ' ' . Translator::translate('PAYMENT_METHOD');
+        $I->see($price, sprintf($this->basketPaymentVat, $surchargeVAT));
+        return $this;
+    }
+
+    public function dontSeePaymentSurchargePrice(): static
+    {
+        $I = $this->user;
+        $surchargeVAT = Translator::translate('SURCHARGE') . ' ' . Translator::translate('PAYMENT_METHOD');
+        $I->dontsee(sprintf($this->basketPaymentVat, $surchargeVAT));
         return $this;
     }
 
@@ -170,6 +349,16 @@ class OrderCheckout extends Page
         $I = $this->user;
         $I->see($priceInformation, sprintf($this->basketGiftCardGross, Translator::translate('GREETING_CARD')));
         return $this;
+    }
+
+    public function editCart(): Basket
+    {
+        $I = $this->user;
+        $I->retryClick($this->editCart);
+        $basket = new Basket($I);
+        $I->waitForElement($basket->breadCrumb);
+
+        return $basket;
     }
 
     /**
@@ -264,7 +453,7 @@ class OrderCheckout extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= ' | ' . Translator::translate('FAX').' ';
+        $transformedAddress .= ' | ' . Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');

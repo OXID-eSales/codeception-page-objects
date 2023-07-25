@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use OxidEsales\Codeception\Module\Context;
 use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
@@ -43,7 +42,7 @@ class UserAccount extends Page
 
     public function seeUserAccount(array $userData): self
     {
-        $this->user->see(Translator::translate('HELLO') . ' ' .$userData['userName']);
+        $this->user->see(Translator::translate('HELLO') . ' ' . $userData['userName']);
         return $this;
     }
 
