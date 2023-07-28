@@ -23,6 +23,7 @@ trait AccountMenu
 {
     public string $accountMenuButton = '//div[contains(@class,"menu-dropdowns")]/button';
     public string $openAccountMenuButton = '//div[contains(@class,"menu-dropdowns")]/ul';
+    public string $openedAccountMenu = '//div[contains(@class,"menu-dropdowns")]/ul/li';
     public string $userRegistrationLink = '#registerLink';
     public string $userLoginName = '#loginEmail';
     public string $userLoginPassword = '#loginPasword';
@@ -119,7 +120,7 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible($this->openAccountMenuButton);
+        $I->waitForElementVisible($this->openedAccountMenu);
         $I->click(Translator::translate('MY_GIFT_REGISTRY'), $this->openAccountMenuButton);
         $I->waitForPageLoad();
         $userGiftRegistryPage = new UserGiftRegistry($I);
@@ -169,7 +170,7 @@ trait AccountMenu
         $I = $this->user;
         $I->waitForElementVisible($this->accountMenuButton);
         $I->click($this->accountMenuButton);
-        $I->waitForElementNotVisible($this->openAccountMenuButton);
+        $I->waitForElementNotVisible($this->openedAccountMenu);
         return $this;
     }
 
