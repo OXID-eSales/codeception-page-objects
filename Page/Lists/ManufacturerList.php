@@ -17,7 +17,7 @@ use OxidEsales\Codeception\Page\Page;
  */
 class ManufacturerList extends Page
 {
-    public $URL = '/en/By-manufacturer/';
+    public string $URL = '/en/By-manufacturer/';
 
     public string $headerTitle = 'h1';
 

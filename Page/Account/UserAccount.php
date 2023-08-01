@@ -19,8 +19,8 @@ class UserAccount extends Page
     use AccountMenu;
     use AccountNavigation;
 
-    public $URL = '/en/my-account/';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '/en/my-account/';
+    public string $breadCrumb = '.breadcrumb';
     public string $headerTitle = '';
     public string $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
     public string $dashboardCompareListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[1]';
@@ -31,7 +31,7 @@ class UserAccount extends Page
     public string $dashboardGiftRegistryPanelContent = '//h4[contains(text(),"%s")]/following-sibling::div';
     public string $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
     public string $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
-    public string $dashboardOrderHistoryHeader = '#linkAccountOrder';
+    public string $dashboardOrderHistoryHeader = '//div[h4[contains(text(), "%s")]]//a';
     public string $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
 
     public function seePageOpened(): self
@@ -65,13 +65,8 @@ class UserAccount extends Page
     public function openOrderHistory(): UserOrderHistory
     {
         $I = $this->user;
-        $I->click($this->dashboardOrderHistoryHeader);
-        $userOrderHistoryPage = new UserOrderHistory($I);
-        $userOrderHistoryPage->seeOnBreadCrumb(
-            Translator::translate('MY_ACCOUNT') . Translator::translate('ORDER_HISTORY')
-        );
-
-        return $userOrderHistoryPage;
+        $I->click(sprintf($this->dashboardOrderHistoryHeader, Translator::translate('ORDER_HISTORY')));
+        return new UserOrderHistory($I);
     }
 
     public function seeItemNumberOnGiftRegistryPanel(string $number): self

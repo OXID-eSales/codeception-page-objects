@@ -19,10 +19,10 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 class UserPasswordReminder extends Page
 {
     // include url of current page
-    public $URL = '/en/forgot-password/';
+    public string $URL = '/en/forgot-password/';
 
     // include bread crumb of current page
-    public $breadCrumb = '.breadcrumb';
+    public string $breadCrumb = '.breadcrumb';
 
     public $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';
 

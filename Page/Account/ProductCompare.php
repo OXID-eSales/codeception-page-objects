@@ -23,10 +23,10 @@ class ProductCompare extends Page
     use MiniBasket;
 
     // include url of current page
-    public $URL = '/en/my-product-comparison/';
+    public string $URL = '/en/my-product-comparison/';
 
     // include bread crumb of current page
-    public $breadCrumb = '.breadcrumb';
+    public string $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h3';
 

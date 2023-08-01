@@ -21,7 +21,7 @@ class Registration extends Page
     use UserForm;
 
     // include url of current page
-    public $URL = '/en/open-account';
+    public string $URL = '/en/open-account';
 
     //save form button
     public $saveFormButton = '#accUserSaveTop';

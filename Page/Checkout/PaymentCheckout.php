@@ -17,35 +17,48 @@ class PaymentCheckout extends Page
 {
     use Navigation;
 
-    // include url of current page
-    public $URL = 'index.php?lang=1&cl=payment';
+    public string $URL = 'index.php?lang=1&cl=payment';
+    public string $breadCrumb = '//div[@class="step step-2 active"]';
+    public string $paymentMethod = '';
+    public string $nextStepButton = '//div[@class="row"]/div[2]//button';
+    public string $previousStepButton = '';
+    public string $selectShippingButton = '//select[@name="sShipSet"]';
+    private string $headings = '//h4';
+    private string $paymentInformation = '//form[@id="payment"]';
+    private string $paymentOption = '//div[@class="payment-option"]';
+    private string $noShippingMethodText = 'Currently we have no shipping method set up for this country.';
 
-    public $paymentMethod = '';
-
-    public $nextStepButton = '//div[@class="row"]/div[2]//button';
-
-    public $previousStepButton = '';
-
-    public $selectShippingButton = '//select[@name="sShipSet"]';
-
-    public $breadCrumb = '//div[@class="step step-2 active"]';
-
-    /**
-     * @param string $paymentMethod The id of a payment method.
-     *
-     * @return $this
-     */
-    public function selectPayment(string $paymentMethod)
+    public function selectPayment(string $paymentMethod): self
     {
         $I = $this->user;
         $I->click('#payment_' . $paymentMethod);
         return $this;
     }
 
-    public function selectShipping(string $shipping)
+    public function selectShipping(string $shipping): self
     {
         $I = $this->user;
         $I->selectOption($this->selectShippingButton, $shipping);
+        return $this;
+    }
+
+    public function selectShippingIsAvailable(): self
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('SELECT_SHIPPING_METHOD'), $this->headings);
+        $I->seeElement($this->selectShippingButton);
+        return $this;
+    }
+
+    public function selectShippingIsNotAvailable(): self
+    {
+        $I = $this->user;
+        $I->dontSee(Translator::translate('SELECT_SHIPPING_METHOD'), $this->headings);
+        $I->dontSeeElement($this->selectShippingButton);
+        $I->see($this->noShippingMethodText, $this->paymentInformation);
+        // If there is no shipping there is also no payment
+        $I->see(Translator::translate('PAYMENT_INFORMATION'));
+        $I->dontSeeElement($this->paymentOption);
         return $this;
     }
 
@@ -59,12 +72,7 @@ class PaymentCheckout extends Page
         return $orderCheckout;
     }
 
-    /**
-     * Opens previous page: user checkout.
-     *
-     * @return UserCheckout
-     */
-    public function goToPreviousStep()
+    public function goToPreviousStep(): UserCheckout
     {
         $I = $this->user;
         $I->retryClick(Translator::translate('PREVIOUS_STEP'));

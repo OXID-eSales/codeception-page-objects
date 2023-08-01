@@ -22,10 +22,10 @@ class Invitation extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = '';
+    public string $URL = '';
 
     // include bread crumb of current page
-    public $breadCrumb = '.breadcrumb';
+    public string $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h1';
 
@@ -39,12 +39,7 @@ class Invitation extends Page
 
     public $emailMessage = 'editval[send_message]';
 
-    /**
-     * @param mixed $param
-     *
-     * @return string
-     */
-    public function route($param)
+    public function route(mixed $params): string
     {
         return $this->URL . '/index.php?lang=0&cl=invite';
     }

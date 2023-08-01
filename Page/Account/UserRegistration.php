@@ -19,8 +19,8 @@ class UserRegistration extends Page
     use UserForm;
     use AccountMenu;
 
-    public $URL = '/en/open-account';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '/en/open-account';
+    public string $breadCrumb = '.breadcrumb';
     public $headerTitle = 'h3';
     public string $saveFormButton = '#accUserSaveTop';
 

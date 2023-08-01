@@ -19,7 +19,7 @@ class Home extends Page
     use Header;
     use Footer;
 
-    public $URL = '/';
+    public string $URL = '/';
     private string $openManufacturerList = '//div[@class="row manufacturer-list"]/div[%s]';
 
     private string $getNewestArticles = 'newItems';

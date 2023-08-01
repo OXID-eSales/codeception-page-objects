@@ -13,7 +13,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class MyDownloads extends Page
 {
-    public $URL = '/en/my-downloads/';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '/en/my-downloads/';
+    public string $breadCrumb = '.breadcrumb';
     public $headerTitle = 'h3';
 }

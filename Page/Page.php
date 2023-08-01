@@ -18,61 +18,29 @@ class Page
     use CookieNotice;
     use MaintenancePage;
 
-    /**
-     * @var Actor
-     */
-    protected $user;
+    public string $URL = '';
+    public string $breadCrumb = '.breadcrumb';
+    protected Actor $user;
 
-    /**
-     * @var string
-     */
-    public $URL = '';
-
-    /**
-     * @var string
-     */
-    public $breadCrumb = '.breadcrumb';
-
-    /**
-     * Page constructor.
-     *
-     * @param Actor $I
-     */
     public function __construct(Actor $I)
     {
         $this->user = $I;
     }
 
-    /**
-     * @param mixed $params
-     *
-     * @return string
-     */
-    public function route($params)
+    public function route(mixed $params): string
     {
         return $this->URL . '/index.php?' . http_build_query($params);
     }
 
-    /**
-     * @param string $breadCrumb
-     *
-     * @return $this
-     */
-    public function seeOnBreadCrumb(string $breadCrumb)
+    public function seeOnBreadCrumb(string $breadCrumb): self
     {
         $I = $this->user;
         $I->assertStringContainsString($breadCrumb, $this->clearNewLines($I->grabTextFrom($this->breadCrumb)));
         return $this;
     }
 
-    /**
-     * Removes \n signs and it leading spaces from string. Keeps only single space in the ends of each row.
-     *
-     * @param string $line Not formatted string (with spaces and \n signs).
-     *
-     * @return string Formatted string with single spaces and no \n signs.
-     */
-    private function clearNewLines(string $line)
+    // Removes \n signs and leading spaces from string. Keeps only single space in the ends of each row.
+    private function clearNewLines(string $line): string
     {
         return trim(preg_replace("/[\t\r\n]+/", '', $line));
     }

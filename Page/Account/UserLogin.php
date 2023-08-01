@@ -14,8 +14,8 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 class UserLogin extends Page
 {
-    public $URL = '/en/my-account/';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '/en/my-account/';
+    public string $breadCrumb = '.breadcrumb';
     public string $headerTitle = 'h1';
     public string $userAccountLoginName = '#loginUser';
     public string $userAccountLoginPassword = '#loginPwd';

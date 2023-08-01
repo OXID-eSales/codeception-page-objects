@@ -16,8 +16,8 @@ class OrderCheckout extends Page
 {
     private const DIV_CONTAINS_TEXT_SPAN_SELECTOR = '//div[contains(text(),"%s")]/span';
 
-    public $URL = '/index.php?cl=order&lang=1';
-    public $breadCrumb = '//div[@class="step step-3 active"]';
+    public string $URL = '/index.php?cl=order&lang=1';
+    public string $breadCrumb = '//div[@class="step step-3 active"]';
 
     public string $basketSummaryNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
     public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
@@ -217,6 +217,19 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    public function seeTotalVat(string $totalVat, string $percentVat): static
+    {
+        $I = $this->user;
+        $I->see(
+            $totalVat,
+            sprintf(
+                $this->basketSummaryGross,
+                sprintf(Translator::translate('VAT_PLUS_PERCENT_AMOUNT'), $percentVat)
+            )
+        );
+        return $this;
+    }
+
     public function seeTotalGross(string $totalGross): static
     {
         $I = $this->user;
@@ -260,7 +273,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
-    public function seePaymentMethodVat(string $paymentMethodVat, $percentSurcharge): static
+    public function seePaymentMethodVat(string $paymentMethodVat, $percentSurchargeTax): static
     {
         $I = $this->user;
         $I->see(
@@ -269,7 +282,7 @@ class OrderCheckout extends Page
                 $this->basketPaymentVat,
                 sprintf(
                     Translator::translate('SURCHARGE_PLUS_PERCENT_AMOUNT'),
-                    $percentSurcharge
+                    $percentSurchargeTax
                 )
             )
         );
@@ -334,6 +347,7 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $surchargeVAT = Translator::translate('SURCHARGE') . ' ' . Translator::translate('PAYMENT_METHOD');
+        $I->waitForPageLoad();
         $I->see($price, sprintf($this->basketPaymentVat, $surchargeVAT));
         return $this;
     }
@@ -342,6 +356,7 @@ class OrderCheckout extends Page
     {
         $I = $this->user;
         $surchargeVAT = Translator::translate('SURCHARGE') . ' ' . Translator::translate('PAYMENT_METHOD');
+        $I->waitForPageLoad();
         $I->dontsee(sprintf($this->basketPaymentVat, $surchargeVAT));
         return $this;
     }
