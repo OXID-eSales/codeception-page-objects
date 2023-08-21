@@ -12,12 +12,14 @@ namespace OxidEsales\Codeception\Page\Checkout;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
 
 class Basket extends Page
 {
     use AccountMenu;
     use MiniBasket;
+    use PaymentSummary;
 
     public string $URL = '';
     public string $breadCrumb = '.breadcrumb';
