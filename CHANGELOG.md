@@ -22,9 +22,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Traits:
   - `Page\Component\CookieNotice`
   - `Page\Component\MaintenancePage`
+  - `Page\Checkout\PaymentSummaryTrait`
 
 ### Changed
 - New traits added to `Page\Page`
+
+### Deprecated
+- `Page\Checkout\OrderCheckout` many see Methods replaced by the ones in the PaymentSummaryTrait
 
 ## [v4.1.0] - 2023-05-09
 

@@ -10,63 +10,93 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
 
 class OrderCheckout extends Page
 {
-    private const DIV_CONTAINS_TEXT_SPAN_SELECTOR = '//div[contains(text(),"%s")]/span';
+    use PaymentSummary;
 
     public string $URL = '/index.php?cl=order&lang=1';
     public string $breadCrumb = '//div[@class="step step-3 active"]';
 
+    /** @deprecated Use PaymentSummary instead. */
+    private const DIV_CONTAINS_TEXT_SPAN_SELECTOR = '//div[contains(text(),"%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketSummaryNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketSummaryVat = '//div[contains(@class,"list-group-item")]';
-    public string $basketSummaryVatMorePreciseSelector =
-        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
-        '[contains(text(), "%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
+    public string $basketSummaryVatMorePreciseSelector = '//div[@class="list-group-item d-flex justify-content-between align-items-center"][contains(text(), "%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketSummaryGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketGiftCardGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
-
+    /** @deprecated Use PaymentSummary instead. */
     private string $basketPaymentNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     private string $basketPaymentVat = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketPaymentGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
-
+    /** @deprecated Use PaymentSummary instead. */
     private string $basketShippingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketShippingGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
-    public string $surchargePaymentVat =
-        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
-        '[contains(text(), "%s")]/span';
-    public string $surchargePayment =
-        '//div[@class="list-group-item d-flex justify-content-between align-items-center"]' .
-        '[contains(text(), "%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
+    public string $surchargePaymentVat = '//div[@class="list-group-item d-flex justify-content-between align-items-center"][contains(text(), "%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
+    public string $surchargePayment = '//div[@class="list-group-item d-flex justify-content-between align-items-center"][contains(text(), "%s")]/span';
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketTotalPrice = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
-
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketWrappingNet = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     private string $basketWrappingVat = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
+    /** @deprecated Use PaymentSummary instead. */
     public string $basketWrappingGross = self::DIV_CONTAINS_TEXT_SPAN_SELECTOR;
 
-    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
+
+    // DEPRECATED the following will be made private
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $basketItemAmount = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
-
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $couponInformation = '//div[contains(@class,"list-group-item")]';
+
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
-
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
+
+    /** @deprecated will be private in next major. Use corresponding method */
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $editPayment = '//form[@id="orderPayment"]/h4/button';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
-
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $paymentMethod = '//form[@id="orderPayment"]/div';
-    public string $shippingMethod = '//form[@id="orderShipping"]/div';
 
+    /** @deprecated will be private in next major. Use corresponding method */
+    public string $shippingMethod = '//form[@id="orderShipping"]/div';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $previousStepLink = '';
+
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
+    /** @deprecated will be private in next major. Use corresponding method */
     public string $userRemarkHeader = 'h4';
+    /** @deprecated will be private in next major. Use corresponding method */
+    public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
 
     public function submitOrder(): self
     {
@@ -163,6 +193,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function validateVat(array $vatInformation): self
     {
         $I = $this->user;
@@ -172,28 +203,18 @@ class OrderCheckout extends Page
         return $this;
     }
 
-
-    /**
-     * @deprecated will be removed in next major
-     * Use seeTotalNet(), seeTotalGross(), seeShippingGross(), seePaymentMethodGross(), seeGrandTotal()
-     */
+    /** @deprecated Use PaymentSummary instead. */
     public function validateTotalPrice(array $priceInformation): self
     {
-        $I = $this->user;
-        $I->see($priceInformation['net'], sprintf($this->basketSummaryNet, Translator::translate('TOTAL_NET')));
-        $I->see($priceInformation['gross'], sprintf($this->basketSummaryGross, Translator::translate('TOTAL_GROSS')));
-        $I->see(
-            $priceInformation['shipping'],
-            sprintf($this->basketShippingGross, Translator::translate('SHIPPING_COST'))
-        );
-        $I->see(
-            $priceInformation['payment'],
-            sprintf($this->basketPaymentGross, Translator::translate('PAYMENT_METHOD'))
-        );
-        $I->see($priceInformation['total'], sprintf($this->basketTotalPrice, Translator::translate('GRAND_TOTAL')));
+        $this->seeSummaryNet($priceInformation['net']);
+        $this->seeSummaryGross($priceInformation['gross']);
+        $this->seeSummaryShippingGross($priceInformation['shipping']);
+        $this->seeSummaryPaymentGross($priceInformation['payment']);
+        $this->seeSummaryGrandTotal($priceInformation['total']);
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeVat(string $vat): static
     {
         $I = $this->user;
@@ -207,6 +228,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeTotalNet(string $totalNet): static
     {
         $I = $this->user;
@@ -217,6 +239,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeTotalVat(string $totalVat, string $percentVat): static
     {
         $I = $this->user;
@@ -230,6 +253,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeTotalGross(string $totalGross): static
     {
         $I = $this->user;
@@ -240,6 +264,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeShippingNet(string $shippingNet): static
     {
         $I = $this->user;
@@ -250,6 +275,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeShippingGross(string $shippingGross): static
     {
         $I = $this->user;
@@ -260,6 +286,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seePaymentMethodNet(string $paymentMethodNet): static
     {
         $I = $this->user;
@@ -273,6 +300,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seePaymentMethodVat(string $paymentMethodVat, $percentSurchargeTax): static
     {
         $I = $this->user;
@@ -289,6 +317,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seePaymentMethodGross(string $paymentMethodGross): static
     {
         $I = $this->user;
@@ -302,6 +331,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeWrappingNet(string $wrappingNet): static
     {
         $I = $this->user;
@@ -312,6 +342,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeWrappingVat(string $wrappingVat): static
     {
         $I = $this->user;
@@ -322,6 +353,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seeWrappingGross(string $wrappingGross): static
     {
         $I = $this->user;
@@ -332,7 +364,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
-
+    /** @deprecated Use PaymentSummary instead. */
     public function seeGrandTotal(string $grandTotal): static
     {
         $I = $this->user;
@@ -343,6 +375,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function seePaymentSurchargePrice(string $price): static
     {
         $I = $this->user;
@@ -352,6 +385,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function dontSeePaymentSurchargePrice(): static
     {
         $I = $this->user;
@@ -361,6 +395,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function validateWrappingPrice(string $priceInformation): self
     {
         $I = $this->user;
@@ -368,6 +403,7 @@ class OrderCheckout extends Page
         return $this;
     }
 
+    /** @deprecated Use PaymentSummary instead. */
     public function validateGiftCardPrice(string $priceInformation): self
     {
         $I = $this->user;
@@ -459,6 +495,13 @@ class OrderCheckout extends Page
         $I = $this->user;
         $addressInfo = $this->convertDeliveryAddressIntoString($userDelAddress);
         $I->assertEquals($I->clearString($addressInfo), $I->clearString($I->grabTextFrom($this->deliveryAddress)));
+        return $this;
+    }
+
+    public function seeUserDeliveryAddressPart(string $addressPart): self
+    {
+        $I = $this->user;
+        $I->see($addressPart, $this->deliveryAddress);
         return $this;
     }
 

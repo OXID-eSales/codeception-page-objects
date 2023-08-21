@@ -9,15 +9,17 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Component\Header\Navigation;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\Component\UserForm;
+use OxidEsales\Codeception\Page\Page;
 
 class UserCheckout extends Page
 {
     use UserForm;
     use Navigation;
+    use PaymentSummary;
 
     public string $URL = '/index.php?lang=1&cl=user';
     public string $breadCrumb = '//div[@class="step step-1 active"]';
@@ -33,9 +35,9 @@ class UserCheckout extends Page
 
     // unused
     public string $previousStepButton = '';
-    public string $openShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[1]';
     public string $deleteShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[2]';
     public string $selectShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[1]/label';
+    public string $openShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[1]';
     public string $shipAddressForm = '#shippingAddressForm';
 
     public function selectOptionNoRegistration(): self
