@@ -10,14 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\Navigation;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for payment checkout page
- * @package OxidEsales\Codeception\Page\Checkout
- */
 class PaymentCheckout extends Page
 {
     use Navigation;
@@ -30,6 +25,8 @@ class PaymentCheckout extends Page
     public $nextStepButton = '//div[@class="row"]/div[2]//button';
 
     public $previousStepButton = '';
+
+    public $selectShippingButton = '//select[@name="sShipSet"]';
 
     public $breadCrumb = '//div[@class="step step-2 active"]';
 
@@ -45,19 +42,21 @@ class PaymentCheckout extends Page
         return $this;
     }
 
-    /**
-     * Opens next page: final order step.
-     *
-     * @return OrderCheckout
-     */
-    public function goToNextStep()
+    public function selectShipping(string $shipping)
     {
         $I = $this->user;
-        $I->waitForElementClickable($this->nextStepButton);
+        $I->selectOption($this->selectShippingButton, $shipping);
+        return $this;
+    }
+
+    public function goToNextStep(): OrderCheckout
+    {
+        $I = $this->user;
         $I->retryClick($this->nextStepButton);
-        $orderPage = new OrderCheckout($I);
-        $I->waitForElement($orderPage->breadCrumb);
-        return $orderPage;
+        $orderCheckout = new OrderCheckout($I);
+        $I->waitForElement($orderCheckout->breadCrumb);
+
+        return $orderCheckout;
     }
 
     /**
