@@ -12,26 +12,11 @@ namespace OxidEsales\Codeception\Admin\Order;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-class ProductsOrderPage extends Page
+class OrderOverviewPage extends Page
 {
     use OrderList;
 
-    public string $searchFieldInProductTab = 'sSearchArtNum';
-    public string $searchButtonInProductTab = '//input[@name="search"]';
-    public string $addButtonInProductTab = 'add';
-    public string $secondProductInProductTab = '#art.2';
-    private string $orderProductLabel = '#art\.%d td:nth-of-type(5)';
-
-    public function addANewProductToTheOrder(string $articleNumber): self
-    {
-        $I = $this->user;
-
-        $I->fillField($this->searchFieldInProductTab, $articleNumber);
-        $I->click($this->searchButtonInProductTab);
-        $I->click($this->addButtonInProductTab);
-
-        return $this;
-    }
+    private string $orderProductLabel = '.box table tbody tr:nth-of-type(%d) td:nth-of-type(6)';
 
     public function seeOrderProductLabel(string $label, int $product): static
     {
@@ -46,8 +31,7 @@ class ProductsOrderPage extends Page
     public function dontSeeOrderProductHasLabel(int $product): static
     {
         $I = $this->user;
-        $I->dontSee(
-            Translator::translate('GENERAL_LABEL'),
+        $I->dontSeeElement(
             sprintf($this->orderProductLabel, $product)
         );
         return $this;

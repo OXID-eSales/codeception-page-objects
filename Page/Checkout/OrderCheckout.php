@@ -65,6 +65,7 @@ class OrderCheckout extends Page
     public string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
     /** @deprecated will be private in next major. Use corresponding method */
     public string $couponInformation = '//div[contains(@class,"list-group-item")]';
+    private string $basketItemLabel = '#list_cartItem_%d .basket-item-desc .persparamBox';
 
     /** @deprecated will be private in next major. Use corresponding method */
     public string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
@@ -440,6 +441,25 @@ class OrderCheckout extends Page
             $I->see((string)$basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->see((string)$basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
         }
+        return $this;
+    }
+
+    public function seeOrderItemLabel(string $label, int $item): static
+    {
+        $I = $this->user;
+        $I->see(
+            sprintf('%s %s', Translator::translate('LABEL'), $label),
+            sprintf($this->basketItemLabel, $item)
+        );
+        return $this;
+    }
+
+    public function dontSeeOrderItemHasLabel(int $item): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement(
+            sprintf($this->basketItemLabel, $item)
+        );
         return $this;
     }
 

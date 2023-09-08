@@ -18,10 +18,6 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Info\ContactPage;
 use OxidEsales\Codeception\Page\PrivateSales\Invitation;
 
-/**
- * Trait for service menu widget in footer
- * @package OxidEsales\Codeception\Page\Component\Footer
- */
 trait ServiceWidget
 {
     public string $basketLink = '//div[@class="footer-content"]';
@@ -58,12 +54,13 @@ trait ServiceWidget
     public function openUserAccountPage()
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('ACCOUNT'), Locator::elementAt($this->userAccountPageLink, 1));
-        if (Context::isUserLoggedIn()) {
-            return new UserAccount($I);
-        }
+        $I->retryClick(
+            Translator::translate('ACCOUNT'),
+            Locator::elementAt($this->userAccountPageLink, 1)
+        );
+        $I->waitForPageLoad();
 
-        return new UserLogin($I);
+        return Context::isUserLoggedIn() ? new UserAccount($I) : new UserLogin($I);
     }
 
     public function openContactPage(): ContactPage

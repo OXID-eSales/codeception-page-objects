@@ -25,6 +25,9 @@ class UserOrderHistory extends Page
     private string $shipmentTo = '//span[@id="accOrderName_%s"]';
     private string $orderAmount = '//li[@id="accOrderAmount_%s_%s"]';
     private string $orderAmountLink = '//a[@id="accOrderLink_%s_%s"]';
+    private string $headerTitle = 'h3';
+    private string $orderItem = '.cl-account_order .card-lg:nth-child(%d) .card-body ol li:nth-of-type(%d)';
+
 
     public function seePageHeader(): self
     {
@@ -61,5 +64,32 @@ class UserOrderHistory extends Page
         $I->click(sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
 
         return new ProductDetails($I);
+    }
+
+    public function seePageOpened(): static
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('ORDER_HISTORY'), $this->headerTitle);
+        return $this;
+    }
+
+    public function seeOrderItemsLabel(string $label, int $order, int $item): static
+    {
+        $I = $this->user;
+        $tableHeaderLinePosition = 1;
+        $I->see(
+            sprintf('%s: %s', Translator::translate('DETAILS'), $label),
+            sprintf($this->orderItem, $tableHeaderLinePosition + $order, $item)
+        );
+        return $this;
+    }
+
+    public function dontSeeOrderItemHasLabel(int $order, int $item): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement(
+            sprintf($this->orderItem, $order, $item)
+        );
+        return $this;
     }
 }
