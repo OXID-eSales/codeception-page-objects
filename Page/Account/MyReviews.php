@@ -21,8 +21,8 @@ class MyReviews extends Page
 
     public const URL = '/index.php?lang=1&cl=account_reviewlist';
 
-    public $URL = self::URL;
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = self::URL;
+    public string $breadCrumb = '.breadcrumb';
     public $headerTitle = 'h3';
     private $reviewEntry = '//div[@class="reviews-landscape"]/div[@class="card"]';
     private $deleteReviewBtn = '//div[@id="reviewName_%s"]//button';

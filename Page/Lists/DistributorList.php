@@ -25,12 +25,7 @@ class DistributorList extends Page
 
     public string $listItemLink = '//div[contains(@class,"cat-list")]/a[%s]';
 
-    /**
-     * @param mixed $param
-     *
-     * @return string
-     */
-    public function route($param)
+    public function route(mixed $params): string
     {
         return $this->URL . '/index.php?' . http_build_query(['cl' => 'vendorlist', 'cnid' => 'root']);
     }

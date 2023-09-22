@@ -21,10 +21,10 @@ class GiftRegistry extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = '/en/gift-registry/';
+    public string $URL = '/en/gift-registry/';
 
     // include bread crumb of current page
-    public $breadCrumb = '.breadcrumb';
+    public string $breadCrumb = '.breadcrumb';
 
     public $headerTitle = 'h1';
 

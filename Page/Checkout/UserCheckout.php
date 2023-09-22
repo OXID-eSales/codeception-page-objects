@@ -19,41 +19,26 @@ class UserCheckout extends Page
     use UserForm;
     use Navigation;
 
-    // include url of current page
-    public $URL = '/index.php?lang=1&cl=user';
+    public string $URL = '/index.php?lang=1&cl=user';
+    public string $breadCrumb = '//div[@class="step step-1 active"]';
+    public string $noRegistrationOption = '//form[@id="optionNoRegistration"]/button';
+    public string $registrationOption = '//form[@id="optionRegistration"]/button';
+    public string $openShipAddressForm = '#showShipAddress';
+    public string $openBillingAddressFormButton = '#userChangeAddress';
+    public string $orderRemark = '#orderRemark';
+    public string $registerUserButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
+    public string $nextStepButton = '#userFormSubmit';
+    public string $selectCountry = '//select[@id="delCountrySelect"]';
+    public string $editShippingAddress = '//button[contains(@class, "edit-shipping-address")]';
 
-    public $noRegistrationOption = '//form[@id="optionNoRegistration"]/button';
+    // unused
+    public string $previousStepButton = '';
+    public string $openShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[1]';
+    public string $deleteShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[2]';
+    public string $selectShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[1]/label';
+    public string $shipAddressForm = '#shippingAddressForm';
 
-    public $registrationOption = '//form[@id="optionRegistration"]/button';
-
-    public $openShipAddressForm = '#showShipAddress';
-
-    public $openBillingAddressFormButton = '#userChangeAddress';
-
-    public $orderRemark = '#orderRemark';
-
-    public $breadCrumb = '//div[@class="step step-1 active"]';
-
-    public $registerUserButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
-
-    public $nextStepButton = '#userFormSubmit';
-
-    public $previousStepButton = '';
-
-    public $openShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[1]';
-
-    public $deleteShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[2]/button[2]';
-
-    public $selectShipAddress = '//div[@id="shippingAddress"]/div[%s]/div/div[1]/label';
-
-    public $shipAddressForm = '#shippingAddressForm';
-
-    /**
-     * Opens the checkout user form without registration.
-     *
-     * @return $this
-     */
-    public function selectOptionNoRegistration()
+    public function selectOptionNoRegistration(): self
     {
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
@@ -62,12 +47,7 @@ class UserCheckout extends Page
         return $this;
     }
 
-    /**
-     * Opens checkout user form for new user registration.
-     *
-     * @return $this
-     */
-    public function selectOptionRegisterNewAccount()
+    public function selectOptionRegisterNewAccount(): self
     {
         $I = $this->user;
         $I->waitForElement($this->registrationOption);
@@ -75,12 +55,7 @@ class UserCheckout extends Page
         return $this;
     }
 
-    /**
-     * Opens next page: payment checkout.
-     *
-     * @return PaymentCheckout
-     */
-    public function goToNextStep()
+    public function goToNextStep(): PaymentCheckout
     {
         $I = $this->user;
         $I->waitForElementClickable($this->nextStepButton);
@@ -90,12 +65,7 @@ class UserCheckout extends Page
         return $paymentPage;
     }
 
-    /**
-     * Opens previous page: cart.
-     *
-     * @return Basket
-     */
-    public function goToPreviousStep()
+    public function goToPreviousStep(): Basket
     {
         $I = $this->user;
         $I->click(Translator::translate('PREVIOUS_STEP'));
@@ -103,10 +73,7 @@ class UserCheckout extends Page
         return new Basket($I);
     }
 
-    /**
-     * @return $this
-     */
-    public function clickOnRegisterUserButton()
+    public function clickOnRegisterUserButton(): self
     {
         $I = $this->user;
         $I->click($this->registerUserButton);
@@ -115,10 +82,7 @@ class UserCheckout extends Page
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function openShippingAddressForm()
+    public function openShippingAddressForm(): self
     {
         $I = $this->user;
         $I->retryClick($this->openShipAddressForm);
@@ -126,10 +90,7 @@ class UserCheckout extends Page
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function openUserBillingAddressForm()
+    public function openUserBillingAddressForm(): self
     {
         $I = $this->user;
         $I->click($this->openBillingAddressFormButton);
@@ -137,15 +98,19 @@ class UserCheckout extends Page
         return $this;
     }
 
-    /**
-     * @param string $orderRemark
-     *
-     * @return $this
-     */
-    public function enterOrderRemark(string $orderRemark)
+    public function enterOrderRemark(string $orderRemark): self
     {
         $I = $this->user;
         $I->fillField($this->orderRemark, $orderRemark);
+        return $this;
+    }
+
+    public function selectCountry(string $country): self
+    {
+        $I = $this->user;
+        $I->click($this->editShippingAddress);
+        $I->selectOption($this->selectCountry, $country);
+
         return $this;
     }
 }

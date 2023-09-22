@@ -110,8 +110,8 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible(['link'=>Translator::translate('MY_ACCOUNT')]);
-        $I->click(['link'=>Translator::translate('MY_ACCOUNT')]);
+        $I->waitForElementVisible(['link' => Translator::translate('MY_ACCOUNT')]);
+        $I->click(['link' => Translator::translate('MY_ACCOUNT')]);
         $I->waitForPageLoad();
         return new UserAccount($I);
     }
@@ -183,9 +183,11 @@ trait AccountMenu
     public function checkWishListItemCount(int $count): self
     {
         $I = $this->user;
-        $cnt = ($count) ?
-            $I->see((string) $count, $this->userAccountWishListText) :
+        if ($count) {
+            $I->see((string) $count, $this->userAccountWishListText);
+        } else {
             $I->waitForElementNotVisible($this->userAccountWishListText);
+        }
         return $this;
     }
 

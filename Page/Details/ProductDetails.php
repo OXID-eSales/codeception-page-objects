@@ -31,105 +31,66 @@ class ProductDetails extends Page
     use Navigation;
     use ServiceWidget;
 
-    // include bread crumb of current page
-    public $breadCrumb = '.breadcrumb';
-
+    public string $breadCrumb = '.breadcrumb';
     public $nextProductLink = '#linkNextArticle';
-
     public $previousProductLink = '#linkPrevArticle';
-
     public $productTitle = '//h1[contains(@class,"details-title")]';
-
     public $productShortDesc = '#productShortdesc';
-
     public $productArtNum = '';
-
     public $productOldPrice = '.price-old';
-
     public $productPrice = '#productPrice';
-
     public $productPricePlus = '//div[@class="price-wrapper h1"]/div[@class="vat-info-text"]';
-
     public $productUnitPrice = '.ppu';
-
     public $toBasketButton = '#toBasket';
-
     public $basketAmountField = '#amountToBasket';
-
     public $addToCompareListLink = '#addToCompare';
-
     public $removeFromCompareListLink = '#removeFromCompare';
-
     public $addToWishListLink = '#linkToNoticeList';
-
     public $addToGiftRegistryLink = '#linkToWishList';
-
     public $reviewLoginLink = '//div[@id="review"]//a';
-
     public $openReviewForm = '//div[@id="review"]//a';
-
     public $reviewTextForm = '[name=rvw_txt]';
-
     public $ratingSelection = '//ul[@id="reviewRating"]/li[%s]';
-
     public $saveRatingAndReviewButton = '#reviewSave';
-
     public $productReviewAuthor = '//div[@id="reviewName_%s"]//div[@class="rater"]/span';
-
     public $productReviewText = '#reviewText_%s';
-
     public $userProductRating = '//div[@id="reviewName_%s"]/div/div/*[@class="star active"]';
-
     public $productSuggestionLink = '#suggest';
-
     public $priceAlertEmail = 'pa[email]';
-
     public $priceAlertSuggestedPrice = 'pa[price]';
-
     public $accessoriesProductTitle = '//div[@id="accessories"]/div/div[%s]//div[@class="h5 card-title"]';
 
     public $accessoriesProductPrice = '//div[@id="accessories"]/div/div[%s]//div[contains(@class,"price")]';
     public $openAccessoriesProduct = '//div[@id="accessories"]/div/div[%s]';
-    public $similarProductTitle = '//div[@id="similar"]/div/div[%s]//div[@class="h5 card-title"]';
 
+    public $similarProductTitle = '//div[@id="similar"]/div/div[%s]//div[@class="h5 card-title"]';
     public $similarProductPrice = '//div[@id="similar"]/div/div[%s]//div[contains(@class,"price")]';
     public $openSimilarProduct = '//div[@id="similar"]/div/div[%s]';
 
     public $crossSellingProductTitle = '//div[@id="cross"]/div/div[%s]//div[@class="h5 card-title"]';
-
     public $crossSellingProductPrice = '//div[@id="cross"]/div/div[%s]//div[contains(@class,"price")]';
     public $openCrossSellingProduct = '//div[@id="cross"]/div/div[%s]';
 
     public $disabledBasketButton = '//button[@id="toBasket" and @disabled=""]';
-
     public $variantSelection = '//div[@id="variants"]/div[%s]/select';
-
     public $variantOpenSelection = '//ul[@class="dropdown-menu  vardrop"]';
-
     public $amountPriceQuantity = '//div[@class="modal-content"]/div[2]/dl/dt[%s]';
-
     public $amountPriceValue = '//div[@class="modal-content"]/div[2]/dl/dd[%s]';
-
     public $amountPriceCloseButton = '//div[@class="modal fade show"]//button';
-
     public $selectionList = '#productSelections select';
-
     public $attributeName = '#attrTitle_%s';
-
     public $attributeValue = '#attrValue_%s';
-
     public $addToListmania = '#recommList';
 
+    private string $alsoBought = '(//div[@id="alsoBought"]//div[@class="card product-card"])[%s]';
+
+
     /**
-     * Return the route to the product details page
-     *
-     * @param mixed $param The product Id.
-     *
-     * @return string
+     * @param mixed $params The product Id.
      */
-    public function route($param)
+    public function route(mixed $params): string
     {
-        return $this->URL . '/index.php?' . http_build_query(['cl' => 'details', 'anid' => $param]);
+        return $this->URL . '/index.php?' . http_build_query(['cl' => 'details', 'anid' => $params]);
     }
 
     /**
@@ -366,7 +327,7 @@ class ProductDetails extends Page
      */
     public function openAttributes()
     {
-        //is alredy open
+        //is already open
         return $this;
     }
 
@@ -377,19 +338,15 @@ class ProductDetails extends Page
      */
     public function openDescription()
     {
-        //is alredy open
+        //is already open
         return $this;
     }
 
     /**
      * Check product data is displayed correctly.
      * $productData = ['title', 'description', 'id', 'price']
-     *
-     * @param array $productData
-     *
-     * @return $this
      */
-    public function seeProductData(array $productData)
+    public function seeProductData(array $productData): self
     {
         $I = $this->user;
         $I->waitForElement($this->productTitle);
@@ -402,38 +359,28 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param string $price
-     *
-     * @return $this
-     */
-    public function seeProductOldPrice(string $price)
+    public function seeProductTitle(string $title): self
+    {
+        $I = $this->user;
+        $I->see($title, $this->productTitle);
+        return $this;
+    }
+
+    public function seeProductOldPrice(string $price): self
     {
         $I = $this->user;
         $I->see($price, $this->productOldPrice);
         return $this;
     }
 
-    /**
-     * @param string $price
-     *
-     * @return $this
-     */
-    public function seeProductUnitPrice(string $price)
+    public function seeProductUnitPrice(string $price): self
     {
         $I = $this->user;
         $I->see($price, $this->productUnitPrice);
         return $this;
     }
 
-    /**
-     * Add current product to basket
-     *
-     * @param int $amount
-     *
-     * @return $this
-     */
-    public function addProductToBasket(int $amount = 1)
+    public function addProductToBasket(int $amount = 1): self
     {
         $I = $this->user;
         $I->fillField($this->basketAmountField, $amount);
@@ -445,13 +392,8 @@ class ProductDetails extends Page
     /**
      * Check the data of the accessory product.
      * $productData = ['title', 'price']
-     *
-     * @param array $productData The product data to check.
-     * @param int   $position    The position of the product in the list.
-     *
-     * @return $this
      */
-    public function seeAccessoryData(array $productData, int $position = 1)
+    public function seeAccessoryData(array $productData, int $position = 1): self
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->accessoriesProductTitle, $position));
@@ -459,12 +401,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param int $position The position of the product in the list.
-     *
-     * @return $this
-     */
-    public function openAccessoryDetailsPage(int $position = 1)
+    public function openAccessoryDetailsPage(int $position = 1): self
     {
         $I = $this->user;
         $I->retryClick(sprintf($this->openAccessoriesProduct, $position));
@@ -476,13 +413,8 @@ class ProductDetails extends Page
     /**
      * Check the data of the similar product.
      * $productData = ['title', 'price']
-     *
-     * @param array $productData The product data to check.
-     * @param int   $position    The position of the product in the list.
-     *
-     * @return $this
      */
-    public function seeSimilarProductData(array $productData, int $position = 1)
+    public function seeSimilarProductData(array $productData, int $position = 1): self
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->similarProductTitle, $position));
@@ -490,12 +422,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param int $position The position of the product in the list.
-     *
-     * @return $this
-     */
-    public function openSimilarProductDetailsPage(int $position = 1)
+    public function openSimilarProductDetailsPage(int $position = 1): self
     {
         $I = $this->user;
         $I->retryClick(sprintf($this->openSimilarProduct, $position));
@@ -505,15 +432,10 @@ class ProductDetails extends Page
     }
 
     /**
-     * Check the data of the cross selling product.
+     * Check the data of the cross-selling product.
      * $productData = ['title', 'price']
-     *
-     * @param array $productData The product data to check.
-     * @param int   $position    The position of the product in the list.
-     *
-     * @return $this
      */
-    public function seeCrossSellingData(array $productData, int $position = 1)
+    public function seeCrossSellingData(array $productData, int $position = 1): self
     {
         $I = $this->user;
         $I->see($productData['title'], sprintf($this->crossSellingProductTitle, $position));
@@ -521,12 +443,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param int $position The position of the product in the list.
-     *
-     * @return $this
-     */
-    public function openCrossSellingDetailsPage(int $position = 1)
+    public function openCrossSellingDetailsPage(int $position = 1): self
     {
         $I = $this->user;
         $I->retryClick(sprintf($this->openCrossSellingProduct, $position));
@@ -541,12 +458,8 @@ class ProductDetails extends Page
      * 'amountFrom',
      * 'discount'
      * ]
-     *
-     * @param array $amountPrices
-     *
-     * @return $this
      */
-    public function seeAmountPrices(array $amountPrices)
+    public function seeAmountPrices(array $amountPrices): self
     {
         $I = $this->user;
         $I->retryClick(Translator::translate('BLOCK_PRICE'));
@@ -565,41 +478,28 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function openNextProduct()
+    public function openNextProduct(): self
     {
         $I = $this->user;
         $I->click($this->nextProductLink);
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function openPreviousProduct()
+    public function openPreviousProduct(): self
     {
         $I = $this->user;
         $I->click($this->previousProductLink);
         return $this;
     }
 
-    /**
-     * @return ProductSearchList
-     */
-    public function openProductSearchList()
+    public function openProductSearchList(): ProductSearchList
     {
         $I = $this->user;
         $I->click(Translator::translate('BACK_TO_OVERVIEW'));
         return new ProductSearchList($I);
     }
 
-    /**
-     * @param string $selectionItem
-     * @return $this
-     */
-    public function selectSelectionListItem(string $selectionItem)
+    public function selectSelectionListItem(string $selectionItem): self
     {
         $I = $this->user;
         $I->selectOption($this->selectionList, $selectionItem);
@@ -607,29 +507,32 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param string $attributeName
-     * @param int    $attributeId
-     *
-     * @return $this
-     */
-    public function seeAttributeName(string $attributeName, int $attributeId)
+    public function seeAttributeName(string $attributeName, int $attributeId): self
     {
         $I = $this->user;
         $I->see($attributeName, sprintf($this->attributeName, $attributeId));
         return $this;
     }
 
-    /**
-     * @param string $attributeValue
-     * @param int    $attributeId
-     *
-     * @return $this
-     */
-    public function seeAttributeValue(string $attributeValue, int $attributeId)
+    public function seeAttributeValue(string $attributeValue, int $attributeId): self
     {
         $I = $this->user;
         $I->see($attributeValue, sprintf($this->attributeValue, $attributeId));
+        return $this;
+    }
+
+    public function openAlsoBoughtProduct(int $position = 1): self
+    {
+        $I = $this->user;
+        $I->see(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
+        $I->retryClick(sprintf($this->alsoBought, $position));
+        return $this;
+    }
+
+    public function dontSeeAlsoBought(): self
+    {
+        $I = $this->user;
+        $I->dontSee(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
         return $this;
     }
 }

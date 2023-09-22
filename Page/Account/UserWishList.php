@@ -20,8 +20,8 @@ class UserWishList extends Page
     use MiniBasket;
     use AccountMenu;
 
-    public $URL = '/en/my-wish-list/';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '/en/my-wish-list/';
+    public string $breadCrumb = '.breadcrumb';
     public $headerTitle = 'h3';
     public string $productTitle = '//div[@id="noticelistProductList"]/div/div[%s]//a';
     public string $productDescription = '//div[@id="noticelistProductList"]/div/div[%s]//div[@class="card-text"]';

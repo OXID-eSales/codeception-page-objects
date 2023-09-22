@@ -39,14 +39,9 @@ class ProductList extends Page
     public string $headerTitle = 'h1';
     public string $listPageDescription = '#catDescLocator';
 
-    /**
-     * @param mixed $param
-     *
-     * @return string
-     */
-    public function route($param)
+    public function route(mixed $params): string
     {
-        return $this->URL . '/index.php?' . http_build_query(['cl' => 'alist', 'cnid' => $param]);
+        return $this->URL . '/index.php?' . http_build_query(['cl' => 'alist', 'cnid' => $params]);
     }
 
     /**

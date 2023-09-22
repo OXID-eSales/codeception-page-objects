@@ -19,8 +19,8 @@ class Basket extends Page
     use AccountMenu;
     use MiniBasket;
 
-    public $URL = '';
-    public $breadCrumb = '.breadcrumb';
+    public string $URL = '';
+    public string $breadCrumb = '.breadcrumb';
     public string $basketSummary = '//div[contains(text(),"%s")]/span';
     public string $basketItemAmount = '#am_%s';
     public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//div[contains(@class,"totalPrice")]/strong';
