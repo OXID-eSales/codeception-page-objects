@@ -37,7 +37,8 @@ class DirectoryAndLoginStep extends SetupStep
         $I = $this->user;
         $I->click($this->continueButton);
         $I->waitForText($this->dataWasWrittenMessage);
-        $I->waitForText($this->updatingDatabaseMessage);
+        // increased timeout for GitHub runners
+        $I->waitForText($this->updatingDatabaseMessage, 20);
 
         return new ShopLicenseStep($this->user);
     }
@@ -47,7 +48,8 @@ class DirectoryAndLoginStep extends SetupStep
         $I = $this->user;
         $I->click($this->continueButton);
         $I->waitForText($this->dataWasWrittenMessage);
-        $I->waitForText($this->updatingDatabaseMessage);
+        // increased timeout for GitHub runners
+        $I->waitForText($this->updatingDatabaseMessage, 20);
 
         return new FinishStep($this->user);
     }
