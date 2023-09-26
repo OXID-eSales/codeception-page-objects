@@ -25,6 +25,7 @@ trait MiniBasket
     public string $miniBasketSummaryPrice = '//div[contains(@class,"minibasket-total-row")]/div[2]';
     public string $miniBasketCountDown = '#countdown';
     public string $miniBasketClose = '//div[@id="basketModal"]//button';
+    private string $addToWishlist = '//*[@id="list_cartItem_%d"]/div[2]/div[1]/div[3]/div/div[1]/div/div[2]/button[2]';
 
     /**
      * $basketProducts[] = ['title' => productTitle,
@@ -103,6 +104,28 @@ trait MiniBasket
         $this->openMiniBasket();
         $I->waitForElementVisible($this->miniBasketCountDown);
         $this->closeMiniBasket();
+        return $this;
+    }
+
+    public function addProductToTheWishlist(int $productPosition): self
+    {
+        $I = $this->user;
+        $I->waitForElementClickable(sprintf($this->addToWishlist, $productPosition));
+        $I->click(sprintf($this->addToWishlist, $productPosition));
+        return $this;
+    }
+
+    public function seeAddToTheWishlistStar(int $productPosition): self
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf($this->addToWishlist, $productPosition));
+        return $this;
+    }
+
+    public function dontSeeAddToWishlistStar(int $productPosition): self
+    {
+        $I = $this->user;
+        $I->dontSeeElement(sprintf($this->addToWishlist, $productPosition));
         return $this;
     }
 }
