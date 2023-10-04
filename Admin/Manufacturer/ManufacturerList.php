@@ -55,6 +55,19 @@ trait ManufacturerList
         return new PictureManufacturerPage($I);
     }
 
+    public function openMainTab(string $title): MainManufacturerPage
+    {
+        $I = $this->user;
+
+        $this->find($this->titleSearchField, $title);
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclmanufacturer_main'));
+        $I->selectEditFrame();
+
+        return new MainManufacturerPage($I);
+    }
+
     public function createManufacturer(Manufacturer $manufacturer): MainManufacturerPage
     {
         $I = $this->user;
@@ -63,7 +76,9 @@ trait ManufacturerList
         $I->selectEditFrame();
         $this->loadForm($this->newManufacturerButton, $mainManufacturerPage->titleInput);
         $mainManufacturerPage->editManufacturer($manufacturer);
+        $pictureManufacturerPage = $this->openPictureTab($manufacturer->getTitle());
+        $pictureManufacturerPage->uploadIcon($manufacturer);
 
-        return $mainManufacturerPage;
+        return $this->openMainTab($manufacturer->getTitle());
     }
 }
