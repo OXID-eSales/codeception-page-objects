@@ -20,10 +20,10 @@ class ProductsOrderPage extends Page
 {
     use OrderList;
 
-    public $searchFieldInProductTab = "sSearchArtNum";
-    public $searchButtonInProductTab = "//input[@name='search']";
-    public $addButtonInProductTab = "add";
-    public $secondProductInProductTab = "#art.2";
+    public string $searchFieldInProductTab = 'sSearchArtNum';
+    public string $searchButtonInProductTab = '//input[@name="search"]';
+    public string $addButtonInProductTab = 'add';
+    public string $secondProductInProductTab = '#art.2';
 
     public function addANewProductToTheOrder(string $articleNumber): self
     {

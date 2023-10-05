@@ -25,6 +25,7 @@ trait MiniBasket
     public string $miniBasketSummaryPrice = '//div[contains(@class,"minibasket-total-row")]/div[2]';
     public string $miniBasketCountDown = '#countdown';
     public string $miniBasketClose = '//div[@id="basketModal"]//button';
+    private string $itemCountBadge = '//button[@class="btn btn-minibasket"]//span[@class="badge"]';
     private string $addToWishlist = '//*[@id="list_cartItem_%d"]/div[2]/div[1]/div[3]/div/div[1]/div/div[2]/button[2]';
 
     /**
@@ -76,9 +77,9 @@ trait MiniBasket
         $I->waitForPageLoad();
         if (Context::isUserLoggedIn()) {
             return new PaymentCheckout($I);
-        } else {
-            return new UserCheckout($I);
         }
+
+        return new UserCheckout($I);
     }
 
     public function openBasketDisplay(): Basket
@@ -104,6 +105,22 @@ trait MiniBasket
         $this->openMiniBasket();
         $I->waitForElementVisible($this->miniBasketCountDown);
         $this->closeMiniBasket();
+        return $this;
+    }
+
+    public function seeItemCountBadge(string $itemCount): self
+    {
+        $I = $this->user;
+        $I->see($itemCount, $this->itemCountBadge);
+
+        return $this;
+    }
+
+    public function dontSeeItemCountBadge(): self
+    {
+        $I = $this->user;
+        $I->dontSeeElement($this->itemCountBadge);
+
         return $this;
     }
 

@@ -24,6 +24,8 @@ class Basket extends Page
     public string $basketSummary = '//div[contains(text(),"%s")]/span';
     public string $basketItemAmount = '#am_%s';
     public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//div[contains(@class,"totalPrice")]/strong';
+    private string $basketItemUnitPrice = '//div[contains(@class, "basketitemrow")][%s]' .
+                                          '//ul[contains(@class, "unit-price")]';
     public string $basketItemTitle = '//div[@id="list_cartItem_%s"]//div[@class="h5"]';
     public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
     public string $basketBundledItemAmount = '//div[@id="list_cartItem_%s"]//div[contains(@class,"quantity")]';
@@ -41,7 +43,11 @@ class Basket extends Page
     {
         $I = $this->user;
         $I->clearField(sprintf($this->basketItemAmount, $itemPosition));
-        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), $amount, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->pressKey(
+            sprintf($this->basketItemAmount, $itemPosition),
+            $amount,
+            \Facebook\WebDriver\WebDriverKeys::ENTER
+        );
         $I->waitForPageLoad();
         return $this;
     }
@@ -89,8 +95,11 @@ class Basket extends Page
         return $this;
     }
 
-    public function seeBasketContainsSelectionList(string $selectionListTitle, string $selectionListValue, int $itemPosition)
-    {
+    public function seeBasketContainsSelectionList(
+        string $selectionListTitle,
+        string $selectionListValue,
+        int $itemPosition
+    ) {
         $I = $this->user;
         $I->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
         return $this;
@@ -142,5 +151,12 @@ class Basket extends Page
         $I->retryClick(sprintf($this->openGiftSelection, $itemPosition));
         $I->waitForText(Translator::translate('GIFT_OPTION'));
         return new GiftSelection($I);
+    }
+
+    public function seeItemUnitPrice(string $price, string $position): self
+    {
+        $I = $this->user;
+        $I->see($price, sprintf($this->basketItemUnitPrice, $position));
+        return $this;
     }
 }
