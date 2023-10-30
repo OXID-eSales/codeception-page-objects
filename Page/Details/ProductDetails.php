@@ -83,7 +83,7 @@ class ProductDetails extends Page
     public $addToListmania = '#recommList';
 
     private string $alsoBought = '(//div[@id="alsoBought"]//div[@class="card product-card"])[%s]';
-
+    private string $persistentParamInput = '#persistentParam';
 
     /**
      * @param mixed $params The product Id.
@@ -518,6 +518,30 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->see($attributeValue, sprintf($this->attributeValue, $attributeId));
+        return $this;
+    }
+
+    public function addProductLabel(string $label): static
+    {
+        $I = $this->user;
+        $I->fillField($this->persistentParamInput, $label);
+
+        return $this;
+    }
+
+    public function seeProductLabelInput(): static
+    {
+        $I = $this->user;
+        $I->seeElement($this->persistentParamInput);
+
+        return $this;
+    }
+
+    public function dontSeeProductLabelInput(): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement($this->persistentParamInput);
+
         return $this;
     }
 

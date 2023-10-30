@@ -31,7 +31,7 @@ class UserAccount extends Page
     public string $dashboardGiftRegistryPanelContent = '//h4[contains(text(),"%s")]/following-sibling::div';
     public string $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
     public string $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
-    public string $dashboardOrderHistoryHeader = '//div[h4[contains(text(), "%s")]]//a';
+    public string $dashboardOrderHistoryHeader = '//h4[contains(text(),"%s")]/following-sibling::div';
     public string $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
 
     public function seePageOpened(): self
@@ -65,8 +65,14 @@ class UserAccount extends Page
     public function openOrderHistory(): UserOrderHistory
     {
         $I = $this->user;
-        $I->click(sprintf($this->dashboardOrderHistoryHeader, Translator::translate('ORDER_HISTORY')));
-        return new UserOrderHistory($I);
+        $I->click(
+            sprintf($this->dashboardOrderHistoryHeader, Translator::translate('ORDER_HISTORY'))
+        );
+        $I->waitForPageLoad();
+        $userOrderHistoryPage = new UserOrderHistory($I);
+        $userOrderHistoryPage->seePageOpened();
+
+        return $userOrderHistoryPage;
     }
 
     public function seeItemNumberOnGiftRegistryPanel(string $number): self

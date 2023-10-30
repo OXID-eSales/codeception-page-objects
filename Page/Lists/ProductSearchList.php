@@ -20,6 +20,7 @@ class ProductSearchList extends ProductList
 {
     use SearchWidget;
 
+    private string $listItem = '//div[@id="searchList"]/div/div[%s]';
     public string $listItemTitle = '//div[@id="searchList"]/div/div[%s]//*[@class="h5 card-title"]';
     public string $listItemDescription = '//div[@id="searchList"]/div/div[%s]//div[@class="short-desc"]';
     public string $listItemPrice = '//div[@id="searchList"]/div/div[%s]//div[contains(@class,"price")]/span';
@@ -44,6 +45,16 @@ class ProductSearchList extends ProductList
     {
         $I = $this->user;
         $I->click(sprintf($this->product, $position));
+        return new ProductDetails($I);
+    }
+
+    public function openFirstProductInSearchResults(): ProductDetails
+    {
+        $I = $this->user;
+        $firstProductsTitle = sprintf($this->listItem, 1);
+        $I->click($firstProductsTitle);
+        $I->waitForDocumentReadyState();
+
         return new ProductDetails($I);
     }
 }

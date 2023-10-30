@@ -3,11 +3,16 @@
 ## v4.2.0 - unreleased
 
 ### Added
-- New methods and Page objects for Checkout, browser-based Shop setup, promotion related and contact page tests
+- New methods and Page objects for 
+  - Checkout
+  - browser-based Shop setup
+  - Product Labels
+  - Promotion
+  - Contact Page.
 - Page components for:
   - Cookie consent management
   - Maintenance page detection
-  - Access to Payment summaries on various checkout pages
+  - Access to Payment Summaries on various checkout pages.
 
 ### Deprecated
 - Parts of `OrderCheckout`'s public interface, extracted into `PaymentSummaryTrait`

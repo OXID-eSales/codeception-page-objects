@@ -13,15 +13,10 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ProductList
 {
-    public $searchNumberInput = "//input[@name='where[oxarticles][oxartnum]']";
-    public $languageSelect = "//select[@name='changelang']";
-    public $searchForm = '#search';
+    public string $searchNumberInput = "//input[@name='where[oxarticles][oxartnum]']";
+    public string $languageSelect = "//select[@name='changelang']";
+    public string $searchForm = '#search';
 
-    /**
-     * @param string $language
-     *
-     * @return MainProductPage
-     */
     public function switchLanguage(string $language): MainProductPage
     {
         $I = $this->user;
@@ -35,12 +30,6 @@ trait ProductList
         return new MainProductPage($I);
     }
 
-    /**
-     * @param string $field
-     * @param string $value
-     *
-     * @return MainProductPage
-     */
     public function find(string $field, string $value): MainProductPage
     {
         $I = $this->user;
@@ -52,14 +41,33 @@ trait ProductList
         $I->selectListFrame();
         $I->click($value);
 
-        $mainProductPage = new MainProductPage($I);
-        $I->selectEditFrame();
-        $I->waitForElement($mainProductPage->numberInput);
-
-        return $mainProductPage;
+        return $this->openMainTab();
     }
 
-    /** @return SelectionProductPage */
+    public function openMainTab(): MainProductPage
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclarticle_main'));
+        $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
+
+        return new MainProductPage($I);
+    }
+
+    public function openExtendedTab(): ExtendedInformationPage
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->click(Translator::translate('tbclarticle_extend'));
+        $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
+
+        return new ExtendedInformationPage($I);
+    }
+
     public function openSelectionTab(): SelectionProductPage
     {
         $I = $this->user;
@@ -71,7 +79,6 @@ trait ProductList
         return new SelectionProductPage($I);
     }
 
-    /** @return VariantsProductPage */
     public function openVariantsTab(): VariantsProductPage
     {
         $I = $this->user;
@@ -83,7 +90,6 @@ trait ProductList
         return new VariantsProductPage($I);
     }
 
-    /** @return DownloadsProductPage */
     public function openDownloadsTab(): DownloadsProductPage
     {
         $I = $this->user;
