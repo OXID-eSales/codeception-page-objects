@@ -11,11 +11,6 @@ namespace OxidEsales\Codeception\Admin\Order;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Trait OrderList
- *
- * @package OxidEsales\Codeception\Admin\Order
- */
 trait OrderList
 {
     public $searchForm = '#search';
@@ -23,25 +18,25 @@ trait OrderList
     public $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
 
     /**
+     * @deprecated method will be removed in next major. Use findByOrderNumber() instead.
      * @param int $orderNumber
      *
      * @return MainOrderPage
      */
     public function searchByOrderNumber(int $orderNumber): MainOrderPage
     {
-        $I = $this->user;
+        return $this->find($this->orderNumberInput, (string)$orderNumber);
+    }
 
-        $I->selectListFrame();
-        $I->submitForm($this->searchForm, [$this->orderNumberInput => $orderNumber]);
+    public function findByOrderNumber(string $orderNumber): OrderOverviewPage
+    {
+        $this->find($this->orderNumberInput, $orderNumber);
 
-        return new MainOrderPage($I);
+        return new OrderOverviewPage($this->user);
     }
 
     /**
-     * @param string $field
-     * @param string $value
-     *
-     * @return MainOrderPage
+     * @deprecated method return value will change to OrderOverviewPage in next major
      */
     public function find(string $field, string $value): MainOrderPage
     {

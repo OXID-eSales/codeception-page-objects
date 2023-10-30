@@ -4,6 +4,3 @@
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
-
-### Changed
-- Parts of `OrderCheckout`'s public interface cahnged to private

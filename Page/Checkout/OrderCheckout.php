@@ -28,6 +28,7 @@ class OrderCheckout extends Page
     private string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
     private string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
     private string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
+    private string $basketItemLabel = '#list_cartItem_%d .basket-item-desc .persparamBox';
 
     private string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
@@ -166,6 +167,25 @@ class OrderCheckout extends Page
             $I->see((string)$basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->see((string)$basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
         }
+        return $this;
+    }
+
+    public function seeOrderItemLabel(string $label, int $item): static
+    {
+        $I = $this->user;
+        $I->see(
+            sprintf('%s %s', Translator::translate('LABEL'), $label),
+            sprintf($this->basketItemLabel, $item)
+        );
+        return $this;
+    }
+
+    public function dontSeeOrderItemHasLabel(int $item): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement(
+            sprintf($this->basketItemLabel, $item)
+        );
         return $this;
     }
 

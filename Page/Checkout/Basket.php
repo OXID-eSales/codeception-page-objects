@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use Facebook\WebDriver\WebDriverKeys;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -40,6 +41,7 @@ class Basket extends Page
     public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
     public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
     public string $checkoutButton = '.content';
+    private string $persistentParamInput = '#list_cartItem_%d input.persParam';
 
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
@@ -48,7 +50,7 @@ class Basket extends Page
         $I->pressKey(
             sprintf($this->basketItemAmount, $itemPosition),
             $amount,
-            \Facebook\WebDriver\WebDriverKeys::ENTER
+            WebDriverKeys::ENTER
         );
         $I->waitForPageLoad();
         return $this;
@@ -159,6 +161,44 @@ class Basket extends Page
     {
         $I = $this->user;
         $I->see($price, sprintf($this->basketItemUnitPrice, $position));
+        return $this;
+    }
+
+    public function seeProductLabel(string $label, int $item): static
+    {
+        $I = $this->user;
+        $I->seeInField(
+            sprintf($this->persistentParamInput, $item),
+            $label,
+        );
+
+        return $this;
+    }
+
+    public function dontSeeProductLabelInput(int $item): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement(
+            sprintf($this->persistentParamInput, $item)
+        );
+
+        return $this;
+    }
+
+    public function addProductLabel(string $label, int $item): static
+    {
+        $I = $this->user;
+        $I->fillField(
+            sprintf($this->persistentParamInput, $item),
+            $label
+        );
+        $I->comment('press the key to trigger CHANGE event');
+        $I->pressKey(
+            sprintf($this->persistentParamInput, $item),
+            WebDriverKeys::ENTER,
+        );
+        $I->waitForAjax();
+
         return $this;
     }
 }
