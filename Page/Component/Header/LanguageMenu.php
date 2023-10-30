@@ -9,15 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Component\Header;
 
-/**
- * Trait for language menu widget.
- * @package OxidEsales\Codeception\Page\Component\Header
- */
 trait LanguageMenu
 {
-    public $languageMenuButton = '//div[@class="meta"]//div[contains(@class,"dropdowns")]/button';
+    public string $languageMenuButton = '//div[@class="meta"]//div[contains(@class,"dropdowns")]/button';
 
-    public $openLanguageMenu = '//div[@class="meta"]//div[contains(@class,"dropdown-menu")]/form/div/button';
+    public string $openLanguageMenu = '//div[@class="meta"]//div[contains(@class,"dropdown-menu")]/form/div/button';
 
     /**
      * @param string $language
@@ -31,7 +27,6 @@ trait LanguageMenu
         $I->waitForElement($this->openLanguageMenu);
         $I->click($this->openLanguageMenu);
         $I->click($language);
-        $I->click($this->languageMenuButton);
         $I->waitForElementNotVisible($this->openLanguageMenu);
         return $this;
     }
