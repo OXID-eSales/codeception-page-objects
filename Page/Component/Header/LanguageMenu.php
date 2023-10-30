@@ -31,7 +31,6 @@ trait LanguageMenu
         $I->waitForElement($this->openLanguageMenu);
         $I->click($this->openLanguageMenu);
         $I->click($language);
-        $I->click($this->languageMenuButton);
         $I->waitForElementNotVisible($this->openLanguageMenu);
         return $this;
     }
