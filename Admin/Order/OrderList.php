@@ -13,32 +13,16 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait OrderList
 {
-    public $searchForm = '#search';
-    public $orderNumberInput = 'where[oxorder][oxordernr]';
-    public $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
-
-    /**
-     * @deprecated method will be removed in next major. Use findByOrderNumber() instead.
-     * @param int $orderNumber
-     *
-     * @return MainOrderPage
-     */
-    public function searchByOrderNumber(int $orderNumber): MainOrderPage
-    {
-        return $this->find($this->orderNumberInput, (string)$orderNumber);
-    }
+    public string $searchForm = '#search';
+    public string $orderNumberInput = 'where[oxorder][oxordernr]';
+    public string $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
 
     public function findByOrderNumber(string $orderNumber): OrderOverviewPage
     {
-        $this->find($this->orderNumberInput, $orderNumber);
-
-        return new OrderOverviewPage($this->user);
+        return $this->find($this->orderNumberInput, $orderNumber);
     }
 
-    /**
-     * @deprecated method return value will change to OrderOverviewPage in next major
-     */
-    public function find(string $field, string $value): MainOrderPage
+    public function find(string $field, string $value): OrderOverviewPage
     {
         $I = $this->user;
 
@@ -51,12 +35,9 @@ trait OrderList
 
         $I->selectEditFrame();
 
-        return new MainOrderPage($I);
+        return new OrderOverviewPage($I);
     }
 
-    /**
-     * @return DownloadsOrderPage
-     */
     public function openDownloadsTab(): DownloadsOrderPage
     {
         $I = $this->user;
@@ -68,9 +49,6 @@ trait OrderList
         return new DownloadsOrderPage($I);
     }
 
-    /**
-     * @return AddressesOrderPage
-     */
     public function openAddressesTab(): AddressesOrderPage
     {
         $I = $this->user;
@@ -82,9 +60,6 @@ trait OrderList
         return new AddressesOrderPage($I);
     }
 
-    /**
-     * @return ProductsOrderPage
-     */
     public function openProductsTab(): ProductsOrderPage
     {
         $I = $this->user;
@@ -96,9 +71,6 @@ trait OrderList
         return new ProductsOrderPage($I);
     }
 
-    /**
-     * @return MainOrderPage
-     */
     public function deleteOrder($columNumber = '1'): MainOrderPage
     {
         $this->executeListModifier("#del.$columNumber");
@@ -106,9 +78,6 @@ trait OrderList
         return new MainOrderPage($this->user);
     }
 
-    /**
-     * @return MainOrderPage
-     */
     public function cancelOrder($columNumber = '1'): MainOrderPage
     {
         $this->executeListModifier("#pau.$columNumber");
