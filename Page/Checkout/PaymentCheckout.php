@@ -11,11 +11,13 @@ namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\Header\Navigation;
+use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
 
 class PaymentCheckout extends Page
 {
     use Navigation;
+    use PaymentSummary;
 
     public string $URL = 'index.php?lang=1&cl=payment';
     public string $breadCrumb = '//div[@class="step step-2 active"]';

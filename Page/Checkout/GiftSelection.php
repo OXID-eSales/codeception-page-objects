@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page\Checkout;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
 
 /**
@@ -19,6 +20,8 @@ use OxidEsales\Codeception\Page\Page;
  */
 class GiftSelection extends Page
 {
+    use PaymentSummary;
+
     public $selectWrapping = '//form[@id="giftoptions_modal_form"]/div/div[%s]//input[@value="%s"]/following-sibling::label';
 
     public $selectGiftCard = '//div[@id="wrappCard"]//input[@id="chosen_%s"]';
