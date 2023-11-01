@@ -66,8 +66,7 @@ class Basket extends Step
 
         $this->openPage($I, $params);
         $basketPage = new BasketPage($I);
-        $breadCrumbName = Translator::translate('CART');
-        $basketPage->seeOnBreadCrumb($breadCrumbName);
+        $I->see(Translator::translate('CART'));
         return $basketPage;
     }
 
