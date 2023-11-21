@@ -9,6 +9,7 @@
   - Product Labels
   - Promotion
   - Contact Page.
+  - Product List
 - Page components for:
   - Cookie consent management
   - Maintenance page detection
