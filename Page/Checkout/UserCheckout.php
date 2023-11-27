@@ -112,6 +112,7 @@ class UserCheckout extends Page
         $I = $this->user;
         $I->click($this->editShippingAddress);
         $I->selectOption($this->selectCountry, $country);
+        $I->wait(1);
 
         return $this;
     }
