@@ -11,11 +11,6 @@ namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class ProductCategories
- *
- * @package OxidEsales\Codeception\Admin
- */
 class ProductCategories extends \OxidEsales\Codeception\Page\Page
 {
     public $searchForm = '#search';
@@ -25,11 +20,8 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
     public $categoryInformation = '#transfer';
     public $categoryInput = 'where[oxcategories][oxtitle]';
 
-    /**
-     * @param string $categoryName
-     *
-     * @return ProductCategories
-     */
+    private string $newCategoryThumbFile = 'myfile[TC@oxcategories__oxthumb]';
+
     public function createNewCategory(string $categoryName): ProductCategories
     {
         $I = $this->user;
@@ -48,9 +40,17 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
-    /**
-     * @return ProductCategories
-     */
+    public function uploadThumbnail(string $categoryThumbPath): ProductCategories
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+
+        $I->attachFile($this->newCategoryThumbFile, $categoryThumbPath);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+
+        return $this;
+    }
+
     public function assignProductsToSelectedCategory(): ProductCategories
     {
         $I = $this->user;
@@ -66,9 +66,6 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
-    /**
-     * @return ProductCategories
-     */
     public function openRightsForSelectedCategory(): ProductCategories
     {
         $I = $this->user;
@@ -80,9 +77,6 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
-    /**
-     * @return ProductCategories
-     */
     public function assignUserRightsToSeletedCategory(): ProductCategories
     {
         $I = $this->user;
@@ -98,9 +92,6 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
-    /**
-     * @return ProductCategories
-     */
     public function selectCategory(string $categoryName): ProductCategories
     {
         $I = $this->user;
