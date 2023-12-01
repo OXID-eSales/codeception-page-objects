@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Products;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ProductList
@@ -16,6 +17,7 @@ trait ProductList
     public string $searchNumberInput = "//input[@name='where[oxarticles][oxartnum]']";
     public string $languageSelect = "//select[@name='changelang']";
     public string $searchForm = '#search';
+    public string $productStatusClass = "//tr[@id='row.1']/td";
 
     public function switchLanguage(string $language): MainProductPage
     {
@@ -28,6 +30,19 @@ trait ProductList
         $I->selectEditFrame();
 
         return new MainProductPage($I);
+    }
+
+    public function filterByProductNumber(string $value): Products
+    {
+        $I = $this->user;
+
+        $I->selectListFrame();
+        $I->fillField($this->searchNumberInput, $value);
+        $I->submitForm($this->searchForm, []);
+
+        $I->selectListFrame();
+
+        return $this;
     }
 
     public function find(string $field, string $value): MainProductPage
