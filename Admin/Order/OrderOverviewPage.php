@@ -17,6 +17,8 @@ class OrderOverviewPage extends Page
     use OrderList;
 
     private string $orderProductLabel = '.box table tbody tr:nth-of-type(%d) td:nth-of-type(6)';
+    private string $shipForm = '#sendorder';
+    private string $orderSendMailCheckbox = 'input[name=sendmail]';
 
     public function seeOrderProductLabel(string $label, int $product): static
     {
@@ -34,6 +36,19 @@ class OrderOverviewPage extends Page
         $I->dontSeeElement(
             sprintf($this->orderProductLabel, $product)
         );
+        return $this;
+    }
+
+    public function shipOrderWithEmail(): static
+    {
+        $I = $this->user;
+
+        $I->checkOption($this->orderSendMailCheckbox);
+        $I->submitForm($this->shipForm, []);
+
+        // waiting for shipment status to be changed
+        $I->see(Translator::translate('GENERAL_SENDON'));
+
         return $this;
     }
 }
