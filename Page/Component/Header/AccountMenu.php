@@ -21,23 +21,23 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AccountMenu
 {
-    public string $accountMenuButton = '//div[contains(@class,"menu-dropdowns")]/button';
-    public string $openAccountMenuButton = '//div[contains(@class,"menu-dropdowns")]/ul';
+    public string $accountMenuButton = "//div[contains(@class,'service-menu')]/button";
+    public string $openAccountMenuButton = "//div[contains(@class,'service-menu')]/ul";
     public string $openedAccountMenu = '//div[contains(@class,"menu-dropdowns")]/ul/li';
     public string $userRegistrationLink = '#registerLink';
     public string $userLoginName = '#loginEmail';
     public string $userLoginPassword = '#loginPasword';
-    public string $userForgotPasswordButton = '//a[contains(@class,"forgotPasswordOpener")]';
-    public string $userLoginButton = '//form[@name="login"]/button';
+    public string $userForgotPasswordButton = '//a[@class="forgotPasswordOpener btn btn-default"]';
+    public string $userLoginButton = '//div[@id="loginBox"]/button';
     public string $userLogoutButton = '';
     public string $badLoginError = '#errorBadLogin';
     public string $userAccount = '//ul[@id="services"]';
-    public string $userAccountLink = '//div[contains(@class,"menu-dropdowns")]/ul/li[1]/a';
-    public string $userAccountCompareListLink = '//a[@class="dropdown-item"]';
-    public string $userAccountWishListLink = '//div[contains(@class,"menu-dropdowns")]/a';
-    public string $userAccountGiftRegistryLink = '//a[@class="dropdown-item"]';
-    public string $userAccountCompareListText = '//a[@class="dropdown-item"]';
-    public string $userAccountWishListText = '//div[contains(@class,"menu-dropdowns")]/a/span';
+    public string $userAccountLink = '//ul[@id="services"]/li[1]/a';
+    public string $userAccountCompareListLink = '//ul[@id="services"]/li[2]/a';
+    public string $userAccountWishListLink = '//ul[@id="services"]/li[3]/a';
+    public string $userAccountGiftRegistryLink = '//ul[@id="services"]/li[4]/a';
+    public string $userAccountCompareListText = '//ul[@id="services"]/li[2]';
+    public string $userAccountWishListText = '//ul[@id="services"]/li[3]';
     public string $userAccountGiftRegistryText = '//ul[@id="services"]/li[4]';
 
     public function openUserRegistrationPage(): UserRegistration

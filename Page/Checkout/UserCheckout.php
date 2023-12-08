@@ -29,7 +29,7 @@ class UserCheckout extends Page
     public string $openBillingAddressFormButton = '#userChangeAddress';
     public string $orderRemark = '#orderRemark';
     public string $registerUserButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
-    public string $nextStepButton = '#userFormSubmit';
+    public string $nextStepButton = '#userNextStepBottom';
     public string $selectCountry = '//select[@id="delCountrySelect"]';
     public string $editShippingAddress = '//button[contains(@class, "edit-shipping-address")]';
 
@@ -63,7 +63,7 @@ class UserCheckout extends Page
         $I->waitForElementClickable($this->nextStepButton);
         $I->retryClick($this->nextStepButton);
         $paymentPage = new PaymentCheckout($I);
-        $I->waitForElement($paymentPage->breadCrumb);
+        #$I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
     }
 

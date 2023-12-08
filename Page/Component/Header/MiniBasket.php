@@ -17,14 +17,14 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait MiniBasket
 {
-    public string $miniBasketMenuElement = '//button[contains(@class,"btn-minibasket")]';
-    public string $miniBasketTitle = '#basketModalLabel';
-    public string $miniBasketItemTitle = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
-    public string $miniBasketItemAmount = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
-    public string $miniBasketItemPrice = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
-    public string $miniBasketSummaryPrice = '//div[contains(@class,"minibasket-total-row")]/div[2]';
+    public string $miniBasketMenuElement = '//div[@class="btn-group minibasket-menu"]/button';
+    public string $miniBasketTitle = '//h3[@id="offcanvasShoppingCartLabel"]';
+    public string $miniBasketItemTitle = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[2]/a';
+    public string $miniBasketItemAmount = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[1]/span';
+    public string $miniBasketItemPrice = '//div[@id="basketFlyout"]/table/tbody/tr[%d]/td[3]';
+    public string $miniBasketSummaryPrice = '//td[@class="total_price text-right"]';
     public string $miniBasketCountDown = '#countdown';
-    public string $miniBasketClose = '//div[@id="basketModal"]//button';
+    public string $miniBasketClose = '//div[@class="btn-group minibasket-menu open"]/button';
     private string $itemCountBadge = '//button[@class="btn btn-minibasket"]//span[@class="badge"]';
     private string $addToWishlist = '//*[@id="list_cartItem_%d"]/div[2]/div[1]/div[3]/div/div[1]/div/div[2]/button[2]';
 

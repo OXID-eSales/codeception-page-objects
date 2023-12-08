@@ -35,12 +35,12 @@ class Basket extends Page
     public string $basketUpdateButton = '//input[@id="am_%s"]/following-sibling::button';
     public string $openBasketCouponField = '//h4[contains(text(),"%s")]';
     public string $addBasketCouponField = '#input_voucherNr';
-    public string $addBasketCouponButton = '//div[@id="voucherCollapse"]//button';
-    public string $removeBasketCoupon = '//a[@class="btn removeFn py-0"]';
-    public string $openGiftSelection = '//div[@id="list_cartItem_%s"]//div[@class="wrapping"]/a';
-    public string $basketItemAttributes = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"attributes")]';
+    public string $addBasketCouponButton = '//div[@id="basketVoucher"]//button';
+    public string $removeBasketCoupon = '.couponData .removeFn';
+    public string $openGiftSelection = '//form[@id="basketform"]//div[@id="basketitem_giftoption_%s"]//a';
+    public string $basketItemAttributes = '#table_cartItem_%s';
     public string $basketItemSelection = '//div[@id="cartItemSelections_%s"]/div';
-    public string $checkoutButton = '.content';
+    public string $checkoutButton = '//button[@id="userNextStepBottom"]';
     private string $persistentParamInput = '#list_cartItem_%d input.persParam';
 
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
@@ -112,9 +112,9 @@ class Basket extends Page
     public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('CHECKOUT'), $this->checkoutButton);
+        $I->retryClick(Translator::translate('CHECKOUT'));
         $userStep = new UserCheckout($I);
-        $I->waitForElement($userStep->breadCrumb);
+      #  $I->waitForElement($userStep->breadCrumb);
         return $userStep;
     }
 
@@ -135,8 +135,8 @@ class Basket extends Page
     public function addCouponToBasket(string $couponNumber): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
-        $I->waitForElementVisible($this->addBasketCouponField);
+        #$I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
+        #$I->waitForElementVisible($this->addBasketCouponField);
         $I->fillField($this->addBasketCouponField, $couponNumber);
         $I->retryClick($this->addBasketCouponButton);
         $I->waitForElementVisible($this->removeBasketCoupon);

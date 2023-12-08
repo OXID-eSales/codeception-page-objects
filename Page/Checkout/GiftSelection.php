@@ -22,9 +22,11 @@ class GiftSelection extends Page
 {
     use PaymentSummary;
 
-    public $selectWrapping = '//form[@id="giftoptions_modal_form"]/div/div[%s]//input[@value="%s"]/following-sibling::label';
+    public $selectWrapping = '//div[@id="swiper-basketproduct-%s"]//div[@id="wrap_%s_%s"]';
 
-    public $selectGiftCard = '//div[@id="wrappCard"]//input[@id="chosen_%s"]';
+    public $waitforGiftCard = '//div[@id="wrappCard"]//input[@id="chosen_%s"]';
+
+    public $selectGiftCard = '//div[@id="wrappCard"]//input[@id="chosen_%s"]/following-sibling::label';
 
     public $greetingsTextField = '#giftmessage';
 
@@ -41,7 +43,10 @@ class GiftSelection extends Page
     public function selectWrapping(int $itemPosition, string $wrappingId)
     {
         $I = $this->user;
-        $I->click(sprintf($this->selectWrapping, $itemPosition, $wrappingId));
+        $I->retryClick(Translator::translate('ADD_WRAPPING'));
+        $I->waitForElementClickable(sprintf($this->selectWrapping, $itemPosition, $itemPosition, $wrappingId));
+        $I->wait(1);
+        $I->click(sprintf($this->selectWrapping, $itemPosition, $itemPosition, $wrappingId));
         return $this;
     }
 
@@ -55,6 +60,9 @@ class GiftSelection extends Page
     public function selectCard(string $cardId)
     {
         $I = $this->user;
+        $I->retryClick(Translator::translate('GREETING_CARD'));
+        $I->waitForElementCLickable(sprintf($this->waitforGiftCard, $cardId));
+        $I->wait(1);
         $I->click(sprintf($this->selectGiftCard, $cardId));
         return $this;
     }
