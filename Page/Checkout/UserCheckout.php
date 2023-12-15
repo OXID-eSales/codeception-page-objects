@@ -79,7 +79,6 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->click($this->registerUserButton);
-		$I->wait(100);
         $I->waitForPageLoad();
         $I->waitForElement($this->breadCrumb);
         return $this;
