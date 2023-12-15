@@ -25,17 +25,17 @@ class OrderCheckout extends Page
     private string $basketItemTitle = '//div[@id="list_cartItem_%s"]/div[2]/div/div';
     private string $couponInformation = '//div[contains(@class,"list-group-item")]';
 
-    private string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
-    private string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
+    private string $billingAddress = '//div[@id="orderAddress"]/div[@class="card-body"][1]/div';
+    private string $deliveryAddress = '//div[@id="orderAddress"]/div[@class="card-body"][2]/div';
     private string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
     private string $basketItemLabel = '#list_cartItem_%d .basket-item-desc .persparamBox';
 
-    private string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
+    private string $editBillingAddress = '//div[@id="orderAddress"]/h4/form[1]/button';
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
-    private string $editPayment = '//form[@id="orderPayment"]/h4/button';
+    private string $editPayment = '//form[@id="orderPayment"]/button';
     private string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
-    private string $paymentMethod = '//form[@id="orderPayment"]/div';
-    private string $shippingMethod = '//form[@id="orderShipping"]/div';
+    private string $paymentMethod = '//div[contains(@class,"card")]/div[@class="card-body"][2]';
+    private string $shippingMethod = '//div[contains(@class,"card")]/div[@class="card-body"][1]';
     private string $previousStepLink = '';
 
     private string $submitOrder = '//button[contains(@class,"btn-highlight")]';
