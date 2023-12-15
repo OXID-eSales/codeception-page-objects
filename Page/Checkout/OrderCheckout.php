@@ -68,25 +68,25 @@ class OrderCheckout extends Page
     private string $basketItemLabel = '#list_cartItem_%d .basket-item-desc .persparamBox';
 
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $billingAddress = '//div[@id="orderAddress"]/form[1]/div/div';
+    public string $billingAddress = '//div[@id="orderAddress"]/div[@class="card-body"][1]/div';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $deliveryAddress = '//div[@id="orderAddress"]/form[2]/div/div';
+    public string $deliveryAddress = '//div[@id="orderAddress"]/div[@class="card-body"][2]/div';
     /** @deprecated will be private in next major. Use corresponding method */
     public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $editBillingAddress = '//div[@id="orderAddress"]/form[1]/h4/button';
+    public string $editBillingAddress = '//div[@id="orderAddress"]/h4/form[1]/button';
 
     /** @deprecated will be private in next major. Use corresponding method */
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $editPayment = '//form[@id="orderPayment"]/h4/button';
+    public string $editPayment = '//form[@id="orderPayment"]/button';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
+    public string $editShippingMethod = '//form[@id="orderShipping"]/button';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $paymentMethod = '//form[@id="orderPayment"]/div';
+    public string $paymentMethod = '//div[contains(@class,"card")]/div[@class="card-body"][2]';
 
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $shippingMethod = '//form[@id="orderShipping"]/div';
+    public string $shippingMethod = '//div[contains(@class,"card")]/div[@class="card-body"][1]';
     /** @deprecated will be private in next major. Use corresponding method */
     public string $previousStepLink = '';
 
