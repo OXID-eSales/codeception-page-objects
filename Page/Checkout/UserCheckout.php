@@ -28,7 +28,7 @@ class UserCheckout extends Page
     public string $openShipAddressForm = '#showShipAddress';
     public string $openBillingAddressFormButton = '#userChangeAddress';
     public string $orderRemark = '#orderRemark';
-    public string $registerUserButton = '//div[@class="content"]//div[@class="row"]/div[2]//button';
+    public string $registerUserButton = '//main[@class="content"]//div[@class="row"]/div[2]//button';
     public string $nextStepButton = '#userFormSubmit';
     public string $selectCountry = '//select[@id="delCountrySelect"]';
     public string $editShippingAddress = '//button[contains(@class, "edit-shipping-address")]';
