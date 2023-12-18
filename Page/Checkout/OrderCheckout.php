@@ -33,7 +33,7 @@ class OrderCheckout extends Page
     private string $editBillingAddress = '//div[@id="orderAddress"]/h4/form[1]/button';
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
     private string $editPayment = '//form[@id="orderPayment"]/button';
-    private string $editShippingMethod = '//form[@id="orderShipping"]/h4/button';
+    private string $editShippingMethod = '//form[@id="orderShipping"]/button';
     private string $paymentMethod = '//div[contains(@class,"card")]/div[@class="card-body"][2]';
     private string $shippingMethod = '//div[contains(@class,"card")]/div[@class="card-body"][1]';
     private string $previousStepLink = '';
