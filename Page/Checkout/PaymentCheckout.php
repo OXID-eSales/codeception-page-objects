@@ -21,7 +21,7 @@ class PaymentCheckout extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = 'index.php?lang=1&cl=payment';
+    public string $URL = 'index.php?lang=1&cl=payment';
 
     public $paymentMethod = '';
 

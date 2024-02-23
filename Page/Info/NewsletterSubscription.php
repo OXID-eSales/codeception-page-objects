@@ -18,7 +18,7 @@ use OxidEsales\Codeception\Page\Page;
 class NewsletterSubscription extends Page
 {
     // include url of current page
-    public $URL = '/en/newsletter/';
+    public string $URL = '/en/newsletter/';
 
     public $userFirstName = '#newsletterFname';
 

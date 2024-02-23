@@ -26,7 +26,7 @@ class UserGiftRegistry extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = '/en/my-gift-registry/';
+    public string $URL = '/en/my-gift-registry/';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';

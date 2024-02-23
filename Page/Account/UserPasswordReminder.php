@@ -17,7 +17,7 @@ class UserPasswordReminder extends Page
 {
     use AccountMenu;
 
-    public $URL = '/en/forgot-password/';
+    public string $URL = '/en/forgot-password/';
     public $breadCrumb = '#breadcrumb';
     public $headerTitle = 'h3';
     public string $forgotPasswordUserEmail = '#forgotPasswordUserLoginName';

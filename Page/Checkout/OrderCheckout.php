@@ -14,7 +14,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class OrderCheckout extends Page
 {
-    public $URL = '/index.php?cl=order&lang=1';
+    public string $URL = '/index.php?cl=order&lang=1';
     public string $billingAddress = '//div[@id="orderAddress"]/div[1]/form/div[2]/div[2]';
     public string $deliveryAddress = '//div[@id="orderAddress"]/div[2]/form/div[2]/div[2]';
     public string $userRemarkHeader = '//div[@class="panel panel-default orderRemarks"]/div[1]/h3';

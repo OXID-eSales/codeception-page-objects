@@ -22,7 +22,7 @@ class Invitation extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = '';
+    public string $URL = '';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';

@@ -20,7 +20,7 @@ class UserChangePassword extends Page
     use AccountMenu;
 
     // include url of current page
-    public $URL = '/en/my-password/';
+    public string $URL = '/en/my-password/';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';

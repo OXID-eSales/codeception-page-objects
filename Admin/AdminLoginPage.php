@@ -18,7 +18,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 class AdminLoginPage extends AdminPanel
 {
-    public $URL = '/admin/';
+    public string $URL = '/admin/';
 
     public $userAccountLoginName = '#usr';
     public $userAccountLoginPassword = '#pwd';

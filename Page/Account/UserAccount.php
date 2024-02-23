@@ -19,7 +19,7 @@ class UserAccount extends Page
     use AccountMenu;
     use AccountNavigation;
 
-    public $URL = '/en/my-account/';
+    public string $URL = '/en/my-account/';
     public $breadCrumb = '#breadcrumb';
     public string $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
     public string $dashboardCompareListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[1]';

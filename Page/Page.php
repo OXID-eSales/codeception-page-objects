@@ -25,7 +25,7 @@ class Page
     /**
      * @var string
      */
-    public $URL = '';
+    public string $URL = '';
 
     /**
      * @var string

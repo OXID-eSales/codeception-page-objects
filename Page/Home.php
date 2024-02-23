@@ -18,7 +18,7 @@ class Home extends Page
     use Header;
     use Footer;
 
-    public $URL = '/';
+    public string $URL = '/';
     public string $openManufacturerList = '//div[@class="top-brands my-5"]/div/div[%s]';
 
     public function openManufacturerFromStarPage(string $manufacturerTitle, int $position = 1): ProductList

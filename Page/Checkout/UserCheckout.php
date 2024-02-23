@@ -20,7 +20,7 @@ class UserCheckout extends Page
     use Navigation;
 
     // include url of current page
-    public $URL = '/index.php?lang=1&cl=user';
+    public string $URL = '/index.php?lang=1&cl=user';
 
     public $noRegistrationOption = '//div[@id="optionNoRegistration"]/div/button';
 

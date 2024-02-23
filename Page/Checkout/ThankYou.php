@@ -19,7 +19,7 @@ use OxidEsales\Codeception\Page\Page;
 class ThankYou extends Page
 {
     // include url of current page
-    public $URL = '/index.php?cl=thankyou&lang=1';
+    public string $URL = '/index.php?cl=thankyou&lang=1';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';

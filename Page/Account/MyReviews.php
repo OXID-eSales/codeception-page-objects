@@ -21,7 +21,7 @@ class MyReviews extends Page
 
     public const URL = '/index.php?lang=1&cl=account_reviewlist';
 
-    public $URL = self::URL;
+    public string $URL = self::URL;
     public $breadCrumb = '#breadcrumb';
     public $headerTitle = 'h1';
     private $reviewEntry = '[itemprop="review"]';

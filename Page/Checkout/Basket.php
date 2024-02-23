@@ -19,7 +19,7 @@ class Basket extends Page
     use AccountMenu;
     use MiniBasket;
 
-    public $URL = '';
+    public string $URL = '';
     public $breadCrumb = '#breadcrumb';
     public string $basketSummary = '#basketGrandTotal';
     public string $basketItemAmount = '#basketcontents_table #am_%s';

@@ -14,7 +14,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class Login extends Page
 {
-    public $URL = '/';
+    public string $URL = '/';
 
     // include bread crumb of current page
     public $breadCrumb = '#breadcrumb';

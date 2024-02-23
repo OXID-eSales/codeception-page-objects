@@ -16,7 +16,7 @@ namespace OxidEsales\Codeception\Page;
 class MultishopHome extends Page
 {
     // include url of current page
-    public $URL = '/';
+    public string $URL = '/';
 
     public $shopLinkPathTemplate = "//div[@id='page']/div[2]//a[%s]";
 

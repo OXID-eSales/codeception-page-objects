@@ -21,5 +21,5 @@ class UserOrderHistory extends Page
     use UserLogin;
 
     // include url of current page
-    public $URL = '/en/order-history/';
+    public string $URL = '/en/order-history/';
 }
