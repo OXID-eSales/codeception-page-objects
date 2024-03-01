@@ -74,7 +74,7 @@ class OrderCheckout extends Page
     /** @deprecated will be private in next major. Use corresponding method */
     public string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $editBillingAddress = '//div[@id="orderAddress"]/h4/form[1]/button';
+    public string $editBillingAddress = '//div[@id="orderAddress"]/h2/form[1]/button';
 
     /** @deprecated will be private in next major. Use corresponding method */
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
@@ -93,9 +93,9 @@ class OrderCheckout extends Page
     /** @deprecated will be private in next major. Use corresponding method */
     public string $submitOrder = '//button[contains(@class,"btn-highlight")]';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
+    public string $userRemark = '//h2[contains(text(),"%s")]/following-sibling::div';
     /** @deprecated will be private in next major. Use corresponding method */
-    public string $userRemarkHeader = 'h4';
+    public string $userRemarkHeader = 'h2';
     /** @deprecated will be private in next major. Use corresponding method */
     public string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
 

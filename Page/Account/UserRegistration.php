@@ -21,7 +21,7 @@ class UserRegistration extends Page
 
     public string $URL = '/en/open-account';
     public string $breadCrumb = '.breadcrumb';
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
     public string $saveFormButton = '#accUserSaveTop';
 
     public function seePageOpen(): self

@@ -28,7 +28,7 @@ class ProductCompare extends Page
     // include bread crumb of current page
     public string $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
 
     public $productTitle = '//tr[@class="compare-products"]/td[%s]//strong[@class="title"]';
 
