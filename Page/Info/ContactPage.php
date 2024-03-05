@@ -20,7 +20,7 @@ class ContactPage extends Page
     private string $email = '//input[@name="editval[oxuser__oxusername]"]';
     private string $subject = '//input[@name="c_subject"]';
     private string $message = '//textarea[@name="c_message"]';
-    private string $sendButton = '//button[@class="btn btn-primary" and contains(text(), "Send")]';
+    private string $sendButton = '//button[@class="btn btn-highlight" and contains(text(), "Send")]';
 
     public function fillInContactData(ContactData $contactData): static
     {
