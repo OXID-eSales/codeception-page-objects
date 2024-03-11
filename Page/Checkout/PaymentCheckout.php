@@ -25,7 +25,7 @@ class PaymentCheckout extends Page
     public string $nextStepButton = '//div[@class="row"]/div[2]//button';
     public string $previousStepButton = '';
     public string $selectShippingButton = '//select[@name="sShipSet"]';
-    private string $headings = '//h4';
+    private string $headings = '//h2';
     private string $paymentInformation = '//form[@id="payment"]';
     private string $paymentOption = '//div[@class="payment-option"]';
     private string $noShippingMethodText = 'Currently we have no shipping method set up for this country.';

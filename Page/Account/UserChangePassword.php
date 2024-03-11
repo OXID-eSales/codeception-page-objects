@@ -26,7 +26,7 @@ class UserChangePassword extends Page
     // include bread crumb of current page
     public string $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
 
     public $userOldPassword = '#passwordOld';
 

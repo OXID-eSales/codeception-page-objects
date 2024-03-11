@@ -30,7 +30,7 @@ class OrderCheckout extends Page
     private string $downloadableProductsAgreement = '#oxdownloadableproductsagreement';
     private string $basketItemLabel = '#list_cartItem_%d .basket-item-desc .persparamBox';
 
-    private string $editBillingAddress = '//div[@id="orderAddress"]/h4/form[1]/button';
+    private string $editBillingAddress = '//div[@id="orderAddress"]/h2/form[1]/button';
     private string $editCart = '//div[@id="orderEditCart"]//h4/button';
     private string $editPayment = '//form[@id="orderPayment"]/button';
     private string $editShippingMethod = '//form[@id="orderShipping"]/button';
@@ -39,8 +39,8 @@ class OrderCheckout extends Page
     private string $previousStepLink = '';
 
     private string $submitOrder = '//button[contains(@class,"btn-highlight")]';
-    private string $userRemark = '//h4[contains(text(),"%s")]/following-sibling::div';
-    private string $userRemarkHeader = 'h4';
+    private string $userRemark = '//h2[contains(text(),"%s")]/following-sibling::div';
+    private string $userRemarkHeader = 'h2';
     private string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
 
     public function submitOrder(): self

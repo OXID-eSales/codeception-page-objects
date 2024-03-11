@@ -23,7 +23,7 @@ class MyReviews extends Page
 
     public string $URL = self::URL;
     public string $breadCrumb = '.breadcrumb';
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
     private $reviewEntry = '//div[@class="reviews-landscape"]/div[@class="card"]';
     private $deleteReviewBtn = '//div[@id="reviewName_%s"]//button';
 

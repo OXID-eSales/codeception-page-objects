@@ -27,11 +27,11 @@ class UserAccount extends Page
     public string $dashboardCompareListPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[2]';
     public string $dashboardWishListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[1]/div[1]';
     public string $dashboardWishListPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[1]/div[2]';
-    public string $dashboardGiftRegistryPanelHeader = '//h4';
-    public string $dashboardGiftRegistryPanelContent = '//h4[contains(text(),"%s")]/following-sibling::div';
+    public string $dashboardGiftRegistryPanelHeader = '//h2';
+    public string $dashboardGiftRegistryPanelContent = '//h2[contains(text(),"%s")]/following-sibling::div';
     public string $dashboardListmaniaPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[1]';
     public string $dashboardListmaniaPanelContent = '//div[@class="accountDashboardView"]/div/div[2]/div[4]/div[2]';
-    public string $dashboardOrderHistoryHeader = '//h4[contains(text(),"%s")]/following-sibling::div';
+    public string $dashboardOrderHistoryHeader = '//h2[contains(text(),"%s")]/following-sibling::div';
     public string $openReviewPageOnDashboard = '//div[contains(text(),"%s")]/following-sibling::a';
 
     public function seePageOpened(): self

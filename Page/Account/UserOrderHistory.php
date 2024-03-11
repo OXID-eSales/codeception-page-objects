@@ -19,13 +19,13 @@ class UserOrderHistory extends Page
     use UserLogin;
 
     public string $URL = '/en/order-history/';
-    private string $pageHeader = '//h3[contains(@class, "page-header")]';
+    private string $pageHeader = '//h1[contains(@class, "page-header")]';
     private string $orderStatus = '//span[@id="accOrderStatus_%s"]';
     private string $orderNumber = '//span[@id="accOrderNo_%s"]';
     private string $shipmentTo = '//span[@id="accOrderName_%s"]';
     private string $orderAmount = '//li[@id="accOrderAmount_%s_%s"]';
     private string $orderAmountLink = '//a[@id="accOrderLink_%s_%s"]';
-    private string $headerTitle = 'h3';
+    private string $headerTitle = 'h1';
     private string $orderItem = '.cl-account_order .card-lg:nth-child(%d) .card-body ol li:nth-of-type(%d)';
 
 

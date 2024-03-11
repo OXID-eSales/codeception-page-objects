@@ -15,5 +15,5 @@ class MyDownloads extends Page
 {
     public string $URL = '/en/my-downloads/';
     public string $breadCrumb = '.breadcrumb';
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
 }

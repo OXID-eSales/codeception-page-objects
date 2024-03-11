@@ -22,7 +22,7 @@ class UserWishList extends Page
 
     public string $URL = '/en/my-wish-list/';
     public string $breadCrumb = '.breadcrumb';
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
     public string $productTitle = '//div[@id="noticelistProductList"]/div/div[%s]//a';
     public string $productDescription = '//div[@id="noticelistProductList"]/div/div[%s]//div[@class="card-text"]';
     public string $productPrice = '#productPrice_noticelistProductList_%s';

@@ -33,7 +33,7 @@ class Basket extends Page
     public string $basketItemId = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"serial-no")]';
     public string $basketBundledItemAmount = '//div[@id="list_cartItem_%s"]//div[contains(@class,"quantity")]';
     public string $basketUpdateButton = '//input[@id="am_%s"]/following-sibling::button';
-    public string $openBasketCouponField = '//h4[contains(text(),"%s")]';
+    public string $openBasketCouponField = '//h2[contains(text(),"%s")]';
     public string $addBasketCouponField = '#input_voucherNr';
     public string $addBasketCouponButton = '//div[@id="voucherCollapse"]//button';
     public string $removeBasketCoupon = '//a[@class="btn removeFn py-0"]';

@@ -24,7 +24,7 @@ class NewsletterSettings extends Page
     // include bread crumb of current page
     public string $breadCrumb = '.breadcrumb';
 
-    public $headerTitle = 'h3';
+    public $headerTitle = 'h1';
 
     public $newsletterStatusSelect = '//select[@id="status"]';
 
