@@ -47,7 +47,7 @@ class PaymentCheckout extends Page
     public function selectShippingIsAvailable(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('SHIPPING_METHOD'), $this->headings);
+        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'), $this->headings);
         $I->seeElement($this->selectShippingButton);
         return $this;
     }
@@ -55,7 +55,7 @@ class PaymentCheckout extends Page
     public function selectShippingIsNotAvailable(): self
     {
         $I = $this->user;
-        $I->dontSee(Translator::translate('SHIPPING_METHOD'), $this->headings);
+        $I->dontSee(Translator::translate('SELECTED_SHIPPING_CARRIER'), $this->headings);
         $I->dontSeeElement($this->selectShippingButton);
         $I->see($this->noShippingMethodText, $this->paymentInformation);
         // If there is no shipping there is also no payment

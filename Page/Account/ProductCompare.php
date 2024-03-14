@@ -30,15 +30,15 @@ class ProductCompare extends Page
 
     public $headerTitle = 'h1';
 
-    public $productTitle = '//tr[@class="compare-products"]/td[%s]//strong[@class="title"]';
+    public $productTitle = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//strong[@class="title"]';
 
-    public $productNumber = '//tr[@class="compare-products"]/td[%s]//span[@class="identifier"]/small[2]';
+    public $productNumber = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//span[@class="identifier"]/small[2]';
 
-    public $productPrice = '//tr[@class="compare-products"]/td[%s]//div[@class="price h5"]/span';
+    public $productPrice = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//div[@class="price h5"]/span';
 
-    public $attributeName = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/th';
+    public $attributeName = '//*[contains(@class, "compare-products")]//div[contains(@class, "attrib-title")][%s]';
 
-    public $attributeValue = '//div[@id="compareLandscape"]/table/tbody/tr[%s]/td[%s]';
+    public $attributeValue = '//*[contains(@class, "compare-products")]//div[@class="attrib-text"][%s]';
 
     public $rightArrow = '#compareRight_%s';
 
@@ -75,7 +75,7 @@ class ProductCompare extends Page
     public function seeProductAttributeName(string $attributeName, int $attributeId)
     {
         $I = $this->user;
-        $I->see($attributeName, sprintf($this->attributeName, ($attributeId + 1)));
+        $I->see($attributeName, sprintf($this->attributeName, $attributeId));
         return $this;
     }
 
@@ -91,7 +91,7 @@ class ProductCompare extends Page
     public function seeProductAttributeValue(string $attributeValue, int $attributeId, int $position)
     {
         $I = $this->user;
-        $I->see($attributeValue, sprintf($this->attributeValue, ($attributeId + 1), $position));
+        $I->see($attributeValue, sprintf($this->attributeValue, $attributeId, $position));
         return $this;
     }
 
