@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.3.0 - unreleased
+## v4.3.0 - 2024-03-11
 
 ### Added
 - New methods for uploading images
