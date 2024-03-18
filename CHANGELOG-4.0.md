@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.4.0 - unreleased
+## v4.4.0 - 2024-03-18
 
 ### Added
 - New methods for `OrderOverviewPage` to ship Order
