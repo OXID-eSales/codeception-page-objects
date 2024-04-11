@@ -116,16 +116,4 @@ trait ProductList
 
         return new DownloadsProductPage($I);
     }
-
-    public function openStockTab(): StockProductPage
-    {
-        $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_stock'));
-        $I->selectListFrame();
-        $I->selectEditFrame();
-
-        return new StockProductPage($I);
-    }
 }
