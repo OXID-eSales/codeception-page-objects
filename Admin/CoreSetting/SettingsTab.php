@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\CoreSetting;
 
-use OxidEsales\Codeception\Admin\CoreSetting\Section\StockSettings;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
@@ -73,19 +72,6 @@ class SettingsTab extends Page
         $I->click(Translator::translate('SHOP_OPTIONS_GROUP_ADMINISTRATION'));
         $I->waitForPageLoad();
         return $this;
-    }
-
-    public function openStockSettings(): StockSettings
-    {
-        $I = $this->user;
-
-        $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_STOCK'));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
-
-        return new StockSettings($I);
     }
 
     public function setAdminFormat(string $format): SettingsTab
