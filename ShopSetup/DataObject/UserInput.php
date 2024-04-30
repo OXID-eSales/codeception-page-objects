@@ -13,7 +13,7 @@ class UserInput
 {
     private string $themeId;
     private string $dbHost;
-    private string $dbPort;
+    private int $dbPort;
     private string $dbName;
     private string $dbUserName;
     private string $dbUserPassword;
@@ -38,12 +38,12 @@ class UserInput
         $this->dbHost = $dbHost;
     }
 
-    public function getDbPort(): string
+    public function getDbPort(): int
     {
         return $this->dbPort;
     }
 
-    public function setDbPort(string $dbPort): void
+    public function setDbPort(int $dbPort): void
     {
         $this->dbPort = $dbPort;
     }
