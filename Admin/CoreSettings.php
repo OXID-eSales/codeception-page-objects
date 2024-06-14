@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\CoreSetting\LicenseTab;
 use OxidEsales\Codeception\Admin\CoreSetting\PerformanceTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SEOTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SettingsTab;
@@ -27,6 +28,8 @@ class CoreSettings extends Page
     public $shopName = 'editval[oxshops__oxname]';
     public $tabPerformance = 'tbclshop_performance';
     public $tabSEO = 'tbclshop_seo';
+
+    private string $tabLicense = 'tbclshop_license';
 
     /**
      * @param string $shopName
@@ -106,6 +109,21 @@ class CoreSettings extends Page
         $I->selectEditFrame();
 
         return new SettingsTab($I);
+    }
+
+
+    public function openLicenseTab(): LicenseTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate($this->tabLicense));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
+        $I->waitForText(Translator::translate('SHOP_LICENSE_VERSION'));
+        $I->waitForPageLoad();
+
+        return new LicenseTab($I);
     }
 
     /**

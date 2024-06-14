@@ -4,6 +4,7 @@
 
 ### Added
 - Page objects for stock configuration
+- Admin License tab elements
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
