@@ -24,7 +24,19 @@ class UserLogin extends Page
 
     public function seePageOpened(): self
     {
-        $this->user->see(Translator::translate('LOGIN'), $this->headerTitle);
+        $I = $this->user;
+        $I->see(Translator::translate('LOGIN'), $this->headerTitle);
+
+        return $this;
+    }
+
+    public function seeLoginForm(): self
+    {
+        $I = $this->user;
+        $I->seeElement($this->userAccountLoginName);
+        $I->seeElement($this->userAccountLoginPassword);
+        $I->seeElement($this->userAccountLoginButton);
+
         return $this;
     }
 
