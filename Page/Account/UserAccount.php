@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
-use OxidEsales\Codeception\Module\Translation\Translator;
 
 class UserAccount extends Page
 {
@@ -20,7 +20,6 @@ class UserAccount extends Page
     use AccountNavigation;
 
     public string $URL = '/en/my-account/';
-    public string $breadCrumb = '.breadcrumb';
     public string $headerTitle = '';
     public string $dashboardChangePasswordPanelHeader = '#linkAccountPassword';
     public string $dashboardCompareListPanelHeader = '//div[@class="accountDashboardView"]/div/div[2]/div[3]/div[1]';

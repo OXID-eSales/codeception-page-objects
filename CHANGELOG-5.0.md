@@ -4,6 +4,7 @@
 
 ### Added
 - Page objects for stock configuration
+- Method in `UserLogin` to confirm that login form is available
 - Admin License tab elements
 
 ### Removed
