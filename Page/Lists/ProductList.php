@@ -155,7 +155,7 @@ class ProductList extends Page
     public function openNextListPage(): self
     {
         $I = $this->user;
-        $I->retryClick($this->nextListPage);
+        $I->retryClickWithLeftButton($this->nextListPage);
         $I->waitForPageLoad();
         return $this;
     }

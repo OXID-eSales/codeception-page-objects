@@ -55,8 +55,7 @@ class OrderCheckout extends Page
     public function submitOrderSuccessfully(): ThankYou
     {
         $I = $this->user;
-        $I->waitForElementClickable($this->submitOrder);
-        $I->retryClick($this->submitOrder);
+        $I->retryClickWithLeftButton($this->submitOrder);
         $thankYouPage = new ThankYou($I);
         $I->waitForElement($thankYouPage->thankYouPage);
         return $thankYouPage;
@@ -98,7 +97,7 @@ class OrderCheckout extends Page
     public function editPaymentMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $I->retryClick($this->editPayment);
+        $I->retryClickWithLeftButton($this->editPayment);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
@@ -113,7 +112,7 @@ class OrderCheckout extends Page
     public function editShippingMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $I->retryClick($this->editShippingMethod);
+        $I->retryClickWithLeftButton($this->editShippingMethod);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;

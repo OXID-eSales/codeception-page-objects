@@ -44,8 +44,7 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
-        $I->waitForElement($this->noRegistrationOption);
-        $I->retryClick($this->noRegistrationOption);
+        $I->retryClickWithLeftButton($this->noRegistrationOption);
         return $this;
     }
 

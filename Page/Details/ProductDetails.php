@@ -404,7 +404,7 @@ class ProductDetails extends Page
     public function openAccessoryDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openAccessoriesProduct, $position));
+        $I->retryClickWithLeftButton(sprintf($this->openAccessoriesProduct, $position));
         $I->waitForPageLoad();
         $I->waitForElement($this->productTitle);
         return $this;
@@ -425,7 +425,7 @@ class ProductDetails extends Page
     public function openSimilarProductDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openSimilarProduct, $position));
+        $I->retryClickWithLeftButton(sprintf($this->openSimilarProduct, $position));
         $I->waitForPageLoad();
         $I->waitForElement($this->productTitle);
         return $this;
@@ -446,7 +446,7 @@ class ProductDetails extends Page
     public function openCrossSellingDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openCrossSellingProduct, $position));
+        $I->retryClickWithLeftButton(sprintf($this->openCrossSellingProduct, $position));
         $I->waitForPageLoad();
         $I->waitForElement($this->productTitle);
         return $this;
@@ -549,7 +549,7 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->see(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
-        $I->retryClick(sprintf($this->alsoBought, $position));
+        $I->retryClickWithLeftButton(sprintf($this->alsoBought, $position));
         return $this;
     }
 

@@ -59,7 +59,7 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->checkOption($this->subscribeCheckbox);
-        $I->retryClick($this->newsletterSubmitButton);
+        $I->retryClickWithLeftButton($this->newsletterSubmitButton);
         return $this;
     }
 
@@ -72,7 +72,7 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->retryCheckOption($this->unSubscribeCheckbox);
-        $I->retryClick($this->newsletterSubmitButton);
+        $I->retryClickWithLeftButton($this->newsletterSubmitButton);
         return $this;
     }
 }

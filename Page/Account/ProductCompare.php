@@ -149,7 +149,7 @@ class ProductCompare extends Page
     public function removeProductFromList(string $productId)
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->removeButton, $productId));
+        $I->retryClickWithLeftButton(sprintf($this->removeButton, $productId));
         $I->waitForPageLoad();
         return $this;
     }

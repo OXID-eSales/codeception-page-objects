@@ -35,6 +35,8 @@ class AdminLoginPage extends AdminPanel
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
+        $I->fillField($this->userAccountLoginPassword, $userPassword);
+        $I->selectOption('#lng', 'English');
         $I->click($this->userAccountLoginButton);
 
         $adminPanel = new AdminPanel($I);

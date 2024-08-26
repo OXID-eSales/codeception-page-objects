@@ -85,7 +85,7 @@ class UserAddress extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->retryClick($this->openShipAddressPanel);
+        $I->retryClickWithLeftButton($this->openShipAddressPanel);
         $I->waitForElementVisible($this->shipAddressPanel);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressPanel);
         return $this;
@@ -148,7 +148,7 @@ class UserAddress extends Page
     public function saveAddress()
     {
         $I = $this->user;
-        $I->retryClick($this->saveUserAddressButton);
+        $I->retryClickWithLeftButton($this->saveUserAddressButton);
         $I->waitForPageLoad();
         return $this;
     }
@@ -222,7 +222,7 @@ class UserAddress extends Page
         $transformedAddress .= $this->getAddressElement($userAddress, 'userLoginNameField');
         $transformedAddress .= Translator::translate('PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'fonNr');
-        $transformedAddress .= ' | ' . Translator::translate('FAX').' ';
+        $transformedAddress .= ' | ' . Translator::translate('FAX') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'faxNr');
         $transformedAddress .= Translator::translate('CELLUAR_PHONE') . ' ';
         $transformedAddress .= $this->getAddressElement($userAddress, 'userMobFonField');

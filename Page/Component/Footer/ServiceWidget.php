@@ -31,6 +31,8 @@ trait ServiceWidget
     public function openBasket(): Basket
     {
         $I = $this->user;
+        $I->scrollTo($this->basketLink);
+        $I->wait(1);
         $I->retryClick(Translator::translate('CART'), $this->basketLink);
         $I->waitForPageLoad();
         return new Basket($I);
