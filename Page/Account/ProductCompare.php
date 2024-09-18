@@ -30,7 +30,7 @@ class ProductCompare extends Page
 
     public $headerTitle = 'h1';
 
-    public $productTitle = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//strong[@class="title"]';
+    public $productTitle = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//strong[@class="title"]//a';
 
     public $productNumber = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//span[@class="identifier"]/small[2]';
 
