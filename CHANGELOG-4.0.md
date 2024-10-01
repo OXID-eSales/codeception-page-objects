@@ -1,6 +1,9 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.4.1 - unreleased
+## v4.5.0 - unreleased
+
+### Added
+- Methods for admin password testing
 
 ### Fixed
 - Locator for `\OxidEsales\Codeception\Page\Account\ProductCompare::productTitle`
