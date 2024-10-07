@@ -11,11 +11,6 @@ namespace OxidEsales\Codeception\Admin;
 
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class AdminLoginPage
- *
- * @package OxidEsales\Codeception\Admin
- */
 class AdminLoginPage extends AdminPanel
 {
     public string $URL = '/admin/';
@@ -24,12 +19,6 @@ class AdminLoginPage extends AdminPanel
     public $userAccountLoginPassword = '#pwd';
     public $userAccountLoginButton = '.btn';
 
-    /**
-     * @param string $userName
-     * @param string $userPassword
-     *
-     * @return AdminPanel
-     */
     public function login(string $userName, string $userPassword): AdminPanel
     {
         $I = $this->user;
@@ -44,5 +33,15 @@ class AdminLoginPage extends AdminPanel
         $I->see(Translator::translate('HOME_DESC'));
 
         return $adminPanel;
+    }
+
+    public function seeLoginForm(): static
+    {
+        $I = $this->user;
+        $I->seeElement($this->userAccountLoginName);
+        $I->seeElement($this->userAccountLoginPassword);
+        $I->seeElement($this->userAccountLoginButton);
+
+        return $this;
     }
 }
