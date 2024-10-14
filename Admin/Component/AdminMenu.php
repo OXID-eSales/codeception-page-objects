@@ -27,6 +27,8 @@ use OxidEsales\Codeception\Admin\Service\SystemHealth;
 use OxidEsales\Codeception\Admin\Service\SystemInfo;
 use OxidEsales\Codeception\Admin\Service\Tools;
 use OxidEsales\Codeception\Admin\Users;
+use OxidEsales\Codeception\Admin\Voucher\MainVoucherPage;
+use OxidEsales\Codeception\Admin\Vouchers;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait AdminMenu
@@ -320,5 +322,19 @@ trait AdminMenu
         $I->selectGenericExportMainFrame();
 
         return new GenericExport($I);
+    }
+
+    public function openVouchers()
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxshopsett'));
+        $I->retryClick(Translator::translate('mxvouchers'));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new Vouchers($I);
     }
 }

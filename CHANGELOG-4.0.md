@@ -4,6 +4,7 @@
 
 ### Added
 - Methods for admin password testing
+- Methods for voucher testing
 
 ### Fixed
 - Locator for `\OxidEsales\Codeception\Page\Account\ProductCompare::productTitle`
