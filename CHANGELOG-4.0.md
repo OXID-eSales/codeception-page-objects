@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.4.1 - unreleased
+## v4.4.1 - 2024-10-14
 
 ### Fixed
 - Locator for `\OxidEsales\Codeception\Page\Account\ProductCompare::productTitle`
