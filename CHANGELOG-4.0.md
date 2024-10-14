@@ -5,6 +5,8 @@
 ### Added
 - Methods for admin password testing
 
+## v4.4.1 - 2024-10-14
+
 ### Fixed
 - Locator for `\OxidEsales\Codeception\Page\Account\ProductCompare::productTitle`
 
