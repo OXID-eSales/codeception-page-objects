@@ -4,6 +4,7 @@
 
 ### Added
 - Methods for admin password testing
+- Methods for voucher testing
 
 ## v4.4.1 - 2024-10-14
 
