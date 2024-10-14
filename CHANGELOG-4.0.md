@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.5.0 - unreleased
+## v4.5.0 - 2024-10-14
 
 ### Added
 - Methods for admin password testing
