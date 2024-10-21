@@ -9,19 +9,33 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Category\CategoryList;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
-class ProductCategories extends \OxidEsales\Codeception\Page\Page
+class ProductCategories extends Page
 {
+    use CategoryList;
+
+    /** @deprecated Use CategoryList trait properties instead */
     public $searchForm = '#search';
+    /** @deprecated Use CategoryList trait properties instead */
     public $newItemButtonId = '#btn.new';
+    /** @deprecated Use CategoryList trait properties instead */
     public $newCategoryName = 'editval[oxcategories__oxtitle]';
+    /** @deprecated Use CategoryList trait properties instead */
     public $activeCategoryCheckbox = 'editval[oxcategories__oxactive]';
+    /** @deprecated Use CategoryList trait properties instead */
     public $categoryInformation = '#transfer';
+    /** @deprecated Use CategoryList trait properties instead */
     public $categoryInput = 'where[oxcategories][oxtitle]';
 
+    /** @deprecated Use CategoryList trait properties instead */
     private string $newCategoryThumbFile = 'myfile[TC@oxcategories__oxthumb]';
 
+    /**
+     * @deprecated Use MainCategoryPage::create() instead
+     */
     public function createNewCategory(string $categoryName): ProductCategories
     {
         $I = $this->user;
@@ -40,6 +54,9 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @deprecated Use MainCategoryPage::uploadThumbnail() instead
+     */
     public function uploadThumbnail(string $categoryThumbPath): ProductCategories
     {
         $I = $this->user;
@@ -51,13 +68,16 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @deprecated Use MainCategoryPage::openAssignProductsPopup() instead
+     */
     public function assignProductsToSelectedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
         $I->click(Translator::translate('GENERAL_ASSIGNARTICLES'));
 
-        $I->switchToNextTab();//codeception way of opening next window
+        $I->switchToNextTab();
         $I->waitForDocumentReadyState();
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->waitForAjax(10);
@@ -66,6 +86,9 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @deprecated Use CategoryList::openRightsTab() instead
+     */
     public function openRightsForSelectedCategory(): ProductCategories
     {
         $I = $this->user;
@@ -77,13 +100,16 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @deprecated Use RightsCategoryPage::assignUserRightsToCategory() instead
+     */
     public function assignUserRightsToSeletedCategory(): ProductCategories
     {
         $I = $this->user;
         $I->selectEditFrame();
         $I->click(Translator::translate('CATEGORY_RIGHTS_ASSIGNVISIBLE'));
 
-        $I->switchToNextTab();//codeception way of opening next window
+        $I->switchToNextTab();
         $I->waitForDocumentReadyState();
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->waitForAjax(10);
@@ -92,6 +118,9 @@ class ProductCategories extends \OxidEsales\Codeception\Page\Page
         return $this;
     }
 
+    /**
+     * @deprecated Use CategoryList::selectProductCategory() instead
+     */
     public function selectCategory(string $categoryName): ProductCategories
     {
         $I = $this->user;

@@ -1,5 +1,21 @@
 # Change Log for OXID eShop Codeception Page Objects
 
+## v4.6.0 - 2024-10-23
+
+### Added
+- New methods and Page objects for
+  - Category management
+  - Category sorting
+  - Category rights
+  - Category list handling
+- Page components for:
+  - Product assignment popups
+  - Product sorting popups
+  - Drag and drop functionality
+
+### Deprecated
+- `ProductCategories` methods extracted into `CategoryListTrait`
+
 ## v4.5.0 - 2024-10-14
 
 ### Added
