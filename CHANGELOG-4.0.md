@@ -1,5 +1,9 @@
 # Change Log for OXID eShop Codeception Page Objects
 
+## v4.6.0 - 2024-10-23
+### Deprecated
+- `ProductCategories` methods extracted into `CategoryListTrait`
+
 ## v4.5.0 - 2024-10-14
 
 ### Added
