@@ -8,3 +8,4 @@
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
+- Methods of `ProductCategories`
