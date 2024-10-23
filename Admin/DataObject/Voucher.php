@@ -11,26 +11,26 @@ namespace OxidEsales\Codeception\Admin\DataObject;
 
 class Voucher
 {
-    private string $title = '';
-    private string $voucherType = '';
+    private string $voucherNr = '';
+    private string $voucherAmount;
 
-    public function getTitle(): string
+    public function getVoucherNr(): string
     {
-        return $this->title;
+        return $this->voucherNr;
     }
 
-    public function setTitle(string $title): void
+    public function setVoucherNr(string $voucherNr): void
     {
-        $this->title = $title;
+        $this->voucherNr = $voucherNr;
     }
 
-    public function getVoucherType(): string
+    public function getVoucherAmount(): string
     {
-        return $this->voucherType;
+        return $this->voucherAmount;
     }
 
-    public function setVoucherType(string $voucherType): void
+    public function setVoucherAmount(string $voucherAmount): void
     {
-        $this->voucherType = $voucherType;
+        $this->voucherAmount = $voucherAmount;
     }
 }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Voucher;
 
+use OxidEsales\Codeception\Admin\DataObject\Voucher;
 use OxidEsales\Codeception\Admin\DataObject\VoucherSerie;
 use OxidEsales\Codeception\Page\Page;
 
@@ -22,6 +23,9 @@ class MainVoucherPage extends Page
 	public string $discountField = "//input[@name='editval[oxvoucherseries__oxdiscount]']";
 	public string $allowSameSeriesYes = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='1']";
 	public string $allowSameSeriesNo = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='0']";
+	public string $voucherNr = "//input[@name='voucherNr']";
+	public string $voucherAmount = "//input[@name='voucherAmount']";
+	public string $generateButton = "//input[@name='save' and @value='Generate']";
 
     public function createVoucherSerie(VoucherSerie $voucher)
     {
@@ -35,6 +39,18 @@ class MainVoucherPage extends Page
         return $this;
     }
 
+	public function createVoucher(Voucher $voucher)
+	{
+		$I = $this->user;
+
+		$I->fillField($this->voucherNr, $voucher->getVoucherNr());
+		$I->fillField($this->voucherAmount, $voucher->getVoucherAmount());
+		$I->click($this->generateButton);
+		$I->waitForDocumentReadyState();
+
+		return $this;
+	}
+
     public function seeVoucherSerie(VoucherSerie $voucher): self
     {
         $I = $this->user;
@@ -44,6 +60,16 @@ class MainVoucherPage extends Page
 
         return $this;
     }
+
+	public function seeVoucher(Voucher $voucher): self
+	{
+		$I = $this->user;
+
+		$I->seeInField($this->voucherNr, $voucher->getVoucherNr());
+		$I->seeInField($this->voucherAmount, $voucher->getVoucherAmount());
+
+		return $this;
+	}
 
 	public function checkVoucherDiscountFieldForShipfreeVoucher(): void
 	{
