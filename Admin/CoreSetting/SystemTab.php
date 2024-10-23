@@ -12,44 +12,51 @@ namespace OxidEsales\Codeception\Admin\CoreSetting;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class SystemTab
- *
- * @package OxidEsales\Codeception\Admin\CoreSetting
- */
 class SystemTab extends Page
 {
-    public $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
+    private string $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
+    private string $displayVariantsCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantsSelection')]";
 
-    /**
-     * @return SystemTab
-     */
-    public function openVariants(): SystemTab
+    public function openVariants(): static
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
-
         $I->selectEditFrame();
         $I->click(Translator::translate('SHOP_OPTIONS_GROUP_VARIANTS'));
-
-        // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
-
         return $this;
     }
 
-    /**
-     * @return SystemTab
-     */
-    public function checkParentProductAsBuyable(): SystemTab
+    public function enableParentProductAsBuyable(): static
     {
-        /** @var AcceptanceTester $I */
-        $I = $this->user;
+        return $this->setCheckboxOptionAndSave($this->buyableParentCheckbox, true);
+    }
 
+    public function disableParentProductAsBuyable(): static
+    {
+        return $this->setCheckboxOptionAndSave($this->buyableParentCheckbox, false);
+    }
+
+    public function enableVariantsInAssignmentLists(): static
+    {
+        return $this->setCheckboxOptionAndSave($this->displayVariantsCheckbox, true);
+    }
+
+    public function disableVariantsInAssignmentLists(): static
+    {
+        return $this->setCheckboxOptionAndSave($this->displayVariantsCheckbox, false);
+    }
+
+    private function setCheckboxOptionAndSave(string $checkboxSelector, bool $enable): static
+    {
+        $I = $this->user;
         $I->selectEditFrame();
-        $I->checkOption($this->buyableParentCheckbox);
-        $I->seeCheckboxIsChecked($this->buyableParentCheckbox);
+
+        if ($enable) {
+            $I->checkOption($checkboxSelector);
+        } else {
+            $I->uncheckOption($checkboxSelector);
+        }
 
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->waitForPageLoad();
