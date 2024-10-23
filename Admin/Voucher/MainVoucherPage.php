@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Voucher;
 
-use OxidEsales\Codeception\Admin\DataObject\Voucher;
+use OxidEsales\Codeception\Admin\DataObject\VoucherSerie;
 use OxidEsales\Codeception\Page\Page;
 
 class MainVoucherPage extends Page
@@ -23,7 +23,7 @@ class MainVoucherPage extends Page
 	public string $allowSameSeriesYes = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='1']";
 	public string $allowSameSeriesNo = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='0']";
 
-    public function createVoucher(Voucher $voucher)
+    public function createVoucherSerie(VoucherSerie $voucher)
     {
         $I = $this->user;
 
@@ -35,7 +35,7 @@ class MainVoucherPage extends Page
         return $this;
     }
 
-    public function seeVoucher(Voucher $voucher): self
+    public function seeVoucherSerie(VoucherSerie $voucher): self
     {
         $I = $this->user;
 
