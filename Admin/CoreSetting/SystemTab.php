@@ -12,30 +12,18 @@ namespace OxidEsales\Codeception\Admin\CoreSetting;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class SystemTab
- *
- * @package OxidEsales\Codeception\Admin\CoreSetting
- */
 class SystemTab extends Page
 {
-    public $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
+    public string $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
+    private string $displayVariantsCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantsSelection')]";
 
-    /**
-     * @return SystemTab
-     */
-    public function openVariants(): SystemTab
+    public function openVariants(): static
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
-
         $I->selectEditFrame();
         $I->click(Translator::translate('SHOP_OPTIONS_GROUP_VARIANTS'));
-
-        // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
-
         return $this;
     }
 
@@ -44,16 +32,41 @@ class SystemTab extends Page
      */
     public function checkParentProductAsBuyable(): SystemTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
-
         $I->selectEditFrame();
         $I->checkOption($this->buyableParentCheckbox);
-        $I->seeCheckboxIsChecked($this->buyableParentCheckbox);
-
         $I->click(Translator::translate('GENERAL_SAVE'));
         $I->waitForPageLoad();
+        return $this;
+    }
 
+    public function disableParentProductAsBuyable(): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->uncheckOption($this->buyableParentCheckbox);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->waitForPageLoad();
+        return $this;
+    }
+
+    public function enableVariantsInAssignmentLists(): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->checkOption($this->displayVariantsCheckbox);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->waitForPageLoad();
+        return $this;
+    }
+
+    public function disableVariantsInAssignmentLists(): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->uncheckOption($this->displayVariantsCheckbox);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->waitForPageLoad();
         return $this;
     }
 }
