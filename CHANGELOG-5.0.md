@@ -10,3 +10,4 @@
 ### Removed
 - Parts of `OrderCheckout`'s public interface
 - Methods of `ProductCategories`
+- Page objects used for testing browser-based shop setup
