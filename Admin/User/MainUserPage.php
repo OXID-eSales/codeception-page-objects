@@ -131,6 +131,16 @@ class MainUserPage extends Page
         return $this;
     }
 
+    public function updateUsername(string $username): static
+    {
+        $I = $this->user;
+        $I->fillField($this->usernameField, $username);
+        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->waitForDocumentReadyState();
+
+        return $this;
+    }
+
     private function checkUserPassword($I, $password)
     {
         $passwordExists = ($password) ? 'Yes' : 'No';

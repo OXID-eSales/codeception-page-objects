@@ -8,6 +8,7 @@
   - Category sorting
   - Category rights
   - Category list handling
+  - Username management in admin
 - Page components for:
   - Product assignment popups
   - Product sorting popups
