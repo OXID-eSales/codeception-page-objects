@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class DirectoryAndLoginStep extends SetupStep
 {
     private string $dataWasWrittenMessage = 'Check and writing data successful. Please wait';

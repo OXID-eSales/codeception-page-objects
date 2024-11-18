@@ -12,6 +12,9 @@ namespace OxidEsales\Codeception\ShopSetup;
 use Codeception\Actor;
 use OxidEsales\Codeception\Page\Page;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class SetupStep extends Page
 {
     public function __construct(Actor $I)

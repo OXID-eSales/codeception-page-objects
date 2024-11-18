@@ -14,6 +14,9 @@ use OxidEsales\Codeception\Admin\AdminLoginPage;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Home;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class FinishStep extends SetupStep
 {
     private string $shopLinkButton = '#linkToShop';

@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class WelcomeStep extends SetupStep
 {
     private string $allowDataCollectionInput = '#send_technical_information_to_oxid_checkbox';

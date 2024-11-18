@@ -11,6 +11,9 @@ namespace OxidEsales\Codeception\ShopSetup;
 
 use OxidEsales\Codeception\ShopSetup\DataObject\UserInput;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class DatabaseStep extends SetupStep
 {
     private string $fillAllFieldsErrorMessage = 'ERROR: Please fill in all needed fields!';
