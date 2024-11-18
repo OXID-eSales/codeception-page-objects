@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\ShopSetup;
 
+/**
+ * @deprecated functionality for testing browser-based shop setup will be removed in next major
+ */
 class SystemRequirementsStep extends SetupStep
 {
     public static string $setupStartingUrl = '/Setup/index.php';

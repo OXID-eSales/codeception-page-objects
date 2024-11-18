@@ -15,6 +15,7 @@
 
 ### Deprecated
 - `ProductCategories` methods extracted into `CategoryListTrait`
+- Page objects used for testing browser-based shop setup
 
 ## v4.5.0 - 2024-10-14
 
