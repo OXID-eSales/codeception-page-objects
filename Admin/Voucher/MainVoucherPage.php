@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Voucher;
 
 use OxidEsales\Codeception\Admin\DataObject\Voucher;
+use OxidEsales\Codeception\Admin\DataObject\VoucherSerie;
 use OxidEsales\Codeception\Page\Page;
 
 class MainVoucherPage extends Page
@@ -19,8 +20,14 @@ class MainVoucherPage extends Page
     public string $titleInput = "//input[@name='editval[oxvoucherseries__oxserienr]']";
     public string $voucherType = "//select[@name='editval[oxvoucherseries__oxdiscounttype]']";
     public string $saveButton = "//input[@name='save']";
+	public string $discountField = "//input[@name='editval[oxvoucherseries__oxdiscount]']";
+	public string $allowSameSeriesYes = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='1']";
+	public string $allowSameSeriesNo = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='0']";
+	public string $voucherNr = "//input[@name='voucherNr']";
+	public string $voucherQuantity = "//input[@name='voucherAmount']";
+	public string $generateButton = "//input[@name='save' and @value='Generate']";
 
-    public function createVoucher(Voucher $voucher)
+    public function createVoucherSerie(VoucherSerie $voucher)
     {
         $I = $this->user;
 
@@ -32,7 +39,19 @@ class MainVoucherPage extends Page
         return $this;
     }
 
-    public function seeVoucher(Voucher $voucher): self
+	public function createVoucher(Voucher $voucher)
+	{
+		$I = $this->user;
+
+		$I->fillField($this->voucherNr, $voucher->getVoucherNr());
+		$I->fillField($this->voucherQuantity, $voucher->getVoucherQuantity());
+		$I->click($this->generateButton);
+		$I->waitForDocumentReadyState();
+
+		return $this;
+	}
+
+    public function seeVoucherSerie(VoucherSerie $voucher): self
     {
         $I = $this->user;
 
@@ -41,4 +60,40 @@ class MainVoucherPage extends Page
 
         return $this;
     }
+
+	public function seeVoucher(Voucher $voucher): self
+	{
+		$I = $this->user;
+
+		$I->seeInField($this->voucherNr, $voucher->getVoucherNr());
+		$I->seeInField($this->voucherQuantity, $voucher->getVoucherQuantity());
+
+		return $this;
+	}
+
+	public function checkVoucherDiscountFieldForShipfreeVoucher(): void
+	{
+		$I = $this->user;
+
+		$I->selectOption($this->voucherType, 'shipfree');
+
+		$I->waitForElementVisible($this->discountField, 5);
+
+		$I->seeElement($this->discountField);
+		$I->seeElement($this->discountField, ['disabled' => 'true']);
+		$I->seeInField($this->discountField, '0');
+	}
+
+	public function checkAllowSameSeriesRadioDisabled(): self
+	{
+		$I = $this->user;
+
+		$I->waitForElementVisible($this->allowSameSeriesYes, 5);
+
+		$I->seeCheckboxIsChecked($this->allowSameSeriesNo);
+		$I->seeElement($this->allowSameSeriesYes, ['disabled' => 'true']);
+		$I->dontSeeElement($this->allowSameSeriesNo, ['disabled' => 'true']);
+
+		return $this;
+	}
 }
