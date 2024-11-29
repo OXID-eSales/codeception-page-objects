@@ -110,10 +110,12 @@ class UserCheckout extends Page
     public function selectCountry(string $country): self
     {
         $I = $this->user;
+        $I->scrollTo($this->editShippingAddress);
+        $I->waitForElementVisible($this->editShippingAddress);
+        $I->waitForElementClickable($this->editShippingAddress);
         $I->click($this->editShippingAddress);
         $I->selectOption($this->selectCountry, $country);
         $I->wait(1);
-
         return $this;
     }
 }
