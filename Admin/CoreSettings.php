@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\CoreSetting\CachingTab;
 use OxidEsales\Codeception\Admin\CoreSetting\LicenseTab;
 use OxidEsales\Codeception\Admin\CoreSetting\PerformanceTab;
 use OxidEsales\Codeception\Admin\CoreSetting\SEOTab;
@@ -28,6 +29,7 @@ class CoreSettings extends Page
     public $shopName = 'editval[oxshops__oxname]';
     public $tabPerformance = 'tbclshop_performance';
     public $tabSEO = 'tbclshop_seo';
+    private $tabCaching = 'tbclshop_cache';
 
     private string $tabLicense = 'tbclshop_license';
 
@@ -153,5 +155,17 @@ class CoreSettings extends Page
         $I->selectEditFrame();
 
         return new SEOTab($I);
+    }
+
+    public function openCacheTab(): CachingTab
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->click(Translator::translate($this->tabCaching));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
+
+        return new CachingTab($I);
     }
 }

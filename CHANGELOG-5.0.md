@@ -7,6 +7,7 @@
 - Method in `UserLogin` to confirm that login form is available
 - Admin License tab elements
 - Methods to check output of the System Info page in admin
+- Page objects for cache in admin
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
