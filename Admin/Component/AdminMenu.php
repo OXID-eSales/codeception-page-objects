@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Component;
 
 use OxidEsales\Codeception\Admin\AdminPanel;
+use OxidEsales\Codeception\Admin\Attribute\MainAttributePage;
 use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\CountryList;
@@ -336,5 +337,18 @@ trait AdminMenu
         $I->selectEditFrame();
 
         return new Vouchers($I);
+    }
+
+    public function openAttributes(): MainAttributePage
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxmanageprod'));
+        $I->retryClick(Translator::translate('mxattributes'));
+
+        $I->selectEditFrame();
+
+        return new MainAttributePage($I);
     }
 }

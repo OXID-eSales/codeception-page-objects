@@ -4,15 +4,10 @@
 
 ### Added
 - New methods and Page objects for
-  - Category management
-  - Category sorting
-  - Category rights
-  - Category list handling
-  - Username management in admin
+  - Category management and sorting
+  - Attribute management and assignments
 - Page components for:
-  - Product assignment popups
-  - Product sorting popups
-  - Drag and drop functionality
+  - Popup handling
 
 ### Deprecated
 - `ProductCategories` methods extracted into `CategoryListTrait`
