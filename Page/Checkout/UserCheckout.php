@@ -114,8 +114,10 @@ class UserCheckout extends Page
         $I->waitForElementVisible($this->editShippingAddress);
         $I->waitForElementClickable($this->editShippingAddress);
         $I->click($this->editShippingAddress);
+        $I->waitForElementVisible($this->selectCountry);
+        $I->waitForElementClickable($this->selectCountry);
         $I->selectOption($this->selectCountry, $country);
-        $I->wait(1);
+        $I->seeInField($this->selectCountry, $country);
         return $this;
     }
 }
