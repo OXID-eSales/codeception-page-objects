@@ -9,6 +9,7 @@
   - Category rights
   - Category list handling
   - Username management in admin
+  - Order overview statistics in admin
 - Page components for:
   - Product assignment popups
   - Product sorting popups

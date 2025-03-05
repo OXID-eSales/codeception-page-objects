@@ -74,6 +74,16 @@ class SettingsTab extends Page
         return $this;
     }
 
+    public function openAdditionalSettings(): SettingsTab
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_OTHER_SETTINGS'));
+        $I->selectListFrame();
+        $I->selectEditFrame();
+        return $this;
+    }
+
     public function setAdminFormat(string $format): SettingsTab
     {
         /** @var AcceptanceTester $I */
