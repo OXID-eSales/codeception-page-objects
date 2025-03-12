@@ -46,7 +46,10 @@ class Basket extends Page
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
         $I = $this->user;
-        $I->clearField(sprintf($this->basketItemAmount, $itemPosition));
+        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), [
+            WebDriverKeys::CONTROL, 'a'
+        ]);
+        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), WebDriverKeys::BACKSPACE);
         $I->pressKey(
             sprintf($this->basketItemAmount, $itemPosition),
             $amount,
