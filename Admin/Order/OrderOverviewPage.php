@@ -19,8 +19,12 @@ class OrderOverviewPage extends Page
     private string $orderProductLabel = '.box table tbody tr:nth-of-type(%d) td:nth-of-type(6)';
     private string $shipForm = '#sendorder';
     private string $orderSendMailCheckbox = 'input[name=sendmail]';
+    private string $todayOrdersCount = "//tr[td[contains(text(),'%s')]]/td[2]/b";
+    private string $todayOrdersSum = "//tr[td[contains(text(),'%s')]]/td[2]";
+    private string $totalOrdersCount = "//tr[td[contains(text(),'%s')]]/td[2]/b";
+    private string $totalOrdersSum = "//tr[td[contains(text(),'%s')]]/td[2]";
 
-    public function seeOrderProductLabel(string $label, int $product): static
+    public function seeOrderProductLabel(string $label, int $product): self
     {
         $I = $this->user;
         $I->see(
@@ -30,7 +34,7 @@ class OrderOverviewPage extends Page
         return $this;
     }
 
-    public function dontSeeOrderProductHasLabel(int $product): static
+    public function dontSeeOrderProductHasLabel(int $product): self
     {
         $I = $this->user;
         $I->dontSeeElement(
@@ -39,16 +43,42 @@ class OrderOverviewPage extends Page
         return $this;
     }
 
-    public function shipOrderWithEmail(): static
+    public function shipOrderWithEmail(): self
     {
         $I = $this->user;
 
         $I->checkOption($this->orderSendMailCheckbox);
         $I->submitForm($this->shipForm, []);
 
-        // waiting for shipment status to be changed
         $I->see(Translator::translate('GENERAL_SENDON'));
+        return $this;
+    }
 
+    public function seeOrdersTodayCount(string $count): self
+    {
+        $I = $this->user;
+        $I->see($count, sprintf($this->todayOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTODAY')));
+        return $this;
+    }
+
+    public function seeOrdersTodaySum(string $sum): self
+    {
+        $I = $this->user;
+        $I->see($sum, sprintf($this->todayOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTODAY')));
+        return $this;
+    }
+
+    public function seeTotalOrdersCount(string $count): self
+    {
+        $I = $this->user;
+        $I->see($count, sprintf($this->totalOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTOTAL')));
+        return $this;
+    }
+
+    public function seeTotalOrdersSum(string $sum): self
+    {
+        $I = $this->user;
+        $I->see($sum, sprintf($this->totalOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTOTAL')));
         return $this;
     }
 }
