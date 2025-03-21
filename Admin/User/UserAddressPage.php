@@ -17,8 +17,8 @@ class UserAddressPage extends Page
 {
     use UserList;
 
-    public $deleteAddressInput = "//input[@value='Delete']";
-    public $addressesTabAddressSelect = 'oxaddressid';
+    public string $deleteAddressInput = "//input[@value='Delete']";
+    public string $addressesTabAddressSelect = 'oxaddressid';
     public string $addressTitleField = "//select[@name='editval[oxaddress__oxsal]']";
     public string $addressFirstNameField = "//input[@name='editval[oxaddress__oxfname]']";
     public string $addressLastNameField = "//input[@name='editval[oxaddress__oxlname]']";
@@ -32,42 +32,31 @@ class UserAddressPage extends Page
     public string $addressPhoneField = "//input[@name='editval[oxaddress__oxfon]']";
     public string $addressFaxField = "//input[@name='editval[oxaddress__oxfax]']";
 
-    /**
-     * @return $this
-     */
     public function deleteSelectedAddress(): self
     {
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->deleteAddressInput);
-
+        $I->clickAndWait($this->deleteAddressInput);
         $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
 
         return $this;
     }
 
-    /**
-     * @param AdminUserAddresses $adminUserAddress
-     * @return $this
-     */
     public function selectAddress(AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;
 
         $I->selectOption($this->addressesTabAddressSelect, $this->getAddressTitle($adminUserAddress));
+        $I->waitForDocumentReadyState();
 
         return $this;
     }
 
-    /**
-     * @param AdminUserAddresses $adminUserAddresses
-     * @return $this
-     */
     public function editUserAddress(AdminUserAddresses $adminUserAddresses): self
     {
         $I = $this->user;
-
         $I->selectOption($this->addressTitleField, $adminUserAddresses->getTitle());
         $I->fillField($this->addressFirstNameField, $adminUserAddresses->getFirstName());
         $I->fillField($this->addressLastNameField, $adminUserAddresses->getLastName());
@@ -80,21 +69,18 @@ class UserAddressPage extends Page
         $I->selectOption($this->addressCountryIdField, $adminUserAddresses->getCountryId());
         $I->fillField($this->addressPhoneField, $adminUserAddresses->getPhone());
         $I->fillField($this->addressFaxField, $adminUserAddresses->getFax());
-
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
         return $this;
     }
 
-    /**
-     * @param AdminUserAddresses $adminUserAddress
-     * @return $this
-     */
     public function seeAddressInformation(AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;
 
+        $I->selectEditFrame();
         $I->seeOptionIsSelected(
             $this->addressesTabAddressSelect,
             $this->getAddressTitle($adminUserAddress)

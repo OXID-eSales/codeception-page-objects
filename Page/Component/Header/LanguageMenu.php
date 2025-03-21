@@ -23,10 +23,10 @@ trait LanguageMenu
     public function switchLanguage(string $language)
     {
         $I = $this->user;
-        $I->click($this->languageMenuButton);
+        $I->clickAndWait($this->languageMenuButton);
         $I->waitForElement($this->openLanguageMenu);
-        $I->click($this->openLanguageMenu);
-        $I->click($language);
+        $I->clickAndWait($this->openLanguageMenu);
+        $I->clickAndWait($language);
         $I->waitForElementNotVisible($this->openLanguageMenu);
         return $this;
     }

@@ -21,7 +21,7 @@ class SystemTab extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_VARIANTS'));
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_VARIANTS'));
         $I->selectListFrame();
         $I->selectEditFrame();
         return $this;
@@ -35,8 +35,8 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->buyableParentCheckbox);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+
         return $this;
     }
 
@@ -45,8 +45,8 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->buyableParentCheckbox);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+
         return $this;
     }
 
@@ -55,8 +55,8 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->displayVariantsCheckbox);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+
         return $this;
     }
 
@@ -65,8 +65,8 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->displayVariantsCheckbox);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+
         return $this;
     }
 }

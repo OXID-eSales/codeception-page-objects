@@ -32,7 +32,7 @@ class UserOrderHistory extends Page
     public function seePageHeader(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('ORDER_HISTORY'), $this->pageHeader);
+        $I->seeText(Translator::translate('ORDER_HISTORY'), $this->pageHeader);
 
         return $this;
     }
@@ -47,10 +47,10 @@ class UserOrderHistory extends Page
         $product = $orderInformation['product'];
 
         $I = $this->user;
-        $I->see($status, sprintf($this->orderStatus, $orderNumber));
-        $I->see($name, sprintf($this->shipmentTo, $orderNumber));
-        $I->see($amount, sprintf($this->orderAmount, $orderNumber, $itemNumber));
-        $I->see($product, sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
+        $I->seeText($status, sprintf($this->orderStatus, $orderNumber));
+        $I->seeText($name, sprintf($this->shipmentTo, $orderNumber));
+        $I->seeText($amount, sprintf($this->orderAmount, $orderNumber, $itemNumber));
+        $I->seeText($product, sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
 
         return $this;
     }
@@ -61,7 +61,7 @@ class UserOrderHistory extends Page
 
         $orderNumber = $orderInformation['orderNumber'];
         $itemNumber = $orderInformation['itemNumber'];
-        $I->click(sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
+        $I->clickAndWait(sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
 
         return new ProductDetails($I);
     }
@@ -69,7 +69,7 @@ class UserOrderHistory extends Page
     public function seePageOpened(): static
     {
         $I = $this->user;
-        $I->see(Translator::translate('ORDER_HISTORY'), $this->headerTitle);
+        $I->seeText(Translator::translate('ORDER_HISTORY'), $this->headerTitle);
         return $this;
     }
 
@@ -77,7 +77,7 @@ class UserOrderHistory extends Page
     {
         $I = $this->user;
         $tableHeaderLinePosition = 1;
-        $I->see(
+        $I->seeText(
             sprintf('%s: %s', Translator::translate('DETAILS'), $label),
             sprintf($this->orderItem, $tableHeaderLinePosition + $order, $item)
         );

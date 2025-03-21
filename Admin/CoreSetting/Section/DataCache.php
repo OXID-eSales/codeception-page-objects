@@ -61,8 +61,7 @@ class DataCache extends Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->dataCacheSaveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->dataCacheSaveButton);
 
         return $this;
     }

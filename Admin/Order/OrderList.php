@@ -9,45 +9,31 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Order;
 
+use OxidEsales\Codeception\Admin\Component\DataTable;
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait OrderList
 {
-    public string $searchForm = '#search';
-    public string $orderNumberInput = 'where[oxorder][oxordernr]';
-    public string $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
+    use DataTable;
+    use Tabs;
+
+    private string $searchForm = '#search';
+    private string $orderNumberInput = 'where[oxorder][oxordernr]';
+    private string $orderBillingLastNameInput = 'where[oxorder][oxbilllname]';
 
     public function findByOrderNumber(string $orderNumber): OrderOverviewPage
     {
-        return $this->find($this->orderNumberInput, $orderNumber);
-    }
+        $this->filterRows('oxorder', 'oxordernr', $orderNumber);
+        $this->selectFirstRow();
 
-    /**
-     * @deprecated method will be removed in next major
-     */
-    public function find(string $field, string $value): OrderOverviewPage
-    {
-        $I = $this->user;
-
-        $I->selectListFrame();
-        $I->fillField($field, $value);
-        $I->submitForm($this->searchForm, []);
-        $I->selectListFrame();
-
-        $I->click($value);
-
-        $I->selectEditFrame();
-
-        return new OrderOverviewPage($I);
+        return new OrderOverviewPage($this->user);
     }
 
     public function openDownloadsTab(): DownloadsOrderPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclorder_downloads'));
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclorder_downloads'));
 
         return new DownloadsOrderPage($I);
     }
@@ -55,10 +41,7 @@ trait OrderList
     public function openAddressesTab(): AddressesOrderPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclorder_address'));
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclorder_address'));
 
         return new AddressesOrderPage($I);
     }
@@ -66,10 +49,7 @@ trait OrderList
     public function openProductsTab(): ProductsOrderPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclorder_article'));
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclorder_article'));
 
         return new ProductsOrderPage($I);
     }
@@ -93,8 +73,11 @@ trait OrderList
         $I = $this->user;
 
         $I->selectListFrame();
-        $I->click($modifierId);
+        $I->openAlert($modifierId);
         $I->acceptPopup();
+        $I->selectListFrame();
+        $I->waitForDocumentReadyState();
+        $I->selectEditFrame();
         $I->waitForDocumentReadyState();
     }
 }

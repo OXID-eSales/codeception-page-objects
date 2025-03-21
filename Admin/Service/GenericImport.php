@@ -66,9 +66,10 @@ class GenericImport extends Page
     public function proceedToFieldMapping(string $tableName): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->proceedToNextStepButton, Translator::translate('Upload file')));
-        $I->waitForText(Translator::translate('GENIMPORT_ASSIGNFIELDS'));
-        $I->see($tableName);
+        $I->clickAndWait(sprintf($this->proceedToNextStepButton, Translator::translate('Upload file')));
+        $I->seeText(Translator::translate('GENIMPORT_ASSIGNFIELDS'));
+        $I->seeText($tableName);
+
         return $this;
     }
 
@@ -95,8 +96,9 @@ class GenericImport extends Page
     public function doImport(): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->proceedToNextStepButton, Translator::translate('Begin import')));
-        $I->waitForText(Translator::translate('GENIMPORT_IMPORTDONE'));
+        $I->clickAndWait(sprintf($this->proceedToNextStepButton, Translator::translate('Begin import')));
+        $I->seeText(Translator::translate('GENIMPORT_IMPORTDONE'));
+
         return $this;
     }
 }

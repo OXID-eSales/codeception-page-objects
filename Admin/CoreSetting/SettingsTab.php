@@ -9,28 +9,22 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\CoreSetting;
 
+use OxidEsales\Codeception\Admin\Component\AssignPopup;
 use OxidEsales\Codeception\Admin\CoreSetting\Section\StockSettings;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
-/**
- * Class SettingsTab
- *
- * @package OxidEsales\Codeception\Admin\CoreSetting
- */
 class SettingsTab extends Page
 {
-    /**
-     * @return SettingsTab
-     */
+    use AssignPopup;
+
     public function openDownloadableProducts(): SettingsTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_SHOP_DOWNLOADABLEARTICLES'));
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_SHOP_DOWNLOADABLEARTICLES'));
 
         // Wait for list and edit sections to load
         $I->selectListFrame();
@@ -41,11 +35,10 @@ class SettingsTab extends Page
 
     public function openShopFrontendDropdown(): SettingsTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_SHOP_FRONTEND'));
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_SHOP_FRONTEND'));
 
         // Wait for list and edit sections to load
         $I->selectListFrame();
@@ -57,21 +50,19 @@ class SettingsTab extends Page
     public function openStartCategoryPopup(): StartCategoryFrontendPopup
     {
         $I = $this->user;
-        $I->click("//input[@value='---']");
-
-        $I->switchToNextTab();
-        $I->waitForElementVisible(['class' => 'yui-dt-data']);
+        $this->openAssignPopup(
+            "//input[@value='---']"
+        );
 
         return new StartCategoryFrontendPopup($I);
     }
 
     public function openAdministration(): SettingsTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_ADMINISTRATION'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_ADMINISTRATION'));
+
         return $this;
     }
 
@@ -80,7 +71,7 @@ class SettingsTab extends Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_STOCK'));
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_STOCK'));
 
         $I->selectListFrame();
         $I->selectEditFrame();
@@ -92,7 +83,7 @@ class SettingsTab extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click(Translator::translate('SHOP_OPTIONS_GROUP_OTHER_SETTINGS'));
+        $I->clickAndWait(Translator::translate('SHOP_OPTIONS_GROUP_OTHER_SETTINGS'));
         $I->selectListFrame();
         $I->selectEditFrame();
         return $this;
@@ -100,7 +91,6 @@ class SettingsTab extends Page
 
     public function setAdminFormat(string $format): SettingsTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectOption('confstrs[sLocalDateFormat]', $format);
         $I->seeOptionIsSelected('confstrs[sLocalDateFormat]', $format);
@@ -110,11 +100,10 @@ class SettingsTab extends Page
 
     public function save(): SettingsTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click('save');
-        $I->waitForPageLoad();
+        $I->clickAndWait('save');
+
         return $this;
     }
 }

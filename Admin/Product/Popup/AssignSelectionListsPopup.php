@@ -9,30 +9,24 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product\Popup;
 
-use Facebook\WebDriver\WebDriverKeys;
+use OxidEsales\Codeception\Admin\Category\Popup\DragAndDropLists;
 use OxidEsales\Codeception\Page\Page;
 
 class AssignSelectionListsPopup extends Page
 {
-    public $unassignedList = '#container1';
-    public $assignedList = '#container2';
-    public $titleFilter = 'input[name="_0"]';
-    public $firstRow = '.yui-dt-data tr.yui-dt-first';
+    use DragAndDropLists;
 
-    /**
-     * @param string $itemTitle
-     *
-     * @return $this
-     */
-    public function assignSelectionByTitle(string $itemTitle): self
+    public function assignSelectionByTitle(string $itemTitle): static
     {
-        $I = $this->user;
+        $this->searchInList1($itemTitle);
+        $this->dragFromList1ToList2();
 
-        $I->fillField("$this->unassignedList $this->titleFilter", $itemTitle);
-        $I->pressKey("$this->unassignedList $this->titleFilter", WebDriverKeys::ENTER);
-        $I->wait(3);
-        $I->retryDragAndDrop("$this->unassignedList $this->firstRow", $this->assignedList);
-        $I->wait(3);
+        return $this;
+    }
+
+    public function seeProductAssigned(string $itemTitle): static
+    {
+        $this->seeProductInAssignedList($itemTitle);
 
         return $this;
     }

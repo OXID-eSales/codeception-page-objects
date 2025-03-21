@@ -26,7 +26,7 @@ trait FrameLoader
         $I->fillField($editableTextInput, $randomValue);
         $I->retrySeeInField($editableTextInput, $randomValue);
 
-        $I->click($loadTrigger);
+        $I->clickAndWait($loadTrigger);
 
         $I->expect('to see the request finished and initial form was replaced by a new one');
         $I->waitForDocumentReadyState();

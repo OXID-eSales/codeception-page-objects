@@ -27,10 +27,9 @@ class ProductListmania extends Page
     public function createNewList()
     {
         $I = $this->user;
-        $I->click(Translator::translate('CLICK_HERE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('CLICK_HERE'));
         $userListmania = new UserListmania($I);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST'), $userListmania->headerTitle);
+        $I->seeText(Translator::translate('PAGE_TITLE_ACCOUNT_RECOMMLIST'), $userListmania->headerTitle);
         return $userListmania;
     }
 }

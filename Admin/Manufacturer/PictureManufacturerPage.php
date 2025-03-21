@@ -9,44 +9,28 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Manufacturer;
 
-use OxidEsales\Codeception\Admin\DataObject\Manufacturer;
-use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
 class PictureManufacturerPage extends Page
 {
-    use ManufacturerList;
-
-    public string $iconInput = "//input[@name='editval[oxmanufacturers__oxicon]']";
+    private string $iconInput = "//input[@name='editval[oxmanufacturers__oxicon]']";
     private string $iconFile = "//input[@name='myfile[MICO@oxmanufacturers__oxicon]']";
-
-    /**
-     * @deprecated method will be removed in next major, use seeIcon() instead
-     */
-    public function seeManufacturerIcon(Manufacturer $manufacturer): self
-    {
-        $I = $this->user;
-
-        $I->seeInField($this->iconInput, $manufacturer->getIcon());
-
-        return $this;
-    }
 
     public function seeIcon(string $icon): static
     {
         $I = $this->user;
-        $I->scrollTo($this->iconInput);
+        $I->clickAndWait($this->iconInput);
         $I->retrySeeInField($this->iconInput, $icon);
 
         return $this;
     }
 
-    public function uploadIcon(Manufacturer $manufacturer): self
+    public function uploadIcon(string $icon): static
     {
         $I = $this->user;
-
-        $I->attachFile($this->iconFile, $manufacturer->getIcon());
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->attachFile($this->iconFile, $icon);
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
         return $this;
     }

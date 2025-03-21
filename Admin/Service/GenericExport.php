@@ -30,9 +30,10 @@ class GenericExport extends Page
     {
         $I = $this->user;
         $I->selectGenericExportMainFrame();
-        $I->click(sprintf($this->startExportButton, Translator::translate('Start Export')));
+        $I->clickAndWait(sprintf($this->startExportButton, Translator::translate('Start Export')));
         $I->selectGenericExportStatusFrame();
-        $I->waitForText(Translator::translate('AUCTMASTER_DO_EXPORTEND'));
+        $I->seeText(Translator::translate('AUCTMASTER_DO_EXPORTEND'));
+
         return $this;
     }
 
@@ -42,7 +43,7 @@ class GenericExport extends Page
         $I->selectGenericExportStatusFrame();
         $url = $I->grabAttributeFrom($this->exportResultsFile, 'href');
         $I->amOnUrl($url);
-        $I->see($text);
+        $I->seeText($text);
         return $this;
     }
 }

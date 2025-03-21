@@ -20,7 +20,7 @@ trait HeaderLinks
     {
         $I = $this->user;
         $I->selectHeaderFrame();
-        $I->click($this->shopsStartPageLink);
+        $I->clickAndWait($this->shopsStartPageLink);
         $I->switchToNextTab();
     }
 }

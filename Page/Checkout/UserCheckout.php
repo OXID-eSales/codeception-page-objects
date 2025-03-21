@@ -43,9 +43,10 @@ class UserCheckout extends Page
     public function selectOptionNoRegistration(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
+        $I->seeText(Translator::translate('PURCHASE_WITHOUT_REGISTRATION'));
         $I->waitForElement($this->noRegistrationOption);
-        $I->retryClick($this->noRegistrationOption);
+        $I->clickAndWait($this->noRegistrationOption);
+
         return $this;
     }
 
@@ -53,7 +54,8 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->waitForElement($this->registrationOption);
-        $I->retryClick($this->registrationOption);
+        $I->clickAndWait($this->registrationOption);
+
         return $this;
     }
 
@@ -61,16 +63,17 @@ class UserCheckout extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->nextStepButton);
-        $I->retryClick($this->nextStepButton);
+        $I->clickAndWait($this->nextStepButton);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
+
         return $paymentPage;
     }
 
     public function goToPreviousStep(): Basket
     {
         $I = $this->user;
-        $I->click(Translator::translate('PREVIOUS_STEP'));
+        $I->clickAndWait(Translator::translate('PREVIOUS_STEP'));
         $I->waitForElement($this->breadCrumb);
         return new Basket($I);
     }
@@ -78,16 +81,16 @@ class UserCheckout extends Page
     public function clickOnRegisterUserButton(): self
     {
         $I = $this->user;
-        $I->click($this->registerUserButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->registerUserButton);
         $I->waitForElement($this->breadCrumb);
+
         return $this;
     }
 
     public function openShippingAddressForm(): self
     {
         $I = $this->user;
-        $I->retryClick($this->openShipAddressForm);
+        $I->clickAndWait($this->openShipAddressForm);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressForm);
         return $this;
     }
@@ -95,7 +98,7 @@ class UserCheckout extends Page
     public function openUserBillingAddressForm(): self
     {
         $I = $this->user;
-        $I->click($this->openBillingAddressFormButton);
+        $I->clickAndWait($this->openBillingAddressFormButton);
         $I->waitForElementVisible($this->billCountryId);
         return $this;
     }
@@ -113,7 +116,7 @@ class UserCheckout extends Page
         $I->scrollTo($this->editShippingAddress);
         $I->waitForElementVisible($this->editShippingAddress);
         $I->waitForElementClickable($this->editShippingAddress);
-        $I->click($this->editShippingAddress);
+        $I->clickAndWait($this->editShippingAddress);
         $I->waitForElementVisible($this->selectCountry);
         $I->waitForElementClickable($this->selectCountry);
         $I->selectOption($this->selectCountry, $country);

@@ -8,8 +8,11 @@
 - Admin License tab elements
 - Methods to check output of the System Info page in admin
 - Page objects for cache in admin
+- Admin interface components: `AssignPopup`, `DataTable`, `Tabs`
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
 - Methods of `ProductCategories`
 - Page objects used for testing browser-based shop setup
+- `find()` methods in `ManufacturerList` and `OrderList`
+- Method `seeManufacturerIcon` in `PictureManufacturerPage`

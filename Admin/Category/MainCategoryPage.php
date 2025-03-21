@@ -10,11 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Category;
 
 use OxidEsales\Codeception\Admin\Category\Popup\AssignProductsPopup;
+use OxidEsales\Codeception\Admin\Component\AssignPopup;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+use function sprintf;
+
 class MainCategoryPage extends Page
 {
+    use AssignPopup;
     use CategoryList;
 
     private string $newCategoryName = "//input[@name='editval[oxcategories__oxtitle]']";
@@ -29,14 +33,14 @@ class MainCategoryPage extends Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->newItemButtonId);
+        $I->clickAndWait($this->newItemButtonId);
         $I->selectListFrame();
         $I->selectEditFrame();
         $I->checkOption($this->activeCategoryCheckbox);
         $I->fillField($this->newCategoryName, $categoryName);
         $this->save();
         $I->selectListFrame();
-        $I->waitForText($categoryName);
+        $I->seeText($categoryName);
 
         return $this;
     }
@@ -45,8 +49,8 @@ class MainCategoryPage extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click($this->saveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveButton);
+
         return $this;
     }
 
@@ -56,18 +60,16 @@ class MainCategoryPage extends Page
         $I->selectEditFrame();
         $I->attachFile($this->newCategoryThumbFile, $categoryThumbPath);
         $this->save();
+
         return $this;
     }
 
     public function openAssignProductsPopup(): AssignProductsPopup
     {
         $I = $this->user;
-
-        $I->selectEditFrame();
-        $I->click(sprintf($this->assignProductsButton, Translator::translate('GENERAL_ASSIGNARTICLES')));
-        $I->switchToNextTab();
-        $I->waitForDocumentReadyState();
-        $I->waitForAjax();
+        $this->openAssignPopup(
+            sprintf($this->assignProductsButton, Translator::translate('GENERAL_ASSIGNARTICLES'))
+        );
 
         return new AssignProductsPopup($I);
     }

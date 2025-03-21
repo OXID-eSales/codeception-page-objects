@@ -73,8 +73,7 @@ trait AccountNavigation
     {
         $I = $this->user;
         $I->waitForElementVisible($this->userAccountWishListLink);
-        $I->click($this->userAccountWishListLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userAccountWishListLink);
         $userWishListPage = new UserWishList($I);
         $userWishListPage->seePageOpen();
         return $userWishListPage;
@@ -127,7 +126,7 @@ trait AccountNavigation
     public function seeNumberOnMyReviewsBadge(int $cnt): void
     {
         $I = $this->user;
-        $I->see(
+        $I->seeText(
             (string) $cnt,
             sprintf(
                 '%s%s',
@@ -158,10 +157,9 @@ trait AccountNavigation
     {
         $I = $this->user;
         $I->waitForElement($this->accountMenu);
-        $I->click($this->accountMenu);
+        $I->clickAndWait($this->accountMenu);
         $I->waitForElement($this->accountWidget);
-        $I->click(Translator::translate($title), $this->accountWidget);
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate($title), $this->accountWidget);
     }
 
     /** @param string $title */
@@ -178,7 +176,7 @@ trait AccountNavigation
      */
     private function seePageTitle(Page $page, string $title): void
     {
-        $this->user->see(Translator::translate($title), $page->headerTitle);
+        $this->user->seeText(Translator::translate($title), $page->headerTitle);
     }
 
     /**

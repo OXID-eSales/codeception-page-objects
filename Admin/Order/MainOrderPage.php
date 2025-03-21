@@ -11,11 +11,6 @@ namespace OxidEsales\Codeception\Admin\Order;
 
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * class MainOrderPage
- *
- * @package OxidEsales\Codeception\Admin\Order
- */
 class MainOrderPage extends Page
 {
     use OrderList;

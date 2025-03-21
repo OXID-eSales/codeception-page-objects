@@ -42,16 +42,16 @@ class Login extends Page
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->click($this->userAccountLoginButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userAccountLoginButton);
+
         return $this;
     }
 
     public function openUserPasswordReminderPage()
     {
         $I = $this->user;
-        $I->retryClick($this->forgotPassword);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->forgotPassword);
+
         return new UserPasswordReminder($I);
     }
 
@@ -59,16 +59,16 @@ class Login extends Page
     {
         $I = $this->user;
         $I->checkOption($this->confirmAGBOption);
-        $I->click($this->confirmAGBButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->confirmAGBButton);
+
         return new UserAccount($I);
     }
 
     public function openRegistrationPage()
     {
         $I = $this->user;
-        $I->click($this->userRegistration);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userRegistration);
+
         return new Registration($I);
     }
 }

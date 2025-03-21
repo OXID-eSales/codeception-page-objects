@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Account;
 
-use Codeception\Util\Locator;
 use OxidEsales\Codeception\Page\Component\Modal;
 use OxidEsales\Codeception\Page\Component\Pagination;
 use OxidEsales\Codeception\Page\Page;
+
+use function sprintf;
 
 class MyReviews extends Page
 {
@@ -23,29 +24,31 @@ class MyReviews extends Page
 
     public string $URL = self::URL;
     public string $breadCrumb = '.breadcrumb';
-    public $headerTitle = 'h1';
-    private $reviewEntry = '//div[@class="reviews-landscape"]/div[@class="card"]';
-    private $deleteReviewBtn = '//div[@id="reviewName_%s"]//button';
+    public string $headerTitle = 'h1';
+    private string $reviewEntry = '//div[@class="reviews-landscape"]/div[@class="card"]';
+    private string $deleteReviewBtn = '//div[@id="reviewName_%s"]//button';
 
-    /** @param int $cnt */
     public function seeNumberOfReviews(int $cnt): self
     {
         $I = $this->user;
         $I->seeNumberOfElements($this->reviewEntry, $cnt);
+
         return $this;
     }
 
     public function deleteFirstReviewInList(): self
     {
         $this->deleteReviewInList(1);
+
         return $this;
     }
 
     public function deleteReviewInList(int $position): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->deleteReviewBtn, $position));
+        $I->clickAndWait(sprintf($this->deleteReviewBtn, $position));
         $this->confirmDeletion();
+
         return $this;
     }
 }

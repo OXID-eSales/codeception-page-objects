@@ -23,7 +23,8 @@ class Tools extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click($this->updateDbViewsButton);
+        $I->waitForElement($this->updateDbViewsButton);
+        $I->openAlert($this->updateDbViewsButton);
         $I->retryAcceptPopup();
         $I->waitForDocumentReadyState();
 
@@ -34,8 +35,9 @@ class Tools extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
+        $I->waitForElement($this->sqlTextInput);
         $I->fillField($this->sqlTextInput, $sqlCommand);
-        $I->click($this->runUpdateSqlButton);
+        $I->clickAndWait($this->runUpdateSqlButton);
         $I->waitForDocumentReadyState();
 
         return $this;
@@ -45,8 +47,8 @@ class Tools extends Page
     {
         $I = $this->user;
         $I->selectListFrame();
-        $I->see($text, $this->sqlOutputElement);
+        $I->seeText($text, $this->sqlOutputElement);
 
         return $this;
-   }
+    }
 }

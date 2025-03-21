@@ -25,14 +25,15 @@ class UserPasswordReminder extends Page
 
     public function seePageOpen(): self
     {
-        $this->user->see(Translator::translate('FORGOT_PASSWORD'), $this->headerTitle);
+        $this->user->seeText(Translator::translate('FORGOT_PASSWORD'), $this->headerTitle);
         return $this;
     }
     public function resetPassword(string $userEmail): self
     {
         $I = $this->user;
         $I->fillField($this->forgotPasswordUserEmail, $userEmail);
-        $I->retryClick(Translator::translate('REQUEST_PASSWORD'));
+        $I->clickAndWait(Translator::translate('REQUEST_PASSWORD'));
+
         return $this;
     }
 }

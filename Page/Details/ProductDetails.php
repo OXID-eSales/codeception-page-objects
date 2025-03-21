@@ -9,20 +9,18 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Details;
 
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Account\UserLogin;
 use OxidEsales\Codeception\Page\Component\Footer\ServiceWidget;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\LanguageMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Page\Component\Header\Navigation;
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Lists\ProductSearchList;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for the product details page
- * @package OxidEsales\Codeception\Page\Details
- */
+use function sprintf;
+
 class ProductDetails extends Page
 {
     use AccountMenu;
@@ -93,11 +91,6 @@ class ProductDetails extends Page
         return $this->URL . '/index.php?' . http_build_query(['cl' => 'details', 'anid' => $params]);
     }
 
-    /**
-     * Assert if user cannot buy current product
-     *
-     * @return $this
-     */
     public function checkIfProductIsNotBuyable()
     {
         $I = $this->user;
@@ -105,11 +98,6 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * Assert if user can buy current product
-     *
-     * @return $this
-     */
     public function checkIfProductIsBuyable()
     {
         $I = $this->user;
@@ -117,21 +105,16 @@ class ProductDetails extends Page
         return $this;
     }
 
-    /**
-     * @param int    $variant      The position of the variant.
-     * @param string $variantValue The value of the variant.
-     * @param string $waitForText  The text to wait (optional).
-     *
-     * @return $this
-     */
-    public function selectVariant(int $variant, string $variantValue, string $waitForText = '')
+    public function selectVariant(int $selector, string $variantValue): static
     {
         $I = $this->user;
-        $I->selectOption(sprintf($this->variantSelection, $variant), $variantValue);
-        $I->waitForElementNotVisible($this->variantOpenSelection);
-        $I->waitForPageLoad();
-        $I->waitForText($variantValue);
-        $I->wait(1);
+        $eventId = $I->addAjaxListener();
+        $I->selectOption(
+            sprintf($this->variantSelection, $selector),
+            $variantValue
+        );
+        $I->waitForAjaxDone($eventId);
+
         return $this;
     }
 
@@ -144,9 +127,9 @@ class ProductDetails extends Page
     public function seeVariant(int $variant, string $variantValue)
     {
         $I = $this->user;
-        $I->click(sprintf($this->variantSelection, $variant));
-        $I->see($variantValue);
-        $I->click(sprintf($this->variantSelection, $variant));
+        $I->clickAndWait(sprintf($this->variantSelection, $variant));
+        $I->seeText($variantValue);
+        $I->clickAndWait(sprintf($this->variantSelection, $variant));
         return $this;
     }
 
@@ -159,9 +142,9 @@ class ProductDetails extends Page
     public function dontSeeVariant(int $variant, string $variantValue)
     {
         $I = $this->user;
-        $I->click(sprintf($this->variantSelection, $variant));
+        $I->clickAndWait(sprintf($this->variantSelection, $variant));
         $I->dontSee($variantValue);
-        $I->click(sprintf($this->variantSelection, $variant));
+        $I->clickAndWait(sprintf($this->variantSelection, $variant));
         return $this;
     }
 
@@ -172,8 +155,8 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToCompareListLink);
-        $I->retryClick($this->addToCompareListLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->addToCompareListLink);
+
         return $this;
     }
 
@@ -183,8 +166,8 @@ class ProductDetails extends Page
     public function removeFromCompareList()
     {
         $I = $this->user;
-        $I->retryClick($this->removeFromCompareListLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->removeFromCompareListLink);
+
         return $this;
     }
 
@@ -195,8 +178,8 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToWishListLink);
-        $I->retryClick($this->addToWishListLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->addToWishListLink);
+
         return $this;
     }
 
@@ -207,8 +190,8 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToListmania);
-        $I->click($this->addToListmania);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->addToListmania);
+
         return new ProductListmania($I);
     }
 
@@ -219,41 +202,39 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->waitForElementClickable($this->addToGiftRegistryLink);
-        $I->retryClick($this->addToGiftRegistryLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->addToGiftRegistryLink);
+
         return $this;
     }
 
     /**
-     * @param string $userName
-     * @param string $userPassword
-     *
      * @return $this
      */
     public function loginUserForReview(string $userName, string $userPassword)
     {
         $I = $this->user;
-        $I->retryClick($this->reviewLoginLink);
-        $userLoginPage = new UserLogin($I);
-        $I->see(Translator::translate('LOGIN'));
-        $userLoginPage->login($userName, $userPassword);
+        $I->clickAndWait($this->reviewLoginLink);
+        $I->seeText(Translator::translate('LOGIN'));
+        (new UserLogin($I))->login(
+            $userName,
+            $userPassword
+        );
+
         return $this;
     }
 
     /**
-     * @param string $review
-     * @param int    $rating
-     *
      * @return $this
      */
     public function addReviewAndRating(string $review, int $rating)
     {
         $I = $this->user;
-        $I->retryClick($this->openReviewForm);
+        $I->clickAndWait($this->openReviewForm);
         $I->waitForElement($this->reviewTextForm);
         $I->retryFillField($this->reviewTextForm, $review);
-        $I->retryClick(sprintf($this->ratingSelection, $rating));
-        $I->retryClick($this->saveRatingAndReviewButton);
+        $I->clickAndWait(sprintf($this->ratingSelection, $rating));
+        $I->clickAndWait($this->saveRatingAndReviewButton);
+
         return $this;
     }
 
@@ -268,8 +249,8 @@ class ProductDetails extends Page
     public function seeUserProductReviewAndRating(int $reviewId, string $userName, string $reviewText, int $rating)
     {
         $I = $this->user;
-        $I->see($userName, sprintf($this->productReviewAuthor, $reviewId));
-        $I->see($reviewText, sprintf($this->productReviewText, $reviewId));
+        $I->seeText($userName, sprintf($this->productReviewAuthor, $reviewId));
+        $I->seeText($reviewText, sprintf($this->productReviewText, $reviewId));
         $I->seeNumberOfElements(sprintf($this->userProductRating, $reviewId), $rating);
         return $this;
     }
@@ -282,11 +263,11 @@ class ProductDetails extends Page
     public function openProductSuggestionPage()
     {
         $I = $this->user;
-        $I->click($this->productSuggestionLink);
+        $I->clickAndWait($this->productSuggestionLink);
         $productSuggestionPage = new ProductSuggestion($I);
         $breadCrumb = Translator::translate('RECOMMEND_PRODUCT');
         $productSuggestionPage->seeOnBreadCrumb($breadCrumb);
-        $I->see(Translator::translate('RECOMMEND_PRODUCT'), $productSuggestionPage->headerTitle);
+        $I->seeText(Translator::translate('RECOMMEND_PRODUCT'), $productSuggestionPage->headerTitle);
         return $productSuggestionPage;
     }
 
@@ -302,8 +283,8 @@ class ProductDetails extends Page
         $this->openPriceAlert();
         $I->fillField($this->priceAlertEmail, $email);
         $I->fillField($this->priceAlertSuggestedPrice, $price);
-        $I->click(Translator::translate('SEND'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('SEND'));
+
         return $this;
     }
 
@@ -315,8 +296,8 @@ class ProductDetails extends Page
     public function openPriceAlert()
     {
         $I = $this->user;
-        $I->click(Translator::translate('PRICE_ALERT'));
-        $I->see(Translator::translate('MESSAGE_PRICE_ALARM_PRICE_CHANGE'));
+        $I->clickAndWait(Translator::translate('PRICE_ALERT'));
+        $I->seeText(Translator::translate('MESSAGE_PRICE_ALARM_PRICE_CHANGE'));
         return $this;
     }
 
@@ -351,32 +332,32 @@ class ProductDetails extends Page
         $I = $this->user;
         $I->waitForElement($this->productTitle);
         $I->waitForText($productData['title'], 30, $this->productTitle);
-        $I->see($productData['title'], $this->productTitle);
-        $I->see($productData['description'], $this->productShortDesc);
-        $I->see($productData['id']);
-        $I->see($productData['price'], $this->productPrice);
-        $I->see(Translator::translate('PLUS_SHIPPING'), $this->productPricePlus);
+        $I->seeText($productData['title'], $this->productTitle);
+        $I->seeText($productData['description'], $this->productShortDesc);
+        $I->seeText($productData['id']);
+        $I->seeText($productData['price'], $this->productPrice);
+        $I->seeText(Translator::translate('PLUS_SHIPPING'), $this->productPricePlus);
         return $this;
     }
 
     public function seeProductTitle(string $title): self
     {
         $I = $this->user;
-        $I->see($title, $this->productTitle);
+        $I->seeText($title, $this->productTitle);
         return $this;
     }
 
     public function seeProductOldPrice(string $price): self
     {
         $I = $this->user;
-        $I->see($price, $this->productOldPrice);
+        $I->seeText($price, $this->productOldPrice);
         return $this;
     }
 
     public function seeProductUnitPrice(string $price): self
     {
         $I = $this->user;
-        $I->see($price, $this->productUnitPrice);
+        $I->seeText($price, $this->productUnitPrice);
         return $this;
     }
 
@@ -384,8 +365,9 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->fillField($this->basketAmountField, $amount);
-        $I->retryClick($this->toBasketButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->toBasketButton);
+        $I->waitForElementClickable($this->toBasketButton);
+
         return $this;
     }
 
@@ -396,17 +378,17 @@ class ProductDetails extends Page
     public function seeAccessoryData(array $productData, int $position = 1): self
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->accessoriesProductTitle, $position));
-        $I->see($productData['price'], sprintf($this->accessoriesProductPrice, $position));
+        $I->seeText($productData['title'], sprintf($this->accessoriesProductTitle, $position));
+        $I->seeText($productData['price'], sprintf($this->accessoriesProductPrice, $position));
         return $this;
     }
 
     public function openAccessoryDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openAccessoriesProduct, $position));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->openAccessoriesProduct, $position));
         $I->waitForElement($this->productTitle);
+
         return $this;
     }
 
@@ -417,17 +399,17 @@ class ProductDetails extends Page
     public function seeSimilarProductData(array $productData, int $position = 1): self
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->similarProductTitle, $position));
-        $I->see($productData['price'], sprintf($this->similarProductPrice, $position));
+        $I->seeText($productData['title'], sprintf($this->similarProductTitle, $position));
+        $I->seeText($productData['price'], sprintf($this->similarProductPrice, $position));
         return $this;
     }
 
     public function openSimilarProductDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openSimilarProduct, $position));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->openSimilarProduct, $position));
         $I->waitForElement($this->productTitle);
+
         return $this;
     }
 
@@ -438,17 +420,17 @@ class ProductDetails extends Page
     public function seeCrossSellingData(array $productData, int $position = 1): self
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->crossSellingProductTitle, $position));
-        $I->see($productData['price'], sprintf($this->crossSellingProductPrice, $position));
+        $I->seeText($productData['title'], sprintf($this->crossSellingProductTitle, $position));
+        $I->seeText($productData['price'], sprintf($this->crossSellingProductPrice, $position));
         return $this;
     }
 
     public function openCrossSellingDetailsPage(int $position = 1): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openCrossSellingProduct, $position));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->openCrossSellingProduct, $position));
         $I->waitForElement($this->productTitle);
+
         return $this;
     }
 
@@ -462,7 +444,7 @@ class ProductDetails extends Page
     public function seeAmountPrices(array $amountPrices): self
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('BLOCK_PRICE'));
+        $I->clickAndWait(Translator::translate('BLOCK_PRICE'));
         $I->waitForElementVisible(sprintf($this->amountPriceQuantity, 1));
         $itemPosition = 1;
         foreach ($amountPrices as $amountPrice) {
@@ -470,32 +452,32 @@ class ProductDetails extends Page
                 . ' ' . $amountPrice['amountFrom']
                 . ' ' . Translator::translate('PCS');
             $discountText = $amountPrice['discount'] . '% ' . Translator::translate('DISCOUNT');
-            $I->see($fromAmount, sprintf($this->amountPriceQuantity, $itemPosition));
-            $I->see($discountText, sprintf($this->amountPriceValue, $itemPosition));
+            $I->seeText($fromAmount, sprintf($this->amountPriceQuantity, $itemPosition));
+            $I->seeText($discountText, sprintf($this->amountPriceValue, $itemPosition));
             $itemPosition++;
         }
-        $I->click($this->amountPriceCloseButton);
+        $I->clickAndWait($this->amountPriceCloseButton);
         return $this;
     }
 
     public function openNextProduct(): self
     {
         $I = $this->user;
-        $I->click($this->nextProductLink);
+        $I->clickAndWait($this->nextProductLink);
         return $this;
     }
 
     public function openPreviousProduct(): self
     {
         $I = $this->user;
-        $I->click($this->previousProductLink);
+        $I->clickAndWait($this->previousProductLink);
         return $this;
     }
 
     public function openProductSearchList(): ProductSearchList
     {
         $I = $this->user;
-        $I->click(Translator::translate('BACK_TO_OVERVIEW'));
+        $I->clickAndWait(Translator::translate('BACK_TO_OVERVIEW'));
         return new ProductSearchList($I);
     }
 
@@ -503,21 +485,21 @@ class ProductDetails extends Page
     {
         $I = $this->user;
         $I->selectOption($this->selectionList, $selectionItem);
-        $I->see($selectionItem, $this->selectionList);
+        $I->seeText($selectionItem, $this->selectionList);
         return $this;
     }
 
     public function seeAttributeName(string $attributeName, int $attributeId): self
     {
         $I = $this->user;
-        $I->see($attributeName, sprintf($this->attributeName, $attributeId));
+        $I->seeText($attributeName, sprintf($this->attributeName, $attributeId));
         return $this;
     }
 
     public function seeAttributeValue(string $attributeValue, int $attributeId): self
     {
         $I = $this->user;
-        $I->see($attributeValue, sprintf($this->attributeValue, $attributeId));
+        $I->seeText($attributeValue, sprintf($this->attributeValue, $attributeId));
         return $this;
     }
 
@@ -548,8 +530,8 @@ class ProductDetails extends Page
     public function openAlsoBoughtProduct(int $position = 1): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
-        $I->retryClick(sprintf($this->alsoBought, $position));
+        $I->seeText(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
+        $I->clickAndWait(sprintf($this->alsoBought, $position));
         return $this;
     }
 

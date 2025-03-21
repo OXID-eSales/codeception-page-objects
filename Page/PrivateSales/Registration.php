@@ -36,8 +36,8 @@ class Registration extends Page
     public function registerUser()
     {
         $I = $this->user;
-        $I->retryClick($this->saveFormButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveFormButton);
+
         return $this;
     }
 

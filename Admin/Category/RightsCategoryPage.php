@@ -10,11 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Category;
 
 use OxidEsales\Codeception\Admin\Category\Popup\AssignProductsPopup;
+use OxidEsales\Codeception\Admin\Component\AssignPopup;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+use function sprintf;
+
 class RightsCategoryPage extends Page
 {
+    use AssignPopup;
     use CategoryList;
 
     private string $assignVisibleRightsButton = "//input[@value='%s']";
@@ -26,8 +30,8 @@ class RightsCategoryPage extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->inheritRightsCheckbox);
-        $I->click($this->saveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveButton);
+
         return $this;
     }
 
@@ -36,23 +40,18 @@ class RightsCategoryPage extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->inheritRightsCheckbox);
-        $I->click($this->saveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveButton);
+
         return $this;
     }
 
     public function assignUserRightsToCategory(): static
     {
         $I = $this->user;
-        $I->selectEditFrame();
-
-        $assignButtonSelector = sprintf($this->assignVisibleRightsButton, Translator::translate('CATEGORY_RIGHTS_ASSIGNVISIBLE'));
-        $I->click($assignButtonSelector);
-
-        $I->switchToNextTab();
-        $I->waitForDocumentReadyState();
-        $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
-        $I->waitForAjax();
+        $this->openAssignPopup(
+            sprintf($this->assignVisibleRightsButton, Translator::translate('CATEGORY_RIGHTS_ASSIGNVISIBLE'))
+        );
+        $I->clickAndWait(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
         $I->closeTab();
 
         return $this;

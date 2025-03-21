@@ -88,8 +88,8 @@ class StockProductPage extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click($this->saveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveButton);
+
         return $this;
     }
 }

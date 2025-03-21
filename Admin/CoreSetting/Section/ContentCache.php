@@ -60,8 +60,7 @@ class ContentCache extends Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->contentCacheSaveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->contentCacheSaveButton);
 
         return $this;
     }

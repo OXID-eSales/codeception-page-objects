@@ -10,14 +10,11 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Page\Account;
 
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
-use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
-use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for my-product-comparison page
- * @package OxidEsales\Codeception\Page\Account
- */
+use function sprintf;
+
 class ProductCompare extends Page
 {
     use MiniBasket;
@@ -55,102 +52,60 @@ class ProductCompare extends Page
      *
      * @return $this
      */
-    public function seeProductData(array $productData, int $position = 1)
+    public function seeProductData(array $productData, int $position = 1): static
     {
         $I = $this->user;
-        $I->see($productData['id'], sprintf($this->productNumber, $position));
-        $I->see($productData['title'], sprintf($this->productTitle, $position));
-        $I->see($productData['price'], sprintf($this->productPrice, $position));
+        $I->seeText($productData['id'], sprintf($this->productNumber, $position));
+        $I->seeText($productData['title'], sprintf($this->productTitle, $position));
+        $I->seeText($productData['price'], sprintf($this->productPrice, $position));
         return $this;
     }
 
-    /**
-     * Check product information
-     *
-     * @param string $attributeName
-     * @param int    $attributeId
-     *
-     * @return $this
-     */
-    public function seeProductAttributeName(string $attributeName, int $attributeId)
+    public function seeProductAttributeName(string $attributeName, int $attributeId): static
     {
         $I = $this->user;
-        $I->see($attributeName, sprintf($this->attributeName, $attributeId));
+        $I->seeText($attributeName, sprintf($this->attributeName, $attributeId));
+
         return $this;
     }
 
-    /**
-     * Check product information
-     *
-     * @param string $attributeValue
-     * @param int    $attributeId
-     * @param int    $position       The Item position
-     *
-     * @return $this
-     */
-    public function seeProductAttributeValue(string $attributeValue, int $attributeId, int $position)
+    public function seeProductAttributeValue(string $attributeValue, int $attributeId): static
     {
         $I = $this->user;
-        $I->see($attributeValue, sprintf($this->attributeValue, $attributeId, $position));
+        $I->seeText($attributeValue, sprintf($this->attributeValue, $attributeId));
+
         return $this;
     }
 
-    /**
-     * Opens details page
-     *
-     * @param int $id
-     *
-     * @return ProductDetails
-     */
-    public function openProductDetailsPage(int $id)
+    public function openProductDetailsPage(int $id): ProductDetails
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->productTitle, $id));
+        $I->clickAndWait(sprintf($this->productTitle, $id));
+
         return new ProductDetails($I);
     }
 
-    /**
-     * Moves selected product to the right.
-     *
-     * @param string $productId
-     *
-     * @return $this
-     */
-    public function moveItemToRight(string $productId)
+    public function moveItemToRight(string $productId): static
     {
         $I = $this->user;
-        $I->click(sprintf($this->rightArrow, $productId));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->rightArrow, $productId));
+
         return $this;
     }
 
-    /**
-     * Moves selected product to the left.
-     *
-     * @param string $productId
-     *
-     * @return $this
-     */
-    public function moveItemToLeft(string $productId)
+    public function moveItemToLeft(string $productId): static
     {
         $I = $this->user;
-        $I->click(sprintf($this->leftArrow, $productId));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->leftArrow, $productId));
+
         return $this;
     }
 
-    /**
-     * Removes selected product from the list.
-     *
-     * @param string $productId
-     *
-     * @return $this
-     */
-    public function removeProductFromList(string $productId)
+    public function removeProductFromList(string $productId): static
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->removeButton, $productId));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->removeButton, $productId));
+
         return $this;
     }
 }

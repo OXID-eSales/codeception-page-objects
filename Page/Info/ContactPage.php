@@ -39,8 +39,7 @@ class ContactPage extends Page
     public function sendContactData(): static
     {
         $I = $this->user;
-        $I->retryClick($this->sendButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->sendButton);
 
         return $this;
     }

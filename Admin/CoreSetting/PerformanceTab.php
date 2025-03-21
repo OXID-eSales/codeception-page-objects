@@ -14,13 +14,10 @@ use OxidEsales\EshopCommunity\Tests\Codeception\AcceptanceTester;
 
 class PerformanceTab extends Page
 {
-    /** @var string */
-    public $disableSaveCartCheckbox = 'confbools[blPerfNoBasketSaving]';
+    public string $disableSaveCartCheckbox = 'confbools[blPerfNoBasketSaving]';
 
-    /** @return PerformanceTab */
     public function enableSaveCart(): PerformanceTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->disableSaveCartCheckbox);
@@ -28,10 +25,8 @@ class PerformanceTab extends Page
         return $this;
     }
 
-    /** @return PerformanceTab */
     public function disableSaveCart(): PerformanceTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->disableSaveCartCheckbox);
@@ -39,14 +34,12 @@ class PerformanceTab extends Page
         return $this;
     }
 
-    /** @return PerformanceTab */
     public function save(): PerformanceTab
     {
-        /** @var AcceptanceTester $I */
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click('save');
-        $I->waitForPageLoad();
+        $I->clickAndWait('save');
+
         return $this;
     }
 }

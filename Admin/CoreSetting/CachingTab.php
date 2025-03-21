@@ -23,7 +23,7 @@ class CachingTab extends Page
     {
         $I = $this->user;
 
-        $I->click($this->dataCacheBlock);
+        $I->clickAndWait($this->dataCacheBlock);
 
         return new DataCache($I);
     }
@@ -32,7 +32,7 @@ class CachingTab extends Page
     {
         $I = $this->user;
 
-        $I->click($this->contentCacheBlock);
+        $I->clickAndWait($this->contentCacheBlock);
 
         return new ContentCache($I);
     }

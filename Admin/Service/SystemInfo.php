@@ -38,6 +38,6 @@ class SystemInfo extends Page
             $module,
             $directive,
         );
-        $I->see($vale, $selector);
+        $I->seeText($vale, $selector);
     }
 }

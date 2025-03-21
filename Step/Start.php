@@ -32,7 +32,7 @@ class Start extends Step
         $homePage = new Home($I);
         $newsletterPage = $homePage->subscribeForNewsletter($userEmail);
         $newsletterPage->enterUserData($userEmail, $userName, $userLastName)->subscribe();
-        $I->see(Translator::translate('MESSAGE_THANKYOU_FOR_SUBSCRIBING_NEWSLETTERS'));
+        $I->seeText(Translator::translate('MESSAGE_THANKYOU_FOR_SUBSCRIBING_NEWSLETTERS'));
         return $newsletterPage;
     }
 

@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Page\Checkout;
 
+use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Component\Header\MiniBasket;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
+
+use function sprintf;
 
 class Basket extends Page
 {
@@ -46,16 +49,26 @@ class Basket extends Page
     public function updateProductAmount(float $amount, int $itemPosition = 1): self
     {
         $I = $this->user;
-        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), [
-            WebDriverKeys::CONTROL, 'a'
-        ]);
-        $I->pressKey(sprintf($this->basketItemAmount, $itemPosition), WebDriverKeys::BACKSPACE);
+        $amountInput = sprintf($this->basketItemAmount, $itemPosition);
+        $eventId = $I->addFetchListener();
         $I->pressKey(
-            sprintf($this->basketItemAmount, $itemPosition),
+            $amountInput,
+            [
+                WebDriverKeys::CONTROL,
+                'a'
+            ]
+        );
+        $I->pressKey(
+            $amountInput,
+            WebDriverKeys::BACKSPACE
+        );
+        $I->pressKey(
+            $amountInput,
             $amount,
             WebDriverKeys::ENTER
         );
-        $I->waitForPageLoad();
+        $I->waitForFetchDone($eventId);
+
         return $this;
     }
 
@@ -70,8 +83,15 @@ class Basket extends Page
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see(Translator::translate('PRODUCT_NO') .
-                ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
+            $I->waitForText($basketProduct['title']);
+            $I->see(
+                sprintf(
+                    '%s %s',
+                    Translator::translate('PRODUCT_NO'),
+                    $basketProduct['id']
+                ),
+                sprintf($this->basketItemId, $itemPosition)
+            );
             $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
             $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
@@ -88,6 +108,7 @@ class Basket extends Page
     public function seeBasketContainsBundledProduct(array $basketProduct, int $itemPosition): self
     {
         $I = $this->user;
+        $I->waitForText($basketProduct['title']);
         $I->see(Translator::translate('PRODUCT_NO') .
             ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
         $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
@@ -98,7 +119,7 @@ class Basket extends Page
     public function seeBasketContainsAttribute(string $basketProductAttribute, int $itemPosition)
     {
         $I = $this->user;
-        $I->see($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
+        $I->seeText($basketProductAttribute, sprintf($this->basketItemAttributes, $itemPosition));
         return $this;
     }
 
@@ -108,23 +129,24 @@ class Basket extends Page
         int $itemPosition
     ) {
         $I = $this->user;
-        $I->see($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
+        $I->seeText($selectionListTitle . ': ' . $selectionListValue, sprintf($this->basketItemSelection, $itemPosition));
         return $this;
     }
 
     public function goToNextStep(): UserCheckout
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('CHECKOUT'), $this->checkoutButton);
+        $I->clickAndWait(Translator::translate('CHECKOUT'), $this->checkoutButton);
         $userStep = new UserCheckout($I);
         $I->waitForElement($userStep->breadCrumb);
+
         return $userStep;
     }
 
     public function seeNextStep(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('CHECKOUT'));
+        $I->seeText(Translator::translate('CHECKOUT'));
         return $this;
     }
 
@@ -138,32 +160,34 @@ class Basket extends Page
     public function addCouponToBasket(string $couponNumber): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
+        $I->clickAndWait(sprintf($this->openBasketCouponField, Translator::translate('COUPON')));
         $I->waitForElementVisible($this->addBasketCouponField);
         $I->fillField($this->addBasketCouponField, $couponNumber);
-        $I->retryClick($this->addBasketCouponButton);
+        $I->clickAndWait($this->addBasketCouponButton);
         $I->waitForElementVisible($this->removeBasketCoupon);
+
         return $this;
     }
 
     public function removeCouponFromBasket(): self
     {
-        $this->user->click($this->removeBasketCoupon);
+        $this->user->clickAndWait($this->removeBasketCoupon);
         return $this;
     }
 
     public function openGiftSelection(int $itemPosition): GiftSelection
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openGiftSelection, $itemPosition));
-        $I->waitForText(Translator::translate('GIFT_OPTION'));
+        $I->clickAndWait(sprintf($this->openGiftSelection, $itemPosition));
+        $I->seeText(Translator::translate('GIFT_OPTION'));
+
         return new GiftSelection($I);
     }
 
     public function seeItemUnitPrice(string $price, string $position): self
     {
         $I = $this->user;
-        $I->see($price, sprintf($this->basketItemUnitPrice, $position));
+        $I->seeText($price, sprintf($this->basketItemUnitPrice, $position));
         return $this;
     }
 
@@ -200,7 +224,7 @@ class Basket extends Page
             sprintf($this->persistentParamInput, $item),
             WebDriverKeys::ENTER,
         );
-        $I->waitForAjax();
+        $I->waitForPageLoad();
 
         return $this;
     }

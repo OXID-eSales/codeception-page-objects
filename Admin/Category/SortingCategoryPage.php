@@ -10,11 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Category;
 
 use OxidEsales\Codeception\Admin\Category\Popup\SortProductsPopup;
+use OxidEsales\Codeception\Admin\Component\AssignPopup;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
+use function sprintf;
+
 class SortingCategoryPage extends Page
 {
+    use AssignPopup;
     use CategoryList;
 
     private string $sortProductsButton = "//input[@value='%s']";
@@ -22,12 +26,9 @@ class SortingCategoryPage extends Page
     public function openSortingProductsPopup(): SortProductsPopup
     {
         $I = $this->user;
-
-        $I->selectEditFrame();
-        $I->click(sprintf($this->sortProductsButton, Translator::translate('CATEGORY_ORDER_SORTCATEGORIES')));
-        $I->switchToNextTab();
-        $I->waitForDocumentReadyState();
-        $I->waitForAjax();
+        $this->openAssignPopup(
+            sprintf($this->sortProductsButton, Translator::translate('CATEGORY_ORDER_SORTCATEGORIES'))
+        );
 
         return new SortProductsPopup($I);
     }

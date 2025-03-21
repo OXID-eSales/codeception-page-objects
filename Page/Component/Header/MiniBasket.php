@@ -38,25 +38,24 @@ trait MiniBasket
     {
         $I = $this->user;
         $this->openMiniBasket();
-        $I->see(sprintf('%s %s', $totalAmount, Translator::translate('ITEMS_IN_BASKET')));
+        $I->seeText(sprintf('%s %s', $totalAmount, Translator::translate('ITEMS_IN_BASKET')));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = (string)++$key;
-            $I->see($basketProduct['title'], $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));
-            $I->see((string)($basketProduct['amount']), sprintf($this->miniBasketItemAmount, $itemPosition));
-            $I->see((string)$basketProduct['price'], sprintf($this->miniBasketItemPrice, $itemPosition));
+            $I->seeText($basketProduct['title'], $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));
+            $I->seeText((string)($basketProduct['amount']), sprintf($this->miniBasketItemAmount, $itemPosition));
+            $I->seeText((string)$basketProduct['price'], sprintf($this->miniBasketItemPrice, $itemPosition));
         }
-        $I->see($basketSummaryPrice, $this->miniBasketItemsSummaryPrice);
+        $I->seeText($basketSummaryPrice, $this->miniBasketItemsSummaryPrice);
         return $this;
     }
 
     public function openMiniBasket(): self
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $I->waitForElementClickable($this->miniBasketMenuElement);
-        $I->click($this->miniBasketMenuElement);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->miniBasketMenuElement);
         $I->waitForElementVisible($this->miniBasketTitle);
+
         return $this;
     }
 
@@ -64,30 +63,29 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
-        $I->wait(1);
-        $I->retryClick($this->miniBasketClose);
-        $I->waitForElementNotVisible($this->miniBasketTitle);
+        $I->clickAndWait($this->miniBasketClose);
+        $I->waitForElementNotVisible($this->miniBasketClose);
+
         return $this;
     }
 
     public function openCheckout(): UserCheckout|PaymentCheckout
     {
         $I = $this->user;
-        $I->waitForText(Translator::translate('CHECKOUT'));
-        $I->retryClick(Translator::translate('CHECKOUT'));
-        $I->waitForPageLoad();
-        if (Context::isUserLoggedIn()) {
-            return new PaymentCheckout($I);
-        }
+        $I->seeText(Translator::translate('CHECKOUT'));
+        $I->clickAndWait(Translator::translate('CHECKOUT'));
 
-        return new UserCheckout($I);
+        return Context::isUserLoggedIn() ?
+            new PaymentCheckout($I) :
+            new UserCheckout($I);
     }
 
     public function openBasketDisplay(): Basket
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('DISPLAY_BASKET'));
-        $I->see(Translator::translate('CART'));
+        $I->clickAndWait(Translator::translate('DISPLAY_BASKET'));
+        $I->seeText(Translator::translate('CART'));
+
         return new Basket($I);
     }
 
@@ -95,7 +93,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $this->openMiniBasket();
-        $I->see(Translator::translate('BASKET_EMPTY'));
+        $I->seeText(Translator::translate('BASKET_EMPTY'));
         $this->closeMiniBasket();
         return $this;
     }
@@ -112,7 +110,7 @@ trait MiniBasket
     public function seeItemCountBadge(string $itemCount): self
     {
         $I = $this->user;
-        $I->see($itemCount, $this->itemCountBadge);
+        $I->seeText($itemCount, $this->itemCountBadge);
 
         return $this;
     }
@@ -129,7 +127,7 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable(sprintf($this->addToWishlist, $productPosition));
-        $I->click(sprintf($this->addToWishlist, $productPosition));
+        $I->clickAndWait(sprintf($this->addToWishlist, $productPosition));
         return $this;
     }
 

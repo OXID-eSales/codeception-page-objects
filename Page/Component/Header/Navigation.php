@@ -26,22 +26,19 @@ trait Navigation
     public function openHomePage()
     {
         $I = $this->user;
-        $I->click($this->homeLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->homeLink);
+
         return new Home($I);
     }
 
     /**
-     * Open selected category page.
-     *
-     * @param string $category
-     *
      * @return ProductList
      */
     public function openCategoryPage(string $category)
     {
         $I = $this->user;
-        $I->retryClick(['link' => $category]);
+        $I->clickAndWait(['link' => $category]);
+
         return new ProductList($I);
     }
 }

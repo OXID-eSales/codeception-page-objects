@@ -11,38 +11,31 @@ namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class Users
- *
- * @package OxidEsales\Codeception\Admin\User
- */
 class UserHistoryPage extends Page
 {
     use UserList;
 
-    public $historyTabRemarkSelect = "//select[@name='rem_oxid']";
-    public $deleteRemark = "//input[@value='Delete']";
-    public $remarktextSelector = "//textarea[@name='remarktext']";
-    public $remarkField = 'remarktext';
+    public string $historyTabRemarkSelect = "//select[@name='rem_oxid']";
+    public string $deleteRemark = "//input[@value='Delete']";
+    public string $remarkTextSelector = "//textarea[@name='remarktext']";
+    public string $remarkField = 'remarktext';
 
-    public function deleteRemark(): self
+    public function deleteRemark(): static
     {
         $I = $this->user;
-
         $I->selectEditFrame();
-
-        $I->click($this->deleteRemark);
-        $I->selectEditFrame();
+        $I->clickAndWait($this->deleteRemark);
+        $I->waitForElementVisible($this->deleteRemark);
 
         return $this;
     }
 
-    public function selectUserRemark($listItem)
+    public function selectUserRemark($listItem): static
     {
         $I = $this->user;
-
+        $I->selectEditFrame();
         $I->selectOption($this->historyTabRemarkSelect, $listItem);
-        $I->waitForElement($this->remarktextSelector);
+        $I->waitForDocumentReadyState();
 
         return $this;
     }

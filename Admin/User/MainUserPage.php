@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\AdminLoginPage;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -42,11 +43,6 @@ class MainUserPage extends Page
     public string $userRightsField = "//select[@name='editval[oxuser__oxrights]']";
     public string $userHasPasswordSelector = '#myedit table tr:nth-child(17) td:nth-child(2)';
 
-    /**
-     * @param AdminUser $user
-     * @param AdminUserAddresses $userAddress
-     * @return $this
-     */
     public function editUserInformation(AdminUser $user, AdminUserAddresses $userAddress): self
     {
         $I = $this->user;
@@ -78,17 +74,13 @@ class MainUserPage extends Page
         $I->fillField($this->userPasswordField, $user->getPassword());
         $I->selectOption($this->userRightsField, $user->getUserRights());
 
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $I->selectEditFrame();
+        $I->waitForElementVisible($this->usernameField);
 
         return $this;
     }
 
-    /**
-     * @param AdminUser $adminUser
-     * @param AdminUserAddresses $adminUserAddress
-     * @return $this
-     */
     public function seeUserInformation(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;
@@ -121,22 +113,27 @@ class MainUserPage extends Page
         return $this;
     }
 
-    public function updatePassword(string $pass): static
+    public function updatePassword(string $pass): AdminLoginPage
     {
         $I = $this->user;
         $I->fillField($this->userPasswordField, $pass);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
-        return $this;
+        $I->expectTo('see that admin is logged out after password changed');
+        $I->reloadPage();
+        $adminLoginPage = new AdminLoginPage($I);
+        $adminLoginPage->seeLoginForm();
+
+        return $adminLoginPage;
     }
 
     public function updateUsername(string $username): static
     {
         $I = $this->user;
         $I->fillField($this->usernameField, $username);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $I->selectEditFrame();
+        $I->waitForElementVisible($this->usernameField);
 
         return $this;
     }
@@ -144,14 +141,10 @@ class MainUserPage extends Page
     private function checkUserPassword($I, $password)
     {
         $passwordExists = ($password) ? 'Yes' : 'No';
-        $I->see($passwordExists, $this->userHasPasswordSelector);
+        $I->seeText($passwordExists, $this->userHasPasswordSelector);
         $I->seeInField($this->userPasswordField, "");
     }
 
-    /**
-     * @param AdminUser $adminUser
-     * @return $this
-     */
     public function editUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
     {
         $I = $this->user;

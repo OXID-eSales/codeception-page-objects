@@ -20,7 +20,7 @@ class DiagnosticsTool extends Page
     public function startDiagnostics(): DiagnosticsTool
     {
         $I = $this->user;
-        $I->click($this->startDiagnosticsButton);
+        $I->clickAndWait($this->startDiagnosticsButton);
         $I->waitForDocumentReadyState();
 
         return $this;
@@ -29,7 +29,7 @@ class DiagnosticsTool extends Page
     public function seeDiagnosticResults(): DiagnosticsTool
     {
         $I = $this->user;
-        $I->see(Translator::translate('OXDIAG_RESULT_SUCCESSFUL'));
+        $I->seeText(Translator::translate('OXDIAG_RESULT_SUCCESSFUL'));
 
         return $this;
     }

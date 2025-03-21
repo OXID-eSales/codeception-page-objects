@@ -11,10 +11,6 @@ namespace OxidEsales\Codeception\Page\Info;
 
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for newsletter page
- * @package OxidEsales\Codeception\Page\Info
- */
 class NewsletterSubscription extends Page
 {
     // include url of current page
@@ -59,7 +55,8 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->checkOption($this->subscribeCheckbox);
-        $I->retryClick($this->newsletterSubmitButton);
+        $I->clickAndWait($this->newsletterSubmitButton);
+
         return $this;
     }
 
@@ -72,7 +69,8 @@ class NewsletterSubscription extends Page
     {
         $I = $this->user;
         $I->retryCheckOption($this->unSubscribeCheckbox);
-        $I->retryClick($this->newsletterSubmitButton);
+        $I->clickAndWait($this->newsletterSubmitButton);
+
         return $this;
     }
 }

@@ -14,6 +14,8 @@ use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class UserAccount extends Page
 {
     use AccountMenu;
@@ -35,13 +37,13 @@ class UserAccount extends Page
 
     public function seePageOpened(): self
     {
-        $this->user->see(Translator::translate('LOGOUT'));
+        $this->user->seeText(Translator::translate('LOGOUT'));
         return $this;
     }
 
     public function seeUserAccount(array $userData): self
     {
-        $this->user->see(Translator::translate('HELLO') . ' ' . $userData['userName']);
+        $this->user->seeText(Translator::translate('HELLO') . ' ' . $userData['userName']);
         return $this;
     }
 
@@ -49,9 +51,9 @@ class UserAccount extends Page
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->click(Translator::translate('LOGOUT'));
+        $I->clickAndWait(Translator::translate('LOGOUT'));
         $userLoginPage = new UserLogin($I);
-        $I->see(Translator::translate('LOGIN'));
+        $I->seeText(Translator::translate('LOGIN'));
 
         return $userLoginPage;
     }
@@ -64,10 +66,9 @@ class UserAccount extends Page
     public function openOrderHistory(): UserOrderHistory
     {
         $I = $this->user;
-        $I->click(
+        $I->clickAndWait(
             sprintf($this->dashboardOrderHistoryHeader, Translator::translate('ORDER_HISTORY'))
         );
-        $I->waitForPageLoad();
         $userOrderHistoryPage = new UserOrderHistory($I);
         $userOrderHistoryPage->seePageOpened();
 
@@ -77,8 +78,8 @@ class UserAccount extends Page
     public function seeItemNumberOnGiftRegistryPanel(string $number): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('MY_GIFT_REGISTRY'), $this->dashboardGiftRegistryPanelHeader);
-        $I->see(
+        $I->seeText(Translator::translate('MY_GIFT_REGISTRY'), $this->dashboardGiftRegistryPanelHeader);
+        $I->seeText(
             Translator::translate('PRODUCT') . ' ' . $number,
             sprintf($this->dashboardGiftRegistryPanelContent, Translator::translate('MY_GIFT_REGISTRY'))
         );
@@ -87,16 +88,23 @@ class UserAccount extends Page
 
     public function seeItemNumberOnReviewPanel(int $number): self
     {
-        $this->user->see(Translator::translate('MY_REVIEWS') . ' ' . $number);
+        $this->user->seeText(Translator::translate('MY_REVIEWS') . ' ' . $number);
         return $this;
     }
 
     public function openMyReviewsPage(): MyReviews
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->openReviewPageOnDashboard, Translator::translate('MY_REVIEWS')));
+        $I->clickAndWait(
+            sprintf(
+                $this->openReviewPageOnDashboard,
+                Translator::translate('MY_REVIEWS')
+            )
+        );
+        $I->waitForElementNotVisible($this->openReviewPageOnDashboard);
         $page = new MyReviews($this->user);
         $this->seePageTitle($page, 'MY_REVIEWS');
+
         return $page;
     }
 }

@@ -20,21 +20,21 @@ trait CookieNotice
     public function closeCookieNotice(): self
     {
         $I = $this->user;
-        $I->click($this->closeButton);
+        $I->clickAndWait($this->closeButton);
         return $this;
     }
 
     public function rejectCookies(): self
     {
         $I = $this->user;
-        $I->click($this->reject);
+        $I->clickAndWait($this->reject);
         return $this;
     }
 
     public function seeRejectInfo(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('INFO_ABOUT_COOKIES'));
+        $I->seeText(Translator::translate('INFO_ABOUT_COOKIES'));
         return $this;
     }
 

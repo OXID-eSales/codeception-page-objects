@@ -23,7 +23,6 @@ class MultishopHome extends Page
     public function openShop(int $shopId)
     {
         $I = $this->user;
-        $I->click(sprintf($this->shopLinkPathTemplate, $shopId));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->shopLinkPathTemplate, $shopId));
     }
 }

@@ -30,10 +30,10 @@ trait CurrencyMenu
     {
         $I = $this->user;
 
-        $I->click($this->currencyMenuButton);
+        $I->clickAndWait($this->currencyMenuButton);
         $I->waitForElement($this->openCurrencyMenu);
-        $I->click($this->openCurrencyMenu);
-        $I->click(['link'=>$currency]);
+        $I->clickAndWait($this->openCurrencyMenu);
+        $I->clickAndWait(['link'=>$currency]);
         $I->waitForElementNotVisible($this->openCurrencyMenu);
         return $this;
     }

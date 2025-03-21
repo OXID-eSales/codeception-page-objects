@@ -12,13 +12,10 @@ use OxidEsales\Codeception\Page\Account\Component\AccountNavigation;
 use OxidEsales\Codeception\Page\Component\Header\AccountMenu;
 use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class for my-password page
- * @package OxidEsales\Codeception\Page\Account
- */
 class UserChangePassword extends Page
 {
-    use AccountMenu, AccountNavigation;
+    use AccountMenu;
+    use AccountNavigation;
 
     // include url of current page
     public string $URL = '/en/my-password/';
@@ -38,9 +35,6 @@ class UserChangePassword extends Page
 
     public $errorMessage = '//div[@class="alert alert-danger"]';
 
-    /**
-     * Fill the password fields, for apex we also need to confirm. There is no JS validation for this part
-     */
     public function fillPasswordFields(string $oldPassword, string $newPassword, string $confirmPassword)
     {
         $I = $this->user;
@@ -50,24 +44,17 @@ class UserChangePassword extends Page
         $I->pressKey($this->userNewPassword, $newPassword);
         $I->pressKey($this->userConfirmNewPassword, ['ctrl', 'a'], WebDriverKeys::DELETE);
         $I->pressKey($this->userConfirmNewPassword, $confirmPassword);
-        $I->retryClick($this->userChangePasswordButton);
+        $I->clickAndWait($this->userChangePasswordButton);
+
         return $this;
     }
 
-    /**
-     * Fill and submit the password fields.
-     *
-     * @param string $oldPassword     The current password
-     * @param string $newPassword     The new password
-     * @param string $confirmPassword The new password
-     *
-     * @return $this
-     */
     public function changePassword(string $oldPassword, string $newPassword, string $confirmPassword)
     {
         $I = $this->user;
         $this->fillPasswordFields($oldPassword, $newPassword, $confirmPassword);
         $I->waitForPageLoad();
+
         return $this;
     }
 }

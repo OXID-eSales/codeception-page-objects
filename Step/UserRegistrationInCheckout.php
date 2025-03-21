@@ -9,29 +9,18 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Step;
 
+use OxidEsales\Codeception\Page\Checkout\PaymentCheckout;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class UserRegistrationInCheckout
- * @package OxidEsales\Codeception\Step
- */
 class UserRegistrationInCheckout extends Step
 {
-    /**
-     * @param array $userLoginData
-     * @param array $userData
-     * @param array $addressData
-     * @param array $shippingAddressData
-     *
-     * @return \OxidEsales\Codeception\Page\Checkout\PaymentCheckout
-     */
     public function createRegisteredUserInCheckout(
         array $userLoginData,
         array $userData,
         array $addressData,
         array $shippingAddressData = []
-    ) {
+    ): PaymentCheckout {
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 
         if (!empty($shippingAddressData)) {
@@ -44,20 +33,12 @@ class UserRegistrationInCheckout extends Step
         return $paymentPage;
     }
 
-    /**
-     * @param array $userLogin
-     * @param array $userData
-     * @param array $addressData
-     * @param array $shippingAddressData
-     *
-     * @return \OxidEsales\Codeception\Page\Checkout\PaymentCheckout
-     */
     public function createNotRegisteredUserInCheckout(
         string $userLogin,
         array $userData,
         array $addressData,
         array $shippingAddressData = []
-    ) {
+    ): PaymentCheckout {
         $userCheckout = $this->enterNotRegisteredUserData($userLogin, $userData, $addressData);
 
         if (!empty($shippingAddressData)) {
@@ -70,20 +51,12 @@ class UserRegistrationInCheckout extends Step
         return $paymentPage;
     }
 
-    /**
-     * @param array $userLoginData
-     * @param array $userData
-     * @param array $addressData
-     * @param array $shippingAddressData
-     *
-     * @return \OxidEsales\Codeception\Page\Checkout\UserCheckout
-     */
     public function createNotValidRegisteredUserInCheckout(
         array $userLoginData,
         array $userData,
         array $addressData,
         array $shippingAddressData = []
-    ) {
+    ): UserCheckout {
         $I = $this->user;
         $userCheckout = $this->enterRegisteredUserData($userLoginData, $userData, $addressData);
 
@@ -94,44 +67,26 @@ class UserRegistrationInCheckout extends Step
         $userCheckout = $userCheckout->clickOnRegisterUserButton();
         $breadCrumbName = Translator::translate("ADDRESS");
         $userCheckout->seeOnBreadCrumb($breadCrumbName);
-        $I->see($breadCrumbName, $userCheckout->breadCrumb);
+        $I->seeText($breadCrumbName, $userCheckout->breadCrumb);
 
         return $userCheckout;
     }
 
-    /**
-     * @param array $userLoginData
-     * @param array $userData
-     * @param array $addressData
-     *
-     * @return UserCheckout
-     */
-    private function enterRegisteredUserData(array $userLoginData, array $userData, array $addressData)
+    private function enterRegisteredUserData(array $userLoginData, array $userData, array $addressData): UserCheckout
     {
-        $userCheckout = new UserCheckout($this->user);
-        $userCheckout = $userCheckout->selectOptionRegisterNewAccount();
-
-        $userCheckout->enterUserLoginData($userLoginData)
+        return (new UserCheckout($this->user))
+            ->selectOptionRegisterNewAccount()
+            ->enterUserLoginData($userLoginData)
             ->enterUserData($userData)
             ->enterAddressData($addressData);
-        return $userCheckout;
     }
 
-    /**
-     * @param array $userLogin
-     * @param array $userData
-     * @param array $addressData
-     *
-     * @return UserCheckout
-     */
-    private function enterNotRegisteredUserData(string $userLogin, array $userData, array $addressData)
+    private function enterNotRegisteredUserData(string $userLogin, array $userData, array $addressData): UserCheckout
     {
-        $userCheckout = new UserCheckout($this->user);
-        $userCheckout = $userCheckout->selectOptionNoRegistration();
-
-        $userCheckout->enterUserLoginName($userLogin)
+        return (new UserCheckout($this->user))
+            ->selectOptionNoRegistration()
+            ->enterUserLoginName($userLogin)
             ->enterUserData($userData)
             ->enterAddressData($addressData);
-        return $userCheckout;
     }
 }

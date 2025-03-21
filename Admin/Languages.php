@@ -39,11 +39,11 @@ class Languages extends Page
         $I->checkOption($this->activeCheckbox);
         $I->fillField($this->abbreviationField, $abbreviation);
         $I->fillField($this->nameField, $name);
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
         $I->expect('to see the new language in the list');
         $I->retrySelectListFrame();
-        $I->waitForText($name);
+        $I->seeText($name);
 
         return $this;
     }

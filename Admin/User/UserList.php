@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\Component\FrameLoader;
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -17,20 +18,16 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 trait UserList
 {
     use FrameLoader;
+    use Tabs;
 
-    public $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
-    public $searchForm = '#search';
-    public $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
-    public $usernameSearchField = "where[oxuser][oxusername]";
-    public $newUserButton  = '#btn.new';
-    public $newRemarkButton = '#btn.newremark';
-    public $newAddressButton = '#btn.newaddress';
+    public string $searchEmailInput = '//input[@name="where[oxuser][oxusername]"]';
+    public string $searchForm = '#search';
+    public string $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
+    public string $usernameSearchField = "where[oxuser][oxusername]";
+    public string $newUserButton  = '#btn.new';
+    public string $newRemarkButton = '#btn.newremark';
+    public string $newAddressButton = '#btn.newaddress';
 
-    /**
-     * @param string $field
-     * @param string $value
-     * @return MainUserPage
-     */
     public function find(string $field, string $value): MainUserPage
     {
         $I = $this->user;
@@ -40,7 +37,7 @@ trait UserList
         $I->submitForm($this->searchForm, []);
         $I->selectListFrame(); // Waits for list section to load
 
-        $I->click($this->firstRowName);
+        $I->clickAndWait($this->firstRowName);
         // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
@@ -48,20 +45,11 @@ trait UserList
         return new MainUserPage($I);
     }
 
-    /**
-     * @param string $value
-     * @return MainUserPage
-     */
     public function findByUserName(string $value): MainUserPage
     {
         return $this->find($this->usernameSearchField, $value);
     }
 
-    /**
-     * @param AdminUser $adminUser
-     *
-     * @return MainUserPage
-     */
     public function createNewUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): MainUserPage
     {
         $I = $this->user;
@@ -74,108 +62,60 @@ trait UserList
         return $mainUserPage;
     }
 
-    /**
-     * @return ExtendedInformationPage
-     */
     public function openExtendedTab(): ExtendedInformationPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbcluser_extend'));
-
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbcluser_extend'));
 
         return new ExtendedInformationPage($I);
     }
 
-    /**
-     * @return UserHistoryPage
-     */
     public function openHistoryTab(): UserHistoryPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbcluser_remark'));
-
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbcluser_remark'));
 
         return new UserHistoryPage($I);
     }
 
-    /**
-     * @return UserProductsPage
-     */
     public function openProductsTab(): UserProductsPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbcluser_article'));
-
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbcluser_article'));
 
         return new UserProductsPage($I);
     }
 
-    /**
-     * @return UserPaymentInformationPage
-     */
     public function openPaymentTab(): UserPaymentInformationPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbcluser_payment'));
-
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbcluser_payment'));
 
         return new UserPaymentInformationPage($I);
     }
 
-    /**
-     * @return UserAddressPage
-     */
     public function openAddressesTab(): UserAddressPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbcluser_address'));
-
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbcluser_address'));
 
         return new UserAddressPage($I);
     }
 
-    /**
-     * @param string $text
-     * @return UserHistoryPage
-     */
     public function createNewRemark(string $text): UserHistoryPage
     {
         $I = $this->user;
-
-        $I->click($this->newRemarkButton);
-
+        $I->clickAndWait($this->newRemarkButton);
         $I->selectEditFrame();
-
-        $I->waitForPageLoad();
-
         $historyPage = new UserHistoryPage($I);
         $I->fillField($historyPage->remarkField, $text);
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
         $I->selectEditFrame();
 
         return $historyPage;
     }
 
-    /**
-     * @param AdminUserAddresses $adminUserAddresses
-     * @return UserAddressPage
-     */
     public function createNewAddress(AdminUserAddresses $adminUserAddresses): UserAddressPage
     {
         $I = $this->user;

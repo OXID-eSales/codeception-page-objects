@@ -32,6 +32,6 @@ class UserRegistration extends Step
             ->enterAddressData($addressDataToFill)
             ->registerUser();
 
-        $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
+        $I->seeText(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
     }
 }

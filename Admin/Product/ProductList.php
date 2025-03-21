@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\Products;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ProductList
 {
+    use Tabs;
+
     public string $searchNumberInput = "//input[@name='where[oxarticles][oxartnum]']";
     public string $languageSelect = "//select[@name='changelang']";
     public string $searchForm = '#search';
@@ -54,7 +57,7 @@ trait ProductList
         $I->submitForm($this->searchForm, []);
 
         $I->selectListFrame();
-        $I->click($value);
+        $I->clickAndWait($value);
 
         return $this->openMainTab();
     }
@@ -62,11 +65,7 @@ trait ProductList
     public function openMainTab(): MainProductPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_main'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclarticle_main'));
 
         return new MainProductPage($I);
     }
@@ -74,11 +73,7 @@ trait ProductList
     public function openExtendedTab(): ExtendedInformationPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_extend'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclarticle_extend'));
 
         return new ExtendedInformationPage($I);
     }
@@ -86,10 +81,7 @@ trait ProductList
     public function openSelectionTab(): SelectionProductPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_attribute'));
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclarticle_attribute'));
 
         return new SelectionProductPage($I);
     }
@@ -97,10 +89,7 @@ trait ProductList
     public function openVariantsTab(): VariantsProductPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_variant'));
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclarticle_variant'));
 
         return new VariantsProductPage($I);
     }
@@ -108,11 +97,7 @@ trait ProductList
     public function openDownloadsTab(): DownloadsProductPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_files'));
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclarticle_files'));
 
         return new DownloadsProductPage($I);
     }
@@ -120,11 +105,7 @@ trait ProductList
     public function openStockTab(): StockProductPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclarticle_stock'));
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclarticle_stock'));
 
         return new StockProductPage($I);
     }

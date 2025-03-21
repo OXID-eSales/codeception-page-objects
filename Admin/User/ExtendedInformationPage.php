@@ -18,7 +18,7 @@ class ExtendedInformationPage extends Page
 {
     use UserList;
 
-    public $extendedInfoTabUserAddress = "#test_userAddress";
+    public string $extendedInfoTabUserAddress = "#test_userAddress";
     public string $extendedInfoEveningPhoneField = "//input[@name='editval[oxuser__oxprivfon]']";
     public string $extendedInfoCellularPhoneField = "//input[@name='editval[oxuser__oxmobfon]']";
     public string $extendedInfoReceivesNewsletterField = "/descendant::input[@name='editnews'][2]";
@@ -26,11 +26,7 @@ class ExtendedInformationPage extends Page
     public string $extendedInfoCreditRatingField = "//input[@name='editval[oxuser__oxboni]']";
     public string $extendedInfoUrlField = "//input[@name='editval[oxuser__oxurl]']";
 
-    /**
-     * @param AdminUserExtendedInfo $adminUserExtendedInfo
-     * @return $this
-     */
-    public function editExtendedInfo(AdminUserExtendedInfo $adminUserExtendedInfo): self
+    public function editExtendedInfo(AdminUserExtendedInfo $adminUserExtendedInfo): static
     {
         $I = $this->user;
 
@@ -48,18 +44,16 @@ class ExtendedInformationPage extends Page
         }
         $I->fillField($this->extendedInfoCreditRatingField, $adminUserExtendedInfo->getCreditRating());
         $I->fillField($this->extendedInfoUrlField, $adminUserExtendedInfo->getUrl());
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
         return $this;
     }
 
-    /**
-     * @param AdminUserAddresses $adminUserAddress
-     * @return $this
-     */
-    public function seeUserAddress(AdminUserAddresses $adminUserAddress): self
+    public function seeUserAddress(AdminUserAddresses $adminUserAddress): static
     {
+        $I = $this->user;
         $addressInformation = $adminUserAddress->getTitle() . ' '
             . $adminUserAddress->getFirstName() . ' '
             . $adminUserAddress->getLastName() . ' '
@@ -72,18 +66,16 @@ class ExtendedInformationPage extends Page
             . $adminUserAddress->getAdditionalInfo() . ' '
             . $adminUserAddress->getCountryId() . ' '
             . $adminUserAddress->getPhone();
-        $I = $this->user;
+        $I->waitForText($adminUserAddress->getLastName());
         $I->see($addressInformation, $this->extendedInfoTabUserAddress);
+
         return $this;
     }
 
-    /**
-     * @param AdminUserExtendedInfo $adminUserExtendedInfo
-     * @return $this
-     */
-    public function seeUserExtendedInformation(AdminUserExtendedInfo $adminUserExtendedInfo)
+    public function seeUserExtendedInformation(AdminUserExtendedInfo $adminUserExtendedInfo): static
     {
         $I = $this->user;
+        $I->selectEditFrame();
         $I->seeInField($this->extendedInfoEveningPhoneField, $adminUserExtendedInfo->getEveningPhone());
         $I->seeInField($this->extendedInfoCellularPhoneField, $adminUserExtendedInfo->getCellularPhone());
         if ($adminUserExtendedInfo->getEmailInvalid()) {

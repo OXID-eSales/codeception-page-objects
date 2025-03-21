@@ -27,7 +27,6 @@ trait Pagination
     public function goToNextPage(): void
     {
         $I = $this->user;
-        $I->retryClick($this->paginationNextBtn);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->paginationNextBtn);
     }
 }

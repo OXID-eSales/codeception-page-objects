@@ -12,6 +12,9 @@ namespace OxidEsales\Codeception\Page\Component\Widget;
 use Codeception\Actor;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+use function sprintf as sprintf1;
+
 class ProductCard extends Page
 {
     private int $position;
@@ -33,17 +36,25 @@ class ProductCard extends Page
     public function productHasTitle(string $productName): self
     {
         $I = $this->user;
-        $I->see($productName, $this->getProductTitleLocator());
+        $I->seeText(
+            $productName,
+            sprintf1($this->productTitleSelector, $this->widgetId, $this->position)
+        );
+
         return $this;
     }
 
     public function setProductAmount(int $amount): self
     {
         $I = $this->user;
-        $I->moveMouseOver($this->getProductLocator());
-        $I->click($this->getProductAmountLocator());
+        $productAmountLocator = sprintf(
+            $this->productAmountSelector,
+            $this->widgetId,
+            $this->position
+        );
+        $I->clickAndWait($productAmountLocator);
         $I->fillField(
-            $this->getProductAmountLocator(),
+            $productAmountLocator,
             $amount
         );
         return $this;
@@ -52,33 +63,20 @@ class ProductCard extends Page
     public function addProductToCart(): self
     {
         $I = $this->user;
-        $I->moveMouseOver($this->getProductLocator());
-        $button = sprintf($this->addToCartButton, $this->widgetId, $this->position);
-        $I->waitForElementVisible($button);
-        $I->click($button);
+        $I->clickAndWait(
+            sprintf($this->addToCartButton, $this->widgetId, $this->position)
+        );
+
         return $this;
     }
 
     public function openProductDetails(): self
     {
         $I = $this->user;
-        $I->moveMouseOver($this->getProductLocator());
-        $I->click(sprintf($this->detailsButton, $this->widgetId, $this->position));
+        $I->clickAndWait(
+            sprintf($this->detailsButton, $this->widgetId, $this->position)
+        );
+
         return $this;
-    }
-
-    public function getProductLocator(): string
-    {
-        return sprintf($this->productSelector, $this->widgetId, $this->position);
-    }
-
-    public function getProductTitleLocator(): string
-    {
-        return sprintf($this->productTitleSelector, $this->widgetId, $this->position);
-    }
-
-    private function getProductAmountLocator(): string
-    {
-        return sprintf($this->productAmountSelector, $this->widgetId, $this->position);
     }
 }

@@ -24,9 +24,8 @@ trait Modal
     public function confirmDeletion(): void
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $I->waitForElementClickable($this->confirmDeletionBtn);
-        $I->seeAndClick(
+        $I->clickAndWait(
             Locator::contains($this->confirmDeletionBtn, Translator::translate('DD_DELETE'))
         );
     }
@@ -34,10 +33,9 @@ trait Modal
     public function confirmShippingAddressDeletion($position): void
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $button = sprintf($this->deleteShippingAddressBtn, $position);
         $I->waitForElementClickable($button);
-        $I->click(
+        $I->clickAndWait(
             Locator::contains($button, Translator::translate('DD_DELETE'))
         );
     }
@@ -46,16 +44,16 @@ trait Modal
     {
         $I = $this->user;
         $I->waitForElementClickable($this->modalCloseBtn);
-        $I->click($this->modalCloseBtn);
+        $I->clickAndWait($this->modalCloseBtn);
     }
 
     //Only for private sales
     public function confirmMainCategoryChanged(): self
     {
         $I = $this->user;
-        $I->waitForPageLoad();
-        $I->waitForText(Translator::translate('ROOT_CATEGORY_CHANGED'));
-        $I->click(Translator::translate('CONTINUE_SHOPPING'));
+        $I->seeText(Translator::translate('ROOT_CATEGORY_CHANGED'));
+        $I->clickAndWait(Translator::translate('CONTINUE_SHOPPING'));
+
         return $this;
     }
 
@@ -63,9 +61,9 @@ trait Modal
     public function openBasketIfMainCategoryChanged(): Basket
     {
         $I = $this->user;
-        $I->waitForPageLoad();
-        $I->waitForText(Translator::translate('ROOT_CATEGORY_CHANGED'));
-        $I->click(Translator::translate('CHECKOUT'), $this->rootCatChangedConfirmation);
+        $I->seeText(Translator::translate('ROOT_CATEGORY_CHANGED'));
+        $I->clickAndWait(Translator::translate('CHECKOUT'), $this->rootCatChangedConfirmation);
+
         return new Basket($I);
     }
 }

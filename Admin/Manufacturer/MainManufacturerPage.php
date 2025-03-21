@@ -33,8 +33,9 @@ class MainManufacturerPage extends Page
         $I->fillField($this->titleInput, $manufacturer->getTitle());
         $I->fillField($this->shortDescriptionInput, $manufacturer->getShortDescription());
         $I->fillField($this->sortValueInput, $manufacturer->getSortValue());
-        $I->click($this->saveButton);
+        $I->clickAndWait($this->saveButton);
         $I->waitForDocumentReadyState();
+        $I->waitForElementClickable($this->saveButton);
 
         return $this;
     }

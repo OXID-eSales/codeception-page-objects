@@ -24,13 +24,13 @@ class AdminLoginPage extends AdminPanel
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->click($this->userAccountLoginButton);
+        $I->clickAndWait($this->userAccountLoginButton);
 
         $adminPanel = new AdminPanel($I);
         $I->waitForElement($adminPanel->adminNavigation);
         $I->selectBaseFrame();
-        $I->waitForText(Translator::translate('NAVIGATION_HOME'));
-        $I->see(Translator::translate('HOME_DESC'));
+        $I->seeText(Translator::translate('NAVIGATION_HOME'));
+        $I->seeText(Translator::translate('HOME_DESC'));
 
         return $adminPanel;
     }

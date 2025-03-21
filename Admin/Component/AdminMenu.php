@@ -27,7 +27,6 @@ use OxidEsales\Codeception\Admin\Service\SystemHealth;
 use OxidEsales\Codeception\Admin\Service\SystemInfo;
 use OxidEsales\Codeception\Admin\Service\Tools;
 use OxidEsales\Codeception\Admin\Users;
-use OxidEsales\Codeception\Admin\Voucher\MainVoucherPage;
 use OxidEsales\Codeception\Admin\Vouchers;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
@@ -41,11 +40,9 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmainmenu'));
-        $I->retryClick(Translator::translate('mxcoresett'));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $I->clickAndWait(Translator::translate('mxmainmenu'));
+        $I->clickAndWait(Translator::translate('mxcoresett'));
+        $this->waitForListTable();
 
         return new CoreSettings($I);
     }
@@ -58,10 +55,9 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmainmenu'));
-        $I->retryClick(Translator::translate('mxcountries'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('mxmainmenu'));
+        $I->clickAndWait(Translator::translate('mxcountries'));
+        $this->waitForListTable();
 
         return new CountryList($I);
     }
@@ -71,170 +67,117 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmainmenu'));
-        $I->retryClick(Translator::translate('mxmanufacturer'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('mxmainmenu'));
+        $I->clickAndWait(Translator::translate('mxmanufacturer'));
+        $this->waitForListTable();
 
         return new Manufacturers($I);
     }
 
-    /**
-     * Opens Home page of Admin panel
-     *
-     * @return AdminPanel
-     */
     public function openHomePage(): AdminPanel
     {
         $I = $this->user;
 
         $I->selectHeaderFrame();
-        $I->retryClick(Translator::translate('NAVIGATION_HOME'));
+        $I->clickAndWait(Translator::translate('NAVIGATION_HOME'));
         $I->selectBaseFrame();
-        $I->waitForText(Translator::translate('NAVIGATION_HOME'));
+        $I->seeText(Translator::translate('NAVIGATION_HOME'));
 
         return new AdminPanel($I);
     }
 
-    /**
-     * @return ProductCategories
-     */
     public function openCategories(): ProductCategories
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmanageprod'));
-        $I->retryClick(Translator::translate('mxcategories'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('mxmanageprod'));
+        $I->clickAndWait(Translator::translate('mxcategories'));
 
         return new ProductCategories($I);
     }
 
-    /**
-     * @return ModulesList
-     */
     public function openModules(): ModulesList
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxextensions'));
-        $I->retryClick(Translator::translate('mxmodule'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('mxextensions'));
+        $I->clickAndWait(Translator::translate('mxmodule'));
+        $this->waitForListTable();
 
         return new ModulesList($I);
     }
 
-    /**
-     * @return Orders
-     */
     public function openOrders(): Orders
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxorders'));
-        $I->retryClick(Translator::translate('mxdisplayorders'));
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait(Translator::translate('mxorders'));
+        $I->clickAndWait(Translator::translate('mxdisplayorders'));
+        $this->waitForListTable();
 
         return new Orders($I);
     }
 
-    /**
-     * @return Products
-     */
     public function openProducts(): Products
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmanageprod'));
-        $I->retryClick(Translator::translate('mxarticles'));
-
-        // After clicking on Products link two requests are executed:
-        // - load product list section
-        // - load product main section
-
-        // Wait for product list section to load
-        $I->selectListFrame();
-
-        // Wait for product list section to load
-        $I->selectEditFrame();
+        $I->clickAndWait(Translator::translate('mxmanageprod'));
+        $I->clickAndWait(Translator::translate('mxarticles'));
+        $this->waitForListTable();
 
         return new Products($I);
     }
 
-    /**
-     * @return Users
-     */
     public function openUsers(): Users
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxuadmin'));
-        $I->retryClick(Translator::translate('mxusers'));
-
-        // After clicking on Users link two requests are executed:
-        // - load user list section
-        // - load user main section
-
-        // Wait for user list section to load
-        $I->selectListFrame();
-
-        // Wait for user main section to load
-        $I->selectEditFrame();
+        $I->clickAndWait(Translator::translate('mxuadmin'));
+        $I->clickAndWait(Translator::translate('mxusers'));
+        $this->waitForListTable();
 
         return new Users($I);
     }
 
-    /**
-     * @return Languages
-     */
     public function openLanguages(): Languages
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxmainmenu'));
-        $I->retryClick(Translator::translate('mxlanguages'));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $I->clickAndWait(Translator::translate('mxmainmenu'));
+        $I->clickAndWait(Translator::translate('mxlanguages'));
+        $this->waitForListTable();
 
         return new Languages($I);
     }
 
-    /**
-     * @return DiagnotsicsTool
-     */
     public function openDiagnosticsTool(): DiagnosticsTool
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('oxdiag_menu'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('oxdiag_menu'));
         $I->selectEditFrame();
-        $I->see(Translator::translate('OXDIAG_HOME'));
+        $I->seeText(Translator::translate('OXDIAG_HOME'));
 
 
         return new DiagnosticsTool($I);
     }
 
-    /**
-     * @return Tools
-     */
     public function openTools(): Tools
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('mxtools'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('mxtools'));
 
         $I->selectEditFrame();
 
@@ -246,8 +189,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('mxsysinfo'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('mxsysinfo'));
         $I->selectBaseFrame();
 
         return new SystemInfo($I);
@@ -258,40 +201,33 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('mxsysreq'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('mxsysreq'));
         $I->selectEditFrame();
 
         return new SystemHealth($I);
     }
 
-    /**
-     * @return CMSPages
-     */
     public function openCMSPages(): CMSPages
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxcustnews'));
-        $I->retryClick(Translator::translate('mxcontent'));
+        $I->clickAndWait(Translator::translate('mxcustnews'));
+        $I->clickAndWait(Translator::translate('mxcontent'));
 
         $I->selectEditFrame();
 
         return new CMSPages($I);
     }
 
-
-    /**
-     * @return Newsletter
-     */
     public function openNewsletter(): Newsletter
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxcustnews'));
-        $I->retryClick(Translator::translate('mxnewsletter'));
+        $I->clickAndWait(Translator::translate('mxcustnews'));
+        $I->clickAndWait(Translator::translate('mxnewsletter'));
 
         $I->selectBaseFrame();
 
@@ -303,8 +239,8 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('mxgenimp'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('mxgenimp'));
 
         $I->selectBaseFrame();
 
@@ -316,25 +252,32 @@ trait AdminMenu
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxservice'));
-        $I->retryClick(Translator::translate('mxgenexp'));
+        $I->clickAndWait(Translator::translate('mxservice'));
+        $I->clickAndWait(Translator::translate('mxgenexp'));
 
         $I->selectGenericExportMainFrame();
 
         return new GenericExport($I);
     }
 
-    public function openVouchers()
+    public function openVouchers(): Vouchers
     {
         $I = $this->user;
 
         $I->selectNavigationFrame();
-        $I->retryClick(Translator::translate('mxshopsett'));
-        $I->retryClick(Translator::translate('mxvouchers'));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $I->clickAndWait(Translator::translate('mxshopsett'));
+        $I->clickAndWait(Translator::translate('mxvouchers'));
+        $this->waitForListTable();
 
         return new Vouchers($I);
+    }
+
+    private function waitForListTable(): void
+    {
+        $I = $this->user;
+        $I->selectListFrame();
+        $I->waitForDocumentReadyState();
+        $I->selectEditFrame();
+        $I->waitForDocumentReadyState();
     }
 }

@@ -14,6 +14,8 @@ use OxidEsales\Codeception\Page\Account\UserOrderHistory;
 use OxidEsales\Codeception\Page\Home;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class ThankYou extends Page
 {
     public string $URL = '/index.php?cl=thankyou&lang=1';
@@ -26,7 +28,7 @@ class ThankYou extends Page
     public function grabOrderNumber(): string
     {
         $I = $this->user;
-        $I->waitForElementVisible($this->thankYouPage, 10);
+        $I->waitForElementVisible($this->thankYouPage);
         $thankYouText = $I->grabTextFrom($this->thankYouPage);
         $thankMessage = trim(sprintf(Translator::translate('REGISTERED_YOUR_ORDER'), ''));
         $result = preg_match_all("/$thankMessage\s*(?P<orderNumber>\d+)/", $thankYouText, $matches);
@@ -38,28 +40,30 @@ class ThankYou extends Page
     public function backToShop(): Home
     {
         $I = $this->user;
-        $I->click($this->backToShop);
+        $I->clickAndWait($this->backToShop);
         $homePage = new Home($I);
         $I->amOnPage($homePage->URL);
-        $I->waitForPageLoad();
+
         return $homePage;
     }
 
     public function goToOrderHistory(): UserOrderHistory
     {
         $I = $this->user;
-        $I->click($this->orderHistory);
+        $I->clickAndWait($this->orderHistory);
         $orderHistory = new UserOrderHistory($I);
         $I->amOnPage($orderHistory->URL);
-        $I->waitForPageLoad();
+
         return $orderHistory;
     }
 
     public function openAlsoBoughtProduct(int $position = 1): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('WHO_BOUGHT_ALSO_BOUGHT'));
-        $I->retryClick(sprintf($this->alsoBought, $position));
+        $I->seeText(Translator::translate('WHO_BOUGHT_ALSO_BOUGHT'));
+        $I->clickAndWait(
+            sprintf($this->alsoBought, $position)
+        );
         return $this;
     }
 

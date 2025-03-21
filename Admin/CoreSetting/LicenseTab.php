@@ -21,8 +21,8 @@ final class LicenseTab extends Page
     public function seeShopVersionInfo(): self
     {
         $I = $this->user;
-        $I->see($this->versionCheckerResponseCurrentVersion, $this->versionUpdateInfoBlock);
-        $I->see($this->versionCheckerResponseLatestVersion, $this->versionUpdateInfoBlock);
+        $I->seeText($this->versionCheckerResponseCurrentVersion, $this->versionUpdateInfoBlock);
+        $I->seeText($this->versionCheckerResponseLatestVersion, $this->versionUpdateInfoBlock);
 
         return $this;
     }

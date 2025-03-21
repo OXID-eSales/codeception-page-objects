@@ -26,15 +26,15 @@ class UserRegistration extends Page
 
     public function seePageOpen(): self
     {
-        $this->user->see(Translator::translate('OPEN_ACCOUNT'), $this->headerTitle);
+        $this->user->seeText(Translator::translate('OPEN_ACCOUNT'), $this->headerTitle);
         return $this;
     }
 
     public function registerUser(): self
     {
         $I = $this->user;
-        $I->retryClick($this->saveFormButton);
-        $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'), $this->headerTitle);
+        $I->clickAndWait($this->saveFormButton);
+        $I->seeText(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'), $this->headerTitle);
         return $this;
     }
 }

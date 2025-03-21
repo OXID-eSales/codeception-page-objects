@@ -45,7 +45,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementVisible($this->userRegistrationLink);
-        $I->click($this->userRegistrationLink);
+        $I->clickAndWait($this->userRegistrationLink);
         $userRegistrationPage = new UserRegistration($I);
         $userRegistrationPage->seePageOpen();
         return $userRegistrationPage;
@@ -56,7 +56,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementVisible($this->userForgotPasswordButton);
-        $I->click($this->userForgotPasswordButton);
+        $I->clickAndWait($this->userForgotPasswordButton);
         $userPasswordReminderPage = new UserPasswordReminder($I);
         $userPasswordReminderPage->seePageOpen();
         return $userPasswordReminderPage;
@@ -66,13 +66,13 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForText(Translator::translate('FORGOT_PASSWORD'));
+        $I->seeText(Translator::translate('FORGOT_PASSWORD'));
         $I->waitForElementVisible($this->userLoginName);
         $I->retryFillField($this->userLoginName, $userName);
         $I->retryFillField($this->userLoginPassword, $userPassword);
-        $I->retryClick($this->userLoginButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userLoginButton);
         Context::setActiveUser($userName);
+
         return $this;
     }
 
@@ -80,11 +80,11 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForText(Translator::translate('MY_ACCOUNT'));
-        $I->waitForText(Translator::translate('LOGOUT'));
-        $I->click(Translator::translate('LOGOUT'));
-        $I->waitForPageLoad();
+        $I->seeText(Translator::translate('MY_ACCOUNT'));
+        $I->seeText(Translator::translate('LOGOUT'));
+        $I->clickAndWait(Translator::translate('LOGOUT'));
         Context::resetActiveUser();
+
         return $this;
     }
 
@@ -93,7 +93,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementNotVisible($this->userRegistrationLink);
-        $I->click($this->accountMenuButton);
+        $I->clickAndWait($this->accountMenuButton);
         return $this;
     }
 
@@ -102,7 +102,7 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementVisible($this->userRegistrationLink);
-        $I->click($this->accountMenuButton);
+        $I->clickAndWait($this->accountMenuButton);
         return $this;
     }
 
@@ -110,9 +110,9 @@ trait AccountMenu
     {
         $I = $this->user;
         $this->openAccountMenu();
-        $I->waitForElementVisible(['link' => Translator::translate('MY_ACCOUNT')]);
-        $I->click(['link' => Translator::translate('MY_ACCOUNT')]);
-        $I->waitForPageLoad();
+        $I->seeText(Translator::translate('MY_ACCOUNT'));
+        $I->clickAndWait(['link' => Translator::translate('MY_ACCOUNT')]);
+
         return new UserAccount($I);
     }
 
@@ -121,10 +121,10 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementVisible($this->openedAccountMenu);
-        $I->click(Translator::translate('MY_GIFT_REGISTRY'), $this->openAccountMenuButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('MY_GIFT_REGISTRY'), $this->openAccountMenuButton);
         $userGiftRegistryPage = new UserGiftRegistry($I);
-        $I->see(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
+        $I->seeText(Translator::translate('PAGE_TITLE_ACCOUNT_WISHLIST'), $userGiftRegistryPage->headerTitle);
+
         return $userGiftRegistryPage;
     }
 
@@ -132,10 +132,10 @@ trait AccountMenu
     {
         $I = $this->user;
         $I->waitForElementVisible($this->userAccountWishListLink);
-        $I->click($this->userAccountWishListLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userAccountWishListLink);
         $userWishListPage = new UserWishList($I);
         $userWishListPage->seePageOpen();
+
         return $userWishListPage;
     }
 
@@ -149,19 +149,18 @@ trait AccountMenu
         $I = $this->user;
         $this->openAccountMenu();
         $I->waitForElementVisible($this->userAccountLink);
-        $I->click($this->userAccountLink);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->userAccountLink);
         $userLoginPage = new UserLogin($I);
-        $I->see(Translator::translate('LOGIN'));
+        $I->seeText(Translator::translate('LOGIN'));
         return $userLoginPage;
     }
 
     public function openAccountMenu(): self
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $I->waitForElementVisible($this->accountMenuButton);
-        $I->click($this->accountMenuButton);
+        $I->clickAndWait($this->accountMenuButton);
+
         return $this;
     }
 
@@ -169,8 +168,9 @@ trait AccountMenu
     {
         $I = $this->user;
         $I->waitForElementVisible($this->accountMenuButton);
-        $I->click($this->accountMenuButton);
+        $I->clickAndWait($this->accountMenuButton);
         $I->waitForElementNotVisible($this->openedAccountMenu);
+
         return $this;
     }
 
@@ -184,7 +184,7 @@ trait AccountMenu
     {
         $I = $this->user;
         if ($count) {
-            $I->see((string) $count, $this->userAccountWishListText);
+            $I->seeText((string) $count, $this->userAccountWishListText);
         } else {
             $I->waitForElementNotVisible($this->userAccountWishListText);
         }

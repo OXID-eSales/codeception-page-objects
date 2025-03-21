@@ -42,8 +42,8 @@ class DistributorList extends Page
     public function seeDistributorData(array $itemData, int $itemId = 1): self
     {
         $I = $this->user;
-        $I->see($itemData['title'], sprintf($this->listItemTitle, $itemId));
-        $I->see($itemData['count'], sprintf($this->listItemCount, $itemId));
+        $I->seeText($itemData['title'], sprintf($this->listItemTitle, $itemId));
+        $I->seeText($itemData['count'], sprintf($this->listItemCount, $itemId));
         return $this;
     }
 
@@ -56,8 +56,8 @@ class DistributorList extends Page
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->click(sprintf($this->listItemLink, $itemId));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->listItemLink, $itemId));
+
         return $productListPage;
     }
 }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\CoreSetting\CachingTab;
 use OxidEsales\Codeception\Admin\CoreSetting\LicenseTab;
 use OxidEsales\Codeception\Admin\CoreSetting\PerformanceTab;
@@ -20,60 +21,52 @@ use OxidEsales\Codeception\Page\Page;
 
 class CoreSettings extends Page
 {
-    public $newShopButton = '#btn.new';
-    public $newShopNameField = '#shopname';
-    public $shopParentSelect = '#shopparent';
-    public $activeShopSelect = 'editval[oxshops__oxactive]';
-    public $masterShopInSelectOption = '#shopparent option:nth-child(2)';
-    public $inheritParentProductsOption = 'editval[oxshops__oxisinherited]';
-    public $shopName = 'editval[oxshops__oxname]';
-    public $tabPerformance = 'tbclshop_performance';
-    public $tabSEO = 'tbclshop_seo';
-    private $tabCaching = 'tbclshop_cache';
+    use Tabs;
 
+    private string $activeShopSelect = "//input[@name='editval[oxshops__oxactive]']";
+    private string $inheritParentProductsOption = 'editval[oxshops__oxisinherited]';
+    private string $masterShopInSelectOption = '#shopparent option:nth-child(2)';
+    private string $newShopButton = '#btn.new';
+    private string $newShopNameField = '#shopname';
+    private string $shopName = "//input[@name='editval[oxshops__oxname]']";
+    private string $shopParentSelect = '#shopparent';
+    private string $tabCaching = 'tbclshop_cache';
     private string $tabLicense = 'tbclshop_license';
+    private string $tabPerformance = 'tbclshop_performance';
+    private string $tabSEO = 'tbclshop_seo';
 
-    /**
-     * @param string $shopName
-     *
-     * @return CoreSettings
-     */
     public function createNewShop(string $shopName): CoreSettings
     {
         $I = $this->user;
 
         $I->selectEditFrame();
 
-        $I->click($this->newShopButton);
-        $I->wait(3);
+        $I->clickAndWait($this->newShopButton);
+        $I->waitForElementVisible($this->newShopNameField);
 
-        //create new shop
         $I->fillField($this->newShopNameField, $shopName);
         $I->checkOption($this->inheritParentProductsOption);
         $option = $I->grabTextFrom($this->masterShopInSelectOption);
         $I->selectOption($this->shopParentSelect, $option);
-        $I->click(Translator::translate('GENERAL_SAVE'));
-        $I->wait(5);
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+
+        $I->waitForElementClickable($this->activeShopSelect);
         $I->checkOption($this->activeShopSelect);
-        $I->click(Translator::translate('GENERAL_SAVE'));
+        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
         $I->selectListFrame();
-        $I->waitForText($shopName, 10);
+        $I->waitForPageLoad();
+        $I->seeText($shopName);
 
         return $this;
     }
 
-    /**
-     * @param string $subShopName
-     *
-     * @return CoreSettings
-     */
     public function selectShopInList(string $subShopName): CoreSettings
     {
         $I = $this->user;
         $I->selectListFrame();
-        $I->waitForText($subShopName);
-        $I->click($subShopName);
+        $I->seeText($subShopName);
+        $I->clickAndWait($subShopName);
         $I->selectEditFrame();
         $I->waitForPageLoad();
         $I->seeInField($this->shopName, $subShopName);
@@ -81,65 +74,35 @@ class CoreSettings extends Page
         return $this;
     }
 
-    /**
-     * @return SystemTab
-     */
     public function openSystemTab(): SystemTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclshop_system'));
-
-        // Wait for list and edit sections to load
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclshop_system'));
 
         return new SystemTab($I);
     }
 
-    /**
-     * @return SettingsTab
-     */
     public function openSettingsTab(): SettingsTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclshop_config'));
-
-        // Wait for list and edit sections to load
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate('tbclshop_config'));
 
         return new SettingsTab($I);
     }
 
-
     public function openLicenseTab(): LicenseTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate($this->tabLicense));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
-        $I->waitForText(Translator::translate('SHOP_LICENSE_VERSION'));
-        $I->waitForPageLoad();
+        $this->openTab(Translator::translate($this->tabLicense));
+        $I->seeText(Translator::translate('SHOP_LICENSE_VERSION'));
 
         return new LicenseTab($I);
     }
 
-    /**
-     * @return PerformanceTab
-     */
     public function openPerformanceTab(): PerformanceTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate($this->tabPerformance));
-
-        // Wait for list and edit sections to load
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate($this->tabPerformance));
 
         return new PerformanceTab($I);
     }
@@ -147,12 +110,7 @@ class CoreSettings extends Page
     public function openSEOTab(): SEOTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate($this->tabSEO));
-
-        // Wait for list and edit sections to load
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate($this->tabSEO));
 
         return new SEOTab($I);
     }
@@ -160,11 +118,7 @@ class CoreSettings extends Page
     public function openCacheTab(): CachingTab
     {
         $I = $this->user;
-        $I->selectListFrame();
-        $I->click(Translator::translate($this->tabCaching));
-
-        $I->selectListFrame();
-        $I->selectEditFrame();
+        $this->openTab(Translator::translate($this->tabCaching));
 
         return new CachingTab($I);
     }

@@ -25,7 +25,7 @@ class Newsletter extends \OxidEsales\Codeception\Page\Page
     {
         $I = $this->user;
 
-        $I->click(Translator::translate('tbclnewsletter_recipients'));
+        $I->clickAndWait(Translator::translate('tbclnewsletter_recipients'));
 
         return $this;
     }

@@ -39,9 +39,9 @@ class NewsletterSettings extends Page
     {
         $I = $this->user;
         $I->selectOption($this->newsletterStatusSelect, Translator::translate('YES'));
-        $I->retryClick($this->newsletterSubscribeButton);
-        $I->waitForPageLoad();
-        $I->waitForText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
+        $I->clickAndWait($this->newsletterSubscribeButton);
+        $I->seeText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_SUCCESS'));
+
         return $this;
     }
 
@@ -54,9 +54,9 @@ class NewsletterSettings extends Page
     {
         $I = $this->user;
         $I->selectOption($this->newsletterStatusSelect, Translator::translate('NO'));
-        $I->retryClick($this->newsletterSubscribeButton);
-        $I->waitForPageLoad();
-        $I->waitForText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
+        $I->clickAndWait($this->newsletterSubscribeButton);
+        $I->seeText(Translator::translate('MESSAGE_NEWSLETTER_SUBSCRIPTION_CANCELED'));
+
         return $this;
     }
 
@@ -68,7 +68,7 @@ class NewsletterSettings extends Page
     public function seeNewsletterSubscribed()
     {
         $I = $this->user;
-        $I->see(Translator::translate('YES'), $this->newsletterStatusSelect);
+        $I->seeText(Translator::translate('YES'), $this->newsletterStatusSelect);
         return $this;
     }
 

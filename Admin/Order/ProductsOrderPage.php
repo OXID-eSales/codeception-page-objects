@@ -18,7 +18,7 @@ class ProductsOrderPage extends Page
 
     public string $searchFieldInProductTab = 'sSearchArtNum';
     public string $searchButtonInProductTab = '//input[@name="search"]';
-    public string $addButtonInProductTab = 'add';
+    public string $addButtonInProductTab = '//input[@name="add"]';
     public string $secondProductInProductTab = '#art.2';
     private string $orderProductLabel = '#art\.%d td:nth-of-type(5)';
 
@@ -27,8 +27,9 @@ class ProductsOrderPage extends Page
         $I = $this->user;
 
         $I->fillField($this->searchFieldInProductTab, $articleNumber);
-        $I->click($this->searchButtonInProductTab);
-        $I->click($this->addButtonInProductTab);
+        $I->clickAndWait($this->searchButtonInProductTab);
+        $I->waitForElementClickable($this->addButtonInProductTab);
+        $I->clickAndWait($this->addButtonInProductTab);
 
         return $this;
     }
@@ -36,7 +37,7 @@ class ProductsOrderPage extends Page
     public function seeOrderProductLabel(string $label, int $product): static
     {
         $I = $this->user;
-        $I->see(
+        $I->seeText(
             sprintf('%s: %s', Translator::translate('GENERAL_LABEL'), $label),
             sprintf($this->orderProductLabel, $product)
         );

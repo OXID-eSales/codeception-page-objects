@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Voucher;
 
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait VoucherList
 {
+    use Tabs;
+
     public string $titleField = 'where[oxvoucherseries][oxserienr]';
     public string $searchForm = '#search';
 
@@ -25,7 +28,7 @@ trait VoucherList
         $I->submitForm($this->searchForm, []);
 
         $I->selectListFrame();
-        $I->click($value);
+        $I->clickAndWait($value);
 
         return $this->openMainTab();
     }
@@ -33,11 +36,7 @@ trait VoucherList
     public function openMainTab(): MainVoucherPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclvoucherserie_main'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclvoucherserie_main'));
 
         return new MainVoucherPage($I);
     }

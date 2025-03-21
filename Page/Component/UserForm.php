@@ -58,15 +58,12 @@ trait UserForm
     public $dropdownMenu = '[role=menu]';
     public $nextOpenedDropdownMenu = '//following::div[contains(@class, "dropdown-menu") and contains(@class, "open")]';
 
-    /**
-     * @param string $userLoginName
-     *
-     * @return $this
-     */
-    public function enterUserLoginName(string $userLoginName)
+    public function enterUserLoginName(string $userLoginName): static
     {
         $I = $this->user;
+        $I->waitForElement($this->userLoginNameField);
         $I->fillField($this->userLoginNameField, $userLoginName);
+
         return $this;
     }
 
@@ -94,6 +91,7 @@ trait UserForm
     public function enterUserLoginData(array $userData)
     {
         $I = $this->user;
+        $I->waitForElement($this->userLoginNameField);
         $I->fillField($this->userLoginNameField, $userData['userLoginNameField']);
         $I->fillField($this->userPasswordField, $userData['userPasswordField']);
         $I->fillField($this->userPasswordConfirmField, $userData['userPasswordField']);
@@ -118,7 +116,6 @@ trait UserForm
     public function enterUserData(array $userData)
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $I->fillField($this->userUstIDField, $userData['userUstIDField']);
         $I->fillField($this->userMobFonField, $userData['userMobFonField']);
         $I->fillField($this->userPrivateFonField, $userData['userPrivateFonField']);
@@ -127,6 +124,7 @@ trait UserForm
         $I->fillField($this->userBirthDateYearField, $userData['userBirthDateYearField']);
 
         $I->selectOption($this->userBirthDateMonthField, $userData['userBirthDateMonthField']);
+
         return $this;
     }
 
@@ -154,7 +152,6 @@ trait UserForm
     public function enterAddressData(array $userData)
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $this->selectBillingAddressSalutation($userData['userSalutation']);
         $this->selectBillingCountry($userData['countryId']);
         if (isset($userData['stateId'])) {
@@ -218,7 +215,6 @@ trait UserForm
     public function enterShippingAddressData(array $userData)
     {
         $I = $this->user;
-        $I->waitForPageLoad();
         $this->selectShippingAddressSalutation($userData['userSalutation']);
         $this->selectShippingCountry($userData['countryId']);
         if (isset($userData['stateId'])) {
@@ -238,7 +234,7 @@ trait UserForm
         $I->waitForElement($dropdownButton);
         $I->scrollTo($dropdownButton);
         $I->waitForElementClickable($dropdownButton);
-        $I->click($dropdownButton);
+        $I->clickAndWait($dropdownButton);
         $I->waitForElementClickable(
             $this->getActiveDropdown($dropdownButton)
         );

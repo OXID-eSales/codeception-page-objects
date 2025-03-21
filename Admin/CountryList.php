@@ -9,24 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
-use OxidEsales\Codeception\Admin\Product\MainProductPage;
-use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
-/**
- * Class ModulesList
- *
- * @package OxidEsales\Codeception\Admin
- */
-class CountryList extends \OxidEsales\Codeception\Page\Page
+class CountryList extends Page
 {
     public string $searchForm = '#search';
     public string $titleSearchField = "where[oxcountry][oxtitle]";
 
-    /**
-     * @param string $country
-     *
-     * @return CountryList
-     */
     public function selectCountry(string $country): CountryList
     {
         $I = $this->user;
@@ -36,7 +25,7 @@ class CountryList extends \OxidEsales\Codeception\Page\Page
         $I->submitForm($this->searchForm, []);
 
         $I->selectListFrame();
-        $I->click($country);
+        $I->clickAndWait($country);
         $I->selectEditFrame();
 
         return $this;

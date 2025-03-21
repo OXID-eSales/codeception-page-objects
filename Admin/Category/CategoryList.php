@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Category;
 
+use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait CategoryList
 {
+    use Tabs;
+
     private string $categorySearchForm = '#search';
     private string $categoryTitleInput = "//input[@name='where[oxcategories][oxtitle]']";
     private string $categoryLanguageSelect = "//select[@name='changelang']";
@@ -45,7 +48,7 @@ trait CategoryList
         $I->submitForm($this->categorySearchForm, []);
 
         $I->selectListFrame();
-        $I->click($categoryName);
+        $I->clickAndWait($categoryName);
         $I->selectEditFrame();
         $I->waitForDocumentReadyState();
 
@@ -55,11 +58,7 @@ trait CategoryList
     public function openMainTab(): MainCategoryPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclcategory_main'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclcategory_main'));
 
         return new MainCategoryPage($I);
     }
@@ -67,13 +66,7 @@ trait CategoryList
     public function openSortingTab(): SortingCategoryPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $tabText = Translator::translate('tbclcategory_order');
-        $tabSelector = "//div[contains(@class, 'tabs')]//a[contains(text(), '$tabText')]";
-        $I->click($tabSelector);
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclcategory_order'));
 
         return new SortingCategoryPage($I);
     }
@@ -81,11 +74,7 @@ trait CategoryList
     public function openRightsTab(): RightsCategoryPage
     {
         $I = $this->user;
-
-        $I->selectListFrame();
-        $I->click(Translator::translate('tbclcategory_rights'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->openTab(Translator::translate('tbclcategory_rights'));
 
         return new RightsCategoryPage($I);
     }

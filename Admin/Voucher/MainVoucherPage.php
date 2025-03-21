@@ -20,12 +20,12 @@ class MainVoucherPage extends Page
     public string $titleInput = "//input[@name='editval[oxvoucherseries__oxserienr]']";
     public string $voucherType = "//select[@name='editval[oxvoucherseries__oxdiscounttype]']";
     public string $saveButton = "//input[@name='save']";
-	public string $discountField = "//input[@name='editval[oxvoucherseries__oxdiscount]']";
-	public string $allowSameSeriesYes = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='1']";
-	public string $allowSameSeriesNo = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='0']";
-	public string $voucherNr = "//input[@name='voucherNr']";
-	public string $voucherQuantity = "//input[@name='voucherAmount']";
-	public string $generateButton = "//input[@name='save' and @value='Generate']";
+    public string $discountField = "//input[@name='editval[oxvoucherseries__oxdiscount]']";
+    public string $allowSameSeriesYes = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='1']";
+    public string $allowSameSeriesNo = "//input[@name='editval[oxvoucherseries__oxallowsameseries]'][@value='0']";
+    public string $voucherNr = "//input[@name='voucherNr']";
+    public string $voucherQuantity = "//input[@name='voucherAmount']";
+    public string $generateButton = "//input[@name='save' and @value='Generate']";
 
     public function createVoucherSerie(VoucherSerie $voucher)
     {
@@ -33,23 +33,23 @@ class MainVoucherPage extends Page
 
         $I->fillField($this->titleInput, $voucher->getTitle());
         $I->selectOption($this->voucherType, $voucher->getVoucherType());
-        $I->click($this->saveButton);
+        $I->clickAndWait($this->saveButton);
         $I->waitForDocumentReadyState();
 
         return $this;
     }
 
-	public function createVoucher(Voucher $voucher)
-	{
-		$I = $this->user;
+    public function createVoucher(Voucher $voucher)
+    {
+        $I = $this->user;
 
-		$I->fillField($this->voucherNr, $voucher->getVoucherNr());
-		$I->fillField($this->voucherQuantity, $voucher->getVoucherQuantity());
-		$I->click($this->generateButton);
-		$I->waitForDocumentReadyState();
+        $I->fillField($this->voucherNr, $voucher->getVoucherNr());
+        $I->fillField($this->voucherQuantity, $voucher->getVoucherQuantity());
+        $I->clickAndWait($this->generateButton);
+        $I->waitForDocumentReadyState();
 
-		return $this;
-	}
+        return $this;
+    }
 
     public function seeVoucherSerie(VoucherSerie $voucher): self
     {
@@ -61,39 +61,39 @@ class MainVoucherPage extends Page
         return $this;
     }
 
-	public function seeVoucher(Voucher $voucher): self
-	{
-		$I = $this->user;
+    public function seeVoucher(Voucher $voucher): self
+    {
+        $I = $this->user;
 
-		$I->seeInField($this->voucherNr, $voucher->getVoucherNr());
-		$I->seeInField($this->voucherQuantity, $voucher->getVoucherQuantity());
+        $I->seeInField($this->voucherNr, $voucher->getVoucherNr());
+        $I->seeInField($this->voucherQuantity, $voucher->getVoucherQuantity());
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function checkVoucherDiscountFieldForShipfreeVoucher(): void
-	{
-		$I = $this->user;
+    public function checkVoucherDiscountFieldForShipfreeVoucher(): void
+    {
+        $I = $this->user;
 
-		$I->selectOption($this->voucherType, 'shipfree');
+        $I->selectOption($this->voucherType, 'shipfree');
 
-		$I->waitForElementVisible($this->discountField, 5);
+        $I->waitForElementVisible($this->discountField, 5);
 
-		$I->seeElement($this->discountField);
-		$I->seeElement($this->discountField, ['disabled' => 'true']);
-		$I->seeInField($this->discountField, '0');
-	}
+        $I->seeElement($this->discountField);
+        $I->seeElement($this->discountField, ['disabled' => 'true']);
+        $I->seeInField($this->discountField, '0');
+    }
 
-	public function checkAllowSameSeriesRadioDisabled(): self
-	{
-		$I = $this->user;
+    public function checkAllowSameSeriesRadioDisabled(): self
+    {
+        $I = $this->user;
 
-		$I->waitForElementVisible($this->allowSameSeriesYes, 5);
+        $I->waitForElementVisible($this->allowSameSeriesYes, 5);
 
-		$I->seeCheckboxIsChecked($this->allowSameSeriesNo);
-		$I->seeElement($this->allowSameSeriesYes, ['disabled' => 'true']);
-		$I->dontSeeElement($this->allowSameSeriesNo, ['disabled' => 'true']);
+        $I->seeCheckboxIsChecked($this->allowSameSeriesNo);
+        $I->seeElement($this->allowSameSeriesYes, ['disabled' => 'true']);
+        $I->dontSeeElement($this->allowSameSeriesNo, ['disabled' => 'true']);
 
-		return $this;
-	}
+        return $this;
+    }
 }

@@ -20,8 +20,7 @@ class ExtendedInformationPage extends Page
     {
         $I = $this->user;
         $I->checkOption($this->isProductConfigurableOption);
-        $I->click($this->saveProductButton);
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait($this->saveProductButton);
 
         return $this;
     }

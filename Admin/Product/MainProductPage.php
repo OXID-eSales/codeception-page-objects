@@ -28,7 +28,7 @@ class MainProductPage extends Page
         $I = $this->user;
 
         $I->selectEditFrame();
-        $I->click($this->createButton);
+        $I->clickAndWait($this->createButton);
         // Wait for list and edit sections to load
         $I->selectListFrame();
         $I->selectEditFrame();
@@ -45,7 +45,7 @@ class MainProductPage extends Page
         }
 
         $I->waitForElementClickable($this->saveButton);
-        $I->click($this->saveButton);
+        $I->clickAndWait($this->saveButton);
         $I->selectEditFrame();
         $I->selectListFrame();
 
@@ -56,8 +56,8 @@ class MainProductPage extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->click($this->saveButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveButton);
+
         return $this;
     }
 }

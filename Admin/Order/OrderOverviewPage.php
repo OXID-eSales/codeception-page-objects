@@ -27,7 +27,7 @@ class OrderOverviewPage extends Page
     public function seeOrderProductLabel(string $label, int $product): self
     {
         $I = $this->user;
-        $I->see(
+        $I->seeText(
             sprintf('%s: %s', Translator::translate('GENERAL_LABEL'), $label),
             sprintf($this->orderProductLabel, $product)
         );
@@ -49,36 +49,36 @@ class OrderOverviewPage extends Page
 
         $I->checkOption($this->orderSendMailCheckbox);
         $I->submitForm($this->shipForm, []);
+        $I->seeText(Translator::translate('GENERAL_SENDON'));
 
-        $I->see(Translator::translate('GENERAL_SENDON'));
         return $this;
     }
 
     public function seeOrdersTodayCount(string $count): self
     {
         $I = $this->user;
-        $I->see($count, sprintf($this->todayOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTODAY')));
+        $I->seeText($count, sprintf($this->todayOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTODAY')));
         return $this;
     }
 
     public function seeOrdersTodaySum(string $sum): self
     {
         $I = $this->user;
-        $I->see($sum, sprintf($this->todayOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTODAY')));
+        $I->seeText($sum, sprintf($this->todayOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTODAY')));
         return $this;
     }
 
     public function seeTotalOrdersCount(string $count): self
     {
         $I = $this->user;
-        $I->see($count, sprintf($this->totalOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTOTAL')));
+        $I->seeText($count, sprintf($this->totalOrdersCount, Translator::translate('ORDER_OVERVIEW_ORDERAMTOTAL')));
         return $this;
     }
 
     public function seeTotalOrdersSum(string $sum): self
     {
         $I = $this->user;
-        $I->see($sum, sprintf($this->totalOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTOTAL')));
+        $I->seeText($sum, sprintf($this->totalOrdersSum, Translator::translate('ORDER_OVERVIEW_ORDERSUMTOTAL')));
         return $this;
     }
 }

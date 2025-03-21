@@ -41,7 +41,7 @@ class GiftSelection extends Page
     public function selectWrapping(int $itemPosition, string $wrappingId)
     {
         $I = $this->user;
-        $I->click(sprintf($this->selectWrapping, $itemPosition, $wrappingId));
+        $I->clickAndWait(sprintf($this->selectWrapping, $itemPosition, $wrappingId));
         return $this;
     }
 
@@ -55,7 +55,7 @@ class GiftSelection extends Page
     public function selectCard(string $cardId)
     {
         $I = $this->user;
-        $I->click(sprintf($this->selectGiftCard, $cardId));
+        $I->clickAndWait(sprintf($this->selectGiftCard, $cardId));
         return $this;
     }
 
@@ -82,8 +82,9 @@ class GiftSelection extends Page
     {
         $I = $this->user;
         $basketPage = new Basket($I);
-        $I->click(Translator::translate('APPLY'));
-        $I->waitForText(Translator::translate('CART'));
+        $I->clickAndWait(Translator::translate('APPLY'));
+        $I->seeText(Translator::translate('CART'));
+
         return $basketPage;
     }
 }

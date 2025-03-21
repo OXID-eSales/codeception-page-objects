@@ -26,8 +26,8 @@ trait ManufacturerWidget
     {
         $I = $this->user;
         $productListPage = new ProductList($I);
-        $I->click($manufacturerTitle);
-        $I->waitForPageLoad();
+        $I->clickAndWait($manufacturerTitle);
+
         return $productListPage;
     }
 
@@ -38,7 +38,7 @@ trait ManufacturerWidget
         $listPage = new ManufacturerList($I);
         $I->amOnPage($listPage->URL);
         $I->waitForPageLoad();
-        $I->see(Translator::translate('BY_MANUFACTURER'), $listPage->headerTitle);
+        $I->seeText(Translator::translate('BY_MANUFACTURER'), $listPage->headerTitle);
         return $listPage;
     }
 }

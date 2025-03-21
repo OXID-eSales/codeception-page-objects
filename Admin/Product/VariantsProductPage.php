@@ -11,23 +11,20 @@ namespace OxidEsales\Codeception\Admin\Product;
 
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class VariantsProductPage extends Page
 {
     use ProductList;
 
-    public $editVariantButton = '#test_variant\.%d > td:nth-child(1) > a';
+    public string $editVariantButton = '#test_variant\.%d > td:nth-child(1) > a';
 
-    /**
-     * @param int $variant
-     *
-     * @return MainProductPage
-     */
     public function openEditProductVariant(int $variant): MainProductPage
     {
         $I = $this->user;
-
-        $I->click(sprintf($this->editVariantButton, $variant));
-        $I->waitForPageLoad();
+        $editButton = sprintf($this->editVariantButton, $variant);
+        $I->clickAndWait($editButton);
+        $I->waitForElementNotVisible($editButton);
 
         return new MainProductPage($I);
     }

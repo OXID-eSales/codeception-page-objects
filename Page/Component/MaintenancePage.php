@@ -14,7 +14,7 @@ trait MaintenancePage
     public function isInMaintenanceMode(): static
     {
         $I = $this->user;
-        $I->waitForText('Maintenance mode');
+        $I->seeText('Maintenance mode');
 
         return $this;
     }

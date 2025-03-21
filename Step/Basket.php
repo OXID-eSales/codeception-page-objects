@@ -66,7 +66,7 @@ class Basket extends Step
 
         $this->openPage($I, $params);
         $basketPage = new BasketPage($I);
-        $I->see(Translator::translate('CART'));
+        $I->seeText(Translator::translate('CART'));
         return $basketPage;
     }
 

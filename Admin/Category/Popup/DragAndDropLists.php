@@ -9,66 +9,70 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Category\Popup;
 
+use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
+
+use function sprintf;
 
 trait DragAndDropLists
 {
     private string $list1 = '#container1';
     private string $list2 = '#container2';
     private string $artNrSearchInput = 'input[name="_0"]';
-    private string $firstListItem = '.yui-dt-data tr.yui-dt-first';
+    private string $datatableBody = 'table.yui-dt-table tbody.yui-dt-data';
+    private string $datatableFirstRow = 'table.yui-dt-table tbody.yui-dt-data tr.yui-dt-first';
     private string $assignAllButton = '#container1_btn';
     private string $unassignAllButton = '#container2_btn';
 
     public function dragFromList1ToList2(): static
     {
         $I = $this->user;
-        $I->retryDragAndDrop("$this->list1 $this->firstListItem", $this->list2);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list2);
+        $this->moveFirstRow($this->list1, $this->list2);
+        $this->waitForContentUpdate($this->list2, $content);
+
         return $this;
     }
 
     public function dragFromList2ToList1(): static
     {
         $I = $this->user;
-        $I->retryDragAndDrop("$this->list2 $this->firstListItem", $this->list1);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list1);
+        $this->moveFirstRow($this->list2, $this->list1);
+        $this->waitForContentUpdate($this->list1, $content);
+
         return $this;
     }
 
     public function searchInList1(string $value): static
     {
         $I = $this->user;
-        $I->fillField("$this->list1 $this->artNrSearchInput", $value);
-        $I->pressKey("$this->list1 $this->artNrSearchInput", WebDriverKeys::ENTER);
-        $I->waitForAjax();
+        $searchInput = "$this->list1 $this->artNrSearchInput";
+        $I->fillField($searchInput, $value);
+        $I->pressKey($searchInput, WebDriverKeys::ENTER);
+        $I->waitForPageLoad();
+        $this->waitForElementDisplayed($this->list1 . ' tbody.yui-dt-data');
+
         return $this;
     }
 
     public function searchInList2(string $value): static
     {
         $I = $this->user;
-        $I->fillField("$this->list2 $this->artNrSearchInput", $value);
-        $I->pressKey("$this->list2 $this->artNrSearchInput", WebDriverKeys::ENTER);
-        $I->waitForAjax();
-        return $this;
-    }
+        $searchInput = "$this->list2 $this->artNrSearchInput";
+        $I->fillField($searchInput, $value);
+        $I->pressKey($searchInput, WebDriverKeys::ENTER);
+        $I->waitForPageLoad();
+        $this->waitForElementDisplayed($this->list2 . ' tbody.yui-dt-data');
 
-    private function clearSearch(string $listSelector): static
-    {
-        $I = $this->user;
-        $searchField = "$listSelector $this->artNrSearchInput";
-        $I->clearField($searchField);
-        $I->click($searchField);
-        $I->pressKey($searchField, WebDriverKeys::BACKSPACE);
-        $I->waitForAjax();
         return $this;
     }
 
     public function seeProductInUnassignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->see($artNr, $this->list1);
+        $I->seeText($artNr, $this->list1);
+
         return $this;
     }
 
@@ -76,13 +80,15 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->dontSee($artNr, $this->list1);
+
         return $this;
     }
 
     public function seeProductInAssignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->see($artNr, $this->list2);
+        $I->seeText($artNr, $this->list2);
+
         return $this;
     }
 
@@ -90,38 +96,89 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->dontSee($artNr, $this->list2);
+
         return $this;
     }
 
     public function assignProductByArtNr(string $artNr): static
     {
+        $I = $this->user;
         $this->searchInList1($artNr);
+        $content = $I->grabTextFrom($this->list2);
         $this->dragFromList1ToList2();
         $this->clearSearch($this->list1);
+        $this->waitForContentUpdate($this->list2, $content);
+
         return $this;
     }
 
     public function unassignProductByArtNr(string $artNr): static
     {
+        $I = $this->user;
         $this->searchInList2($artNr);
+        $content = $I->grabTextFrom($this->list1);
         $this->dragFromList2ToList1();
         $this->clearSearch($this->list2);
+        $this->waitForContentUpdate($this->list1, $content);
+
         return $this;
     }
 
     public function assignAllProducts(): static
     {
         $I = $this->user;
-        $I->click($this->assignAllButton);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list2);
+        $I->clickAndWait($this->assignAllButton);
+        $this->waitForContentUpdate($this->list2, $content);
+
         return $this;
     }
 
     public function unassignAllProducts(): static
     {
         $I = $this->user;
-        $I->click($this->unassignAllButton);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list2);
+        $I->clickAndWait($this->unassignAllButton);
+        $this->waitForContentUpdate($this->list2, $content);
+
         return $this;
+    }
+
+    private function moveFirstRow(string $from, string $to): void
+    {
+        $I = $this->user;
+        $I->retryDragAndDrop(
+            sprintf('%s %s', $from, $this->datatableFirstRow),
+            $to
+        );
+        $I->waitforPageLoad();
+    }
+
+    private function clearSearch(string $listSelector): static
+    {
+        $I = $this->user;
+        $searchInput = "$listSelector $this->artNrSearchInput";
+        $I->clearField($searchInput);
+        $I->clickAndWait($searchInput);
+        $I->pressKey($searchInput, WebDriverKeys::BACKSPACE);
+        $I->waitForPageLoad();
+
+        return $this;
+    }
+
+    private function waitForContentUpdate(string $selector, string $contentBefore): void
+    {
+        $I = $this->user;
+        $I->waitForElementChange($selector, function (WebDriverElement $element) use ($contentBefore) {
+            return $contentBefore !== $element->getText();
+        });
+    }
+
+    private function waitForElementDisplayed(string $selector): void
+    {
+        $I = $this->user;
+        $I->waitForElementChange($selector, function (WebDriverElement $element) {
+            return $element->isDisplayed();
+        });
     }
 }

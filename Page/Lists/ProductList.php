@@ -14,6 +14,8 @@ use OxidEsales\Codeception\Page\Component\Header\Header;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class ProductList extends Page
 {
     use Header;
@@ -50,8 +52,9 @@ class ProductList extends Page
     public function seePageInformation(array $pageData): self
     {
         $I = $this->user;
-        $I->see($pageData['title'], $this->headerTitle);
-        $I->see($pageData['description'], $this->listPageDescription);
+        $I->seeText($pageData['title'], $this->headerTitle);
+        $I->seeText($pageData['description'], $this->listPageDescription);
+
         return $this;
     }
 
@@ -61,9 +64,10 @@ class ProductList extends Page
     public function seeProductData(array $productData, int $itemId = 1): self
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
-        $I->see($productData['description'], sprintf($this->listItemDescription, $itemId));
-        $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
+        $I->seeText($productData['title'], sprintf($this->listItemTitle, $itemId));
+        $I->seeText($productData['description'], sprintf($this->listItemDescription, $itemId));
+        $I->seeText($productData['price'], sprintf($this->listItemPrice, $itemId));
+
         return $this;
     }
 
@@ -79,9 +83,9 @@ class ProductList extends Page
     public function seeProductDataInDisplayTypeList(array $productData, int $itemId = 1): self
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->listItemTitle, $itemId));
-        $I->see($productData['description'], sprintf($this->listItemDescriptionTypeList, $itemId));
-        $I->see($productData['price'], sprintf($this->listItemPrice, $itemId));
+        $I->seeText($productData['title'], sprintf($this->listItemTitle, $itemId));
+        $I->seeText($productData['description'], sprintf($this->listItemDescriptionTypeList, $itemId));
+        $I->seeText($productData['price'], sprintf($this->listItemPrice, $itemId));
         return $this;
     }
 
@@ -97,20 +101,25 @@ class ProductList extends Page
     public function openProductDetailsPage(int $itemId): ProductDetails
     {
         $I = $this->user;
-        $I->retryMoveMouseOver(sprintf($this->listItemTitle, $itemId));
-        $I->clickWithLeftButton(sprintf($this->listItemTitle, $itemId));
-        $I->waitForPageLoad();
+        $I->clickWithLeftButton(
+            sprintf($this->listItemTitle, $itemId)
+        );
         $productDetails = new ProductDetails($I);
         $I->waitForElement($productDetails->productTitle);
+
         return $productDetails;
     }
 
     public function selectFilter($attributeName, $attributeValue): self
     {
         $I = $this->user;
-        $I->selectOption(sprintf($this->listFilter, $attributeName), $attributeValue);
+        $I->selectOption(
+            sprintf($this->listFilter, $attributeName),
+            $attributeValue
+        );
+        $I->waitForElement($this->resetListFilter);
         $I->waitForPageLoad();
-        $I->waitForElementVisible($this->resetListFilter);
+
         return $this;
     }
 
@@ -130,48 +139,53 @@ class ProductList extends Page
 
     public function openFilter(string $attributeName): self
     {
-        $this->user->click(sprintf($this->listFilter, $attributeName));
+        $this->user->clickAndWait(sprintf($this->listFilter, $attributeName));
+
         return $this;
     }
 
     public function resetFilter(): self
     {
         $I = $this->user;
-        $I->click($this->resetListFilter);
+        $I->scrollTo($this->resetListFilter);
+        $I->clickAndWait($this->resetListFilter);
         $I->waitForElementNotVisible($this->resetListFilter);
+
         return $this;
     }
 
     public function selectProductsPerPage(string $itemsPerPage): self
     {
         $I = $this->user;
-        $I->click(Translator::translate('PRODUCTS_PER_PAGE'));
-        $I->click(sprintf($this->itemsPerPageSelection, $itemsPerPage));
-        $I->waitForPageLoad();
-        $I->waitForText(Translator::translate('PRODUCTS_PER_PAGE') . ' ' . $itemsPerPage);
+        $I->clickAndWait(Translator::translate('PRODUCTS_PER_PAGE'));
+        $I->clickAndWait(sprintf($this->itemsPerPageSelection, $itemsPerPage));
+        $I->seeText(Translator::translate('PRODUCTS_PER_PAGE') . ' ' . $itemsPerPage);
+
         return $this;
     }
 
     public function openNextListPage(): self
     {
         $I = $this->user;
-        $I->retryClick($this->nextListPage);
-        $I->waitForPageLoad();
+        $I->scrollTo($this->nextListPage);
+        $I->clickAndWait($this->nextListPage);
+
         return $this;
     }
 
     public function openPreviousListPage(): self
     {
         $I = $this->user;
-        $I->retryClick($this->previousListPage);
-        $I->waitForPageLoad();
+        $I->scrollTo($this->previousListPage);
+        $I->clickAndWait($this->previousListPage);
+
         return $this;
     }
 
     public function openListPageNumber(int $pageNumber): self
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->pageNumberSelection, $pageNumber));
+        $I->clickAndWait(sprintf($this->pageNumberSelection, $pageNumber));
         $I->waitForElement(sprintf($this->activePageNumber, $pageNumber));
 
         return $this;
@@ -180,32 +194,40 @@ class ProductList extends Page
     public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
     {
         $I = $this->user;
-        $I->retryClick($this->sortingButton);
-        $I->waitForElement(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
-        $I->retryClick(sprintf($this->sortingSelection, $this->getSortingElementTitle($sortingName, $sortingOrder)));
+        $I->clickAndWait($this->sortingButton);
+        $sortingTypeSelection = sprintf(
+            $this->sortingSelection,
+            $this->getSortingElementTitle($sortingName, $sortingOrder)
+        );
+        $I->waitForElementClickable($sortingTypeSelection);
+        $I->clickAndWait($sortingTypeSelection);
+
         return $this;
     }
 
     public function selectVariant(int $itemId, string $variantValue): ProductDetails
     {
         $I = $this->user;
-        $I->retryClick(sprintf($this->variantSelection, $itemId));
-        $I->retryClick($variantValue);
-        $I->waitForText($variantValue);
+        $I->clickAndWait(sprintf($this->variantSelection, $itemId));
+        $I->clickAndWait($variantValue);
+        $I->seeText($variantValue);
+
         return new ProductDetails($I);
     }
 
     public function addProductToBasket(int $itemId): self
     {
+        $I = $this->user;
         $this->user->submitForm(sprintf($this->listItemForm, $itemId), []);
+        $I->waitForPageLoad();
+
         return $this;
     }
 
     public function selectListDisplayType(string $view): self
     {
         $I = $this->user;
-        $I->click(sprintf($this->listViewSelection, $view));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->listViewSelection, $view));
 
         return $this;
     }

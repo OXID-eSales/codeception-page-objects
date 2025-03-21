@@ -25,7 +25,7 @@ class UserLogin extends Page
     public function seePageOpened(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('LOGIN'), $this->headerTitle);
+        $I->seeText(Translator::translate('LOGIN'), $this->headerTitle);
 
         return $this;
     }
@@ -45,8 +45,10 @@ class UserLogin extends Page
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->retryClick($this->userAccountLoginButton);
+        $I->clickAndWait($this->userAccountLoginButton);
+        $I->waitForElementNotVisible($this->userAccountLoginButton);
         $I->dontSee(Translator::translate('LOGIN'));
+
         return new UserAccount($I);
     }
 
@@ -55,15 +57,15 @@ class UserLogin extends Page
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->retryClick($this->userAccountLoginButton);
-        $I->see(Translator::translate('LOGIN'));
+        $I->clickAndWait($this->userAccountLoginButton);
+        $I->seeText(Translator::translate('LOGIN'));
         return $this;
     }
 
     public function openUserPasswordReminderPage(): UserPasswordReminder
     {
         $I = $this->user;
-        $I->click($this->userForgotPasswordLink);
+        $I->clickAndWait($this->userForgotPasswordLink);
         $userPasswordReminderPage = new UserPasswordReminder($I);
         $userPasswordReminderPage->seeOnBreadCrumb(
             Translator::translate("YOU_ARE_HERE") . ":" . Translator::translate("FORGOT_PASSWORD")

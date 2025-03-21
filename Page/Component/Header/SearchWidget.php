@@ -11,30 +11,22 @@ namespace OxidEsales\Codeception\Page\Component\Header;
 
 use OxidEsales\Codeception\Page\Lists\ProductSearchList;
 
-/**
- * Trait for the search widget in the header.
- * @package OxidEsales\Codeception\Page\Component\Header
- */
+use function sprintf;
+
 trait SearchWidget
 {
-    public $searchField = '#searchParam';
+    private string $searchField = '#searchParam';
+    private string $searchButton = 'button[type=submit]';
+    private string $searchForm = 'form[name=search]';
 
-    public $searchButton = '';
-
-    public $searchForm = '//form[name=search]';
-
-    /**
-     * Executes the search and opens result page.
-     *
-     * @param string $value
-     *
-     * @return ProductSearchList
-     */
-    public function searchFor(string $value)
+    public function searchFor(string $value): ProductSearchList
     {
         $I = $this->user;
         $I->fillField($this->searchField, $value);
-        $I->click('form[name=search] button[type=submit]');
+        $button = sprintf('%s %s', $this->searchForm, $this->searchButton);
+        $I->clickAndWait($button);
+        $I->waitForElementClickable($button);
+
         return new ProductSearchList($I);
     }
 }

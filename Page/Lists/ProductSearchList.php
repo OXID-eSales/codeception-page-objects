@@ -37,14 +37,14 @@ class ProductSearchList extends ProductList
     public function seeSearchCount(int $count): self
     {
         $I = $this->user;
-        $I->see($count . ' ' . Translator::translate('HITS_FOR'));
+        $I->seeText($count . ' ' . Translator::translate('HITS_FOR'));
         return $this;
     }
 
     public function openProduct(int $position = 1): ProductDetails
     {
         $I = $this->user;
-        $I->click(sprintf($this->product, $position));
+        $I->clickAndWait(sprintf($this->product, $position));
         return new ProductDetails($I);
     }
 
@@ -52,8 +52,7 @@ class ProductSearchList extends ProductList
     {
         $I = $this->user;
         $firstProductsTitle = sprintf($this->listItem, 1);
-        $I->click($firstProductsTitle);
-        $I->waitForDocumentReadyState();
+        $I->clickAndWait($firstProductsTitle);
 
         return new ProductDetails($I);
     }

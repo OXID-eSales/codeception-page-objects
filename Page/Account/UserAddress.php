@@ -72,7 +72,7 @@ class UserAddress extends Page
     public function openUserBillingAddressForm()
     {
         $I = $this->user;
-        $I->click($this->openBillingAddressFormButton);
+        $I->clickAndWait($this->openBillingAddressFormButton);
         $I->waitForElementVisible($this->billCountryId);
         return $this;
     }
@@ -85,7 +85,7 @@ class UserAddress extends Page
     public function openShippingAddressForm()
     {
         $I = $this->user;
-        $I->retryClick($this->openShipAddressPanel);
+        $I->clickAndWait($this->openShipAddressPanel);
         $I->waitForElementVisible($this->shipAddressPanel);
         $I->dontSeeCheckboxIsChecked($this->openShipAddressPanel);
         return $this;
@@ -99,7 +99,7 @@ class UserAddress extends Page
     public function selectNewShippingAddress()
     {
         $I = $this->user;
-        $I->click($this->newShipAddressForm);
+        $I->clickAndWait($this->newShipAddressForm);
         $I->waitForElementVisible($this->shipAddressForm);
         return $this;
     }
@@ -116,11 +116,10 @@ class UserAddress extends Page
         $I = $this->user;
         $selectAddressBtn = sprintf($this->selectShipAddress, $position);
         $I->waitForElementClickable($selectAddressBtn);
-        $I->retryClick($selectAddressBtn);
+        $I->clickAndWait($selectAddressBtn);
         $openFormBtn = sprintf($this->openShipAddressForm, $position);
         $I->waitForElementClickable($openFormBtn);
-        $I->retryClick($openFormBtn);
-        $I->waitForPageLoad();
+        $I->clickAndWait($openFormBtn);
         $I->waitForElementVisible($this->shipAddressForm);
         return $this;
     }
@@ -134,10 +133,10 @@ class UserAddress extends Page
         $I = $this->user;
         $selectBtn = sprintf($this->selectShipAddress, $position);
         $I->waitForElementClickable($selectBtn);
-        $I->click($selectBtn);
+        $I->clickAndWait($selectBtn);
         $deleteBtn = sprintf($this->deleteShipAddress, $position);
         $I->waitForElementClickable($deleteBtn);
-        $I->retryClick($deleteBtn);
+        $I->clickAndWait($deleteBtn);
         $this->confirmShippingAddressDeletion($position);
         return $this;
     }
@@ -148,8 +147,8 @@ class UserAddress extends Page
     public function saveAddress()
     {
         $I = $this->user;
-        $I->retryClick($this->saveUserAddressButton);
-        $I->waitForPageLoad();
+        $I->clickAndWait($this->saveUserAddressButton);
+
         return $this;
     }
 

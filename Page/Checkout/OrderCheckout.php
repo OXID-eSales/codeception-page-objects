@@ -13,6 +13,8 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Component\PaymentSummary;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class OrderCheckout extends Page
 {
     use PaymentSummary;
@@ -38,7 +40,7 @@ class OrderCheckout extends Page
     private string $shippingMethod = '//div[contains(@class,"card")]/div[@class="card-body"][1]';
     private string $previousStepLink = '';
 
-    private string $submitOrder = '//button[contains(@class,"btn-highlight")]';
+    private string $submitOrder = '//button[contains(@class,"btn-highlight") and contains(text(),"%s")]';
     private string $userRemark = '//h2[contains(text(),"%s")]/following-sibling::div';
     private string $userRemarkHeader = 'h2';
     private string $basketItemTotalPrice = '//div[@id="list_cartItem_%s"]//ul[contains(@class,"unit-price")]';
@@ -46,19 +48,18 @@ class OrderCheckout extends Page
     public function submitOrder(): self
     {
         $I = $this->user;
-        $I->waitForText(Translator::translate('SUBMIT_ORDER'));
-        $I->retryClick(Translator::translate('SUBMIT_ORDER'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->submitOrder, Translator::translate('SUBMIT_ORDER')));
+
         return $this;
     }
 
     public function submitOrderSuccessfully(): ThankYou
     {
         $I = $this->user;
-        $I->waitForElementClickable($this->submitOrder);
-        $I->retryClick($this->submitOrder);
+        $this->submitOrder();
         $thankYouPage = new ThankYou($I);
         $I->waitForElement($thankYouPage->thankYouPage);
+
         return $thankYouPage;
     }
 
@@ -80,7 +81,7 @@ class OrderCheckout extends Page
     public function goToPreviousStep(): PaymentCheckout
     {
         $I = $this->user;
-        $I->click($this->previousStepLink);
+        $I->clickAndWait($this->previousStepLink);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
         return $paymentPage;
@@ -89,7 +90,7 @@ class OrderCheckout extends Page
     public function editUserAddress(): UserCheckout
     {
         $I = $this->user;
-        $I->click($this->editBillingAddress);
+        $I->clickAndWait($this->editBillingAddress);
         $userPage = new UserCheckout($I);
         $I->waitForElement($userPage->breadCrumb);
         return $userPage;
@@ -98,30 +99,34 @@ class OrderCheckout extends Page
     public function editPaymentMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $I->retryClick($this->editPayment);
+        $I->clickAndWait($this->editPayment);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
+
         return $paymentPage;
     }
 
     public function validatePaymentMethod(string $paymentMethod): self
     {
+        $I = $this->user;
         $this->user->see($paymentMethod, $this->paymentMethod);
+
         return $this;
     }
 
     public function editShippingMethod(): PaymentCheckout
     {
         $I = $this->user;
-        $I->retryClick($this->editShippingMethod);
+        $I->clickAndWait($this->editShippingMethod);
         $paymentPage = new PaymentCheckout($I);
         $I->waitForElement($paymentPage->breadCrumb);
+
         return $paymentPage;
     }
 
     public function validateShippingMethod(string $shippingMethod): self
     {
-        $this->user->see($shippingMethod, $this->shippingMethod);
+        $this->user->seeText($shippingMethod, $this->shippingMethod);
         return $this;
     }
 
@@ -134,6 +139,7 @@ class OrderCheckout extends Page
             $couponId,
             $couponDiscount
         );
+        $I->waitForText(Translator::translate('COUPON'));
         $I->see($informationText, $this->couponInformation);
         return $this;
     }
@@ -141,7 +147,7 @@ class OrderCheckout extends Page
     public function editCart(): Basket
     {
         $I = $this->user;
-        $I->retryClick($this->editCart);
+        $I->clickAndWait($this->editCart);
         $basket = new Basket($I);
         $I->waitForElement($basket->breadCrumb);
 
@@ -159,13 +165,13 @@ class OrderCheckout extends Page
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = (string)++$key;
-            $I->see(
+            $I->seeText(
                 sprintf('%s %s', Translator::translate('PRODUCT_NO'), $basketProduct['id']),
                 sprintf($this->basketItemId, $itemPosition)
             );
-            $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
-            $I->see((string)$basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
-            $I->see((string)$basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
+            $I->seeText($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
+            $I->seeText((string)$basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
+            $I->seeText((string)$basketProduct['amount'], sprintf($this->basketItemAmount, $itemPosition));
         }
         return $this;
     }
@@ -173,7 +179,7 @@ class OrderCheckout extends Page
     public function seeOrderItemLabel(string $label, int $item): static
     {
         $I = $this->user;
-        $I->see(
+        $I->seeText(
             sprintf('%s %s', Translator::translate('LABEL'), $label),
             sprintf($this->basketItemLabel, $item)
         );
@@ -247,15 +253,15 @@ class OrderCheckout extends Page
     public function seeUserDeliveryAddressPart(string $addressPart): self
     {
         $I = $this->user;
-        $I->see($addressPart, $this->deliveryAddress);
+        $I->seeText($addressPart, $this->deliveryAddress);
         return $this;
     }
 
     public function validateRemarkText(string $userRemarkText): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('WHAT_I_WANTED_TO_SAY'), $this->userRemarkHeader);
-        $I->see($userRemarkText, sprintf($this->userRemark, Translator::translate('WHAT_I_WANTED_TO_SAY')));
+        $I->seeText(Translator::translate('WHAT_I_WANTED_TO_SAY'), $this->userRemarkHeader);
+        $I->seeText($userRemarkText, sprintf($this->userRemark, Translator::translate('WHAT_I_WANTED_TO_SAY')));
         return $this;
     }
 

@@ -33,7 +33,7 @@ class PaymentCheckout extends Page
     public function selectPayment(string $paymentMethod): self
     {
         $I = $this->user;
-        $I->click('#payment_' . $paymentMethod);
+        $I->clickAndWait('#payment_' . $paymentMethod);
         return $this;
     }
 
@@ -47,7 +47,7 @@ class PaymentCheckout extends Page
     public function selectShippingIsAvailable(): self
     {
         $I = $this->user;
-        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'), $this->headings);
+        $I->seeText(Translator::translate('SELECTED_SHIPPING_CARRIER'), $this->headings);
         $I->seeElement($this->selectShippingButton);
         return $this;
     }
@@ -57,9 +57,9 @@ class PaymentCheckout extends Page
         $I = $this->user;
         $I->dontSee(Translator::translate('SELECTED_SHIPPING_CARRIER'), $this->headings);
         $I->dontSeeElement($this->selectShippingButton);
-        $I->see($this->noShippingMethodText, $this->paymentInformation);
+        $I->seeText($this->noShippingMethodText, $this->paymentInformation);
         // If there is no shipping there is also no payment
-        $I->see(Translator::translate('PAYMENT_INFORMATION'));
+        $I->seeText(Translator::translate('PAYMENT_INFORMATION'));
         $I->dontSeeElement($this->paymentOption);
         return $this;
     }
@@ -67,7 +67,7 @@ class PaymentCheckout extends Page
     public function goToNextStep(): OrderCheckout
     {
         $I = $this->user;
-        $I->retryClick($this->nextStepButton);
+        $I->clickAndWait($this->nextStepButton);
         $orderCheckout = new OrderCheckout($I);
         $I->waitForElement($orderCheckout->breadCrumb);
 
@@ -77,9 +77,10 @@ class PaymentCheckout extends Page
     public function goToPreviousStep(): UserCheckout
     {
         $I = $this->user;
-        $I->retryClick(Translator::translate('PREVIOUS_STEP'));
+        $I->clickAndWait(Translator::translate('PREVIOUS_STEP'));
         $userCheckout = new UserCheckout($I);
         $I->waitForElement($userCheckout->breadCrumb);
+
         return $userCheckout;
     }
 }

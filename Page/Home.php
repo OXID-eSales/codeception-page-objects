@@ -14,6 +14,8 @@ use OxidEsales\Codeception\Page\Component\Header\Header;
 use OxidEsales\Codeception\Page\Component\Widget\Promotion;
 use OxidEsales\Codeception\Page\Lists\ProductList;
 
+use function sprintf;
+
 class Home extends Page
 {
     use Header;
@@ -29,11 +31,11 @@ class Home extends Page
     public function openManufacturerFromStarPage(string $manufacturerTitle, int $position = 1): ProductList
     {
         $I = $this->user;
-        $productListPage = new ProductList($I);
-        $I->retryMoveMouseOver(sprintf($this->openManufacturerList, $position));
-        $I->retryClick(sprintf($this->openManufacturerList, $position));
-        $I->waitForPageLoad();
-        return $productListPage;
+        $I->clickAndWait(
+            sprintf($this->openManufacturerList, $position)
+        );
+
+        return new ProductList($I);
     }
 
     public function getNewestArticles(): Promotion

@@ -39,7 +39,7 @@ class UserPasswordReminder extends Page
     {
         $I = $this->user;
         $I->fillField($this->forgotPasswordUserEmail, $userEmail);
-        $I->click(Translator::translate('REQUEST_PASSWORD'));
+        $I->clickAndWait(Translator::translate('REQUEST_PASSWORD'));
         return $this;
     }
 
@@ -49,7 +49,7 @@ class UserPasswordReminder extends Page
     public function goBackToShop()
     {
         $I = $this->user;
-        $I->click($this->backToShop);
+        $I->clickAndWait($this->backToShop);
         return new Login($I);
     }
 }

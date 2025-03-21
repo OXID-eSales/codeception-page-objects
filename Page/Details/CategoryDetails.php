@@ -40,9 +40,9 @@ class CategoryDetails extends Page
     public function seeCategoryData(array $categoryData): self
     {
         $I = $this->user;
-        $I->see($categoryData['title']);
-        $I->see($categoryData['description'], $this->categoryDesc);
-        $I->see($categoryData['longDescription'], $this->categoryLongDesc);
+        $I->seeText($categoryData['title']);
+        $I->seeText($categoryData['description'], $this->categoryDesc);
+        $I->seeText($categoryData['longDescription'], $this->categoryLongDesc);
 
         return $this;
     }
@@ -57,7 +57,7 @@ class CategoryDetails extends Page
         $subcategoryItemSelector = $this->getFormattedSelector(template: $this->subCategoryItem, itemId: $itemId);
         $subcategoryImageSelector = $this->getFormattedSelector(template: $this->subCategoryItemImage, itemId: $itemId);
 
-        $I->see($subCategoryData['title'], $subcategoryItemSelector);
+        $I->seeText($subCategoryData['title'], $subcategoryItemSelector);
 
         $this->assertElementAttribute(
             I: $I,

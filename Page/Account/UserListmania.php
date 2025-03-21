@@ -53,8 +53,8 @@ class UserListmania extends Page
             $I->fillField($this->listmaniaAuthorField, $author);
         }
         $I->fillField($this->listmaniaDescriptionField, $description);
-        $I->click(Translator::translate('SAVE'));
-        $I->waitForPageLoad();
+        $I->clickAndWait(Translator::translate('SAVE'));
+
         return $this;
     }
 
@@ -66,8 +66,8 @@ class UserListmania extends Page
     public function openListByTitle(string $title)
     {
         $I = $this->user;
-        $I->click(sprintf($this->listmaniaListTitle, $title));
-        $I->waitForPageLoad();
+        $I->clickAndWait(sprintf($this->listmaniaListTitle, $title));
+
         return $this;
     }
 
@@ -81,8 +81,8 @@ class UserListmania extends Page
     public function seeListData(string $title, string $author = '', string $description = '')
     {
         $I = $this->user;
-        $I->see($description);
-        $I->see($title . ' ' . Translator::translate('LIST_BY') . ' ' . $author);
+        $I->seeText($description);
+        $I->seeText($title . ' ' . Translator::translate('LIST_BY') . ' ' . $author);
         return $this;
     }
 }

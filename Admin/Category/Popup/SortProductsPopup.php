@@ -11,6 +11,8 @@ namespace OxidEsales\Codeception\Admin\Category\Popup;
 
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class SortProductsPopup extends Page
 {
     use DragAndDropLists;
@@ -23,31 +25,41 @@ class SortProductsPopup extends Page
     public function seeProductInPosition(string $productId, int $position): static
     {
         $I = $this->user;
-        $I->see($productId, sprintf($this->rowTemplate, $this->list1, $position));
+        $row = sprintf($this->rowTemplate, $this->list1, $position);
+        $I->seeText(text: $productId, selector: $row);
+
         return $this;
     }
 
     public function saveSorting(): static
     {
         $I = $this->user;
-        $I->click($this->saveButton);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list1);
+        $I->clickAndWait($this->saveButton);
+        $this->waitForContentUpdate($this->list1, $content);
+
         return $this;
     }
 
     public function deleteSorting(): static
     {
         $I = $this->user;
-        $I->click($this->deleteButton);
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list1);
+        $I->clickAndWait($this->deleteButton);
+        $this->waitForContentUpdate($this->list1, $content);
+
         return $this;
     }
 
     public function sortByColumn(int $columnNumber): static
     {
         $I = $this->user;
-        $I->click(sprintf($this->columnHeaderTemplate, $this->list1, $columnNumber));
-        $I->waitForAjax();
+        $content = $I->grabTextFrom($this->list1);
+        $I->clickAndWait(
+            sprintf($this->columnHeaderTemplate, $this->list1, $columnNumber)
+        );
+        $this->waitForContentUpdate($this->list1, $content);
+
         return $this;
     }
 }

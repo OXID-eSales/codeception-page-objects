@@ -16,10 +16,6 @@ use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Page\Details\ProductDetails;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
-/**
- * Class for my-gift-registry page
- * @package OxidEsales\Codeception\Page\Account
- */
 class UserGiftRegistry extends Page
 {
     use MiniBasket;
@@ -64,31 +60,26 @@ class UserGiftRegistry extends Page
     public $toBasketButton = '#toBasket_wishlistProductList_%s';
 
     /**
-     * Searches for existing gift registry list.
-     *
-     * @param string $userName The name of user.
-     *
      * @return $this
      */
     public function searchForGiftRegistry(string $userName)
     {
         $I = $this->user;
         $I->fillField($this->giftRegistrySearch, $userName);
-        $I->click($this->searchButton);
+        $I->clickAndWait($this->searchButton);
         return $this;
     }
 
     /**
-     * Opens gift-registry page of the found list item
-     *
      * @return GiftRegistry
      */
     public function openFoundGiftRegistryList()
     {
         $I = $this->user;
-        $I->click($this->foundListLink);
+        $I->clickAndWait($this->foundListLink);
         $giftRegistryPage = new GiftRegistry($I);
-        $I->waitForText(Translator::translate('GIFT_REGISTRY_OF'));
+        $I->seeText(Translator::translate('GIFT_REGISTRY_OF'));
+
         return $giftRegistryPage;
     }
 
@@ -106,7 +97,8 @@ class UserGiftRegistry extends Page
         $I->fillField($this->recipientName, $recipient);
         $I->fillField($this->recipientEmail, $email);
         $I->fillField($this->emailMessage, $message);
-        $I->retryClick(Translator::translate('SUBMIT'));
+        $I->clickAndWait(Translator::translate('SUBMIT'));
+
         return $this;
     }
 
@@ -116,8 +108,9 @@ class UserGiftRegistry extends Page
     public function openGiftRegistryEmailForm()
     {
         $I = $this->user;
-        $I->click(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
-        $I->waitForText(Translator::translate('SEND_GIFT_REGISTRY'));
+        $I->clickAndWait(Translator::translate('MESSAGE_SEND_GIFT_REGISTRY'));
+        $I->seeText(Translator::translate('SEND_GIFT_REGISTRY'));
+
         return $this;
     }
 
@@ -130,7 +123,8 @@ class UserGiftRegistry extends Page
      */
     public function removeFromGiftRegistry(int $itemPosition)
     {
-        $this->user->retryClick(sprintf($this->removeFromGitRegistry, $itemPosition));
+        $this->user->clickAndWait(sprintf($this->removeFromGitRegistry, $itemPosition));
+
         return $this;
     }
 
@@ -141,7 +135,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->selectOption($this->publicSelection, 1);
-        $I->click(Translator::translate('SAVE'));
+        $I->clickAndWait(Translator::translate('SAVE'));
         return $this;
     }
 
@@ -152,7 +146,7 @@ class UserGiftRegistry extends Page
     {
         $I = $this->user;
         $I->selectOption($this->publicSelection, 0);
-        $I->click(Translator::translate('SAVE'));
+        $I->clickAndWait(Translator::translate('SAVE'));
         return $this;
     }
 
@@ -160,47 +154,35 @@ class UserGiftRegistry extends Page
      * Checks if given product data is shown correctly:
      * ['title', 'description', 'price']
      *
-     * @param array $productData
-     * @param int   $itemPosition
-     *
      * @return $this
      */
     public function seeProductData(array $productData, int $itemPosition = 1)
     {
         $I = $this->user;
-        $I->see($productData['title'], sprintf($this->productTitle, $itemPosition));
-        $I->see($productData['description'], sprintf($this->productDescription, $itemPosition));
-        $I->see($productData['price'], sprintf($this->productPrice, $itemPosition));
+        $I->seeText($productData['title'], sprintf($this->productTitle, $itemPosition));
+        $I->seeText($productData['description'], sprintf($this->productDescription, $itemPosition));
+        $I->seeText($productData['price'], sprintf($this->productPrice, $itemPosition));
         return $this;
     }
 
     /**
-     * Opens the detail page of selected product.
-     *
-     * @param int $itemPosition
-     *
      * @return ProductDetails
      */
     public function openProductDetailsPage(int $itemPosition)
     {
         $I = $this->user;
-        $I->click(sprintf($this->productTitle, $itemPosition));
+        $I->clickAndWait(sprintf($this->productTitle, $itemPosition));
         return new ProductDetails($I);
     }
 
     /**
-     * Adds selected product to the basket.
-     *
-     * @param int $itemPosition
-     * @param int $amount
-     *
      * @return $this
      */
     public function addProductToBasket(int $itemPosition, int $amount)
     {
         $I = $this->user;
         $I->fillField(sprintf($this->basketAmount, $itemPosition), $amount);
-        $I->click(sprintf($this->toBasketButton, $itemPosition));
+        $I->clickAndWait(sprintf($this->toBasketButton, $itemPosition));
         return $this;
     }
 }

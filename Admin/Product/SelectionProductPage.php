@@ -9,39 +9,29 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\AssignPopup;
 use OxidEsales\Codeception\Admin\Product\Popup\AssignSelectionListsPopup;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class SelectionProductPage extends Page
 {
+    use AssignPopup;
     use ProductList;
 
-    public $assignSelectionListButton = 'input.edittext[type="button"][value="%s"]';
-    public $assignSelectionListButtonValue = 'ARTICLE_ATTRIBUTE_ASSIGNSELECTLIST';
-    public $unassignedSelectionsListTitle = 'ARTICLE_ATTRIBUTE_NOSELLIST';
-    public $unassignedList = '#container1';
-    public $assignedList = '#container2';
+    private string $assignButton = 'input.edittext[type="button"][value="%s"]';
 
-    /** @return AssignSelectionListsPopup */
     public function openAssignSelectionListPopup(): AssignSelectionListsPopup
     {
         $I = $this->user;
-
-        $assignSelectionListButtonSelector = sprintf(
-            $this->assignSelectionListButton,
-            Translator::translate($this->assignSelectionListButtonValue)
+        $this->openAssignPopup(
+            sprintf(
+                $this->assignButton,
+                Translator::translate('ARTICLE_ATTRIBUTE_ASSIGNSELECTLIST')
+            )
         );
-
-        $I->click($assignSelectionListButtonSelector);
-        $I->waitForDocumentReadyState();
-        $I->switchToNextTab();
-        $I->waitForDocumentReadyState();
-        $I->maximizeWindow();
-
-        $I->waitForText(Translator::translate($this->unassignedSelectionsListTitle));
-        $I->waitForElement($this->unassignedList);
-        $I->waitForElement($this->assignedList);
 
         return new AssignSelectionListsPopup($I);
     }
