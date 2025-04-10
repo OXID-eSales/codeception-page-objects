@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v4.6.0 - unreleased
+## v4.6.0 - 2025-04-10
 
 ### Added
 - New methods and Page objects for
