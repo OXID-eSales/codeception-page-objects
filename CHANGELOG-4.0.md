@@ -16,8 +16,12 @@
   - Drag and drop functionality
 
 ### Deprecated
+- Public properties of Page Objects, that represent selectors, will be made private in next major versions.
+If possible, page elements should be managed via public methods, accessing them directly is discouraged.
 - `ProductCategories` methods extracted into `CategoryListTrait`
 - Page objects used for testing browser-based shop setup
+- `find()` methods in `ManufacturerList` and `OrderList`
+- Method `seeManufacturerIcon` in `PictureManufacturerPage`
 
 ## v4.5.0 - 2024-10-14
 

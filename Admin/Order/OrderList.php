@@ -36,7 +36,7 @@ trait OrderList
     }
 
     /**
-     * @deprecated method return value will change to OrderOverviewPage in next major
+     * @deprecated method will be removed in next major
      */
     public function find(string $field, string $value): MainOrderPage
     {

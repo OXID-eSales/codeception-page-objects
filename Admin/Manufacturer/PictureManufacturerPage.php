@@ -20,11 +20,23 @@ class PictureManufacturerPage extends Page
     public string $iconInput = "//input[@name='editval[oxmanufacturers__oxicon]']";
     private string $iconFile = "//input[@name='myfile[MICO@oxmanufacturers__oxicon]']";
 
+    /**
+     * @deprecated method will be removed in next major, use seeIcon() instead
+     */
     public function seeManufacturerIcon(Manufacturer $manufacturer): self
     {
         $I = $this->user;
 
         $I->seeInField($this->iconInput, $manufacturer->getIcon());
+
+        return $this;
+    }
+
+    public function seeIcon(string $icon): static
+    {
+        $I = $this->user;
+        $I->scrollTo($this->iconInput);
+        $I->retrySeeInField($this->iconInput, $icon);
 
         return $this;
     }

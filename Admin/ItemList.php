@@ -10,11 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin;
 
 /**
- * Class ItemList
- *
- * General admin list with items.
- *
- * @package OxidEsales\Codeception\Admin
+ * @deprecated method will be removed in next major
  */
 class ItemList extends \OxidEsales\Codeception\Page\Page
 {

@@ -10,15 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin;
 
 /**
- * Class ListItemTab
- *
- * General admin list item tab click page.
- * This class is the base that should be extended.
- *
- * tabHref attribute should have correct the tab link href value:
- * <a href="#someclassname">, in this case we have "#someclassname" as tabHref.
- *
- * @package OxidEsales\Codeception\Admin
+ * @deprecated method will be removed in next major
  */
 abstract class ItemListTab extends \OxidEsales\Codeception\Page\Page
 {
