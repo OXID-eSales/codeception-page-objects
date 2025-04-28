@@ -22,6 +22,9 @@ trait ManufacturerList
     public string $newManufacturerButton = "#btn.new";
     public string $firstRowName = '//tr[@id="row.1"]//td[2]//div//a';
 
+    /**
+     * @deprecated method will be removed in next major
+     */
     public function find(string $searchField, string $value): MainManufacturerPage
     {
         $I = $this->user;

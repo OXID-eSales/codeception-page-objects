@@ -22,6 +22,9 @@ trait OrderList
         return $this->find($this->orderNumberInput, $orderNumber);
     }
 
+    /**
+     * @deprecated method will be removed in next major
+     */
     public function find(string $field, string $value): OrderOverviewPage
     {
         $I = $this->user;
