@@ -170,7 +170,8 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->waitForElementChange($selector, function (WebDriverElement $element) use ($contentBefore) {
-            return $contentBefore !== $element->getText();
+            $content = $element->getText();
+            return $content && $content !== $contentBefore;
         });
     }
 
