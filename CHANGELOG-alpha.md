@@ -4,6 +4,7 @@
 
 ### Added
 - Added methods for managing stock default message settings in admin
+- Functionality for Product Pictures management in admin
 
 ### Changed
 - Assertion method `setRowInDateTable` renamed to `seeRowInDataTable`

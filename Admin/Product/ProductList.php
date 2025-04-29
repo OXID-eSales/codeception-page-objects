@@ -9,18 +9,21 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\DataTable;
 use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\Products;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait ProductList
 {
+    use DataTable;
     use Tabs;
 
     public string $searchNumberInput = "//input[@name='where[oxarticles][oxartnum]']";
     public string $languageSelect = "//select[@name='changelang']";
     public string $searchForm = '#search';
     public string $productStatusClass = "//tr[@id='row.1']/td";
+    private string $productNumberInput = 'oxartnum';
 
     public function switchLanguage(string $language): MainProductPage
     {
@@ -37,27 +40,25 @@ trait ProductList
 
     public function filterByProductNumber(string $value): Products
     {
-        $I = $this->user;
-
-        $I->selectListFrame();
-        $I->fillField($this->searchNumberInput, $value);
-        $I->submitForm($this->searchForm, []);
-
-        $I->selectListFrame();
+        $this->filterRows('oxarticles', $this->productNumberInput, $value);
 
         return $this;
+    }
+
+    public function findByProductNumber(string $productNumber): MainProductPage
+    {
+        $this->filterRows('oxarticles', $this->productNumberInput, $productNumber);
+        $this->selectFirstRow();
+
+        return $this->openMainTab();
     }
 
     public function find(string $field, string $value): MainProductPage
     {
         $I = $this->user;
 
-        $I->selectListFrame();
-        $I->fillField($field, $value);
-        $I->submitForm($this->searchForm, []);
-
-        $I->selectListFrame();
-        $I->clickAndWait($value);
+        $this->filterRows('oxarticles', $field, $value);
+        $this->selectFirstRow();
 
         return $this->openMainTab();
     }
@@ -108,5 +109,13 @@ trait ProductList
         $this->openTab(Translator::translate('tbclarticle_stock'));
 
         return new StockProductPage($I);
+    }
+
+    public function openPicturesTab(): PicturesProductPage
+    {
+        $I = $this->user;
+        $this->openTab(Translator::translate('tbclarticle_pictures'));
+
+        return new PicturesProductPage($I);
     }
 }
