@@ -46,10 +46,14 @@ class CoreSettings extends Page
 
         $I->fillField($this->newShopNameField, $shopName);
         $I->checkOption($this->inheritParentProductsOption);
-        $option = $I->grabTextFrom($this->masterShopInSelectOption);
-        $I->selectOption($this->shopParentSelect, $option);
+        $I->selectOption(
+            $this->shopParentSelect,
+            $I->grabTextFrom($this->masterShopInSelectOption)
+        );
         $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
+        $I->selectEditFrame();
+        $I->waitForPageLoad();
         $I->waitForElementClickable($this->activeShopSelect);
         $I->checkOption($this->activeShopSelect);
         $I->clickAndWait(Translator::translate('GENERAL_SAVE'));

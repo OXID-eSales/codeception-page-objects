@@ -43,7 +43,9 @@ class Languages extends Page
 
         $I->expect('to see the new language in the list');
         $I->retrySelectListFrame();
-        $I->seeText($name);
+        $I->comment('creating multiple languages can be slow on some systems');
+        $I->amGoingTo('wait till the process ends, with increased timeout');
+        $I->seeText(text: $name, timeout: 30);
 
         return $this;
     }
