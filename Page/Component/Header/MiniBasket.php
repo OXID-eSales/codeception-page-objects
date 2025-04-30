@@ -23,7 +23,7 @@ trait MiniBasket
     public string $miniBasketItemAmount = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
     public string $miniBasketItemPrice = '//div[@class="minibasket-items"]/div[%d]/a/span[2]';
     public string $miniBasketSummaryPrice = '//div[contains(@class,"minibasket-total-row")]/div[2]';
-    public string $miniBasketItemsSummaryPrice = '//div[contains(@class,"col-4 text-end")]';
+    public string $miniBasketItemsSummaryPrice = '//div[contains(@class,"col-4 minibasket-total-col text-end")]';
     public string $miniBasketCountDown = '#countdown';
     public string $miniBasketClose = '//div[@id="basketModal"]//button';
     private string $itemCountBadge = '//button[@class="btn btn-minibasket"]//span[@class="badge"]';
