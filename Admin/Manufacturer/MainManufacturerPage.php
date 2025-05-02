@@ -34,6 +34,7 @@ class MainManufacturerPage extends Page
         $I->fillField($this->shortDescriptionInput, $manufacturer->getShortDescription());
         $I->fillField($this->sortValueInput, $manufacturer->getSortValue());
         $I->clickAndWait($this->saveButton);
+        $I->selectEditFrame();
         $I->waitForDocumentReadyState();
         $I->waitForElementClickable($this->saveButton);
 
