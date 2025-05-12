@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 class StockProductPage extends Page
 {
+    use EditForm;
     use ProductList;
 
     public string $saveButton = "//input[@name='save']";
@@ -86,9 +88,7 @@ class StockProductPage extends Page
 
     public function save(): StockProductPage
     {
-        $I = $this->user;
-        $I->selectEditFrame();
-        $I->clickAndWait($this->saveButton);
+        $this->submitForm($this->saveButton);
 
         return $this;
     }

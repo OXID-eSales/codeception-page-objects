@@ -8,7 +8,7 @@
 - Admin License tab elements
 - Methods to check output of the System Info page in admin
 - Page objects for cache in admin
-- Admin interface components: `AssignPopup`, `DataTable`, `Tabs`
+- Admin interface components: `AssignPopup`, `DataTable`, `EditForm`, `Tabs`
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface

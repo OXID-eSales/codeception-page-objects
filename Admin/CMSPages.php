@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
-use Facebook\WebDriver\WebDriverElement;
-use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 class CMSPages extends Page
 {
+    use EditForm;
+
     public string $newCMSButton = '#btn.new';
     public string $activeCheckbox = 'editval[oxcontents__oxactive]';
     public string $title = 'editval[oxcontents__oxtitle]';
@@ -38,9 +39,7 @@ class CMSPages extends Page
         $I->fillField($this->title, $title);
         $I->fillField($this->ident, $ident);
         $I->fillField($this->content, $content);
-        $I->clickAndWait($this->saveButton);
-        $I->waitForDocumentReadyState();
-        $I->selectEditFrame();
+        $this->submitForm($this->saveButton);
         $I->selectListFrame();
 
         return $this;

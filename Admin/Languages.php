@@ -9,25 +9,20 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\Component\FrameLoader;
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class Languages extends Page
 {
+    use EditForm;
     use FrameLoader;
 
-    public $newLanguageButton = '#btn.new';
-    public $activeCheckbox = "//input[@name='editval[active]'][@type='checkbox']";
-    public $abbreviationField = "//input[@name='editval[abbr]']";
-    public $nameField = "//input[@name='editval[desc]']";
+    public string $newLanguageButton = '#btn.new';
+    public string $activeCheckbox = "//input[@name='editval[active]'][@type='checkbox']";
+    public string $abbreviationField = "//input[@name='editval[abbr]']";
+    public string $nameField = "//input[@name='editval[desc]']";
 
-    /**
-     * @param string $abbreviation
-     * @param string $name
-     *
-     * @return Languages
-     */
     public function createNewLanguage(string $abbreviation, string $name): Languages
     {
         $I = $this->user;
@@ -39,7 +34,7 @@ class Languages extends Page
         $I->checkOption($this->activeCheckbox);
         $I->fillField($this->abbreviationField, $abbreviation);
         $I->fillField($this->nameField, $name);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         $I->expect('to see the new language in the list');
         $I->retrySelectListFrame();

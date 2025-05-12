@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\CoreSetting;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class SystemTab extends Page
 {
+    use EditForm;
+
     public string $buyableParentCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantParentBuyable')]";
     private string $displayVariantsCheckbox = "//input[@type='checkbox' and contains(@name, 'blVariantsSelection')]";
 
@@ -27,15 +30,12 @@ class SystemTab extends Page
         return $this;
     }
 
-    /**
-     * @return SystemTab
-     */
     public function checkParentProductAsBuyable(): SystemTab
     {
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->buyableParentCheckbox);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         return $this;
     }
@@ -45,7 +45,7 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->buyableParentCheckbox);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         return $this;
     }
@@ -55,7 +55,7 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->displayVariantsCheckbox);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         return $this;
     }
@@ -65,7 +65,7 @@ class SystemTab extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->displayVariantsCheckbox);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         return $this;
     }

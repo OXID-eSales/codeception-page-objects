@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 class MainProductPage extends Page
 {
+    use EditForm;
     use ProductList;
 
     public string $activeCheckbox = "//input[@name='editval[oxarticles__oxactive]'][@type='checkbox']";
@@ -45,18 +47,23 @@ class MainProductPage extends Page
         }
 
         $I->waitForElementClickable($this->saveButton);
-        $I->clickAndWait($this->saveButton);
-        $I->selectEditFrame();
+        $this->submitForm($this->saveButton);
         $I->selectListFrame();
+
+        return $this;
+    }
+
+    public function setLongDescription(string $longDescription): static
+    {
+        $I = $this->user;
+        $I->fillField($this->longDescriptionInput, $longDescription);
 
         return $this;
     }
 
     public function save(): MainProductPage
     {
-        $I = $this->user;
-        $I->selectEditFrame();
-        $I->clickAndWait($this->saveButton);
+        $this->submitForm($this->saveButton);
 
         return $this;
     }

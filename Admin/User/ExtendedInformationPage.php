@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class ExtendedInformationPage extends Page
 {
+    use EditForm;
     use UserList;
 
     public string $extendedInfoTabUserAddress = "#test_userAddress";
@@ -44,9 +45,7 @@ class ExtendedInformationPage extends Page
         }
         $I->fillField($this->extendedInfoCreditRatingField, $adminUserExtendedInfo->getCreditRating());
         $I->fillField($this->extendedInfoUrlField, $adminUserExtendedInfo->getUrl());
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->submitForm();
 
         return $this;
     }

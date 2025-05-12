@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Manufacturer;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\Manufacturer;
 use OxidEsales\Codeception\Page\Page;
 
 class MainManufacturerPage extends Page
 {
+    use EditForm;
     use ManufacturerList;
 
     public string $activeInput = "//input[@name='editval[oxmanufacturers__oxactive]']";
@@ -33,9 +35,7 @@ class MainManufacturerPage extends Page
         $I->fillField($this->titleInput, $manufacturer->getTitle());
         $I->fillField($this->shortDescriptionInput, $manufacturer->getShortDescription());
         $I->fillField($this->sortValueInput, $manufacturer->getSortValue());
-        $I->clickAndWait($this->saveButton);
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->submitForm($this->saveButton);
         $I->waitForElementClickable($this->saveButton);
 
         return $this;

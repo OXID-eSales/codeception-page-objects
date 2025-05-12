@@ -11,6 +11,7 @@ namespace OxidEsales\Codeception\Admin\Category;
 
 use OxidEsales\Codeception\Admin\Category\Popup\AssignProductsPopup;
 use OxidEsales\Codeception\Admin\Component\AssignPopup;
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
@@ -20,6 +21,7 @@ class MainCategoryPage extends Page
 {
     use AssignPopup;
     use CategoryList;
+    use EditForm;
 
     private string $newCategoryName = "//input[@name='editval[oxcategories__oxtitle]']";
     private string $activeCategoryCheckbox = "//input[@name='editval[oxcategories__oxactive]'][@type='checkbox']";
@@ -38,18 +40,10 @@ class MainCategoryPage extends Page
         $I->selectEditFrame();
         $I->checkOption($this->activeCategoryCheckbox);
         $I->fillField($this->newCategoryName, $categoryName);
-        $this->save();
+        $this->submitForm($this->saveButton);
+
         $I->selectListFrame();
         $I->seeText($categoryName);
-
-        return $this;
-    }
-
-    public function save(): static
-    {
-        $I = $this->user;
-        $I->selectEditFrame();
-        $I->clickAndWait($this->saveButton);
 
         return $this;
     }
@@ -59,7 +53,7 @@ class MainCategoryPage extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->attachFile($this->newCategoryThumbFile, $categoryThumbPath);
-        $this->save();
+        $this->submitForm($this->saveButton);
 
         return $this;
     }

@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Manufacturer;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class PictureManufacturerPage extends Page
 {
+    use EditForm;
+
     private string $iconInput = "//input[@name='editval[oxmanufacturers__oxicon]']";
     private string $iconFile = "//input[@name='myfile[MICO@oxmanufacturers__oxicon]']";
 
@@ -30,7 +33,7 @@ class PictureManufacturerPage extends Page
     {
         $I = $this->user;
         $I->attachFile($this->iconFile, $icon);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         return $this;
     }

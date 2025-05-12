@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Voucher;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\Voucher;
 use OxidEsales\Codeception\Admin\DataObject\VoucherSerie;
 use OxidEsales\Codeception\Page\Page;
 
 class MainVoucherPage extends Page
 {
+    use EditForm;
     use VoucherList;
 
     public string $titleInput = "//input[@name='editval[oxvoucherseries__oxserienr]']";
@@ -33,8 +35,7 @@ class MainVoucherPage extends Page
 
         $I->fillField($this->titleInput, $voucher->getTitle());
         $I->selectOption($this->voucherType, $voucher->getVoucherType());
-        $I->clickAndWait($this->saveButton);
-        $I->waitForDocumentReadyState();
+        $this->submitForm($this->saveButton);
 
         return $this;
     }

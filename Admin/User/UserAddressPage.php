@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
-use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
 class UserAddressPage extends Page
 {
+    use EditForm;
     use UserList;
 
     public string $deleteAddressInput = "//input[@value='Delete']";
@@ -69,9 +70,7 @@ class UserAddressPage extends Page
         $I->selectOption($this->addressCountryIdField, $adminUserAddresses->getCountryId());
         $I->fillField($this->addressPhoneField, $adminUserAddresses->getPhone());
         $I->fillField($this->addressFaxField, $adminUserAddresses->getFax());
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
-        $I->selectEditFrame();
-        $I->waitForDocumentReadyState();
+        $this->submitForm();
 
         return $this;
     }

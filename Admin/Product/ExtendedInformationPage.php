@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 class ExtendedInformationPage extends Page
 {
+    use EditForm;
+
     private string $isProductConfigurableOption = "editval[oxarticles__oxisconfigurable]";
     private string $saveProductButton = "//input[@name='save']";
 
@@ -20,7 +23,7 @@ class ExtendedInformationPage extends Page
     {
         $I = $this->user;
         $I->checkOption($this->isProductConfigurableOption);
-        $I->clickAndWait($this->saveProductButton);
+        $this->submitForm($this->saveProductButton);
 
         return $this;
     }

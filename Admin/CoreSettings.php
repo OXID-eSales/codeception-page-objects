@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\CoreSetting\CachingTab;
 use OxidEsales\Codeception\Admin\CoreSetting\LicenseTab;
@@ -21,6 +22,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class CoreSettings extends Page
 {
+    use EditForm;
     use Tabs;
 
     private string $activeShopSelect = "//input[@name='editval[oxshops__oxactive]']";
@@ -50,13 +52,11 @@ class CoreSettings extends Page
             $this->shopParentSelect,
             $I->grabTextFrom($this->masterShopInSelectOption)
         );
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
-        $I->selectEditFrame();
-        $I->waitForPageLoad();
         $I->waitForElementClickable($this->activeShopSelect);
         $I->checkOption($this->activeShopSelect);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
+        $this->submitForm();
 
         $I->selectListFrame();
         $I->waitForPageLoad();

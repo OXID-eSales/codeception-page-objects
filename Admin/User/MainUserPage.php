@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\AdminLoginPage;
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -17,6 +18,7 @@ use OxidEsales\Codeception\Page\Page;
 
 class MainUserPage extends Page
 {
+    use EditForm;
     use UserList;
 
     public string $userActiveField = "//input[@name='editval[oxuser__oxactive]'][@type='checkbox']";
@@ -74,8 +76,7 @@ class MainUserPage extends Page
         $I->fillField($this->userPasswordField, $user->getPassword());
         $I->selectOption($this->userRightsField, $user->getUserRights());
 
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
-        $I->selectEditFrame();
+        $this->submitForm();
         $I->waitForElementVisible($this->usernameField);
 
         return $this;
@@ -117,9 +118,10 @@ class MainUserPage extends Page
     {
         $I = $this->user;
         $I->fillField($this->userPasswordField, $pass);
+        $I->comment('after the click user is logged out and current page elements are not available anymore');
         $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
 
-        $I->expectTo('see that admin is logged out after password changed');
+        $I->expectTo('see that admin needs to log in again after password changed');
         $I->reloadPage();
         $adminLoginPage = new AdminLoginPage($I);
         $adminLoginPage->seeLoginForm();
@@ -131,8 +133,7 @@ class MainUserPage extends Page
     {
         $I = $this->user;
         $I->fillField($this->usernameField, $username);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
-        $I->selectEditFrame();
+        $this->submitForm();
         $I->waitForElementVisible($this->usernameField);
 
         return $this;
@@ -142,7 +143,7 @@ class MainUserPage extends Page
     {
         $passwordExists = ($password) ? 'Yes' : 'No';
         $I->seeText($passwordExists, $this->userHasPasswordSelector);
-        $I->seeInField($this->userPasswordField, "");
+        $I->seeInField($this->userPasswordField, '');
     }
 
     public function editUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self

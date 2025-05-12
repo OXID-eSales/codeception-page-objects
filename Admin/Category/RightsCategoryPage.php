@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Category;
 
-use OxidEsales\Codeception\Admin\Category\Popup\AssignProductsPopup;
 use OxidEsales\Codeception\Admin\Component\AssignPopup;
-use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Page\Page;
 
 use function sprintf;
 
@@ -20,6 +20,7 @@ class RightsCategoryPage extends Page
 {
     use AssignPopup;
     use CategoryList;
+    use EditForm;
 
     private string $assignVisibleRightsButton = "//input[@value='%s']";
     private string $inheritRightsCheckbox = "//input[@name='editval[oxcategories__oxrootid]'][@type='checkbox']";
@@ -30,7 +31,7 @@ class RightsCategoryPage extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->checkOption($this->inheritRightsCheckbox);
-        $I->clickAndWait($this->saveButton);
+        $this->submitForm($this->saveButton);
 
         return $this;
     }
@@ -40,7 +41,7 @@ class RightsCategoryPage extends Page
         $I = $this->user;
         $I->selectEditFrame();
         $I->uncheckOption($this->inheritRightsCheckbox);
-        $I->clickAndWait($this->saveButton);
+        $this->submitForm($this->saveButton);
 
         return $this;
     }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\Component\FrameLoader;
 use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
@@ -17,6 +18,7 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait UserList
 {
+    use EditForm;
     use FrameLoader;
     use Tabs;
 
@@ -109,9 +111,7 @@ trait UserList
         $I->selectEditFrame();
         $historyPage = new UserHistoryPage($I);
         $I->fillField($historyPage->remarkField, $text);
-        $I->clickAndWait(Translator::translate('GENERAL_SAVE'));
-
-        $I->selectEditFrame();
+        $this->submitForm();
 
         return $historyPage;
     }
