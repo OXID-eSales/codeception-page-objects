@@ -73,6 +73,7 @@ trait OrderList
         $I = $this->user;
 
         $I->selectListFrame();
+        $I->waitForElementClickable($modifierId);
         $I->openAlert($modifierId);
         $I->acceptPopup();
         $I->selectListFrame();

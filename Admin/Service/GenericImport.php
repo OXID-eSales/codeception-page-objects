@@ -12,6 +12,8 @@ namespace OxidEsales\Codeception\Admin\Service;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
+use function sprintf;
+
 class GenericImport extends Page
 {
     public string $attachCsvFileInput = 'input[name=csvfile]';
@@ -66,7 +68,10 @@ class GenericImport extends Page
     public function proceedToFieldMapping(string $tableName): self
     {
         $I = $this->user;
-        $I->clickAndWait(sprintf($this->proceedToNextStepButton, Translator::translate('Upload file')));
+        $I->clickAndWait(
+            sprintf($this->proceedToNextStepButton, Translator::translate('Upload file'))
+        );
+        $I->selectBaseFrame();
         $I->seeText(Translator::translate('GENIMPORT_ASSIGNFIELDS'));
         $I->seeText($tableName);
 
@@ -96,7 +101,10 @@ class GenericImport extends Page
     public function doImport(): self
     {
         $I = $this->user;
-        $I->clickAndWait(sprintf($this->proceedToNextStepButton, Translator::translate('Begin import')));
+        $I->clickAndWait(
+            sprintf($this->proceedToNextStepButton, Translator::translate('Begin import'))
+        );
+        $I->selectBaseFrame();
         $I->seeText(Translator::translate('GENIMPORT_IMPORTDONE'));
 
         return $this;
