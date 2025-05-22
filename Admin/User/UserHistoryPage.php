@@ -34,8 +34,26 @@ class UserHistoryPage extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
+        $textBefore = $I->grabTextFrom($this->remarkTextSelector);
         $I->selectOption($this->historyTabRemarkSelect, $listItem);
         $I->waitForDocumentReadyState();
+        $I->waitForTextUpdate($this->remarkTextSelector, $textBefore);
+
+        return $this;
+    }
+
+    public function seeRemarkText(string $remarkText): static
+    {
+        $I = $this->user;
+        $I->seeInField($this->remarkTextSelector, $remarkText);
+
+        return $this;
+    }
+
+    public function dontSeeRemarkText(string $remarkText): static
+    {
+        $I = $this->user;
+        $I->dontSeeInField($this->remarkTextSelector, $remarkText);
 
         return $this;
     }

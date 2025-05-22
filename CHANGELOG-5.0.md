@@ -4,11 +4,12 @@
 
 ### Added
 - Page objects for stock configuration
-- Method in `UserLogin` to confirm that login form is available
+- Method in `UserLogin` to confirm that the login form is available
 - Admin License tab elements
-- Methods to check output of the System Info page in admin
+- Methods to check the output of the System Info page in admin
 - Page objects for cache in admin
 - Admin interface components: `AssignPopup`, `DataTable`, `EditForm`, `Tabs`
+- Methods in `UserHistoryPage` tab
 
 ### Removed
 - Parts of `OrderCheckout`'s public interface
