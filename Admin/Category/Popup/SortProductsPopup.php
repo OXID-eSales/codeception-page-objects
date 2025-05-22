@@ -36,7 +36,7 @@ class SortProductsPopup extends Page
         $I = $this->user;
         $content = $I->grabTextFrom($this->list1);
         $I->clickAndWait($this->saveButton);
-        $this->waitForContentUpdate($this->list1, $content);
+        $I->waitForTextUpdate($this->list1, $content);
 
         return $this;
     }
@@ -46,7 +46,7 @@ class SortProductsPopup extends Page
         $I = $this->user;
         $content = $I->grabTextFrom($this->list1);
         $I->clickAndWait($this->deleteButton);
-        $this->waitForContentUpdate($this->list1, $content);
+        $I->waitForTextUpdate($this->list1, $content);
 
         return $this;
     }
@@ -58,7 +58,7 @@ class SortProductsPopup extends Page
         $I->clickAndWait(
             sprintf($this->columnHeaderTemplate, $this->list1, $columnNumber)
         );
-        $this->waitForContentUpdate($this->list1, $content);
+        $I->waitForTextUpdate($this->list1, $content);
 
         return $this;
     }

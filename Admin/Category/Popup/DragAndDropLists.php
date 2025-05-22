@@ -29,7 +29,7 @@ trait DragAndDropLists
         $I = $this->user;
         $content = $I->grabTextFrom($this->list2);
         $this->moveFirstRow($this->list1, $this->list2);
-        $this->waitForContentUpdate($this->list2, $content);
+        $I->waitForTextUpdate($this->list2, $content);
 
         return $this;
     }
@@ -39,7 +39,7 @@ trait DragAndDropLists
         $I = $this->user;
         $content = $I->grabTextFrom($this->list1);
         $this->moveFirstRow($this->list2, $this->list1);
-        $this->waitForContentUpdate($this->list1, $content);
+        $I->waitForTextUpdate($this->list1, $content);
 
         return $this;
     }
@@ -107,7 +107,7 @@ trait DragAndDropLists
         $content = $I->grabTextFrom($this->list2);
         $this->dragFromList1ToList2();
         $this->clearSearch($this->list1);
-        $this->waitForContentUpdate($this->list2, $content);
+        $I->waitForTextUpdate($this->list2, $content);
 
         return $this;
     }
@@ -119,7 +119,7 @@ trait DragAndDropLists
         $content = $I->grabTextFrom($this->list1);
         $this->dragFromList2ToList1();
         $this->clearSearch($this->list2);
-        $this->waitForContentUpdate($this->list1, $content);
+        $I->waitForTextUpdate($this->list1, $content);
 
         return $this;
     }
@@ -129,7 +129,7 @@ trait DragAndDropLists
         $I = $this->user;
         $content = $I->grabTextFrom($this->list2);
         $I->clickAndWait($this->assignAllButton);
-        $this->waitForContentUpdate($this->list2, $content);
+        $I->waitForTextUpdate($this->list2, $content);
 
         return $this;
     }
@@ -139,7 +139,7 @@ trait DragAndDropLists
         $I = $this->user;
         $content = $I->grabTextFrom($this->list2);
         $I->clickAndWait($this->unassignAllButton);
-        $this->waitForContentUpdate($this->list2, $content);
+        $I->waitForTextUpdate($this->list2, $content);
 
         return $this;
     }
@@ -164,15 +164,6 @@ trait DragAndDropLists
         $I->waitForPageLoad();
 
         return $this;
-    }
-
-    private function waitForContentUpdate(string $selector, string $contentBefore): void
-    {
-        $I = $this->user;
-        $I->waitForElementChange($selector, function (WebDriverElement $element) use ($contentBefore) {
-            $content = $element->getText();
-            return $content && $content !== $contentBefore;
-        });
     }
 
     private function waitForElementDisplayed(string $selector): void
