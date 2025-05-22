@@ -12,7 +12,7 @@ namespace OxidEsales\Codeception\Admin\User;
 use OxidEsales\Codeception\Admin\AdminLoginPage;
 use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
-use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddress;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
@@ -45,7 +45,7 @@ class MainUserPage extends Page
     public string $userRightsField = "//select[@name='editval[oxuser__oxrights]']";
     public string $userHasPasswordSelector = '#myedit table tr:nth-child(17) td:nth-child(2)';
 
-    public function editUserInformation(AdminUser $user, AdminUserAddresses $userAddress): self
+    public function editUserInformation(AdminUser $user, AdminUserAddress $userAddress): self
     {
         $I = $this->user;
 
@@ -82,7 +82,7 @@ class MainUserPage extends Page
         return $this;
     }
 
-    public function seeUserInformation(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
+    public function seeUserInformation(AdminUser $adminUser, AdminUserAddress $adminUserAddress): self
     {
         $I = $this->user;
         if ($adminUser->getActive()) {
@@ -146,7 +146,7 @@ class MainUserPage extends Page
         $I->seeInField($this->userPasswordField, '');
     }
 
-    public function editUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): self
+    public function editUser(AdminUser $adminUser, AdminUserAddress $adminUserAddress): self
     {
         $I = $this->user;
         $I->selectEditFrame();

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\Component\EditForm;
-use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddress;
 use OxidEsales\Codeception\Admin\DataObject\AdminUserExtendedInfo;
 use OxidEsales\Codeception\Page\Page;
 
@@ -50,7 +50,7 @@ class ExtendedInformationPage extends Page
         return $this;
     }
 
-    public function seeUserAddress(AdminUserAddresses $adminUserAddress): static
+    public function seeUserAddress(AdminUserAddress $adminUserAddress): static
     {
         $I = $this->user;
         $addressInformation = $adminUserAddress->getTitle() . ' '

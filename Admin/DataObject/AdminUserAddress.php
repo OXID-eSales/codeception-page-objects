@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\DataObject;
 
-class AdminUserAddresses
+class AdminUserAddress
 {
     private string $title = '';
     private string $firstName = '';

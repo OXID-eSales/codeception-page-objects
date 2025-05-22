@@ -16,3 +16,6 @@
 - Page objects used for testing browser-based shop setup
 - `find()` methods in `ManufacturerList` and `OrderList`
 - Method `seeManufacturerIcon` in `PictureManufacturerPage`
+
+### Changed
+- `AdminUserAddresses` data object renamed to `AdminUserAddress`

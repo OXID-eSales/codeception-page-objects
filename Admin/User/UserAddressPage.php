@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\User;
 
 use OxidEsales\Codeception\Admin\Component\EditForm;
-use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddress;
 use OxidEsales\Codeception\Page\Page;
 
 class UserAddressPage extends Page
@@ -45,7 +45,7 @@ class UserAddressPage extends Page
         return $this;
     }
 
-    public function selectAddress(AdminUserAddresses $adminUserAddress): self
+    public function selectAddress(AdminUserAddress $adminUserAddress): self
     {
         $I = $this->user;
 
@@ -55,7 +55,7 @@ class UserAddressPage extends Page
         return $this;
     }
 
-    public function editUserAddress(AdminUserAddresses $adminUserAddresses): self
+    public function editUserAddress(AdminUserAddress $adminUserAddresses): self
     {
         $I = $this->user;
         $I->selectOption($this->addressTitleField, $adminUserAddresses->getTitle());
@@ -75,7 +75,7 @@ class UserAddressPage extends Page
         return $this;
     }
 
-    public function seeAddressInformation(AdminUserAddresses $adminUserAddress): self
+    public function seeAddressInformation(AdminUserAddress $adminUserAddress): self
     {
         $I = $this->user;
 
@@ -100,7 +100,7 @@ class UserAddressPage extends Page
         return $this;
     }
 
-    private function getAddressTitle(AdminUserAddresses $adminUserAddress)
+    private function getAddressTitle(AdminUserAddress $adminUserAddress)
     {
         $title = '-';
         if ($adminUserAddress->getFirstName()) {

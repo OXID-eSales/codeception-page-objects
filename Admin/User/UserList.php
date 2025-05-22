@@ -13,7 +13,7 @@ use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Admin\Component\FrameLoader;
 use OxidEsales\Codeception\Admin\Component\Tabs;
 use OxidEsales\Codeception\Admin\DataObject\AdminUser;
-use OxidEsales\Codeception\Admin\DataObject\AdminUserAddresses;
+use OxidEsales\Codeception\Admin\DataObject\AdminUserAddress;
 use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait UserList
@@ -52,7 +52,7 @@ trait UserList
         return $this->find($this->usernameSearchField, $value);
     }
 
-    public function createNewUser(AdminUser $adminUser, AdminUserAddresses $adminUserAddress): MainUserPage
+    public function createNewUser(AdminUser $adminUser, AdminUserAddress $adminUserAddress): MainUserPage
     {
         $I = $this->user;
         $mainUserPage = new MainUserPage($I);
@@ -116,7 +116,7 @@ trait UserList
         return $historyPage;
     }
 
-    public function createNewAddress(AdminUserAddresses $adminUserAddresses): UserAddressPage
+    public function createNewAddress(AdminUserAddress $adminUserAddresses): UserAddressPage
     {
         $I = $this->user;
         $addressPage = new UserAddressPage($I);
