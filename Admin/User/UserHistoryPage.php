@@ -9,16 +9,27 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\User;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 class UserHistoryPage extends Page
 {
+    use EditForm;
     use UserList;
 
     public string $historyTabRemarkSelect = "//select[@name='rem_oxid']";
     public string $deleteRemark = "//input[@value='Delete']";
     public string $remarkTextSelector = "//textarea[@name='remarktext']";
-    public string $remarkField = 'remarktext';
+
+    public function addRemark(string $text): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->fillField($this->remarkTextSelector, $text);
+        $this->submitForm();
+
+        return $this;
+    }
 
     public function deleteRemark(): static
     {

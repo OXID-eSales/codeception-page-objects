@@ -11,11 +11,6 @@ namespace OxidEsales\Codeception\Admin\Component;
 
 trait FrameLoader
 {
-    /**
-     * @param string $loadTrigger
-     * @param string $editableTextInput
-     * @return void
-     */
     public function loadForm(string $loadTrigger, string $editableTextInput): void
     {
         $I = $this->user;

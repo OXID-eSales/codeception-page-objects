@@ -52,18 +52,6 @@ trait UserList
         return $this->find($this->usernameSearchField, $value);
     }
 
-    public function createNewUser(AdminUser $adminUser, AdminUserAddress $adminUserAddress): MainUserPage
-    {
-        $I = $this->user;
-        $mainUserPage = new MainUserPage($I);
-
-        $I->selectEditFrame();
-        $this->loadForm($this->newUserButton, $mainUserPage->userFirstNameField);
-        $mainUserPage->editUser($adminUser, $adminUserAddress);
-
-        return $mainUserPage;
-    }
-
     public function openExtendedTab(): ExtendedInformationPage
     {
         $I = $this->user;
@@ -104,14 +92,26 @@ trait UserList
         return new UserAddressPage($I);
     }
 
+    public function createNewUser(AdminUser $adminUser, AdminUserAddress $adminUserAddress): MainUserPage
+    {
+        $I = $this->user;
+        $mainUserPage = new MainUserPage($I);
+
+        $I->selectEditFrame();
+        $this->loadForm($this->newUserButton, $mainUserPage->userFirstNameField);
+        $mainUserPage->editUser($adminUser, $adminUserAddress);
+
+        return $mainUserPage;
+    }
+
     public function createNewRemark(string $text): UserHistoryPage
     {
         $I = $this->user;
-        $I->clickAndWait($this->newRemarkButton);
-        $I->selectEditFrame();
         $historyPage = new UserHistoryPage($I);
-        $I->fillField($historyPage->remarkField, $text);
-        $this->submitForm();
+
+        $I->selectEditFrame();
+        $this->loadForm($this->newRemarkButton, $historyPage->remarkTextSelector);
+        $historyPage->addRemark($text);
 
         return $historyPage;
     }
