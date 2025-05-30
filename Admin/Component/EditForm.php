@@ -13,12 +13,22 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 
 trait EditForm
 {
+    public function openForm(string $button): void
+    {
+        $this->clickAndWaitForFrameReload($button);
+    }
+
     public function submitForm(?string $submitButton = null): void
     {
-        $I = $this->user;
-        $I->clickAndWait(
+        $this->clickAndWaitForFrameReload(
             $submitButton ?? Translator::translate('GENERAL_SAVE')
         );
+    }
+
+    private function clickAndWaitForFrameReload(string $button): void
+    {
+        $I = $this->user;
+        $I->clickAndWait($button);
         $I->selectEditFrame();
         $I->waitForPageLoad();
     }

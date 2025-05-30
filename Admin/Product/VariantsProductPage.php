@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Product;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 use function sprintf;
 
 class VariantsProductPage extends Page
 {
+    use EditForm;
     use ProductList;
 
     public string $editVariantButton = '#test_variant\.%d > td:nth-child(1) > a';
@@ -23,7 +25,7 @@ class VariantsProductPage extends Page
     {
         $I = $this->user;
         $editButton = sprintf($this->editVariantButton, $variant);
-        $I->clickAndWait($editButton);
+        $this->openForm($editButton);
         $I->waitForElementNotVisible($editButton);
 
         return new MainProductPage($I);
