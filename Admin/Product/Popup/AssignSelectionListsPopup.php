@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Product\Popup;
 
 use Facebook\WebDriver\WebDriverKeys;
+use OxidEsales\Codeception\Admin\Category\Popup\DragAndDropLists;
 use OxidEsales\Codeception\Page\Page;
 
 class AssignSelectionListsPopup extends Page
 {
+    use DragAndDropLists;
+
     public $unassignedList = '#container1';
     public $assignedList = '#container2';
     public $titleFilter = 'input[name="_0"]';
@@ -30,10 +33,8 @@ class AssignSelectionListsPopup extends Page
 
         $I->fillField("$this->unassignedList $this->titleFilter", $itemTitle);
         $I->pressKey("$this->unassignedList $this->titleFilter", WebDriverKeys::ENTER);
-        $I->wait(3);
-        $I->retryDragAndDrop("$this->unassignedList $this->firstRow", $this->assignedList);
-        $I->wait(3);
-
+        $I->executeJS($this->dragAndDropJs("$this->unassignedList $this->firstRow", $this->assignedList));
+        $I->waitForAjax();
         return $this;
     }
 }

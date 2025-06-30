@@ -23,7 +23,7 @@ trait DragAndDropLists
     public function dragFromList1ToList2(): static
     {
         $I = $this->user;
-        $I->retryDragAndDrop("$this->list1 $this->firstListItem", $this->list2);
+        $I->executeJS($this->dragAndDropJs("$this->list1 $this->firstListItem", $this->list2));
         $I->waitForAjax();
         return $this;
     }
@@ -31,7 +31,7 @@ trait DragAndDropLists
     public function dragFromList2ToList1(): static
     {
         $I = $this->user;
-        $I->retryDragAndDrop("$this->list2 $this->firstListItem", $this->list1);
+        $I->executeJS($this->dragAndDropJs("$this->list2 $this->firstListItem", $this->list1));
         $I->waitForAjax();
         return $this;
     }
@@ -59,8 +59,10 @@ trait DragAndDropLists
         $I = $this->user;
         $searchField = "$listSelector $this->artNrSearchInput";
         $I->clearField($searchField);
-        $I->click($searchField);
-        $I->pressKey($searchField, WebDriverKeys::BACKSPACE);
+        $I->executeJS("
+            const input = document.querySelector('$searchField');
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        ");
         $I->waitForAjax();
         return $this;
     }
@@ -123,5 +125,30 @@ trait DragAndDropLists
         $I->click($this->unassignAllButton);
         $I->waitForAjax();
         return $this;
+    }
+
+    private function dragAndDropJs (string $element, string $destination)
+    {
+        return sprintf("
+            function triggerDnD(selectorFrom, selectorTo) {
+                const dataTransfer = new DataTransfer();
+                const from = document.querySelector(selectorFrom);
+                const to = document.querySelector(selectorTo);
+
+                const dragStart = new DragEvent('dragstart', { dataTransfer });
+                from.dispatchEvent(dragStart);
+
+                const dragOver = new DragEvent('dragover', { dataTransfer });
+                to.dispatchEvent(dragOver);
+
+                const drop = new DragEvent('drop', { dataTransfer });
+                to.dispatchEvent(drop);
+
+                const dragEnd = new DragEvent('dragend', { dataTransfer });
+                from.dispatchEvent(dragEnd);
+            }
+
+            triggerDnD(%s, %s);
+        ", json_encode($element), json_encode($destination . "_bg"));
     }
 }
