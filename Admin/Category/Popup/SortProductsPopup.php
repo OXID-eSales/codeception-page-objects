@@ -19,7 +19,7 @@ class SortProductsPopup extends Page
 
     private string $saveButton = '#saveBtn';
     private string $deleteButton = '#deleteBtn';
-    private string $rowTemplate = '%s .yui-dt-data tr:nth-child(%d) .yui-dt0-col-_0 .yui-dt-liner div';
+    private string $rowTemplate = '%s .yui-dt-data tr:nth-child(%d) td:first-child div.yui-dt-liner';
     private string $columnHeaderTemplate = '%s thead th:nth-child(%d) .yui-dt-label';
 
     public function seeProductInPosition(string $productId, int $position): static

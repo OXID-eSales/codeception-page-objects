@@ -147,9 +147,11 @@ trait DragAndDropLists
     private function moveFirstRow(string $from, string $to): void
     {
         $I = $this->user;
-        $I->retryDragAndDrop(
-            sprintf('%s %s', $from, $this->datatableFirstRow),
-            $to
+        $I->executeJs(
+            $this->dragAndDropJs(
+                sprintf('%s %s', $from, $this->datatableFirstRow),
+                $to
+            )
         );
         $I->waitforPageLoad();
     }
@@ -160,7 +162,10 @@ trait DragAndDropLists
         $searchInput = "$listSelector $this->artNrSearchInput";
         $I->clearField($searchInput);
         $I->clickAndWait($searchInput);
-        $I->pressKey($searchInput, WebDriverKeys::BACKSPACE);
+        $I->executeJS("
+            const input = document.querySelector('$searchInput');
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        ");
         $I->waitForPageLoad();
 
         return $this;
@@ -172,5 +177,30 @@ trait DragAndDropLists
         $I->waitForElementChange($selector, function (WebDriverElement $element) {
             return $element->isDisplayed();
         });
+    }
+
+    private function dragAndDropJs (string $element, string $destination)
+    {
+        return sprintf("
+            function triggerDnD(selectorFrom, selectorTo) {
+                const dataTransfer = new DataTransfer();
+                const from = document.querySelector(selectorFrom);
+                const to = document.querySelector(selectorTo);
+
+                const dragStart = new DragEvent('dragstart', { dataTransfer });
+                from.dispatchEvent(dragStart);
+
+                const dragOver = new DragEvent('dragover', { dataTransfer });
+                to.dispatchEvent(dragOver);
+
+                const drop = new DragEvent('drop', { dataTransfer });
+                to.dispatchEvent(drop);
+
+                const dragEnd = new DragEvent('dragend', { dataTransfer });
+                from.dispatchEvent(dragEnd);
+            }
+
+            triggerDnD(%s, %s);
+        ", json_encode($element), json_encode($destination . "_bg"));
     }
 }
