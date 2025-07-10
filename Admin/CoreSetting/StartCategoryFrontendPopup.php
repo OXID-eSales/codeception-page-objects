@@ -27,6 +27,7 @@ class StartCategoryFrontendPopup extends Page
         $I->fillField($this->categoryNameSearchFilter, $categoryName);
         $I->waitForElementNotVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
         $I->waitForText($categoryName, 10, $this->datTableFirstRow);
+        $I->waitForPageLoad();
         $I->clickAndWait($this->datTableFirstRow);
         $I->waitForElementVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
         $I->clickAndWait(Translator::translate('SHOP_CONFIG_ASSIGNDEFAULTCAT'));
