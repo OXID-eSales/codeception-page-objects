@@ -104,6 +104,7 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $this->searchInList1($artNr);
+        $I->waitForText($artNr, 10, $this->list1 . ' ' . $this->datatableFirstRow);
         $content = $I->grabTextFrom($this->list2);
         $this->dragFromList1ToList2();
         $this->clearSearch($this->list1);
@@ -116,6 +117,7 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $this->searchInList2($artNr);
+        $I->waitForText($artNr, 10, $this->list2 . ' ' . $this->datatableFirstRow);
         $content = $I->grabTextFrom($this->list1);
         $this->dragFromList2ToList1();
         $this->clearSearch($this->list2);
