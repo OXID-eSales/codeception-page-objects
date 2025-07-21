@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\Codeception\Admin\Product;
 
 use OxidEsales\Codeception\Page\Page;
+use OxidEsales\Codeception\Module\Translation\Translator;
+use OxidEsales\Codeception\Admin\Product\Popup\AssignCategoriesPopup;
 
 class ExtendedInformationPage extends Page
 {
@@ -24,5 +26,16 @@ class ExtendedInformationPage extends Page
         $I->waitForDocumentReadyState();
 
         return $this;
+    }
+
+    public function openAssignCategoriesPopup(): AssignCategoriesPopup
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->click(Translator::translate('GENERAL_ASSIGNCATEGORIES'));
+        $I->switchToNextTab();
+        $I->waitForAjax();
+
+        return new AssignCategoriesPopup($I);
     }
 }

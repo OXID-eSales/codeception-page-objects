@@ -10,6 +10,7 @@
   - Category list handling
   - Username management in admin
   - Order overview statistics in admin
+  - Category assignment from product
 - Page components for:
   - Product assignment popups
   - Product sorting popups
