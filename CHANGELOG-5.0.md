@@ -1,5 +1,10 @@
 # Change Log for OXID eShop Codeception Page Objects
 
+## v5.0.0-alpha.2 - Unreleased
+
+### Added
+- Added methods for managing stock default message settings in admin
+
 ## v5.0.0-alpha.1 - 2025-02-03
 
 ### Added
