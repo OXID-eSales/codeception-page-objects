@@ -51,13 +51,7 @@ class Basket extends Page
         $I = $this->user;
         $amountInput = sprintf($this->basketItemAmount, $itemPosition);
         $eventId = $I->addFetchListener();
-        $I->pressKey(
-            $amountInput,
-            [
-                WebDriverKeys::CONTROL,
-                'a'
-            ]
-        );
+        $I->doubleClick($amountInput);
         $I->pressKey(
             $amountInput,
             WebDriverKeys::BACKSPACE
