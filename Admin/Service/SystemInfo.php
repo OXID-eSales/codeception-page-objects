@@ -18,7 +18,7 @@ class SystemInfo extends Page
     private string $dateTableHeader =
         "//a[@name = '%s']/following::table[1]/tbody/tr[contains(td[@class='e'], '%s')]/td[@class='v']";
 
-    public function setRowInDateTable(string $directive, string $vale): static
+    public function seeRowInDateTable(string $directive, string $vale): static
     {
         $this->seeTableRowWithDirectiveValuePair(
             'module_date',

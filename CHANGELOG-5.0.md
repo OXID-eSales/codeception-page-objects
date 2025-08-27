@@ -5,6 +5,9 @@
 ### Added
 - Added methods for managing stock default message settings in admin
 
+### Changed
+- Assertion method `setRowInDateTable` renamed to `seeRowInDataTable`
+
 ## v5.0.0-alpha.1 - 2025-02-03
 
 ### Added
