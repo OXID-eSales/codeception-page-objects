@@ -23,6 +23,9 @@ If possible, page elements should be managed via public methods, accessing them 
 - `find()` methods in `ManufacturerList` and `OrderList`
 - Method `seeManufacturerIcon` in `PictureManufacturerPage`
 
+### Fixed
+- Stability issues in `StartCategoryFrontendPopup`
+
 ## v4.5.0 - 2024-10-14
 
 ### Added

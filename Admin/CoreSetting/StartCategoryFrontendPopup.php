@@ -25,12 +25,14 @@ class StartCategoryFrontendPopup extends Page
         $I = $this->user;
 
         $I->fillField($this->categoryNameSearchFilter, $categoryName);
+        $I->waitForPageLoad();
         $I->waitForElementNotVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
         $I->waitForText($categoryName, 10, $this->datTableFirstRow);
         $I->click($this->datTableFirstRow);
+        $I->waitForPageLoad();
         $I->waitForElementVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
         $I->click(Translator::translate('SHOP_CONFIG_ASSIGNDEFAULTCAT'));
-        $I->waitForDocumentReadyState();
+        $I->waitForPageLoad();
         $I->waitForText($this->getDefaultCategoryLabel($categoryName), 10, $this->defaultCategoryLabelContainer);
 
         return $this;
@@ -42,7 +44,7 @@ class StartCategoryFrontendPopup extends Page
 
         $I->waitForElementVisible($this->defaultCategoryLabelContainer);
         $I->click(Translator::translate('SHOP_CONFIG_UNASSIGNDEFAULTCAT'));
-        $I->waitForDocumentReadyState();
+        $I->waitForPageLoad();
         $I->waitForElementNotVisible($this->defaultCategoryLabelContainer);
 
         return $this;
