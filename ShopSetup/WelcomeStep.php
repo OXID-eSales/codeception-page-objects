@@ -33,14 +33,6 @@ class WelcomeStep extends SetupStep
         return new LicenseConditionsStep($this->user);
     }
 
-    public function seeAllowDataCollectionInput(): static
-    {
-        $I = $this->user;
-        $I->seeElement($this->allowDataCollectionInput);
-
-        return $this;
-    }
-
     public function dontSeeAllowDataCollectionInput(): static
     {
         $I = $this->user;
