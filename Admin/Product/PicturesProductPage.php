@@ -66,24 +66,13 @@ class PicturesProductPage extends Page
         return $this;
     }
 
-    private function getUploadedImageCardSelector(int $position): string
-    {
-        return sprintf(
-            $this->uploadImageCard,
-            $this->uploadGrid,
-            $position
-        );
-    }
-
     public function seeUploadedImageIsActive(int $position): static
     {
         $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgActivateButton.active",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
+        $item = $this->getUploadedImageCardSelector($position);
+        $I->moveMouseOver($item);
+        $I->waitForElementVisible(sprintf("%s .toggle-active", $item));
+        $I->seeElement(sprintf("%s .toggle-active.active", $item));
 
         return $this;
     }
@@ -91,84 +80,10 @@ class PicturesProductPage extends Page
     public function seeUploadedImageIsInactive(int $position): static
     {
         $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgActivateButton.inactive",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
-
-        return $this;
-    }
-
-    public function seeUploadedImageIsThumbnail(int $position): static
-    {
-        $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgThumbButton.is-thumb",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
-        $I->assertEquals(
-            $this->getUploadedImageUrl($position),
-            $this->getThumbnailUrl()
-        );
-
-        return $this;
-    }
-
-    public function seeUploadedImageIsNotThumbnail(int $position): static
-    {
-        $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgThumbButton:not(.is-thumb)",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
-        if (!$this->isEmptyThumbnailPlaceholder()) {
-            $I->assertNotEquals(
-                $this->getUploadedImageUrl($position),
-                $this->getThumbnailUrl()
-            );
-        }
-
-        return $this;
-    }
-
-    public function seeUploadedImageIsIcon(int $position): static
-    {
-        $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgIconButton.is-icon",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
-        $I->assertEquals(
-            $this->getUploadedImageUrl($position),
-            $this->getIconUrl()
-        );
-
-        return $this;
-    }
-
-    public function seeUploadedImageIsNotIcon(int $position): static
-    {
-        $I = $this->user;
-        $I->seeElement(
-            sprintf(
-                "$this->uploadedImgIconButton:not(.is-icon)",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
-        if (!$this->isEmptyIconPlaceholder()) {
-            $I->assertNotEquals(
-                $this->getUploadedImageUrl($position),
-                $this->getIconUrl()
-            );
-        }
+        $item = $this->getUploadedImageCardSelector($position);
+        $I->moveMouseOver($item);
+        $I->waitForElementVisible(sprintf("%s .toggle-active", $item));
+        $I->seeElement(sprintf("%s .toggle-active.inactive", $item));
 
         return $this;
     }
@@ -194,10 +109,11 @@ class PicturesProductPage extends Page
     public function canSeeUploadedImageInLightbox(int $position): static
     {
         $I = $this->user;
-        $I->clickAndWait(sprintf(
-            "$this->uploadedImgOverlay",
-            $this->getUploadedImageCardSelector($position)
-        ));
+        $itemSelector = $this->getUploadedImageCardSelector($position);
+        $overlaySelector = sprintf($this->uploadedImgOverlay, $itemSelector);
+        $I->moveMouseOver($itemSelector);
+        $I->waitForElementVisible($overlaySelector);
+        $I->clickWithLeftButton($overlaySelector);
         $I->waitForElementVisible('#lightbox img');
         $I->assertEquals(
             $this->getUploadedImageUrl($position),
@@ -245,28 +161,40 @@ class PicturesProductPage extends Page
         return $this;
     }
 
-    public function setUploadedImageAsThumb(int $position): static
+    public function uploadThumbnail(string $filePath): static
     {
         $I = $this->user;
-        $I->clickAndWait(
-            sprintf(
-                "$this->uploadedImgThumbButton",
-                $this->getUploadedImageCardSelector($position)
-            )
-        );
+        $I->clickAndWait('#thumb .card');
+        $I->attachFile($this->uploadInput, $filePath);
         $this->waitForTabReload();
 
         return $this;
     }
 
-    public function setUploadedImageAsIcon(int $position): static
+    public function uploadIcon(string $filePath): static
     {
         $I = $this->user;
-        $I->clickAndWait(sprintf(
-            "$this->uploadedImgIconButton",
-            $this->getUploadedImageCardSelector($position)
-        ));
+        $I->clickAndWait('#icon .card');
+        $I->attachFile($this->uploadInput, $filePath);
         $this->waitForTabReload();
+
+        return $this;
+    }
+
+    public function seeThumbnailEndsWith(string $filename): static
+    {
+        $I = $this->user;
+        $I->seeImage("$this->thumbnailCard img");
+        $I->assertStringEndsWith($filename, $this->getThumbnailUrl());
+
+        return $this;
+    }
+
+    public function seeIconEndsWith(string $filename): static
+    {
+        $I = $this->user;
+        $I->seeImage("$this->iconCard img");
+        $I->assertStringEndsWith($filename, $this->getIconUrl());
 
         return $this;
     }
@@ -308,20 +236,6 @@ class PicturesProductPage extends Page
         return $this;
     }
 
-    private function isEmptyThumbnailPlaceholder(): bool
-    {
-        $I = $this->user;
-
-        return empty($I->grabMultiple("$this->thumbnailCard img"));
-    }
-
-    private function isEmptyIconPlaceholder(): bool
-    {
-        $I = $this->user;
-
-        return empty($I->grabMultiple("$this->iconCard img"));
-    }
-
     public function seeEmptyThumbnailPlaceholder(): static
     {
         $I = $this->user;
@@ -338,7 +252,7 @@ class PicturesProductPage extends Page
         return $this;
     }
 
-    public function seeThumbnailImage(): static
+    public function seeThumbnail(): static
     {
         $I = $this->user;
         $I->seeImage("$this->thumbnailCard img");
@@ -346,7 +260,7 @@ class PicturesProductPage extends Page
         return $this;
     }
 
-    public function seeIconImage(): static
+    public function seeIcon(): static
     {
         $I = $this->user;
         $I->seeImage("$this->iconCard img");
@@ -366,14 +280,6 @@ class PicturesProductPage extends Page
         $I = $this->user;
 
         return $I->grabAttributeFrom("$this->iconCard img", 'src');
-    }
-
-    private function waitForTabReload(): void
-    {
-        $I = $this->user;
-        $I->waitForElementNotVisible($this->pageLoaderAnimation);
-        $I->selectEditFrame();
-        $I->waitForElementVisible($this->uploadGrid);
     }
 
     public function seeUploadedImageAtPosition(string $filename, int $position): static
@@ -409,5 +315,36 @@ class PicturesProductPage extends Page
         $I->seeText($message, $this->errorMessagesContainer);
 
         return $this;
+    }
+
+    private function getUploadedImageCardSelector(int $position): string
+    {
+        return sprintf(
+            $this->uploadImageCard,
+            $this->uploadGrid,
+            $position
+        );
+    }
+
+    private function isEmptyThumbnailPlaceholder(): bool
+    {
+        $I = $this->user;
+
+        return empty($I->grabMultiple("$this->thumbnailCard img"));
+    }
+
+    private function isEmptyIconPlaceholder(): bool
+    {
+        $I = $this->user;
+
+        return empty($I->grabMultiple("$this->iconCard img"));
+    }
+
+    private function waitForTabReload(): void
+    {
+        $I = $this->user;
+        $I->waitForElementNotVisible($this->pageLoaderAnimation);
+        $I->selectEditFrame();
+        $I->waitForElementVisible($this->uploadGrid);
     }
 }
