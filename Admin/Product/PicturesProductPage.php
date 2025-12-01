@@ -99,6 +99,13 @@ class PicturesProductPage extends Page
         return $I->grabAttributeFrom($imageAtPosition, 'src');
     }
 
+    public function getUploadedImageZoomUrl(int $position): string
+    {
+        $I = $this->user;
+
+        return $I->grabAttributeFrom($this->getUploadedImageCardSelector($position), 'data-url');
+    }
+
     public function getLightboxImageUrl(): string
     {
         $I = $this->user;
@@ -116,7 +123,7 @@ class PicturesProductPage extends Page
         $I->clickWithLeftButton($overlaySelector);
         $I->waitForElementVisible('#lightbox img');
         $I->assertEquals(
-            $this->getUploadedImageUrl($position),
+            $this->getUploadedImageZoomUrl($position),
             $this->getLightboxImageUrl()
         );
         $this->closeLightbox();
