@@ -168,6 +168,7 @@ class ProductList extends Page
     {
         $I = $this->user;
         $I->scrollTo($this->nextListPage);
+        $I->waitForElementClickable($this->nextListPage);
         $I->clickAndWait($this->nextListPage);
 
         return $this;
@@ -177,6 +178,7 @@ class ProductList extends Page
     {
         $I = $this->user;
         $I->scrollTo($this->previousListPage);
+        $I->waitForElementClickable($this->previousListPage);
         $I->clickAndWait($this->previousListPage);
 
         return $this;
