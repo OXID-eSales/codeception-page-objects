@@ -167,7 +167,6 @@ class ProductList extends Page
     public function openNextListPage(): self
     {
         $I = $this->user;
-        $I->scrollTo($this->nextListPage);
         $I->waitForElementClickable($this->nextListPage);
         $I->clickAndWait($this->nextListPage);
 
@@ -177,7 +176,6 @@ class ProductList extends Page
     public function openPreviousListPage(): self
     {
         $I = $this->user;
-        $I->scrollTo($this->previousListPage);
         $I->waitForElementClickable($this->previousListPage);
         $I->clickAndWait($this->previousListPage);
 
