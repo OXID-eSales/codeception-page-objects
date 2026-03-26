@@ -1,22 +1,22 @@
 {
-  "name": "oxid-esales/codeception-page-objects",
-  "description": "Page Objects for OXID eShop acceptance tests on codeception",
-  "license": [
-    "proprietary"
-  ],
-  "keywords": [
-    "oxid",
-    "codeception",
-    "pageObject",
-    "eShop"
-  ],
-  "homepage": "https://www.oxid-esales.com/en/",
-  "autoload": {
-    "psr-4": {
-      "OxidEsales\\Codeception\\Admin\\": "Admin",
-      "OxidEsales\\Codeception\\Page\\": "Page",
-      "OxidEsales\\Codeception\\ShopSetup\\": "ShopSetup",
-      "OxidEsales\\Codeception\\Step\\": "Step"
+    "name": "oxid-esales/codeception-page-objects",
+    "description": "Page Objects for OXID eShop acceptance tests on codeception",
+    "license": [
+        "proprietary"
+    ],
+    "keywords": [
+        "oxid",
+        "codeception",
+        "pageObject",
+        "eShop"
+    ],
+    "homepage": "https://www.oxid-esales.com/en/",
+    "autoload": {
+        "psr-4": {
+            "OxidEsales\\Codeception\\Admin\\": "Admin",
+            "OxidEsales\\Codeception\\Page\\": "Page",
+            "OxidEsales\\Codeception\\ShopSetup\\": "ShopSetup",
+            "OxidEsales\\Codeception\\Step\\": "Step"
+        }
     }
-  }
 }
