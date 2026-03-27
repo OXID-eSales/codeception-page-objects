@@ -14,6 +14,7 @@ use OxidEsales\Codeception\Admin\CMSPages;
 use OxidEsales\Codeception\Admin\CoreSettings;
 use OxidEsales\Codeception\Admin\CountryList;
 use OxidEsales\Codeception\Admin\Languages;
+use OxidEsales\Codeception\Admin\Locales;
 use OxidEsales\Codeception\Admin\Manufacturers;
 use OxidEsales\Codeception\Admin\ModulesList;
 use OxidEsales\Codeception\Admin\Newsletter;
@@ -155,6 +156,20 @@ trait AdminMenu
         $this->waitForListTable();
 
         return new Languages($I);
+    }
+
+    public function openLocales(): Locales
+    {
+        $I = $this->user;
+        $localesPage = new Locales($I);
+
+        $I->selectNavigationFrame();
+        $I->clickAndWait(Translator::translate('mxmainmenu'));
+        $I->clickAndWait(Translator::translate('mxlocales'));
+        $I->selectBaseFrame();
+        $I->waitForElementVisible($localesPage->localeManager);
+
+        return $localesPage;
     }
 
     public function openDiagnosticsTool(): DiagnosticsTool

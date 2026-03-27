@@ -3,6 +3,9 @@
 ## v8.0.0-alpha.3 - Unreleased
 *Compilation release*
 
+### Added
+- Page objects for language locale management in admin
+
 ## v8.0.0-alpha.2 - 2026-02-12
 *Compilation release*
 
