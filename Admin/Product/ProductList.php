@@ -118,4 +118,12 @@ trait ProductList
 
         return new PicturesProductPage($I);
     }
+
+    public function openPictureAltTab(): PictureAltProductPage
+    {
+        $I = $this->user;
+        $this->openTab(Translator::translate('tbclarticle_picture_alt'));
+
+        return new PictureAltProductPage($I);
+    }
 }

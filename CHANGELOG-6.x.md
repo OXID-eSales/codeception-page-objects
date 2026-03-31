@@ -5,6 +5,7 @@
 
 ### Added
 - Page objects for language locale management in admin
+- Page objects for products alt attribute management in admin
 
 ## v8.0.0-alpha.2 - 2026-02-12
 *Compilation release*
