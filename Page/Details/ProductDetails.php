@@ -79,6 +79,18 @@ class ProductDetails extends Page
     public $attributeName = '#attrTitle_%s';
     public $attributeValue = '#attrValue_%s';
     public $addToListmania = '#recommList';
+    public string $galleryThumbnailButton =
+        '(//div[@id="productGalleryCarousel"]//div[contains(@class,"carousel-indicators")]//button)[%s]';
+    public string $galleryThumbnailImage =
+        '(//div[@id="productGalleryCarousel"]//div[contains(@class,"carousel-indicators")]//img)[%s]';
+    public string $activeGalleryImage = '//div[@id="productGalleryCarousel"]//div[contains(@class,"active")]//img';
+    public string $modalZoomImage = '//div[@id="zoomModal"]//div[contains(@class,"active")]//img';
+    public string $modalZoomThumbnail =
+        '(//div[@id="zoomModal"]//button[contains(@class,"carouselThumbnail")]//img)[%s]';
+    public string $modalZoomCloseButton = '//div[@id="zoomModal"]//button[contains(@class,"btn-close")]';
+    public string $hoverZoomImage = '//figure[contains(@class,"zoom-container-hover")]//img';
+    public string $magnifierZoomImage = '//figure[contains(@class,"zoom-container-magnifier")]/img';
+    public string $noZoomImage = '//div[@id="productGalleryCarousel"]//div[contains(@class,"active")]//figure//img';
 
     private string $alsoBought = '(//div[@id="alsoBought"]//div[@class="card product-card"])[%s]';
     private string $persistentParamInput = '#persistentParam';
@@ -327,7 +339,7 @@ class ProductDetails extends Page
      * Check product data is displayed correctly.
      * $productData = ['title', 'description', 'id', 'price']
      */
-    public function seeProductData(array $productData): self
+    public function seeProductData(array $productData): static
     {
         $I = $this->user;
         $I->waitForElement($this->productTitle);
@@ -340,28 +352,115 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function seeProductTitle(string $title): self
+    public function seeProductTitle(string $title): static
     {
         $I = $this->user;
         $I->seeText($title, $this->productTitle);
         return $this;
     }
 
-    public function seeProductOldPrice(string $price): self
+    public function seeProductOldPrice(string $price): static
     {
         $I = $this->user;
         $I->seeText($price, $this->productOldPrice);
         return $this;
     }
 
-    public function seeProductUnitPrice(string $price): self
+    public function seeProductUnitPrice(string $price): static
     {
         $I = $this->user;
         $I->seeText($price, $this->productUnitPrice);
         return $this;
     }
 
-    public function addProductToBasket(int $amount = 1): self
+    public function seeGalleryThumbnailAltText(string $altText, int $position = 1): static
+    {
+        $I = $this->user;
+        $I->seeElement(
+            sprintf(
+                '%s[@aria-label="%s"]',
+                sprintf($this->galleryThumbnailButton, $position),
+                $altText
+            )
+        );
+        $I->seeElement(
+            sprintf(
+                '%s[@alt="%s"]',
+                sprintf($this->galleryThumbnailImage, $position),
+                $altText
+            )
+        );
+
+        return $this;
+    }
+
+    public function seeActiveGalleryPictureAltText(string $altText): static
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf('%s[@alt="%s"]', $this->activeGalleryImage, $altText));
+
+        return $this;
+    }
+
+    public function openModalZoom(): static
+    {
+        $I = $this->user;
+        $I->clickAndWait($this->activeGalleryImage);
+        $I->waitForElementVisible($this->modalZoomImage);
+
+        return $this;
+    }
+
+    public function closeModalZoom(): static
+    {
+        $I = $this->user;
+        $I->clickAndWait($this->modalZoomCloseButton);
+
+        return $this;
+    }
+
+    public function seeModalZoomPictureAltText(string $altText): static
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf('%s[@alt="%s"]', $this->modalZoomImage, $altText));
+
+        return $this;
+    }
+
+    public function seeModalZoomThumbnailAltText(string $altText, int $position = 1): static
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf('%s[@alt="%s"]', sprintf($this->modalZoomThumbnail, $position), $altText));
+
+        return $this;
+    }
+
+    public function seeHoverZoomPictureAltText(string $altText): static
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf('%s[@alt="%s"]', $this->hoverZoomImage, $altText));
+
+        return $this;
+    }
+
+    public function seeMagnifierZoomPictureAltText(string $altText): static
+    {
+        $I = $this->user;
+        $I->seeElement(sprintf('%s[@alt="%s"]', $this->magnifierZoomImage, $altText));
+
+        return $this;
+    }
+
+    public function seeNoZoomPictureAltText(string $altText): static
+    {
+        $I = $this->user;
+        $I->dontSeeElement('//figure[contains(@class,"zoom-container")]');
+        $I->seeElement(sprintf('%s[@alt="%s"]', $this->noZoomImage, $altText));
+
+        return $this;
+    }
+
+    public function addProductToBasket(int $amount = 1): static
     {
         $I = $this->user;
         $I->fillField($this->basketAmountField, $amount);
@@ -375,7 +474,7 @@ class ProductDetails extends Page
      * Check the data of the accessory product.
      * $productData = ['title', 'price']
      */
-    public function seeAccessoryData(array $productData, int $position = 1): self
+    public function seeAccessoryData(array $productData, int $position = 1): static
     {
         $I = $this->user;
         $I->seeText($productData['title'], sprintf($this->accessoriesProductTitle, $position));
@@ -383,7 +482,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function openAccessoryDetailsPage(int $position = 1): self
+    public function openAccessoryDetailsPage(int $position = 1): static
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->openAccessoriesProduct, $position));
@@ -396,7 +495,7 @@ class ProductDetails extends Page
      * Check the data of the similar product.
      * $productData = ['title', 'price']
      */
-    public function seeSimilarProductData(array $productData, int $position = 1): self
+    public function seeSimilarProductData(array $productData, int $position = 1): static
     {
         $I = $this->user;
         $I->seeText($productData['title'], sprintf($this->similarProductTitle, $position));
@@ -404,7 +503,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function openSimilarProductDetailsPage(int $position = 1): self
+    public function openSimilarProductDetailsPage(int $position = 1): static
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->openSimilarProduct, $position));
@@ -417,7 +516,7 @@ class ProductDetails extends Page
      * Check the data of the cross-selling product.
      * $productData = ['title', 'price']
      */
-    public function seeCrossSellingData(array $productData, int $position = 1): self
+    public function seeCrossSellingData(array $productData, int $position = 1): static
     {
         $I = $this->user;
         $I->seeText($productData['title'], sprintf($this->crossSellingProductTitle, $position));
@@ -425,7 +524,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function openCrossSellingDetailsPage(int $position = 1): self
+    public function openCrossSellingDetailsPage(int $position = 1): static
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->openCrossSellingProduct, $position));
@@ -441,7 +540,7 @@ class ProductDetails extends Page
      * 'discount'
      * ]
      */
-    public function seeAmountPrices(array $amountPrices): self
+    public function seeAmountPrices(array $amountPrices): static
     {
         $I = $this->user;
         $I->clickAndWait(Translator::translate('BLOCK_PRICE'));
@@ -460,14 +559,14 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function openNextProduct(): self
+    public function openNextProduct(): static
     {
         $I = $this->user;
         $I->clickAndWait($this->nextProductLink);
         return $this;
     }
 
-    public function openPreviousProduct(): self
+    public function openPreviousProduct(): static
     {
         $I = $this->user;
         $I->clickAndWait($this->previousProductLink);
@@ -481,7 +580,7 @@ class ProductDetails extends Page
         return new ProductSearchList($I);
     }
 
-    public function selectSelectionListItem(string $selectionItem): self
+    public function selectSelectionListItem(string $selectionItem): static
     {
         $I = $this->user;
         $I->selectOption($this->selectionList, $selectionItem);
@@ -489,14 +588,14 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function seeAttributeName(string $attributeName, int $attributeId): self
+    public function seeAttributeName(string $attributeName, int $attributeId): static
     {
         $I = $this->user;
         $I->seeText($attributeName, sprintf($this->attributeName, $attributeId));
         return $this;
     }
 
-    public function seeAttributeValue(string $attributeValue, int $attributeId): self
+    public function seeAttributeValue(string $attributeValue, int $attributeId): static
     {
         $I = $this->user;
         $I->seeText($attributeValue, sprintf($this->attributeValue, $attributeId));
@@ -527,7 +626,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function openAlsoBoughtProduct(int $position = 1): self
+    public function openAlsoBoughtProduct(int $position = 1): static
     {
         $I = $this->user;
         $I->seeText(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));
@@ -535,7 +634,7 @@ class ProductDetails extends Page
         return $this;
     }
 
-    public function dontSeeAlsoBought(): self
+    public function dontSeeAlsoBought(): static
     {
         $I = $this->user;
         $I->dontSee(Translator::translate('CUSTOMERS_ALSO_BOUGHT'));

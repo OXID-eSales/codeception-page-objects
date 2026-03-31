@@ -21,6 +21,8 @@ class ProductSearchList extends ProductList
     use SearchWidget;
 
     private string $listItem = '//div[@id="searchList"]/div/div[%s]';
+    public string $listItemImage = '(//div[@id="searchList"]/div/div[%s]//img[contains(@class,"product-img")])[%s]';
+    private string $lineListItemImage = '//div[@id="searchList"]/div/div[%s]//img[contains(@class,"card-img")]';
     public string $listItemTitle = '//div[@id="searchList"]/div/div[%s]//*[@class="h5 card-title"]';
     public string $listItemDescription = '//div[@id="searchList"]/div/div[%s]//div[@class="short-desc"]';
     public string $listItemPrice = '//div[@id="searchList"]/div/div[%s]//div[contains(@class,"price")]/span';
@@ -34,10 +36,24 @@ class ProductSearchList extends ProductList
         return $this->URL . '/index.php?' . http_build_query(['cl' => 'search', 'searchparam' => $params]);
     }
 
-    public function seeSearchCount(int $count): self
+    public function seeSearchCount(int $count): static
     {
         $I = $this->user;
         $I->seeText($count . ' ' . Translator::translate('HITS_FOR'));
+        return $this;
+    }
+
+    public function seeLineListPictureAltText(string $altText, int $itemPosition = 1): static
+    {
+        $I = $this->user;
+        $I->seeElement(
+            sprintf(
+                '%s[@alt="%s"]',
+                sprintf($this->lineListItemImage, $itemPosition),
+                $altText
+            )
+        );
+
         return $this;
     }
 

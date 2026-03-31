@@ -40,6 +40,7 @@ class ProductList extends Page
     public string $activePageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a[contains(text(),"%s")]';
     public string $headerTitle = 'h1';
     public string $listPageDescription = '#catDescLocator';
+    public string $listItemImage = '(//div[@id="productList"]/div/div[%s]//img[contains(@class,"product-img")])[%s]';
 
     public function route(mixed $params): string
     {
@@ -49,7 +50,7 @@ class ProductList extends Page
     /**
      * $pageData = ['title', 'description']
      */
-    public function seePageInformation(array $pageData): self
+    public function seePageInformation(array $pageData): static
     {
         $I = $this->user;
         $I->seeText($pageData['title'], $this->headerTitle);
@@ -61,12 +62,26 @@ class ProductList extends Page
     /**
      * $productData = ['title', 'description', 'price']
      */
-    public function seeProductData(array $productData, int $itemId = 1): self
+    public function seeProductData(array $productData, int $itemId = 1): static
     {
         $I = $this->user;
         $I->seeText($productData['title'], sprintf($this->listItemTitle, $itemId));
         $I->seeText($productData['description'], sprintf($this->listItemDescription, $itemId));
         $I->seeText($productData['price'], sprintf($this->listItemPrice, $itemId));
+
+        return $this;
+    }
+
+    public function seeProductPictureAltText(string $altText, int $itemPosition = 1, int $imagePosition = 1): static
+    {
+        $I = $this->user;
+        $I->seeElement(
+            sprintf(
+                '%s[@alt="%s"]',
+                sprintf($this->listItemImage, $itemPosition, $imagePosition),
+                $altText
+            )
+        );
 
         return $this;
     }
@@ -80,7 +95,7 @@ class ProductList extends Page
      *
      * @return $this
      */
-    public function seeProductDataInDisplayTypeList(array $productData, int $itemId = 1): self
+    public function seeProductDataInDisplayTypeList(array $productData, int $itemId = 1): static
     {
         $I = $this->user;
         $I->seeText($productData['title'], sprintf($this->listItemTitle, $itemId));
@@ -92,7 +107,7 @@ class ProductList extends Page
     /**
      * $productData = ['title']
      */
-    public function dontSeeProductData(array $productData, int $itemId = 1): self
+    public function dontSeeProductData(array $productData, int $itemId = 1): static
     {
         $this->user->dontSee($productData['title'], sprintf($this->listItemTitle, $itemId));
         return $this;
@@ -110,7 +125,7 @@ class ProductList extends Page
         return $productDetails;
     }
 
-    public function selectFilter($attributeName, $attributeValue): self
+    public function selectFilter($attributeName, $attributeValue): static
     {
         $I = $this->user;
         $I->selectOption(
@@ -123,28 +138,28 @@ class ProductList extends Page
         return $this;
     }
 
-    public function seeSelectedFilter($attributeName, $attributeValue): self
+    public function seeSelectedFilter($attributeName, $attributeValue): static
     {
         $I = $this->user;
         $I->seeOptionIsSelected(sprintf($this->listFilter, $attributeName), $attributeValue);
         return $this;
     }
 
-    public function dontSeeSelectedFilter($attributeName, $attributeValue): self
+    public function dontSeeSelectedFilter($attributeName, $attributeValue): static
     {
         $I = $this->user;
         $I->dontSeeOptionIsSelected(sprintf($this->listFilter, $attributeName), $attributeValue);
         return $this;
     }
 
-    public function openFilter(string $attributeName): self
+    public function openFilter(string $attributeName): static
     {
         $this->user->clickAndWait(sprintf($this->listFilter, $attributeName));
 
         return $this;
     }
 
-    public function resetFilter(): self
+    public function resetFilter(): static
     {
         $I = $this->user;
         $I->scrollTo($this->resetListFilter);
@@ -154,7 +169,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function selectProductsPerPage(string $itemsPerPage): self
+    public function selectProductsPerPage(string $itemsPerPage): static
     {
         $I = $this->user;
         $I->clickAndWait(Translator::translate('PRODUCTS_PER_PAGE'));
@@ -164,7 +179,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function openNextListPage(): self
+    public function openNextListPage(): static
     {
         $I = $this->user;
         $I->waitForElementClickable($this->nextListPage);
@@ -173,7 +188,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function openPreviousListPage(): self
+    public function openPreviousListPage(): static
     {
         $I = $this->user;
         $I->waitForElementClickable($this->previousListPage);
@@ -182,7 +197,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function openListPageNumber(int $pageNumber): self
+    public function openListPageNumber(int $pageNumber): static
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->pageNumberSelection, $pageNumber));
@@ -191,7 +206,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): self
+    public function selectSorting(string $sortingName, string $sortingOrder = 'asc'): static
     {
         $I = $this->user;
         $I->clickAndWait($this->sortingButton);
@@ -215,7 +230,7 @@ class ProductList extends Page
         return new ProductDetails($I);
     }
 
-    public function addProductToBasket(int $itemId): self
+    public function addProductToBasket(int $itemId): static
     {
         $I = $this->user;
         $this->user->submitForm(sprintf($this->listItemForm, $itemId), []);
@@ -224,7 +239,7 @@ class ProductList extends Page
         return $this;
     }
 
-    public function selectListDisplayType(string $view): self
+    public function selectListDisplayType(string $view): static
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->listViewSelection, $view));

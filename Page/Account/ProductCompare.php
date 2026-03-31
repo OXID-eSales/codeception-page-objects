@@ -43,6 +43,8 @@ class ProductCompare extends Page
 
     public $removeButton = '#remove_cmp_%s';
 
+    public string $productImage = '//*[contains(@class, "compare-products")]//div[contains(@class, "compare-product")][%s]//img[contains(@class,"product-img")]';
+
     /**
      * Checks if given product data is shown correctly:
      * ['id', 'title', 'price']
@@ -105,6 +107,20 @@ class ProductCompare extends Page
     {
         $I = $this->user;
         $I->clickAndWait(sprintf($this->removeButton, $productId));
+
+        return $this;
+    }
+
+    public function seeProductPictureAltText(string $altText, int $position = 1): static
+    {
+        $I = $this->user;
+        $I->seeElement(
+            sprintf(
+                '%s[@alt="%s"]',
+                sprintf($this->productImage, $position),
+                $altText
+            )
+        );
 
         return $this;
     }

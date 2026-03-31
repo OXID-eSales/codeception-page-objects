@@ -30,7 +30,7 @@ trait LanguageList
         return $mainPage;
     }
 
-    public function createNewLanguage(string $abbreviation, string $name): MainLanguagePage
+    public function createNewLanguage(string $abbreviation, string $name): self
     {
         $I = $this->user;
         $mainPage = new MainLanguagePage($I);
@@ -47,6 +47,6 @@ trait LanguageList
         $I->waitForDocumentReadyState();
         $I->retrySee($name);
 
-        return $mainPage;
+        return $this;
     }
 }
