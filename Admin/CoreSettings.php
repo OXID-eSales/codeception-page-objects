@@ -73,7 +73,7 @@ class CoreSettings extends Page
         $I->clickAndWait($subShopName);
         $I->selectEditFrame();
         $I->waitForPageLoad();
-        $I->seeInField($this->shopName, $subShopName);
+        $I->retrySeeInField($this->shopName, $subShopName);
 
         return $this;
     }
