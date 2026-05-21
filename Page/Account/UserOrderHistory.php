@@ -49,7 +49,10 @@ class UserOrderHistory extends Page
         $I = $this->user;
         $I->see($status, sprintf($this->orderStatus, $orderNumber));
         $I->see($name, sprintf($this->shipmentTo, $orderNumber));
-        $I->see($amount, sprintf($this->orderAmount, $orderNumber, $itemNumber));
+        $I->see(
+            sprintf('%s %s', $amount, Translator::translate('QNT')),
+            sprintf($this->orderAmount, $orderNumber, $itemNumber)
+        );
         $I->see($product, sprintf($this->orderAmountLink, $orderNumber, $itemNumber));
 
         return $this;

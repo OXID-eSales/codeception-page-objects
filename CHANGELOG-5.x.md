@@ -1,5 +1,10 @@
 # Change Log for OXID eShop Codeception Page Objects
 
+## Unreleased
+
+### Fixed
+- `UserOrderHistory::seeOrder` amount assertion no longer matches digits from the product title
+
 ## v5.0.0 - 2025-10-14
 
 ### Added
