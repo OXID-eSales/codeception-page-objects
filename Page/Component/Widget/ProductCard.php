@@ -41,6 +41,7 @@ class ProductCard extends Page
     {
         $I = $this->user;
         $I->moveMouseOver($this->getProductLocator());
+        $I->waitForElementVisible($this->getProductAmountLocator());
         $I->click($this->getProductAmountLocator());
         $I->fillField(
             $this->getProductAmountLocator(),
