@@ -52,6 +52,7 @@ class ProductCard extends Page
             $this->widgetId,
             $this->position
         );
+        $I->waitForElementVisible($productAmountLocator);
         $I->clickAndWait($productAmountLocator);
         $I->fillField(
             $productAmountLocator,
