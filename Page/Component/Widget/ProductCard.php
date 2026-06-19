@@ -52,6 +52,7 @@ class ProductCard extends Page
             $this->widgetId,
             $this->position
         );
+        $I->moveMouseOver(sprintf($this->productSelector, $this->widgetId, $this->position));
         $I->waitForElementVisible($productAmountLocator);
         $I->clickAndWait($productAmountLocator);
         $I->fillField(
