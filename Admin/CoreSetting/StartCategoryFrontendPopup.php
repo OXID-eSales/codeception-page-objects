@@ -30,8 +30,11 @@ class StartCategoryFrontendPopup extends Page
         $I->waitForElementClickable($this->datTableFirstRow);
         $I->retryClick($this->datTableFirstRow);
         $I->waitForElementVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
+
+        $labelBeforeAssign = $I->grabTextFrom($this->defaultCategoryLabelContainer);
         $I->clickAndWait(Translator::translate('SHOP_CONFIG_ASSIGNDEFAULTCAT'));
-        $I->waitForText($this->getDefaultCategoryLabel($categoryName), 10, $this->defaultCategoryLabelContainer);
+        $I->waitForTextUpdate($this->defaultCategoryLabelContainer, $labelBeforeAssign);
+        $I->see($this->getDefaultCategoryLabel($categoryName), $this->defaultCategoryLabelContainer);
 
         return $this;
     }
@@ -43,7 +46,7 @@ class StartCategoryFrontendPopup extends Page
         $I->waitForElementVisible($this->defaultCategoryLabelContainer);
         $I->clickAndWait(Translator::translate('SHOP_CONFIG_UNASSIGNDEFAULTCAT'));
         $I->waitForDocumentReadyState();
-        $I->waitForElementNotVisible($this->defaultCategoryLabelContainer);
+        $I->waitForElementNotVisible($this->defaultCategoryLabelContainer, 30);
 
         return $this;
     }
