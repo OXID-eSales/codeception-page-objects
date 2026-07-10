@@ -31,8 +31,7 @@ class CMSPages extends Page
         $I->selectEditFrame();
 
         $I->waitForElementClickable($this->newCMSButton);
-        $I->clickAndWait($this->newCMSButton);
-        $I->waitForElementClickable($this->newCMSButton);
+        $this->openForm($this->newCMSButton);
 
         //create new CMS
         $I->checkOption($this->activeCheckbox);
