@@ -6,6 +6,7 @@
 ### Added
 - Page objects for language locale management in admin
 - Page objects for products alt attribute management in admin
+- Page objects for managing theme settings in admin
 
 ### Fixed
 - Admin edit-form actions now wait for the edit-frame document to be replaced
