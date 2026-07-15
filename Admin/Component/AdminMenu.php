@@ -27,6 +27,7 @@ use OxidEsales\Codeception\Admin\Service\GenericImport;
 use OxidEsales\Codeception\Admin\Service\SystemHealth;
 use OxidEsales\Codeception\Admin\Service\SystemInfo;
 use OxidEsales\Codeception\Admin\Service\Tools;
+use OxidEsales\Codeception\Admin\Themes;
 use OxidEsales\Codeception\Admin\Users;
 use OxidEsales\Codeception\Admin\Vouchers;
 use OxidEsales\Codeception\Module\Translation\Translator;
@@ -108,6 +109,18 @@ trait AdminMenu
         $this->waitForListTable();
 
         return new ModulesList($I);
+    }
+
+    public function openThemes(): Themes
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->clickAndWait(Translator::translate('mxextensions'));
+        $I->clickAndWait(Translator::translate('mxtheme'));
+        $this->waitForListTable();
+
+        return new Themes($I);
     }
 
     public function openOrders(): Orders
