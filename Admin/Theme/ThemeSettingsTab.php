@@ -85,6 +85,29 @@ class ThemeSettingsTab extends Page
         return $this;
     }
 
+    public function seeSettingIsDisabled(string $settingName): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->seeElement(
+            sprintf(
+                '[name="%s"][disabled]',
+                $this->getFieldSelector($settingName)
+            )
+        );
+
+        return $this;
+    }
+
+    public function seeEnvironmentOverrideHint(string $hint): static
+    {
+        $I = $this->user;
+        $I->selectEditFrame();
+        $I->see($hint);
+
+        return $this;
+    }
+
     public function selectSettingOption(string $settingName, string $option): static
     {
         $I = $this->user;
