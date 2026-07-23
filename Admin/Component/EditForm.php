@@ -28,8 +28,9 @@ trait EditForm
     private function clickAndWaitForFrameReload(string $button): void
     {
         $I = $this->user;
+        $documentMarker = $I->markEditFrameDocument();
+
         $I->clickAndWait($button);
-        $I->selectEditFrame();
-        $I->waitForPageLoad();
+        $I->waitForEditFrameReload($documentMarker);
     }
 }

@@ -7,6 +7,9 @@
 - Page objects for language locale management in admin
 - Page objects for products alt attribute management in admin
 
+### Fixed
+- Admin edit-form actions now wait for the edit-frame document to be replaced
+
 ## v8.0.0-alpha.2 - 2026-02-12
 *Compilation release*
 
