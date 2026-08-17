@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Replace Usage of `waitForAjax()` with wait for content to be loaded
+
 ### Fixed
 - `UserOrderHistory::seeOrder` amount assertion no longer matches digits from the product title
 

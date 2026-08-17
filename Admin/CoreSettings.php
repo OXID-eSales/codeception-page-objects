@@ -25,6 +25,7 @@ class CoreSettings extends Page
     public $masterShopInSelectOption = '#shopparent option:nth-child(2)';
     public $inheritParentProductsOption = 'editval[oxshops__oxisinherited]';
     public $shopName = 'editval[oxshops__oxname]';
+    public $shopNameFieldWithValue = '//input[@name="editval[oxshops__oxname]" and @value="%s"]';
     public $tabPerformance = 'tbclshop_performance';
     public $tabSEO = 'tbclshop_seo';
 
@@ -71,6 +72,7 @@ class CoreSettings extends Page
         $I->click($subShopName);
         $I->selectEditFrame();
         $I->waitForPageLoad();
+        $I->waitForElement(sprintf($this->shopNameFieldWithValue, $subShopName));
         $I->seeInField($this->shopName, $subShopName);
 
         return $this;

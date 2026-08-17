@@ -67,7 +67,7 @@ class MainCategoryPage extends Page
         $I->click(sprintf($this->assignProductsButton, Translator::translate('GENERAL_ASSIGNARTICLES')));
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
-        $I->waitForAjax();
+        $I->waitForElement('#container1 .yui-dt-data tr');
 
         return new AssignProductsPopup($I);
     }

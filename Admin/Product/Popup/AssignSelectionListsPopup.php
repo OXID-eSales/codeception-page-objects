@@ -33,8 +33,9 @@ class AssignSelectionListsPopup extends Page
 
         $I->fillField("$this->unassignedList $this->titleFilter", $itemTitle);
         $I->pressKey("$this->unassignedList $this->titleFilter", WebDriverKeys::ENTER);
+        $I->waitForText($itemTitle, selector: "$this->unassignedList $this->firstRow");
         $I->executeJS($this->dragAndDropJs("$this->unassignedList $this->firstRow", $this->assignedList));
-        $I->waitForAjax();
+        $I->waitForText($itemTitle, selector: $this->assignedList);
         return $this;
     }
 }

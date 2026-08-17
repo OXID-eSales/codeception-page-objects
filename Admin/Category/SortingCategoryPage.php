@@ -27,7 +27,7 @@ class SortingCategoryPage extends Page
         $I->click(sprintf($this->sortProductsButton, Translator::translate('CATEGORY_ORDER_SORTCATEGORIES')));
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
-        $I->waitForAjax();
+        $I->waitForElement('#container1 .yui-dt-data tr');
 
         return new SortProductsPopup($I);
     }

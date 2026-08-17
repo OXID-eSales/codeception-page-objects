@@ -80,7 +80,7 @@ class ProductCategories extends Page
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
-        $I->waitForAjax(10);
+        $I->waitForElement('#container2 .yui-dt-data tr');
         $I->closeTab();
 
         return $this;
@@ -112,7 +112,7 @@ class ProductCategories extends Page
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
-        $I->waitForAjax(10);
+        $I->waitForElement('#container2 .yui-dt-data tr');
         $I->closeTab();
 
         return $this;

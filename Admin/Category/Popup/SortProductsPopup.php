@@ -23,7 +23,7 @@ class SortProductsPopup extends Page
     public function seeProductInPosition(string $productId, int $position): static
     {
         $I = $this->user;
-        $I->see($productId, sprintf($this->rowTemplate, $this->list1, $position));
+        $I->waitForText($productId, selector: sprintf($this->rowTemplate, $this->list1, $position));
         return $this;
     }
 
@@ -31,7 +31,6 @@ class SortProductsPopup extends Page
     {
         $I = $this->user;
         $I->click($this->saveButton);
-        $I->waitForAjax();
         return $this;
     }
 
@@ -39,7 +38,6 @@ class SortProductsPopup extends Page
     {
         $I = $this->user;
         $I->click($this->deleteButton);
-        $I->waitForAjax();
         return $this;
     }
 
@@ -47,7 +45,6 @@ class SortProductsPopup extends Page
     {
         $I = $this->user;
         $I->click(sprintf($this->columnHeaderTemplate, $this->list1, $columnNumber));
-        $I->waitForAjax();
         return $this;
     }
 }

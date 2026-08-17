@@ -28,7 +28,9 @@ class VariantsProductPage extends Page
 
         $I->click(sprintf($this->editVariantButton, $variant));
         $I->waitForPageLoad();
+        $mainProductPage = new MainProductPage($I);
+        $I->waitForElement($mainProductPage->numberInput . "[@value!='']");
 
-        return new MainProductPage($I);
+        return $mainProductPage;
     }
 }

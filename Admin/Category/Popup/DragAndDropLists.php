@@ -24,7 +24,6 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->executeJS($this->dragAndDropJs("$this->list1 $this->firstListItem", $this->list2));
-        $I->waitForAjax();
         return $this;
     }
 
@@ -32,7 +31,6 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->executeJS($this->dragAndDropJs("$this->list2 $this->firstListItem", $this->list1));
-        $I->waitForAjax();
         return $this;
     }
 
@@ -41,7 +39,7 @@ trait DragAndDropLists
         $I = $this->user;
         $I->fillField("$this->list1 $this->artNrSearchInput", $value);
         $I->pressKey("$this->list1 $this->artNrSearchInput", WebDriverKeys::ENTER);
-        $I->waitForAjax();
+        $I->waitForText($value, selector: "$this->list1 $this->firstListItem");
         return $this;
     }
 
@@ -50,7 +48,7 @@ trait DragAndDropLists
         $I = $this->user;
         $I->fillField("$this->list2 $this->artNrSearchInput", $value);
         $I->pressKey("$this->list2 $this->artNrSearchInput", WebDriverKeys::ENTER);
-        $I->waitForAjax();
+        $I->waitForText($value, selector: "$this->list2 $this->firstListItem");
         return $this;
     }
 
@@ -63,14 +61,13 @@ trait DragAndDropLists
             const input = document.querySelector('$searchField');
             input.dispatchEvent(new Event('input', { bubbles: true }));
         ");
-        $I->waitForAjax();
         return $this;
     }
 
     public function seeProductInUnassignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->see($artNr, $this->list1);
+        $I->waitForText($artNr, selector: $this->list1);
         return $this;
     }
 
@@ -84,7 +81,7 @@ trait DragAndDropLists
     public function seeProductInAssignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->see($artNr, $this->list2);
+        $I->waitForText($artNr, selector: $this->list2);
         return $this;
     }
 
@@ -99,6 +96,7 @@ trait DragAndDropLists
     {
         $this->searchInList1($artNr);
         $this->dragFromList1ToList2();
+        $this->user->waitForText($artNr, selector: $this->list2);
         $this->clearSearch($this->list1);
         return $this;
     }
@@ -107,6 +105,7 @@ trait DragAndDropLists
     {
         $this->searchInList2($artNr);
         $this->dragFromList2ToList1();
+        $this->user->waitForText($artNr, selector: $this->list1);
         $this->clearSearch($this->list2);
         return $this;
     }
@@ -115,7 +114,6 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->click($this->assignAllButton);
-        $I->waitForAjax();
         return $this;
     }
 
@@ -123,7 +121,6 @@ trait DragAndDropLists
     {
         $I = $this->user;
         $I->click($this->unassignAllButton);
-        $I->waitForAjax();
         return $this;
     }
 

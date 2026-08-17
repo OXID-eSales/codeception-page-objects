@@ -52,7 +52,7 @@ class RightsCategoryPage extends Page
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
         $I->click(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
-        $I->waitForAjax();
+        $I->waitForElement('#container2 .yui-dt-data tr');
         $I->closeTab();
 
         return $this;
