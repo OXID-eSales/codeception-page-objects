@@ -71,8 +71,7 @@ trait DragAndDropLists
     public function seeProductInUnassignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->seeText($artNr, $this->list1);
-
+        $I->waitForText($artNr, selector: $this->list1);
         return $this;
     }
 
@@ -87,8 +86,7 @@ trait DragAndDropLists
     public function seeProductInAssignedList(string $artNr): static
     {
         $I = $this->user;
-        $I->seeText($artNr, $this->list2);
-
+        $I->waitForText($artNr, selector: $this->list2);
         return $this;
     }
 
@@ -107,6 +105,7 @@ trait DragAndDropLists
         $I->waitForText($artNr, 10, $this->list1 . ' ' . $this->datatableFirstRow);
         $content = $I->grabTextFrom($this->list2);
         $this->dragFromList1ToList2();
+        $this->user->waitForText($artNr, selector: $this->list2);
         $this->clearSearch($this->list1);
         $I->waitForTextUpdate($this->list2, $content);
 
@@ -120,6 +119,7 @@ trait DragAndDropLists
         $I->waitForText($artNr, 10, $this->list2 . ' ' . $this->datatableFirstRow);
         $content = $I->grabTextFrom($this->list1);
         $this->dragFromList2ToList1();
+        $this->user->waitForText($artNr, selector: $this->list1);
         $this->clearSearch($this->list2);
         $I->waitForTextUpdate($this->list1, $content);
 

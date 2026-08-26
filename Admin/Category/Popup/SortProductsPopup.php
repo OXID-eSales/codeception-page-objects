@@ -25,9 +25,7 @@ class SortProductsPopup extends Page
     public function seeProductInPosition(string $productId, int $position): static
     {
         $I = $this->user;
-        $row = sprintf($this->rowTemplate, $this->list1, $position);
-        $I->seeText(text: $productId, selector: $row);
-
+        $I->waitForText($productId, selector: sprintf($this->rowTemplate, $this->list1, $position));
         return $this;
     }
 

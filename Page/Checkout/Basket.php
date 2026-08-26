@@ -87,7 +87,7 @@ class Basket extends Page
                 sprintf($this->basketItemId, $itemPosition)
             );
             $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
-            $I->see($basketProduct['totalPrice'], sprintf($this->basketItemTotalPrice, $itemPosition));
+            $I->waitForText($basketProduct['totalPrice'], selector: sprintf($this->basketItemTotalPrice, $itemPosition));
             $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
         }
         $I->see($basketSummaryPrice, sprintf($this->basketSummary, Translator::translate('GRAND_TOTAL')));
@@ -181,7 +181,7 @@ class Basket extends Page
     public function seeItemUnitPrice(string $price, string $position): self
     {
         $I = $this->user;
-        $I->seeText($price, sprintf($this->basketItemUnitPrice, $position));
+        $I->waitForText($price, selector: sprintf($this->basketItemUnitPrice, $position));
         return $this;
     }
 
@@ -218,7 +218,9 @@ class Basket extends Page
             sprintf($this->persistentParamInput, $item),
             WebDriverKeys::ENTER,
         );
-        $I->waitForPageLoad();
+        $I->waitForElement(
+            sprintf($this->persistentParamInput, $item) . "[value='$label']"
+        );
 
         return $this;
     }

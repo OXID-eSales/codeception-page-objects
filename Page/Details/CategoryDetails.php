@@ -24,7 +24,7 @@ class CategoryDetails extends Page
     public string $categoryDesc = '//div[@id="catDescLocator"]';
     public string $categoryLongDesc = '//div[@id="catLongDescLocator"]';
     public string $subCategoryItem = '//div[contains(@class,"cat-list")]//a[@class="cat-list-item"][%d]';
-    public string $subCategoryItemImage = '//div[contains(@class,"cat-list")]//a[@class="cat-list-item"][%d]//img[@class="cat-list-item-img"]';
+    public string $subCategoryItemImage = '//div[contains(@class,"cat-list")]//a[@class="cat-list-item"][%d]//img[contains(@class,"cat-list-item-img")]';
 
     /**
      * @param mixed $params The category Id.

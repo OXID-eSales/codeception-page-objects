@@ -38,14 +38,14 @@ trait MiniBasket
     {
         $I = $this->user;
         $this->openMiniBasket();
-        $I->seeText(sprintf('%s %s', $totalAmount, Translator::translate('ITEMS_IN_BASKET')));
+        $I->waitForText(sprintf('%s %s', $totalAmount, Translator::translate('ITEMS_IN_BASKET')));
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = (string)++$key;
-            $I->seeText($basketProduct['title'], $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));
-            $I->seeText((string)($basketProduct['amount']), sprintf($this->miniBasketItemAmount, $itemPosition));
-            $I->seeText((string)$basketProduct['price'], sprintf($this->miniBasketItemPrice, $itemPosition));
+            $I->waitForText($basketProduct['title'], selector: $I->clearString(sprintf($this->miniBasketItemTitle, $itemPosition)));
+            $I->waitForText((string)($basketProduct['amount']), selector: sprintf($this->miniBasketItemAmount, $itemPosition));
+            $I->waitForText((string)$basketProduct['price'], selector: sprintf($this->miniBasketItemPrice, $itemPosition));
         }
-        $I->seeText($basketSummaryPrice, $this->miniBasketItemsSummaryPrice);
+        $I->waitForText($basketSummaryPrice, selector: $this->miniBasketItemsSummaryPrice);
         return $this;
     }
 

@@ -53,6 +53,7 @@ class RightsCategoryPage extends Page
             sprintf($this->assignVisibleRightsButton, Translator::translate('CATEGORY_RIGHTS_ASSIGNVISIBLE'))
         );
         $I->clickAndWait(Translator::translate('GENERAL_AJAX_ASSIGNALL'));
+        $I->waitForElement('#container2 .yui-dt-data tr');
         $I->closeTab();
 
         return $this;

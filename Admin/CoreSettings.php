@@ -32,6 +32,7 @@ class CoreSettings extends Page
     private string $newShopNameField = '#shopname';
     private string $shopName = "//input[@name='editval[oxshops__oxname]']";
     private string $shopParentSelect = '#shopparent';
+    private string $shopNameFieldWithValue = '//input[@name="editval[oxshops__oxname]" and @value="%s"]';
     private string $tabCaching = 'tbclshop_cache';
     private string $tabLicense = 'tbclshop_license';
     private string $tabPerformance = 'tbclshop_performance';
@@ -73,6 +74,7 @@ class CoreSettings extends Page
         $I->clickAndWait($subShopName);
         $I->selectEditFrame();
         $I->waitForPageLoad();
+        $I->waitForElement(sprintf($this->shopNameFieldWithValue, $subShopName));
         $I->retrySeeInField($this->shopName, $subShopName);
 
         return $this;

@@ -29,6 +29,7 @@ class SortingCategoryPage extends Page
         $this->openAssignPopup(
             sprintf($this->sortProductsButton, Translator::translate('CATEGORY_ORDER_SORTCATEGORIES'))
         );
+        $I->waitForElement('#container1 .yui-dt-data tr');
 
         return new SortProductsPopup($I);
     }
