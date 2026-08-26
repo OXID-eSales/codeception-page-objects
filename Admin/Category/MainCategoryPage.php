@@ -23,6 +23,7 @@ class MainCategoryPage extends Page
     private string $newItemButtonId = '#btn.new';
     private string $newCategoryThumbFile = 'myfile[TC@oxcategories__oxthumb]';
     private string $assignProductsButton = "//input[@value='%s']";
+    private string $unassignedProductsList = '#container1 table.yui-dt-table';
 
     public function create(string $categoryName): static
     {
@@ -67,7 +68,7 @@ class MainCategoryPage extends Page
         $I->click(sprintf($this->assignProductsButton, Translator::translate('GENERAL_ASSIGNARTICLES')));
         $I->switchToNextTab();
         $I->waitForDocumentReadyState();
-        $I->waitForElement('#container1 .yui-dt-data tr');
+        $I->waitForElement($this->unassignedProductsList);
 
         return new AssignProductsPopup($I);
     }
