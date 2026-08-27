@@ -63,8 +63,10 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
-        $I->clickAndWait($this->miniBasketClose);
-        $I->waitForElementNotVisible($this->miniBasketClose);
+        $I->waitForJS("var d = document.querySelector('#basketModal .modal-dialog'); return !!d && "
+            . "['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(window.getComputedStyle(d).transform);", 10);
+        $I->retryClick($this->miniBasketClose);
+        $I->waitForElementNotVisible($this->miniBasketTitle);
 
         return $this;
     }
