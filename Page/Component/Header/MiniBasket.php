@@ -26,6 +26,7 @@ trait MiniBasket
     public string $miniBasketItemsSummaryPrice = '//div[contains(@class,"col-4 text-end")]';
     public string $miniBasketCountDown = '#countdown';
     public string $miniBasketClose = '//div[@id="basketModal"]//button';
+    private string $miniBasketShownScript = "var d = document.querySelector('#basketModal .modal-dialog'); return !!d && ['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(window.getComputedStyle(d).transform);";
     private string $itemCountBadge = '//button[@class="btn btn-minibasket"]//span[@class="badge"]';
     private string $addToWishlist = '//*[@id="list_cartItem_%d"]/div[2]/div[1]/div[3]/div/div[1]/div/div[2]/button[2]';
 
@@ -63,8 +64,9 @@ trait MiniBasket
     {
         $I = $this->user;
         $I->waitForElementClickable($this->miniBasketClose);
-        $I->clickAndWait($this->miniBasketClose);
-        $I->waitForElementNotVisible($this->miniBasketClose);
+        $I->waitForJS($this->miniBasketShownScript, 10);
+        $I->retryClick($this->miniBasketClose);
+        $I->waitForElementNotVisible($this->miniBasketTitle);
 
         return $this;
     }
