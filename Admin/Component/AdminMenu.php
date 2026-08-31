@@ -20,6 +20,7 @@ use OxidEsales\Codeception\Admin\Newsletter;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
+use OxidEsales\Codeception\Admin\SelectionLists;
 use OxidEsales\Codeception\Admin\Service\DiagnosticsTool;
 use OxidEsales\Codeception\Admin\Service\GenericExport;
 use OxidEsales\Codeception\Admin\Service\GenericImport;
@@ -110,6 +111,21 @@ trait AdminMenu
         $I->waitForDocumentReadyState();
 
         return new ProductCategories($I);
+    }
+
+    public function openSelectionLists(): SelectionLists
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->retryClick(Translator::translate('mxmanageprod'));
+        $I->retryClick(Translator::translate('mxsellist'));
+
+        $I->selectListFrame();
+        $I->selectEditFrame();
+        $I->waitForElement('#EditAddName');
+
+        return new SelectionLists($I);
     }
 
     /**

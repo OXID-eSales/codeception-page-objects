@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+- `SelectionLists` page object for selection list management
+- `AdminMenu::openSelectionLists()` for opening selection lists in admin
+
 ### Changed
 - Replace Usage of `waitForAjax()` with wait for content to be loaded
 
