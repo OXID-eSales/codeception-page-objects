@@ -21,6 +21,7 @@ use OxidEsales\Codeception\Admin\Newsletter;
 use OxidEsales\Codeception\Admin\Orders;
 use OxidEsales\Codeception\Admin\ProductCategories;
 use OxidEsales\Codeception\Admin\Products;
+use OxidEsales\Codeception\Admin\SelectionLists;
 use OxidEsales\Codeception\Admin\Service\DiagnosticsTool;
 use OxidEsales\Codeception\Admin\Service\GenericExport;
 use OxidEsales\Codeception\Admin\Service\GenericImport;
@@ -96,6 +97,18 @@ trait AdminMenu
         $I->clickAndWait(Translator::translate('mxcategories'));
 
         return new ProductCategories($I);
+    }
+
+    public function openSelectionLists(): SelectionLists
+    {
+        $I = $this->user;
+
+        $I->selectNavigationFrame();
+        $I->clickAndWait(Translator::translate('mxmanageprod'));
+        $I->clickAndWait(Translator::translate('mxsellist'));
+        $this->waitForListTable();
+
+        return new SelectionLists($I);
     }
 
     public function openModules(): ModulesList
