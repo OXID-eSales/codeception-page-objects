@@ -36,6 +36,7 @@ class ProductList extends Page
     public string $listViewSelection = '//a[@title="%s"]';
     public string $pageNumberSelection = '//ul[contains(@class,"pagination")]//a[contains(text(),"%s")]';
     public string $activePageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a[contains(text(),"%s")]';
+    public string $activeListPageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a';
     public string $headerTitle = 'h1';
     public string $listPageDescription = '#catDescLocator';
 
@@ -155,16 +156,22 @@ class ProductList extends Page
     public function openNextListPage(): self
     {
         $I = $this->user;
+        $currentPage = (int) $I->grabTextFrom($this->activeListPageNumber);
         $I->retryClick($this->nextListPage);
         $I->waitForPageLoad();
+        $I->waitForElement(sprintf($this->activePageNumber, $currentPage + 1));
+
         return $this;
     }
 
     public function openPreviousListPage(): self
     {
         $I = $this->user;
+        $currentPage = (int) $I->grabTextFrom($this->activeListPageNumber);
         $I->retryClick($this->previousListPage);
         $I->waitForPageLoad();
+        $I->waitForElement(sprintf($this->activePageNumber, $currentPage - 1));
+
         return $this;
     }
 
