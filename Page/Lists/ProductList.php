@@ -38,6 +38,7 @@ class ProductList extends Page
     public string $listViewSelection = '//a[@title="%s"]';
     public string $pageNumberSelection = '//ul[contains(@class,"pagination")]//a[contains(text(),"%s")]';
     public string $activePageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a[contains(text(),"%s")]';
+    public string $activeListPageNumber = '//ul[contains(@class,"pagination")]/li[contains(@class,"active")]/a';
     public string $headerTitle = 'h1';
     public string $listPageDescription = '#catDescLocator';
     public string $listItemImage = '(//div[@id="productList"]/div/div[%s]//img[contains(@class,"product-img")])[%s]';
@@ -182,8 +183,10 @@ class ProductList extends Page
     public function openNextListPage(): static
     {
         $I = $this->user;
+        $currentPage = (int) $I->grabTextFrom($this->activeListPageNumber);
         $I->waitForElementClickable($this->nextListPage);
         $I->clickAndWait($this->nextListPage);
+        $I->waitForElement(sprintf($this->activePageNumber, $currentPage + 1));
 
         return $this;
     }
@@ -191,8 +194,10 @@ class ProductList extends Page
     public function openPreviousListPage(): static
     {
         $I = $this->user;
+        $currentPage = (int) $I->grabTextFrom($this->activeListPageNumber);
         $I->waitForElementClickable($this->previousListPage);
         $I->clickAndWait($this->previousListPage);
+        $I->waitForElement(sprintf($this->activePageNumber, $currentPage - 1));
 
         return $this;
     }
