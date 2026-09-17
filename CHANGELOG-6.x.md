@@ -9,6 +9,7 @@
 
 ### Fixed
 - Admin edit-form actions now wait for the edit-frame document to be replaced
+- `resetFilter()` in `ProductList` no longer scrolls before clicking the reset button
 
 ## v8.0.0-alpha.2 - 2026-02-12
 *Compilation release*
