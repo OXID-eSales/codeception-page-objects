@@ -163,7 +163,6 @@ class ProductList extends Page
     public function resetFilter(): static
     {
         $I = $this->user;
-        $I->scrollTo($this->resetListFilter);
         $I->clickAndWait($this->resetListFilter);
         $I->waitForElementNotVisible($this->resetListFilter);
 
