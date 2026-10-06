@@ -1,6 +1,6 @@
 # Change Log for OXID eShop Codeception Page Objects
 
-## v5.1.0 - Unreleased
+## v5.1.0 - 2026-10-06
 
 ### Added
 - `SelectionLists` page object for selection list management
