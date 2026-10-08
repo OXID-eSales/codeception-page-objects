@@ -70,13 +70,13 @@ class Basket extends Page
         $I = $this->user;
         foreach ($basketProducts as $key => $basketProduct) {
             $itemPosition = $key + 1;
-            $I->see(Translator::translate('PRODUCT_NO') .
+            $I->retrySee(Translator::translate('PRODUCT_NO') .
                 ' ' . $basketProduct['id'], sprintf($this->basketItemId, $itemPosition));
-            $I->see($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
+            $I->retrySee($basketProduct['title'], sprintf($this->basketItemTitle, $itemPosition));
             $I->waitForText($basketProduct['totalPrice'], selector: sprintf($this->basketItemTotalPrice, $itemPosition));
-            $I->seeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
+            $I->retrySeeInField(sprintf($this->basketItemAmount, $itemPosition), (string)$basketProduct['amount']);
         }
-        $I->see($basketSummaryPrice, sprintf($this->basketSummary, Translator::translate('GRAND_TOTAL')));
+        $I->retrySee($basketSummaryPrice, sprintf($this->basketSummary, Translator::translate('GRAND_TOTAL')));
         return $this;
     }
 
