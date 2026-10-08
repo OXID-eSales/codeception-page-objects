@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\CoreSetting;
 
+use Facebook\WebDriver\WebDriverKeys;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Page;
 
@@ -19,14 +20,13 @@ class StartCategoryFrontendPopup extends Page
     public string $categoryDescriptionSearchFilter = "//input[@name='_1']";
     public string $datTableFirstRow = "div#container1_c > table > tbody.yui-dt-data > tr:first-child";
     public string $dateTableSelectedRow = '.yui-dt-selected';
+    private string $dataTableSecondRow = "div#container1_c > table > tbody.yui-dt-data > tr:nth-child(2)";
 
     public function selectCategory(string $categoryName): StartCategoryFrontendPopup
     {
         $I = $this->user;
 
-        $I->fillField($this->categoryNameSearchFilter, $categoryName);
-        $I->waitForPageLoad();
-        $I->waitForElementNotVisible($this->datTableFirstRow . $this->dateTableSelectedRow);
+        $this->filterByCategoryName($categoryName);
         $I->waitForText($categoryName, 10, $this->datTableFirstRow);
         $I->waitForElementClickable($this->datTableFirstRow);
         $I->retryClick($this->datTableFirstRow);
@@ -49,6 +49,17 @@ class StartCategoryFrontendPopup extends Page
         $I->waitForElementNotVisible($this->defaultCategoryLabelContainer);
 
         return $this;
+    }
+
+    private function filterByCategoryName(string $categoryName): void
+    {
+        $I = $this->user;
+
+        $I->pressKey($this->categoryNameSearchFilter, [WebDriverKeys::CONTROL, 'a']);
+        $I->pressKey($this->categoryNameSearchFilter, WebDriverKeys::BACKSPACE);
+        $I->waitForElementVisible($this->dataTableSecondRow);
+        $I->fillField($this->categoryNameSearchFilter, $categoryName);
+        $I->waitForElementNotVisible($this->dataTableSecondRow);
     }
 
     private function getDefaultCategoryLabel(string $categoryName): string
