@@ -148,7 +148,9 @@ class Basket extends Page
 
     public function removeCouponFromBasket(): self
     {
-        $this->user->click($this->removeBasketCoupon);
+        $I = $this->user;
+        $I->click($this->removeBasketCoupon);
+        $I->waitForElementNotVisible($this->removeBasketCoupon);
         return $this;
     }
 
