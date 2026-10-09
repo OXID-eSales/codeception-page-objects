@@ -64,7 +64,9 @@ class ProductCard extends Page
     {
         $I = $this->user;
         $I->moveMouseOver($this->getProductLocator());
-        $I->click(sprintf($this->detailsButton, $this->widgetId, $this->position));
+        $button = sprintf($this->detailsButton, $this->widgetId, $this->position);
+        $I->waitForElementVisible($button);
+        $I->click($button);
         return $this;
     }
 
