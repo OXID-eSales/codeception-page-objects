@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\Codeception\Admin\Theme;
 
+use OxidEsales\Codeception\Admin\Component\EditForm;
 use OxidEsales\Codeception\Page\Page;
 
 use function sprintf;
 
 class ThemeSettingsTab extends Page
 {
+    use EditForm;
+
     private string $settingField = 'settings[%s]';
     private string $settingCheckbox = "//input[@type='checkbox'][@name='settings[%s]']";
     private string $saveButton = 'save';
@@ -120,7 +123,7 @@ class ThemeSettingsTab extends Page
     {
         $I = $this->user;
         $I->selectEditFrame();
-        $I->clickAndWait($this->saveButton);
+        $this->submitForm($this->saveButton);
 
         return $this;
     }
