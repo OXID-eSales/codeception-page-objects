@@ -156,14 +156,11 @@ trait UserList
     public function createNewRemark(string $text): UserHistoryPage
     {
         $I = $this->user;
-
-        $I->click($this->newRemarkButton);
+        $historyPage = new UserHistoryPage($I);
 
         $I->selectEditFrame();
+        $this->loadForm($this->newRemarkButton, $historyPage->remarktextSelector);
 
-        $I->waitForPageLoad();
-
-        $historyPage = new UserHistoryPage($I);
         $I->fillField($historyPage->remarkField, $text);
         $I->click(Translator::translate('GENERAL_SAVE'));
 
